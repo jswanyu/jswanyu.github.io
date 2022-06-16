@@ -19,32 +19,20 @@
     <meta name="description" content="参考资料：黑马Redis教程  黑马程序员Redis入门到实战教程，全面透析redis底层原理+redis分布式锁+企业解决方案+redis实战 一、认识NoSQL略 二、认识Redis略 三、安装Redis大多数企业都是基于Linux服务器来部署项目，而且Redis官方也没有提供Windows版本的安装包。因此课程中我们会基于Linux系统来安装Redis. 此处选择的Linux版本为CentO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis：01.初识Redis">
-<meta property="og:url" content="http://example.com/2022/06/16/Redis/01.%E5%88%9D%E8%AF%86Redis/index.html">
-<meta property="og:site_name" content="博客">
+<meta property="og:url" content="http://example.com/2022/05/01/Redis/01.%E5%88%9D%E8%AF%86Redis/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="参考资料：黑马Redis教程  黑马程序员Redis入门到实战教程，全面透析redis底层原理+redis分布式锁+企业解决方案+redis实战 一、认识NoSQL略 二、认识Redis略 三、安装Redis大多数企业都是基于Linux服务器来部署项目，而且Redis官方也没有提供Windows版本的安装包。因此课程中我们会基于Linux系统来安装Redis. 此处选择的Linux版本为CentO">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B1.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B2.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B3.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B4.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B5.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B6.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B7.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B8.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B9.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B10.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B11.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B12.png">
-<meta property="article:published_time" content="2022-06-16T09:13:56.000Z">
-<meta property="article:modified_time" content="2022-06-16T09:56:20.187Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2022-05-01T09:13:56.000Z">
+<meta property="article:modified_time" content="2022-06-16T12:02:03.872Z">
 <meta property="article:author" content="万宇">
-<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Redis%E5%AE%89%E8%A3%85/%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B1.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
   
   
   
-  <title>Redis：01.初识Redis - 博客</title>
+  <title>Redis：01.初识Redis - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +189,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -218,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-16 17:13" pubdate>
-          2022年6月16日 下午
+        <time datetime="2022-05-01 17:13" pubdate>
+          2022年5月1日 下午
         </time>
       </span>
     
@@ -429,13 +417,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Redis/">#Redis</a>
-      
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
     </div>
+  
   
 </div>
 
@@ -446,7 +448,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis：01.初识Redis</div>
-      <div>http://example.com/2022/06/16/Redis/01.初识Redis/</div>
+      <div>http://example.com/2022/05/01/Redis/01.初识Redis/</div>
     </div>
     <div class="license-meta">
       
@@ -458,7 +460,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月16日</div>
+          <div>2022年5月1日</div>
         </div>
       
       

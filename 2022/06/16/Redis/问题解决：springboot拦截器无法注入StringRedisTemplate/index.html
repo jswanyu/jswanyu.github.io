@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis问题解决：springboot拦截器无法注入StringRedisTemplate">
 <meta property="og:url" content="http://example.com/2022/06/16/Redis/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%EF%BC%9Aspringboot%E6%8B%A6%E6%88%AA%E5%99%A8%E6%97%A0%E6%B3%95%E6%B3%A8%E5%85%A5StringRedisTemplate/index.html">
-<meta property="og:site_name" content="博客">
+<meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="1. 问题描述在学习Redis实战课程过程中，需要用拦截器实现登录验证功能，其需要从Redis中获取用户信息，大致功能逻辑如图   这里一个问题，拦截器里使用Redis时，自然需要使用 StringRedisTemplate ，然而发现不能在拦截器类 LoginInterceptor 注入 StringRedisTemplate，因为拦截器执行在bean实例化前执行的，拦截器会先加载，所以 Str">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
@@ -33,7 +33,7 @@
   
   
   
-  <title>Redis问题解决：springboot拦截器无法注入StringRedisTemplate - 博客</title>
+  <title>Redis问题解决：springboot拦截器无法注入StringRedisTemplate - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
