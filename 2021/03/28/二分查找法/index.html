@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -73,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -82,8 +82,6 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-  
-
 
   
 <meta name="generator" content="Hexo 6.1.0"></head>
@@ -229,6 +227,15 @@
     
 
     
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
 
     
     
@@ -265,10 +272,9 @@
             <!-- SEO header -->
             <h1 style="display: none">二分查找法</h1>
             
-            
-              <div class="markdown-body">
-                
-                <h1 id="二分查找法"><a href="#二分查找法" class="headerlink" title="二分查找法"></a>二分查找法</h1><h2 id="一、概念及其介绍"><a href="#一、概念及其介绍" class="headerlink" title="一、概念及其介绍"></a>一、概念及其介绍</h2><p>二分查找是一种在<strong>有序数组</strong>中查找某一特定元素的搜索算法。</p>
+            <div class="markdown-body">
+              
+              <h1 id="二分查找法"><a href="#二分查找法" class="headerlink" title="二分查找法"></a>二分查找法</h1><h2 id="一、概念及其介绍"><a href="#一、概念及其介绍" class="headerlink" title="一、概念及其介绍"></a>一、概念及其介绍</h2><p>二分查找是一种在<strong>有序数组</strong>中查找某一特定元素的搜索算法。</p>
 <h2 id="二、算法性能"><a href="#二、算法性能" class="headerlink" title="二、算法性能"></a>二、算法性能</h2><p>二分查找法只针对有序数组，查找次数为1+1+1+…+1，最多有logn的长度，所以复杂度为O(logn)</p>
 <p>排序是二分查找法的前置条件，不将排序时间算在二分查找的时间复杂度里，但想运行二分查找确实需要考虑排序的时间。虽然排序是前置条件，比较耗时，但当多次查找时，仍然具有较低的复杂度。比如查找n次，排序只用1次，时间为nlogn，每次查找为logn，n次查找就是nlogn，合起来就是2nlogn，均摊复杂度就是2nlogn&#x2F;n &#x3D; 2logn，仍然是logn级别。</p>
 <p>所以面对无序数组，多次查找仍然具有较低的时间复杂度，否则不排序每次都用线性查找，将是O(n^2)的复杂度</p>
@@ -364,9 +370,8 @@
 
 
 
-                
-              </div>
-            
+              
+            </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
@@ -398,6 +403,11 @@
         </div>
       
       
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年3月28日</div>
+        </div>
+      
       
       <div class="license-meta-item">
         <div>许可协议</div>
@@ -420,6 +430,23 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/28/Hexo%E7%94%A8%E6%B3%95/" title="Hexo用法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hexo用法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
               
             </div>
 
@@ -473,7 +500,6 @@
 
 
 
-
     
 
     
@@ -511,6 +537,10 @@
 
   <footer>
     <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
   
   
@@ -557,6 +587,8 @@
 
 
 
+
+
   
     <script  src="/js/img-lazyload.js" ></script>
   
@@ -592,9 +624,74 @@
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
 
-  <script>Fluid.plugins.codeWidget();</script>
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
 
 
   
