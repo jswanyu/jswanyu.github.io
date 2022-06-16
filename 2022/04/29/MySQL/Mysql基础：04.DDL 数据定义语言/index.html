@@ -1,0 +1,1134 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="DDL语言一、常用数据类型数值型：  整型 小数 定点数 浮点数    字符型：  较短的文本：char、varchar  较长的文本：text、blob（较长的二进制数据）   日期型 1. 整型1.1 整型   整数类型 字节 范围    tinyint 1 有符号：-128127  无符号：0255   smallint 2 有符号：-3276832767  无符号：065535   med">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql基础：04.DDL 数据定义语言">
+<meta property="og:url" content="http://example.com/2022/04/29/MySQL/Mysql%E5%9F%BA%E7%A1%80%EF%BC%9A04.DDL%20%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="DDL语言一、常用数据类型数值型：  整型 小数 定点数 浮点数    字符型：  较短的文本：char、varchar  较长的文本：text、blob（较长的二进制数据）   日期型 1. 整型1.1 整型   整数类型 字节 范围    tinyint 1 有符号：-128127  无符号：0255   smallint 2 有符号：-3276832767  无符号：065535   med">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2022-04-29T14:32:56.000Z">
+<meta property="article:modified_time" content="2022-06-16T15:06:57.594Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
+  
+  
+  
+  <title>Mysql基础：04.DDL 数据定义语言 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/log/">
+                <i class="iconfont icon-tags-fill"></i>
+                日志
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Mysql基础：04.DDL 数据定义语言"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-29 22:32" pubdate>
+          2022年4月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Mysql基础：04.DDL 数据定义语言</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="DDL语言"><a href="#DDL语言" class="headerlink" title="DDL语言"></a>DDL语言</h1><h1 id="一、常用数据类型"><a href="#一、常用数据类型" class="headerlink" title="一、常用数据类型"></a>一、常用数据类型</h1><p>数值型：</p>
+<ul>
+<li>整型</li>
+<li>小数<ul>
+<li>定点数</li>
+<li>浮点数</li>
+</ul>
+</li>
+</ul>
+<p>字符型：</p>
+<ul>
+<li><p>较短的文本：char、varchar</p>
+</li>
+<li><p>较长的文本：text、blob（较长的二进制数据）</p>
+</li>
+</ul>
+<p>日期型</p>
+<h2 id="1-整型"><a href="#1-整型" class="headerlink" title="1. 整型"></a>1. 整型</h2><h3 id="1-1-整型"><a href="#1-1-整型" class="headerlink" title="1.1 整型"></a>1.1 整型</h3><table>
+<thead>
+<tr>
+<th align="center">整数类型</th>
+<th align="center">字节</th>
+<th align="center">范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">tinyint</td>
+<td align="center">1</td>
+<td align="center">有符号：-128<del>127  无符号：0</del>255</td>
+</tr>
+<tr>
+<td align="center">smallint</td>
+<td align="center">2</td>
+<td align="center">有符号：-32768<del>32767  无符号：0</del>65535</td>
+</tr>
+<tr>
+<td align="center">mediumint</td>
+<td align="center">3</td>
+<td align="center">有符号：-8388608<del>8388607  无符号：0</del>1677215</td>
+</tr>
+<tr>
+<td align="center">int&#x2F;integer</td>
+<td align="center">4</td>
+<td align="center">有符号：-2147483648<del>2147483647  无符号：0</del>4294967295</td>
+</tr>
+<tr>
+<td align="center">bigint</td>
+<td align="center">8</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p>常规设置整型：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> int_test(<br>	t1 <span class="hljs-type">SMALLINT</span>,<br>	t2 <span class="hljs-type">INT</span><br>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果不设置无符号还是有符号，默认是有符号，如果想设置无符号，需要添加unsigned关键字</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> int_test(<br>	t1 <span class="hljs-type">SMALLINT</span>,<br>	t2 <span class="hljs-type">INT</span> UNSIGNED<br>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果插入的数值超出了整型的范围，会报out of range警告，并且插入临界值.（注意，如果<strong>严格的 SQL 模式</strong>，那么插入是失败的，对应的不是警告而是报错）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 插入的t1是符合范围的，t2是无符号，插入<span class="hljs-number">-1</span>会超出范围，实际插入的t2是<span class="hljs-number">0</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> int_test <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">128</span>,<span class="hljs-number">-1</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果不设置长度，会有默认的长度。这里的长度指的是数据显示的最大宽度，而不是大小，如果长度不够会用0在左边填充，但必须搭配zerofill使用。如果够了就不用管。</p>
+<p>设置长度的方式是在<strong>紧接着数据类型</strong>后面加上括号（位置容易放错），括号里放长度。设置长度以后会被取消（Warning Code : 1681 Integer display width is deprecated and will be removed in a future release.）</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 未设置长度<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> int_test(<br>	t1 <span class="hljs-type">SMALLINT</span>,<br>	t2 <span class="hljs-type">INT</span> UNSIGNED<br>);<br><br>#设置长度<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> int_test(<br>	t1 <span class="hljs-type">SMALLINT</span>(<span class="hljs-number">7</span>),<br>	t2 <span class="hljs-type">INT</span>(<span class="hljs-number">7</span>) UNSIGNED<br>);<br><br>#搭配zerofill<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> int_test(<br>	t1 <span class="hljs-type">INT</span>(<span class="hljs-number">7</span>) ZEROFILL,<br>	t2 <span class="hljs-type">INT</span>(<span class="hljs-number">7</span>) ZEROFILL<br>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> int_test <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">123</span>,<span class="hljs-number">123</span>);<br># t1 t2会显示为<span class="hljs-number">0000123</span> <span class="hljs-number">0000123</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-2-适用场景"><a href="#1-2-适用场景" class="headerlink" title="1.2 适用场景"></a>1.2 适用场景</h3><p><code>TINYINT</code>：一般用于枚举数据，比如系统设定取值范围很小且固定的场景。</p>
+<p><code>SMALLINT</code>：可以用于较小范围的统计数据，比如统计工厂的固定资产库存数量等。</p>
+<p><code>MEDIUMINT</code>：用于较大整数的计算，比如车站每日的客流量等。</p>
+<p><code>INT、INTEGER</code>：取值范围足够大，一般情况下不用考虑超限问题，用得最多。比如商品编号。</p>
+<p><code>BIGINT</code>：只有当你处理特别巨大的整数时才会用到。比如双十一的交易量、大型门户网站点击量、证券公司衍生产品持仓等。</p>
+<h3 id="1-3-如何选择？"><a href="#1-3-如何选择？" class="headerlink" title="1.3 如何选择？"></a>1.3 如何选择？</h3><p>在评估用哪种整数类型的时候，你需要考虑<code>存储空间</code>和<code>可靠性</code>的平衡问题：一方 面，用占用字节数少的整数类型可以节省存储空间；另一方面，要是为了节省存储空间， 使用的整数类型取值范围太小，一旦遇到超出取值范围的情况，就可能引起<code>系统错误</code>，影响可靠性。 </p>
+<p>举个例子，商品编号采用的数据类型是 INT。原因就在于，客户门店中流通的商品种类较多，而且，每天都有旧商品下架，新商品上架，这样不断迭代，日积月累。</p>
+<p>如果使用 SMALLINT 类型，虽然占用字节数比 INT 类型的整数少，但是却不能保证数据不会超出范围 65535。相反，使用 INT，就能确保有足够大的取值范围，不用担心数据超出范围影响可靠性的问题。 </p>
+<p>你要注意的是，在实际工作中，<strong>系统故障产生的成本远远超过增加几个字段存储空间所产生的成本</strong>。因此，我建议你首先确保数据不会超过取值范围，在这个前提之下，再去考虑如何节省存储空间。</p>
+<h2 id="2-小数"><a href="#2-小数" class="headerlink" title="2. 小数"></a>2. 小数</h2><p>浮点数： float(M,D)  占4字节；</p>
+<p>​                 double(M,D)  占8字节</p>
+<p>定点数：decimal(M,D)，也可以写成dec(M,D)</p>
+<p><strong>浮点数慢慢被弃用，使用定点数为主</strong></p>
+<p>特点：</p>
+<ul>
+<li>M代表整数部位+小数部位的个数，D代表小数部位</li>
+<li>如果超出范围，则报out or range异常，并且插入临界值</li>
+<li>M和D都可以省略，但对于定点数，M默认为10，D默认为0</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> float_test (<br>	f1 <span class="hljs-type">FLOAT</span>, <br>	f2 <span class="hljs-keyword">DOUBLE</span>, <br>	f3 <span class="hljs-type">DECIMAL</span><br>) ;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-字符型"><a href="#3-字符型" class="headerlink" title="3. 字符型"></a>3. 字符型</h2><h3 id="3-1-较短的文本：char-和-varchar"><a href="#3-1-较短的文本：char-和-varchar" class="headerlink" title="3.1 较短的文本：char 和 varchar"></a>3.1 较短的文本：char 和 varchar</h3><table>
+<thead>
+<tr>
+<th align="center">写法</th>
+<th align="center">M的意思</th>
+<th align="center">特点</th>
+<th align="center">空间的耗费</th>
+<th align="center">效率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">char(M)</td>
+<td align="center">最大的字符数，可以省略，默认为1</td>
+<td align="center">固定长度的字符</td>
+<td align="center">比较耗费</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td align="center">varchar(M)</td>
+<td align="center">最大的字符数，不可以省略</td>
+<td align="center">可变长度的字符</td>
+<td align="center">比较节省</td>
+<td align="center">低</td>
+</tr>
+</tbody></table>
+<p>对于固定的长度的字符，比如性别，一般会选择char，对于不固定的一般会选择varchar</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> char_test (<br>	f1 <span class="hljs-type">char</span>, <br>	f2 <span class="hljs-type">varchar</span>(<span class="hljs-number">10</span>)<br>) ;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-较长的文本：text、blob-较大的二进制"><a href="#3-2-较长的文本：text、blob-较大的二进制" class="headerlink" title="3.2 较长的文本：text、blob(较大的二进制)"></a>3.2 较长的文本：text、blob(较大的二进制)</h3><p>在MySQL中，TEXT用来保存文本类型的字符串，总共包含4种类型，分别为TINYTEXT、TEXT、MEDIUMTEXT 和 LONGTEXT 类型。</p>
+<p>在向TEXT类型的字段保存和查询数据时，系统自动按照实际长度存储，不需要预先定义长度。这一点和 VARCHAR类型相同。</p>
+<p>每种TEXT类型保存的数据长度和所占用的存储空间不同，如下：</p>
+<table>
+<thead>
+<tr>
+<th>文本字符串类型</th>
+<th>特点</th>
+<th>长度</th>
+<th>长度范围</th>
+<th>占用的存储空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYTEXT</td>
+<td>小文本、可变长度</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 255</td>
+<td>L + 2 个字节</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>文本、可变长度</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 65535</td>
+<td>L + 2 个字节</td>
+</tr>
+<tr>
+<td>MEDIUMTEXT</td>
+<td>中等文本、可变长度</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 16777215</td>
+<td>L + 3 个字节</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>大文本、可变长度</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L&lt;&#x3D; 4294967295（相当于4GB）</td>
+<td>L + 4 个字节</td>
+</tr>
+</tbody></table>
+<p><strong>由于实际存储的长度不确定，MySQL 不允许 TEXT 类型的字段做主键</strong>。遇到这种情况，你只能采用 CHAR(M)，或者 VARCHAR(M)。</p>
+<p><strong>开发中经验：</strong></p>
+<p>TEXT文本类型，可以存比较大的文本段，搜索速度稍慢，因此如果不是特别大的内容，建议使用CHAR，VARCHAR来代替。还有TEXT类型不用加默认值，加了也没用。而且text和blob类型的数据删除后容易导致“空洞”，使得文件碎片比较多，所以频繁使用的表不建议包含TEXT类型字段，建议单独分出去，单独用一个表。</p>
+<p>BLOB是一个<code>二进制大对象</code>，可以容纳可变数量的数据。</p>
+<p>MySQL中的BLOB类型包括TINYBLOB、BLOB、MEDIUMBLOB和LONGBLOB 4种类型，它们可容纳值的最大长度不同。可以存储一个二进制的大对象，比如<code>图片</code>、<code>音频</code>和<code>视频</code>等。</p>
+<p>需要注意的是，在实际工作中，往往不会在MySQL数据库中使用BLOB类型存储大对象数据，通常会将图片、音频和视频文件存储到<code>服务器的磁盘上</code>，并将图片、音频和视频的访问路径存储到MySQL中。</p>
+<table>
+<thead>
+<tr>
+<th>二进制字符串类型</th>
+<th>值的长度</th>
+<th>长度范围</th>
+<th>占用空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYBLOB</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 255</td>
+<td>L + 1 个字节</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 65535（相当于64KB）</td>
+<td>L + 2 个字节</td>
+</tr>
+<tr>
+<td>MEDIUMBLOB</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 16777215 （相当于16MB）</td>
+<td>L + 3 个字节</td>
+</tr>
+<tr>
+<td>LONGBLOB</td>
+<td>L</td>
+<td>0 &lt;&#x3D; L &lt;&#x3D; 4294967295（相当于4GB）</td>
+<td>L + 4 个字节</td>
+</tr>
+</tbody></table>
+<h2 id="4-日期时间"><a href="#4-日期时间" class="headerlink" title="4. 日期时间"></a>4. 日期时间</h2><ul>
+<li>date只保存日期；</li>
+<li>time 只保存时间；</li>
+<li>year只保存年；</li>
+<li>datetime保存日期+时间； </li>
+<li>timestamp保存日期（带时区）+时间；</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>字节</th>
+<th>范围</th>
+<th>受时区影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>datetime</td>
+<td>8</td>
+<td>1000-9999</td>
+<td>不受</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>4</td>
+<td>1970-2038</td>
+<td>受</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> date_test(<br>	t1 DATETIME,<br>	t2 <span class="hljs-type">TIMESTAMP</span><br>);<br></code></pre></td></tr></table></figure>
+
+
+
+<p>用得最多的日期时间类型，就是 <code>DATETIME</code>。虽然 MySQL 也支持 YEAR（年）、 TIME（时间）、DATE（日期），以及 TIMESTAMP 类型，但是在实际项目中，尽量用 DATETIME 类型。因为这个数据类型包括了完整的日期和时间信息，取值范围也最大，使用起来比较方便。毕竟，如果日期时间信息分散在好几个字段，很不容易记，而且查询的时候，SQL 语句也会更加复杂。 </p>
+<p>此外，一般存注册时间、商品发布时间等，不建议使用DATETIME存储，而是使用<code>时间戳</code>，因为DATETIME虽然直观，但不便于计算。</p>
+<h2 id="5-其它类型"><a href="#5-其它类型" class="headerlink" title="5. 其它类型"></a>5. 其它类型</h2><ul>
+<li><p>enum用于保存枚举，插入的数据只能在枚举列表之中，不区分大小写，大写统一转为小写。若插入不在枚举表中的数据，实际上不会插入成功</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> tab_char(<br>	c1 ENUM(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>)<br>);<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_char <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;a&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_char <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;b&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_char <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;c&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_char <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;m&#x27;</span>);  # 可以插入，但不会显示m<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_char <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;A&#x27;</span>);  # 显示a<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>set用于保存集合，同上，但集合支持插入多个数据</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> tab_set(<br>	s1 <span class="hljs-keyword">SET</span>(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>,<span class="hljs-string">&#x27;d&#x27;</span>)<br>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_set <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;a&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_set <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;A,B&#x27;</span>);   # 显示a,b<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_set <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;a,c,d&#x27;</span>);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="6-类型选择建议"><a href="#6-类型选择建议" class="headerlink" title="6. 类型选择建议"></a>6. 类型选择建议</h2><p>在定义数据类型时，如果确定是<code>整数</code>，就用<code> INT</code>； 如果是<code>小数</code>，一定用定点数类型 <code>DECIMAL(M,D)</code>； 如果是日期与时间，就用 <code>DATETIME</code>。 </p>
+<p>这样做的好处是，首先确保你的系统不会因为数据类型定义出错。不过，凡事都是有两面的，可靠性好，并不意味着高效。比如，TEXT 虽然使用方便，但是效率不如 CHAR(M) 和 VARCHAR(M)。</p>
+<p>关于字符串的选择，建议参考如下阿里巴巴的《Java开发手册》规范：</p>
+<p><strong>阿里巴巴《Java开发手册》之MySQL数据库：</strong></p>
+<ul>
+<li>任何字段如果为非负数，必须是 UNSIGNED</li>
+<li>【<code>强制</code>】小数类型为 DECIMAL，禁止使用 FLOAT 和 DOUBLE。 <ul>
+<li>说明：在存储的时候，FLOAT 和 DOUBLE 都存在精度损失的问题，很可能在比较值的时候，得到不正确的结果。如果存储的数据范围超过 DECIMAL 的范围，建议将数据拆成整数和小数并分开存储。</li>
+</ul>
+</li>
+<li>【<code>强制</code>】如果存储的字符串长度几乎相等，使用 CHAR 定长字符串类型。 </li>
+<li>【<code>强制</code>】VARCHAR 是可变长字符串，不预先分配存储空间，长度不要超过 5000。如果存储长度大于此值，定义字段类型为 TEXT，独立出来一张表，用主键来对应，避免影响其它字段索引效率。</li>
+</ul>
+<h1 id="二、常见约束"><a href="#二、常见约束" class="headerlink" title="二、常见约束"></a>二、常见约束</h1><h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><p>约束是一种限制，用于限制表中的数据，为了保证表中的数据的准确和可靠性。</p>
+<h3 id="1-1-常见约束及其关键字"><a href="#1-1-常见约束及其关键字" class="headerlink" title="1.1 常见约束及其关键字"></a>1.1 常见约束及其关键字</h3><table>
+<thead>
+<tr>
+<th>MySQL关键字</th>
+<th>约束含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NULL</td>
+<td>数据列可包含NULL值</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>数据列不允许包含NULL值，用于保证该字段的值不能为空。比如姓名、学号等。空字符串’ ‘不等于NULL，0也不等于NULL</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>默认值，用于保证该字段有默认值。比如性别</td>
+</tr>
+<tr>
+<td>PRIMARY KEY</td>
+<td>主键，用于保证该字段的值具有<strong>唯一性，并且非空</strong>。比如学号、员工编号等</td>
+</tr>
+<tr>
+<td>FOREIGN KEY</td>
+<td>外键，用于限制两个表的关系，用于保证该字段的值必须来自于主表的关联列的值，在从表添加外键约束，用于引用主表中某列的值，一般搭配 <code>refereneces</code>关键字使用 。比如学生表的专业编号，员工表的部门编号，员工表的工种编号</td>
+</tr>
+<tr>
+<td>UNIQUE</td>
+<td>唯一，用于保证该字段的值具有唯一性，<strong>可以为空，但不可以都为空</strong>，即<strong>不能出现2个及以上的null</strong>。比如座位号。                                                                                                                                                   有时会用于多个列的组合需要唯一，比如在创建表时在最下面加上unipque key(col1,col2,…)</td>
+</tr>
+<tr>
+<td>AUTO_INCREMENT</td>
+<td>自动递增，适用于整数类型</td>
+</tr>
+<tr>
+<td>UNSIGNED</td>
+<td>无符号</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-主键和唯一的区别"><a href="#1-2-主键和唯一的区别" class="headerlink" title="1.2 主键和唯一的区别"></a>1.2 主键和唯一的区别</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>保证唯一性</th>
+<th>是否允许为空</th>
+<th>一个表中是否可以有多个</th>
+<th>是否允许组合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主键</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>√，但不推荐</td>
+</tr>
+<tr>
+<td>唯一</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√，但不推荐</td>
+</tr>
+</tbody></table>
+<p>ps：组合即指定某几列为主键或者唯一，但一般不用组合的结构，容易引起混乱。如果是多列组合的复合主键约束，那么这些列都不允许为空值，并且组合的值不允许重复。</p>
+<p>需要注意的一点是，不要修改主键字段的值。因为主键是数据记录的唯一标识，如果修改了主键的值，就有可能会破坏数据的完整性</p>
+<h3 id="1-3-外键的特点"><a href="#1-3-外键的特点" class="headerlink" title="1.3 外键的特点"></a>1.3 外键的特点</h3><ul>
+<li>要求在从表设置外键关系</li>
+<li>从表外键列的类型和主表的关联列类型要求是一致或者兼容的，名称无要求</li>
+<li>主表的关联列必须是一个key（一般是主键或者唯一）</li>
+<li>插入数据时，先插入主表再插入从表，删除时，先删除从表再删除主表</li>
+</ul>
+<h3 id="1-4-列级约束与表级约束"><a href="#1-4-列级约束与表级约束" class="headerlink" title="1.4 列级约束与表级约束"></a>1.4 列级约束与表级约束</h3><p>约束可以分为列级约束和表级约束，列级约束是定义在列属性中的，而表级约束是定义在列之后的，两者本质上没什么区别，但约束范围不同</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="left">支持类型</th>
+<th align="center">是否可以起约束名</th>
+<th align="center">约束范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">列级约束</td>
+<td align="left">主键、唯一、默认、非空 （检查MySQL不支持，外键对列级约束没意义）</td>
+<td align="center">不可以</td>
+<td align="center">某个列</td>
+</tr>
+<tr>
+<td align="center">表级约束</td>
+<td align="left">主键、唯一、外键 （检查MySQL不支持）</td>
+<td align="center">可以，但对主键无效</td>
+<td align="center">整个表或某几个列</td>
+</tr>
+</tbody></table>
+<h3 id="1-5-添加约束的时机"><a href="#1-5-添加约束的时机" class="headerlink" title="1.5 添加约束的时机"></a>1.5 添加约束的时机</h3><ul>
+<li>创建表时</li>
+<li>修改表时</li>
+</ul>
+<h2 id="2-创建表时添加约束"><a href="#2-创建表时添加约束" class="headerlink" title="2. 创建表时添加约束"></a>2. 创建表时添加约束</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">#先新建一个库<br><span class="hljs-keyword">CREATE</span> DATABASE students;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-1-添加列级约束"><a href="#2-1-添加列级约束" class="headerlink" title="2.1 添加列级约束"></a>2.1 添加列级约束</h3><p><strong>语法</strong>：直接在字段名和类型后面追加约束类型即可，<strong>可以给每个字段添加多个列级约束，中间用空格隔开，顺序无要求</strong>。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sql">#先新建一个库<br><span class="hljs-keyword">CREATE</span> DATABASE students;<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> stuinfo(<br>	id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY,#主键<br>	stuName <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">UNIQUE</span>,#非空，唯一<br>	gender <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>) <span class="hljs-keyword">CHECK</span>(gender<span class="hljs-operator">=</span><span class="hljs-string">&#x27;男&#x27;</span> <span class="hljs-keyword">OR</span> gender <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;女&#x27;</span>),#检查，MySQL不支持<br>	seat <span class="hljs-type">INT</span> <span class="hljs-keyword">UNIQUE</span>,#唯一<br>	age <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">18</span>,#默认约束<br>	majorId <span class="hljs-type">INT</span> <span class="hljs-keyword">REFERENCES</span> major(id) #外键，列约束时没用<br>);<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> major(<br>	id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY,<br>	majorName <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)<br>);<br><br>#查看stuinfo中的所有索引，包括主键、外键、唯一<br><span class="hljs-keyword">SHOW</span> INDEX <span class="hljs-keyword">FROM</span> stuinfo;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-添加表级约束"><a href="#2-2-添加表级约束" class="headerlink" title="2.2 添加表级约束"></a>2.2 添加表级约束</h3><p><strong>语法</strong>：在各个字段的最下面 【constraint 约束名】 <strong>约束类型(字段名)<strong>，其中约束名可以不加。</strong>但这种写法不常用</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> stuinfo(<br>	id <span class="hljs-type">INT</span>,<br>	stuname <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),<br>	gender <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>),<br>	seat <span class="hljs-type">INT</span>,<br>	age <span class="hljs-type">INT</span>,<br>	majorid <span class="hljs-type">INT</span>,<br>	<br>	<span class="hljs-keyword">CONSTRAINT</span> pk <span class="hljs-keyword">PRIMARY</span> KEY(id),#主键<br>	<span class="hljs-keyword">CONSTRAINT</span> uq <span class="hljs-keyword">UNIQUE</span>(seat),#唯一键<br>	<span class="hljs-keyword">CONSTRAINT</span> ck <span class="hljs-keyword">CHECK</span>(gender <span class="hljs-operator">=</span><span class="hljs-string">&#x27;男&#x27;</span> <span class="hljs-keyword">OR</span> gender  <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;女&#x27;</span>),#检查<br>	<span class="hljs-keyword">CONSTRAINT</span> fk_stuinfo_major <span class="hljs-keyword">FOREIGN</span> KEY(majorid) <span class="hljs-keyword">REFERENCES</span> major(id)#外键	<br>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-通用写法"><a href="#2-3-通用写法" class="headerlink" title="2.3 通用写法"></a>2.3 通用写法</h3><p>一般在字段后添加列级约束（也可以不加），在所有字段最下面添加表级约束（一般是外键约束）</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 表名(<br>  	字段名 字段类型 <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>, #非空<br>  	字段名 字段类型 <span class="hljs-keyword">primary</span> key, #主键<br>  	字段名 字段类型 <span class="hljs-keyword">unique</span>, #唯一<br>  	字段名 字段类型 <span class="hljs-keyword">default</span> 值, #默认<br>  	【<span class="hljs-keyword">constraint</span> 约束名】 <span class="hljs-keyword">foreign</span> key(字段名) <span class="hljs-keyword">references</span> 主表（被引用列）<br>);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> stuinfo(<br>	id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY,<br>	stuName <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">UNIQUE</span>,<br>	gender <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>),<br>	seat <span class="hljs-type">INT</span> <span class="hljs-keyword">UNIQUE</span>,<br>	majorId <span class="hljs-type">INT</span>,<br>	<br>	【<span class="hljs-keyword">CONSTRAINT</span> fk_stuinfo_major】<span class="hljs-keyword">FOREIGN</span> KEY(majorid) <span class="hljs-keyword">REFERENCES</span> major(id)<br>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-修改表时添加、修改、删除约束"><a href="#3-修改表时添加、修改、删除约束" class="headerlink" title="3. 修改表时添加、修改、删除约束"></a>3. 修改表时添加、修改、删除约束</h2><p>主要是结合上文的添加、修改、删除表语句操作约束条件</p>
+<h3 id="3-1-添加或修改约束"><a href="#3-1-添加或修改约束" class="headerlink" title="3.1 添加或修改约束"></a>3.1 添加或修改约束</h3><p>语法：注意添加列级是modify，添加表级约束是</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">#<span class="hljs-number">1</span>、添加列级约束<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 字段类型 新约束;<br><br>#<span class="hljs-number">2</span>、添加表级约束<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">add</span> 【<span class="hljs-keyword">constraint</span> 约束名】 约束类型(字段名) 【外键的引用】;<br></code></pre></td></tr></table></figure>
+
+<p>案例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs sql">#删除表重新建表<br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> stuinfo;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> stuinfo(<br>	id <span class="hljs-type">INT</span>,<br>	stuname <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),<br>	gender <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>),<br>	seat <span class="hljs-type">INT</span>,<br>	age <span class="hljs-type">INT</span>,<br>	majorid <span class="hljs-keyword">IN</span><br>);<br><br>#在有表的基础上添加约束<br>#<span class="hljs-number">1.</span>添加主键<br>	#①列级约束<br>	<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY;<br>	#②表级约束<br>	<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">PRIMARY</span> KEY(id);<br><br>#<span class="hljs-number">2.</span>添加唯一<br>	#①列级约束<br>	<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> seat <span class="hljs-type">INT</span> <span class="hljs-keyword">UNIQUE</span>;<br>	#②表级约束<br>	<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">UNIQUE</span>(seat);<br><br>#<span class="hljs-number">3.</span>添加非空约束<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> stuname <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>;<br><br>#<span class="hljs-number">4.</span>添加默认约束<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> age <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">18</span>;<br><br>#<span class="hljs-number">5.</span>添加外键<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">FOREIGN</span> KEY(majorid) <span class="hljs-keyword">REFERENCES</span> major(id);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-删除约束"><a href="#3-2-删除约束" class="headerlink" title="3.2 删除约束"></a>3.2 删除约束</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql">#<span class="hljs-number">1.</span>删除主键<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">PRIMARY</span> KEY;<br><br>#<span class="hljs-number">2.</span>删除唯一<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">DROP</span> INDEX seat;<br><br>#<span class="hljs-number">3.</span>删除非空约束,添加非空约束是<span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>，删除改为<span class="hljs-keyword">null</span>，或者不写<span class="hljs-keyword">null</span>也可以，因为默认是<span class="hljs-keyword">null</span><br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> stuname <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>;<br><br>#<span class="hljs-number">4.</span>删除默认约束，就是将添加时的默认约束不写就行<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo MODIFY <span class="hljs-keyword">COLUMN</span> age <span class="hljs-type">INT</span> ;<br><br>#<span class="hljs-number">5.</span>删除外键<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> stuinfo <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">FOREIGN</span> KEY fk_stuinfo_major;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-语法总结"><a href="#3-3-语法总结" class="headerlink" title="3.3 语法总结"></a>3.3 语法总结</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">1</span>、非空<br>添加非空<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 字段类型 <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>;<br>删除非空<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 字段类型 ;<br><br><span class="hljs-number">2</span>、默认<br>添加默认<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 字段类型 <span class="hljs-keyword">default</span> 值;<br>删除默认<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 字段类型 ;<br><br><span class="hljs-number">3</span>、主键<br>添加主键<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">add</span>【 <span class="hljs-keyword">constraint</span> 约束名】 <span class="hljs-keyword">primary</span> key(字段名);<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 <span class="hljs-keyword">primary</span> key;<br>删除主键<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key;<br><br><span class="hljs-number">4</span>、唯一<br>添加唯一<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">add</span>【 <span class="hljs-keyword">constraint</span> 约束名】 <span class="hljs-keyword">unique</span>(字段名);<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 modify <span class="hljs-keyword">column</span> 字段名 <span class="hljs-keyword">unique</span>;<br>删除唯一<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">drop</span> index 索引名;<br><br><span class="hljs-number">5</span>、外键<br>添加外键<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">add</span>【 <span class="hljs-keyword">constraint</span> 约束名】 <span class="hljs-keyword">foreign</span> key(字段名) <span class="hljs-keyword">references</span> 主表（被引用列）;<br>删除外键<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表名 <span class="hljs-keyword">drop</span> <span class="hljs-keyword">foreign</span> key 约束名;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-自增长列（标识列）"><a href="#4-自增长列（标识列）" class="headerlink" title="4. 自增长列（标识列）"></a>4. 自增长列（标识列）</h2><p>自增长列（标识列）是可以不用手动的插入值，系统提供默认的序列值</p>
+<p>自增长列的特点：</p>
+<ul>
+<li>一个表至多有一个自增长列</li>
+<li>自增长列必须为一个key，一般为主键</li>
+<li>自增长列只能支持数值型。int float double都行，一般为Int</li>
+<li>自增长列默认从1开始，步长为1，如果要更改步长：更改系统变量<code>set auto_increment_increment=值;</code>  如果要更改起始值：手动插入值</li>
+</ul>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql">#一、创建表时设置自增长列<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 表(<br>	字段名 字段类型 约束 auto_increment<br>);<br><br>#二、修改表时设置自增长列<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表 modify <span class="hljs-keyword">column</span> 字段名 字段类型 约束 auto_increment;<br><br>#三、删除自增长列<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> 表 modify <span class="hljs-keyword">column</span> 字段名 字段类型 约束;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">EXISTS</span> tab_id;<br><br>#创建表时设置标识列<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> tab_id(<br>	id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY AUTO_INCREMENT,<br>	tab_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)<br>);<br><br>#插入时不必指定id，输入为<span class="hljs-keyword">null</span>即可，标识列会自增<br>#如果要更改起始值，插入目标值即可，后续会根据步长自动增长<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_id (id,NAME) <span class="hljs-keyword">VALUES</span>(<span class="hljs-keyword">NULL</span>,<span class="hljs-string">&#x27;alicy&#x27;</span>);<br><br>#或者插入时不用指定自增长列，插入其他列即可<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> tab_id (NAME) <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;bob&#x27;</span>);<br><br>#修改表时设置某列为自增长列，添加关键字auto_increment即可(假设id原来不是自增长列)<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tab_id MODIFY <span class="hljs-keyword">COLUMN</span> id <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY AUTO_INCREMENT;<br><br>#删除自增长列，将关键字auto_increment去掉即可<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> tab_id MODIFY <span class="hljs-keyword">COLUMN</span> id  <span class="hljs-type">INT</span> <span class="hljs-keyword">PRIMARY</span> KEY;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="三、表的管理"><a href="#三、表的管理" class="headerlink" title="三、表的管理"></a>三、表的管理</h1><h3 id="标识符命名规则"><a href="#标识符命名规则" class="headerlink" title="标识符命名规则"></a>标识符命名规则</h3><ul>
+<li>数据库名、表名不得超过30个字符，变量名限制为29个</li>
+<li>必须只能包含 A–Z, a–z, 0–9, _共63个字符</li>
+<li>数据库名、表名、字段名等对象名中间不要包含空格</li>
+<li>同一个MySQL软件中，数据库不能同名；同一个库中，表不能重名；同一个表中，字段不能重名</li>
+<li>必须保证你的字段没有和保留字、数据库系统或常用方法冲突。如果坚持使用，请在SQL语句中使用&#96;（着重号）引起来</li>
+<li>保持字段名和类型的一致性：在命名字段并为其指定数据类型的时候一定要保证一致性，假如数据类型在一个表里是整数，那在另一个表里可就别变成字符型了</li>
+</ul>
+<h2 id="1-创建表"><a href="#1-创建表" class="headerlink" title="1. 创建表"></a>1. 创建表</h2><p>语法： </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> 【if <span class="hljs-keyword">not</span> <span class="hljs-keyword">exists</span>】表名( <br>	列名 列的类型【(长度) 约束】, <br>	列名 列的类型【(长度) 约束】, <br>	列名 列的类型【(长度) 约束】, <br>	... <br>	列名 列的类型【(长度) 约束】 <br>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> book(<br>	id <span class="hljs-type">INT</span>,<br>	bName <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>), # <span class="hljs-type">varchar</span>不指定长度会报错，是<span class="hljs-type">varchar</span>的特点<br>	price <span class="hljs-keyword">DOUBLE</span>,<br>	authorId <span class="hljs-type">INT</span>,<br>	publishDate DATETIME  #最后一个不用加逗号<br>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>必须指定：</strong><ul>
+<li>表名</li>
+<li>列名(或字段名)，数据类型，<strong>长度</strong></li>
+</ul>
+</li>
+<li><strong>可选指定：</strong><ul>
+<li>约束条件</li>
+<li>默认值</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-修改表"><a href="#2-修改表" class="headerlink" title="2. 修改表"></a>2. 修改表</h2><p>基本语法：alter table 表名 <strong>add|drop|modify|change</strong> column 列名 【列类型 约束】;</p>
+<h3 id="2-1-修改表名"><a href="#2-1-修改表名" class="headerlink" title="2.1  修改表名"></a>2.1  修改表名</h3><p>语法：alter table 表名 rename 【to】 新表名;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> book_author RENAME author;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-添加列"><a href="#2-2-添加列" class="headerlink" title="2.2 添加列"></a>2.2 添加列</h3><p>语法：alter table 表名 add column 列名 类型;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> author <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> annual <span class="hljs-keyword">DOUBLE</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-删除列"><a href="#2-3-删除列" class="headerlink" title="2.3 删除列"></a>2.3 删除列</h3><p>语法：alter table 表名 drop column 列名;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> author <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> annual;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-4-修改列名"><a href="#2-4-修改列名" class="headerlink" title="2.4 修改列名"></a>2.4 修改列名</h3><p>语法：alter table 表名 <strong>change</strong> column 旧名 新名【类型】;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> book CHANGE <span class="hljs-keyword">COLUMN</span> publishDate pubDate DATETIME;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-5-修改列的类型或约束"><a href="#2-5-修改列的类型或约束" class="headerlink" title="2.5 修改列的类型或约束"></a>2.5 修改列的类型或约束</h3><p>语法：alter table 表名 <strong>modify</strong> column 列名 新类型【约束】</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> book MODIFY <span class="hljs-keyword">COLUMN</span> pubDate <span class="hljs-type">TIMESTAMP</span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>修改列名和类型分别是用change和modify，注意区分</strong></p>
+<h2 id="3-删除表"><a href="#3-删除表" class="headerlink" title="3. 删除表"></a>3. 删除表</h2><p>语法：drop table 【if exists】表名;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> author;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-复制表"><a href="#4-复制表" class="headerlink" title="4. 复制表"></a>4. 复制表</h2><h3 id="4-1-仅复制表的结构"><a href="#4-1-仅复制表的结构" class="headerlink" title="4.1 仅复制表的结构"></a>4.1 仅复制表的结构</h3><p>语法：create table 表名 like 旧表;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> author_copy <span class="hljs-keyword">LIKE</span> author;<br></code></pre></td></tr></table></figure>
+
+<p>这样并不会复制数据</p>
+<p>如果是仅复制某些字段，不想复制全部的结构，需要加上where 0的筛选</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> author_copy1<br><span class="hljs-keyword">SELECT</span> id,authorName <br><span class="hljs-keyword">FROM</span> author<br><span class="hljs-keyword">WHERE</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-复制表的结构-数据"><a href="#4-2-复制表的结构-数据" class="headerlink" title="4.2 复制表的结构+数据"></a>4.2 复制表的结构+数据</h3><p>语法：create table 表名 select 查询列表 from 旧表【where 筛选】;  </p>
+<p>不加筛选则是复制全部数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 复制表的结构<span class="hljs-operator">+</span>全部数据<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> author_copy2 <br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> author;<br><br># 复制表的结构<span class="hljs-operator">+</span>部分数据<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> author_copy3<br><span class="hljs-keyword">SELECT</span> id,authorName <br><span class="hljs-keyword">FROM</span> author<br><span class="hljs-keyword">WHERE</span> nation <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;中国&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-清空表"><a href="#5-清空表" class="headerlink" title="5. 清空表"></a>5. 清空表</h2><p>TRUNCATE TABLE语句：</p>
+<ul>
+<li>删除表中所有的数据</li>
+<li>释放表的存储空间</li>
+</ul>
+<p>举例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">TRUNCATE TABLE detail_dept;<br></code></pre></td></tr></table></figure>
+
+<p>TRUNCATE语句<strong>不能回滚</strong>，而使用 DELETE 语句删除数据，可以回滚</p>
+<blockquote>
+<p>阿里开发规范：</p>
+<p>【参考】TRUNCATE TABLE 比 DELETE 速度快，且使用的系统和事务日志资源少，但 TRUNCATE 无事务且不触发 TRIGGER，有可能造成事故，故不建议在开发代码中使用此语句。 </p>
+<p>说明：TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同。</p>
+</blockquote>
+<h2 id="6-MySQL8新特性：计算列"><a href="#6-MySQL8新特性：计算列" class="headerlink" title="6. MySQL8新特性：计算列"></a>6. MySQL8新特性：计算列</h2><p>计算列就是某一列的值是通过别的列计算得来的。例如，a列值为1、b列值为2，c列不需要手动插入，定义a+b的结果为c的值，那么c就是计算列，是通过别的列计算得来的。</p>
+<p>在MySQL 8.0中，CREATE TABLE 和 ALTER TABLE 中都支持增加计算列。下面以CREATE TABLE为例进行讲解。</p>
+<p>举例：定义数据表tb1，然后定义字段id、字段a、字段b和字段c，其中字段c为计算列，用于计算a+b的值。<br>首先创建测试表tb1，语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE tb1(<br>id INT,<br>a INT,<br>b INT,<br>c INT GENERATED ALWAYS AS (a + b) VIRTUAL<br>);<br></code></pre></td></tr></table></figure>
+
+<p>插入演示数据，语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO tb1(a,b) VALUES (100,200);<br></code></pre></td></tr></table></figure>
+
+<p>查询数据表tb1中的数据，结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; SELECT * FROM tb1;<br>+------+------+------+------+<br>| id   | a    | b    | c    |<br>+------+------+------+------+<br>| NULL |  100 |  200 |  300 |<br>+------+------+------+------+<br>1 row in set (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<p>更新数据中的数据，语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql&gt; UPDATE tb1 SET a = 500;<br>Query OK, 0 rows affected (0.00 sec)<br>Rows matched: 1  Changed: 0  Warnings: 0<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="四、库的管理"><a href="#四、库的管理" class="headerlink" title="四、库的管理"></a>四、库的管理</h1><h2 id="1-创建库"><a href="#1-创建库" class="headerlink" title="1. 创建库"></a>1. 创建库</h2><p>语法：<code>create database 【if not exists】 库名【 character set 字符集名】;</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> DATABASE IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> books;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-修改库"><a href="#2-修改库" class="headerlink" title="2. 修改库"></a>2. 修改库</h2><p><strong>一般不会修改库</strong>，而是修改库里的表或表里的列</p>
+<p>语法：<code>alter database 库名 character set 字符集名;</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> DATABASE books <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> gbk;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-删除库"><a href="#3-删除库" class="headerlink" title="3. 删除库"></a>3. 删除库</h2><p>语法：<code>drop database 【if exists】 库名;</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> DATABASE IF <span class="hljs-keyword">EXISTS</span> books;<br></code></pre></td></tr></table></figure>
+
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Mysql基础：04.DDL 数据定义语言</div>
+      <div>http://example.com/2022/04/29/MySQL/Mysql基础：04.DDL 数据定义语言/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年4月29日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1020 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、变量在MySQL数据库的存储过程和函数中，可以使用变量来存储查询或计算的中间结果数据，或者输出最终的结果数据。 在 MySQL 数据库中，变量分为系统变量以及自定义变量。 1. 系统变量系统变量由系统定义，不是用户定义，属于服务器层面，系统变量分为全局变量和会话变量。变量由系统定义，不是用户定义，属于服务器层面。启动MySQL服务，生成MySQL服务实例期间，MySQL将为MySQL服务器内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql基础：05.变量、视图、存储过程、函数、游标、触发器">
+<meta property="og:url" content="http://example.com/2022/05/01/MySQL/Mysql%E5%9F%BA%E7%A1%80%EF%BC%9A05.%E5%8F%98%E9%87%8F%E3%80%81%E8%A7%86%E5%9B%BE%E3%80%81%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81%E6%B8%B8%E6%A0%87%E3%80%81%E8%A7%A6%E5%8F%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="一、变量在MySQL数据库的存储过程和函数中，可以使用变量来存储查询或计算的中间结果数据，或者输出最终的结果数据。 在 MySQL 数据库中，变量分为系统变量以及自定义变量。 1. 系统变量系统变量由系统定义，不是用户定义，属于服务器层面，系统变量分为全局变量和会话变量。变量由系统定义，不是用户定义，属于服务器层面。启动MySQL服务，生成MySQL服务实例期间，MySQL将为MySQL服务器内存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2022-05-01T15:19:53.000Z">
+<meta property="article:modified_time" content="2022-06-16T15:08:03.298Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
+  
+  
+  
+  <title>Mysql基础：05.变量、视图、存储过程、函数、游标、触发器 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/log/">
+                <i class="iconfont icon-tags-fill"></i>
+                日志
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Mysql基础：05.变量、视图、存储过程、函数、游标、触发器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-05-01 23:19" pubdate>
+          2022年5月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Mysql基础：05.变量、视图、存储过程、函数、游标、触发器</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、变量"><a href="#一、变量" class="headerlink" title="一、变量"></a>一、变量</h1><p>在MySQL数据库的存储过程和函数中，可以使用变量来存储查询或计算的中间结果数据，或者输出最终的结果数据。</p>
+<p>在 MySQL 数据库中，变量分为<strong>系统变量</strong>以及自定义变量。</p>
+<h2 id="1-系统变量"><a href="#1-系统变量" class="headerlink" title="1. 系统变量"></a>1. 系统变量</h2><p>系统变量由系统定义，不是用户定义，属于服务器层面，系统变量分为<strong>全局变量</strong>和<strong>会话变量</strong>。变量由系统定义，不是用户定义，属于<strong>服务器</strong>层面。启动MySQL服务，生成MySQL服务实例期间，MySQL将为MySQL服务器内存中的系统变量赋值，这些系统变量定义了当前MySQL服务实例的属性、特征。这些系统变量的值要么是<strong>编译MySQL时参数</strong>的默认值，要么是<strong>配置文件</strong>（例如my.ini等）中的参数值。大家可以通过网址 <code>https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html</code> 查看MySQL文档的系统变量。</p>
+<p><strong>全局变量</strong>：需要添加<code>global</code>关键字，作用域针对于<strong>所有会话（连接）</strong>有效，但不能跨重启</p>
+<p><strong>会话变量</strong>：需要添加<code>session</code>关键字，作用域针对于<strong>当前会话（连接）</strong>有效，如果不写，默认会话级别。</p>
+<p>每一个MySQL客户机成功连接MySQL服务器后，都会产生与之对应的会话。会话期间，MySQL服务实例会在MySQL服务器内存中生成与该会话对应的会话系统变量，这些<strong>会话系统变量</strong>的初始值是<strong>全局系统变量值</strong>的<strong>复制</strong></p>
+<p>会话系统变量仅针对于当前会话（连接）有效。会话期间，当前会话对某个会话系统变量值的修改，不会影响其他会话同一个会话系统变量的值。会话1对某个全局系统变量值的修改会导致会话2中同一个全局系统变量值的修改。</p>
+<p>系统变量使用<strong>语法</strong>：</p>
+<ul>
+<li><p>查看所有系统变量</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">global</span><span class="hljs-operator">|</span>【session】 variables;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看满足条件的部分系统变量</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">global</span><span class="hljs-operator">|</span>【session】 variables <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%char%&#x27;</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看指定的系统变量的值（使用<code>@@+点式结构</code>）</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> @<span class="hljs-variable">@global</span>.<span class="hljs-operator">|</span>【session.】系统变量名;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>为某个系统变量赋值（两种方式，方便记忆的话可以统一记点式结构）</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">#方式一：<br><span class="hljs-keyword">set</span> @<span class="hljs-variable">@global</span><span class="hljs-operator">|</span>【session】.系统变量名<span class="hljs-operator">=</span>值;<br>#方式二：<br><span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span><span class="hljs-operator">|</span>【session】系统变量名<span class="hljs-operator">=</span>值;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>案例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql">#全局变量演示：<br>#①查看所有全局变量<br><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GLOBAL</span> VARIABLES;<br>#②查看满足条件的部分系统变量<br><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GLOBAL</span> VARIABLES <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%char%&#x27;</span>;<br>#③查看指定的系统变量的值<br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@global</span>.autocommit;<br>#④为某个系统变量赋值<br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@global</span>.autocommit <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> autocommit <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br><br>#会话变量演示:<br>#①查看所有会话变量<br><span class="hljs-keyword">SHOW</span> VARIABLES;<br>#②查看满足条件的部分会话变量<br><span class="hljs-keyword">SHOW</span> VARIABLES <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%char%&#x27;</span>;<br>#③查看指定的会话变量的值<br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@autocommit</span>;<br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@session</span>.autocommit;<br>#④为某个会话变量赋值<br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@autocommit</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@session</span>.autocommit <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">SET</span> SESSION autocommit <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-自定义变量"><a href="#2-自定义变量" class="headerlink" title="2. 自定义变量"></a>2. 自定义变量</h2><p>用户变量是用户自己定义的，根据作用范围不同，又分为<strong>会话用户变量</strong>和<strong>局部变量</strong>。</p>
+<ul>
+<li><p>用户变量：作用域和会话变量一样，只对<strong>当前连接</strong>会话有效。</p>
+</li>
+<li><p>局部变量：只在 BEGIN 和 END 语句块中有效。局部变量只能在<strong>存储过程和函数</strong>中使用。</p>
+</li>
+</ul>
+<h3 id="2-1-用户变量"><a href="#2-1-用户变量" class="headerlink" title="2.1 用户变量"></a>2.1 用户变量</h3><p>用户变量由用户自定义，而不是系统提供的，作为 MySQL 编码规范，MySQL 中的用户变量以<code>一个“@”</code>开头。作用域：针对于当前会话（连接）有效，作用域同于会话变量，即可以<strong>应用在当前会话的任何地方</strong>，begin end里面和外面都可以</p>
+<p>语法：<strong>要搭配@符号使用</strong>、用户变量<strong>声明时必须赋值以初始化</strong>，统一记第一种就行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql">#赋值操作符：<span class="hljs-operator">=</span>或:<span class="hljs-operator">=</span><br>#①声明并初始化，不用指定数据类型，会根据初始化的值自动分配数据类型，必须要初始化，只声明不行！！！<br><span class="hljs-keyword">SET</span> @变量名<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SET</span> @变量名:<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SELECT</span> @用户变量 :<span class="hljs-operator">=</span> 表达式 [<span class="hljs-keyword">FROM</span> 等子句];<br><span class="hljs-keyword">SELECT</span> 表达式 <span class="hljs-keyword">INTO</span> @用户变量  [<span class="hljs-keyword">FROM</span> 等子句];<br><br>#②赋值（更新变量的值）<br>#方式一：<br><span class="hljs-keyword">SET</span> @变量名<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SET</span> @变量名:<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SELECT</span> @变量名:<span class="hljs-operator">=</span>值;<br>#方式二：利用<span class="hljs-keyword">select</span>语句将表的信息赋给某个值<br><span class="hljs-keyword">SELECT</span> 字段<span class="hljs-number">1</span>,字段<span class="hljs-number">2</span>,… <span class="hljs-keyword">INTO</span> @变量名<span class="hljs-number">1</span>,@变量名<span class="hljs-number">2</span>,…<br><span class="hljs-keyword">FROM</span> 表;<br><br>#③使用（查看、比较、运算等）<br><span class="hljs-keyword">SELECT</span> @变量名;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>实例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql">#声明并初始化<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;john&#x27;</span>;<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@num</span> :<span class="hljs-operator">=</span> <span class="hljs-number">100</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@count</span> :<span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><br>#赋值(更新值)<br>#将major表的统计信息赋给count<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">INTO</span> <span class="hljs-variable">@count</span><br><span class="hljs-keyword">FROM</span> major;<br><br>#使用<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@name</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@num</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@count</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-局部变量"><a href="#2-2-局部变量" class="headerlink" title="2.2 局部变量"></a>2.2 局部变量</h3><p>局部变量的作用域<strong>仅在定义它的begin end块中有效</strong>，应用在 begin end中的第一句话。</p>
+<p>它与用户变量不同，声明时需要指定数据类型，不用加@符号</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql">#①声明，不支持<span class="hljs-keyword">select</span>声明方式<br><span class="hljs-keyword">DECLARE</span> 变量名 类型;<br><span class="hljs-keyword">DECLARE</span> 变量名 类型 【<span class="hljs-keyword">DEFAULT</span> 值】;<br><br>#②赋值（更新变量的值）<br>#方式一：<br><span class="hljs-keyword">SET</span> 局部变量名<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SET</span> 局部变量名:<span class="hljs-operator">=</span>值;<br><span class="hljs-keyword">SELECT</span> 局部变量名:<span class="hljs-operator">=</span>值;<br>#方式二：<br><span class="hljs-keyword">SELECT</span> 字段<span class="hljs-number">1</span>,字段<span class="hljs-number">2</span>,… <span class="hljs-keyword">INTO</span> 局部变量名<span class="hljs-number">1</span>,局部变量名<span class="hljs-number">2</span>,…<br><span class="hljs-keyword">FROM</span> 表;<br>	<br>#③使用（查看变量的值）<br><span class="hljs-keyword">SELECT</span> 局部变量名;<br></code></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 局部变量声明<br><span class="hljs-keyword">DECLARE</span> name1 <span class="hljs-type">VARCHAR</span>;<br><span class="hljs-keyword">DECLARE</span> num <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">DECLARE</span> count1 <span class="hljs-type">INT</span>;<br><br># 赋值（更新变量值）<br><span class="hljs-keyword">SET</span> name1 <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;tom&#x27;</span>;<br><span class="hljs-keyword">SET</span> num :<span class="hljs-operator">=</span> <span class="hljs-number">2</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">INTO</span> count1<br><span class="hljs-keyword">FROM</span> major;<br><br># 使用<br><span class="hljs-keyword">SELECT</span> name1;<br><span class="hljs-keyword">SELECT</span> num;<br><span class="hljs-keyword">SELECT</span> count1;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-用户变量和局部变量的对比"><a href="#2-3-用户变量和局部变量的对比" class="headerlink" title="2.3 用户变量和局部变量的对比"></a>2.3 用户变量和局部变量的对比</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">作用域</th>
+<th align="center">定义位置</th>
+<th align="center">语法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">用户变量</td>
+<td align="center">当前会话</td>
+<td align="center">会话的任何地方</td>
+<td align="center">加@符号，不用指定类型</td>
+</tr>
+<tr>
+<td align="center">局部变量</td>
+<td align="center">定义它的BEGIN END中</td>
+<td align="center">BEGIN END的第一句话</td>
+<td align="center">一般不用加@，需要指定类型</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql">#案例：声明两个变量，求和并打印<br>#用户变量<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@m</span><span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@n</span><span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@sum</span><span class="hljs-operator">=</span><span class="hljs-variable">@m</span><span class="hljs-operator">+</span><span class="hljs-variable">@n</span>;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@sum</span>;<br><br>#局部变量<br><span class="hljs-keyword">DECLARE</span> m <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">DECLARE</span> n <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">DECLARE</span> SUM <span class="hljs-type">INT</span>;<br><span class="hljs-keyword">SET</span> SUM<span class="hljs-operator">=</span>m<span class="hljs-operator">+</span>n;<br><span class="hljs-keyword">SELECT</span> SUM;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="二、视图"><a href="#二、视图" class="headerlink" title="二、视图"></a>二、视图</h1><p>视图：是一种虚拟表，是通过表动态生成的数据，和普通表一样使用。</p>
+<p>视图一方面可以帮我们使用表的一部分而不是所有的表，另一方面也可以针对不同的用户制定不同的查询视图。比如，针对一个公司的销售人员，我们只想给他看部分数据，而某些特殊的数据，比如采购的价格，则不会提供给他。再比如，人员薪酬是个敏感的字段，那么只给某个级别以上的人员开放，其他人的查询视图中则不提供这个字段。这只是视图的一个使用场景，实际上视图还有很多作用。</p>
+<p>视图建立在已有表的基础上, 视图赖以建立的这些表称为<strong>基表</strong>，可以将视图理解为<strong>存储起来的</strong> <strong>SELECT</strong> <strong>语句</strong> 。</p>
+<p>视图应用场景：</p>
+<ul>
+<li>多个地方用到同样的查询结果</li>
+<li>该查询结果使用的sql语句较复杂</li>
+</ul>
+<p>视图的优点：</p>
+<ul>
+<li>重用sql语句</li>
+<li>简化复杂的sql操作，不必知道它的查询细节</li>
+<li>保护数据，提高安全性</li>
+</ul>
+<p>在数据库中，视图不会保存数据，数据真正保存在数据表中。当对视图中的数据进行增加、删除和修改操作时，数据表中的数据会相应地发生变化；反之亦然。</p>
+<p>通常情况下，小型项目的数据库可以不使用视图，但是在大型项目中，以及数据表比较复杂的情况下，视图的价值就凸显出来了，它可以帮助我们把经常查询的结果集放到虚拟表中，提升使用效率。理解和使用起来都非常方便。</p>
+<h2 id="1-视图的创建"><a href="#1-视图的创建" class="headerlink" title="1. 视图的创建"></a>1. 视图的创建</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> 视图名称 <br><span class="hljs-keyword">AS</span> 查询语句<br></code></pre></td></tr></table></figure>
+
+<p>案例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs sql">USE myemployees;<br>#<span class="hljs-number">1.</span>查询姓名中包含a字符的员工名、部门名和工种信息<br>#①创建视图<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> myv1 <span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span> `last_name`,`department_name`,`job_title`<br><span class="hljs-keyword">FROM</span> `employees` e<br><span class="hljs-keyword">JOIN</span> `departments` d <span class="hljs-keyword">ON</span> e.`department_id` <span class="hljs-operator">=</span> d.`department_id`<br><span class="hljs-keyword">JOIN</span> `jobs` j <span class="hljs-keyword">ON</span> e.`job_id` <span class="hljs-operator">=</span> j.`job_id`;<br>#②使用视图<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> myv1 <span class="hljs-keyword">WHERE</span> `last_name` <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%a%&#x27;</span>;<br><br>#<span class="hljs-number">2.</span>查询各部门的平均工资级别<br>#①创建视图查看每个部门的平均工资<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> myv2 <span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(`salary`) ag, `department_id`<br><span class="hljs-keyword">FROM</span> `employees` <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> `department_id` <br>#②使用视图<br><span class="hljs-keyword">SELECT</span> myv2.ag,g.`grade_level`<br><span class="hljs-keyword">FROM</span> myv2 <span class="hljs-keyword">JOIN</span> `job_grades` g <br><span class="hljs-keyword">ON</span> myv2.ag <span class="hljs-keyword">BETWEEN</span> g.`lowest_sal` <span class="hljs-keyword">AND</span> g.`highest_sal`;<br><br>#<span class="hljs-number">3.</span>查询平均工资最低的部门信息<br>#使用创建好的视图<span class="hljs-number">2</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> myv2 <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ag LIMIT <span class="hljs-number">1</span>;<br><br>#<span class="hljs-number">4.</span>查询平均工资最低的部门名和平均工资<br>#①创建视图查看平均工资最低的部门信息<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> myv3 <span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> myv2 <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ag LIMIT <span class="hljs-number">1</span>; # 套娃<br>#②使用视图<span class="hljs-number">3</span><br><span class="hljs-keyword">SELECT</span> d.`department_name`,m.ag<br><span class="hljs-keyword">FROM</span> myv3 m <span class="hljs-keyword">JOIN</span> `departments` d<br><span class="hljs-keyword">ON</span> m.`department_id` <span class="hljs-operator">=</span> d.`department_id`;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-视图的修改"><a href="#2-视图的修改" class="headerlink" title="2. 视图的修改"></a>2. 视图的修改</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">#方式一：<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> replace <span class="hljs-keyword">view</span> 视图名 <span class="hljs-keyword">as</span> 查询语句;<br>#方式二：<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">view</span> 视图名 <span class="hljs-keyword">as</span> 查询语句;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-视图的删除"><a href="#3-视图的删除" class="headerlink" title="3. 视图的删除"></a>3. 视图的删除</h2><p>用户可以一次删除一个或者多个视图，前提是必须有该视图的drop权限</p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">view</span> 视图<span class="hljs-number">1</span>，视图<span class="hljs-number">2</span>,…;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-视图的查看"><a href="#4-视图的查看" class="headerlink" title="4. 视图的查看"></a>4. 视图的查看</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">desc</span> 视图名;<br><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> 视图名;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-视图的更新"><a href="#5-视图的更新" class="headerlink" title="5. 视图的更新"></a>5. 视图的更新</h2><p>视图是一个虚拟表，可以对其结果进行更新（增删改）的操作，但<strong>一般只用来查询</strong></p>
+<p>更新操作：插入：insert   修改：update    删除：delete  </p>
+<p>值得注意的是：<strong>对视图的增删改操作都会改变视图from的原表</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">VIEW</span> myv1<br><span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span> last_name,email<br><span class="hljs-keyword">FROM</span> employees;<br><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> myv1;<br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> employees;<br><br>#<span class="hljs-number">1.</span>插入<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> myv1 <span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;张飞&#x27;</span>,<span class="hljs-string">&#x27;zf@qq.com&#x27;</span>);<br><br>#<span class="hljs-number">2.</span>修改<br><span class="hljs-keyword">UPDATE</span> myv1 <span class="hljs-keyword">SET</span> last_name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张无忌&#x27;</span> <span class="hljs-keyword">WHERE</span> last_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;张飞&#x27;</span>;<br><br>#<span class="hljs-number">3.</span>删除<br><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> myv1 <span class="hljs-keyword">WHERE</span> last_name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张无忌&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>视图<strong>一般是用于查询的，而不是更新</strong>的，因为有很多情况是不能更新的，这些情况覆盖了大部分语句，所以对于视图的更新了解即可。</p>
+<ul>
+<li>包含以下关键字的sql语句：分组函数、distinct、group by、having、union或者union all</li>
+<li>常量视图</li>
+<li>Select中包含子查询</li>
+<li>join</li>
+<li>from一个不能更新的视图</li>
+<li>where子句的子查询引用了from子句中的表</li>
+</ul>
+<h2 id="6-视图vs表"><a href="#6-视图vs表" class="headerlink" title="6. 视图vs表"></a>6. 视图vs表</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">关键字</th>
+<th align="center">是否占用物理空间</th>
+<th align="center">使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">视图</td>
+<td align="center">view</td>
+<td align="center">占用较小，只保存sql逻辑</td>
+<td align="center">一般用于查询</td>
+</tr>
+<tr>
+<td align="center">表</td>
+<td align="center">table</td>
+<td align="center">保存实际的数据</td>
+<td align="center">增删改查</td>
+</tr>
+</tbody></table>
+<h1 id="三、存储过程"><a href="#三、存储过程" class="headerlink" title="三、存储过程"></a>三、存储过程</h1><p>MySQL从5.0版本开始支持存储过程和函数。存储过程和函数能够将复杂的SQL逻辑封装在一起，应用程序无须关注存储过程和函数内部复杂的SQL逻辑，而只需要简单地调用存储过程和函数即可。</p>
+<p>存储过程预先存储在 MySQL 服务器上，需要执行的时候，客户端只需要向服务器端发出调用存储过程的命令，服务器端就可以把<strong>预先编译</strong>好的这一系列 SQL 语句全部执行。</p>
+<p>类似于Java中的方法，将一组完成特定功能的逻辑语句包装起来，对外暴露名字，理解成批处理语句</p>
+<p><strong>和视图的对比</strong>：</p>
+<p>它和视图有着同样的优点，清晰、安全，还可以减少网络传输量。不过它和视图不同，视图是<strong>虚拟表</strong>，通常不对底层数据表直接操作，而存储过程是程序化的 SQL，可以<strong>直接操作底层数据表</strong>，相比于面向集合的操作方式，能够实现一些更复杂的数据处理。</p>
+<h2 id="1-存储过程的创建"><a href="#1-存储过程的创建" class="headerlink" title="1. 存储过程的创建"></a>1. 存储过程的创建</h2><h3 id="1-1-创建语法"><a href="#1-1-创建语法" class="headerlink" title="1.1 创建语法"></a>1.1 创建语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> 存储过程名(参数模式 参数名 参数类型,...)<br>[characteristics ...]<br><span class="hljs-keyword">BEGIN</span><br>	存储过程体(一组合法的<span class="hljs-keyword">SQL</span>语句)<br><span class="hljs-keyword">END</span><br></code></pre></td></tr></table></figure>
+
+<p>参数类型可以是 MySQL数据库中的任意类型。</p>
+<p>如果存储过程体仅仅只有一句话，begin end可以省略，存储过程体中的每条sql语句的结尾要求必须加分号。</p>
+<p><code>characteristics</code> 表示创建存储过程时指定的对存储过程的约束条件，暂时省略</p>
+<h3 id="1-2-参数模式"><a href="#1-2-参数模式" class="headerlink" title="1.2 参数模式"></a>1.2 参数模式</h3><p>IN、OUT、INOUT 都可以在一个存储过程中带多个。</p>
+<ul>
+<li>in：该参数可以作为输入，也就是该参数被调用时需要传入值 。如果没有定义参数种类，<strong>默认就是 IN</strong>，表示输入参数。</li>
+<li>out：该参数可以作为输出，也就是该参数可以作为返回值 （存储过程没有return，在调用时声明变量接收即可）</li>
+<li>inout：该参数既可以作为输入又可以作为输出，也就是该参数既需要传入值，又可以返回值</li>
+</ul>
+<h3 id="1-3-结束标记"><a href="#1-3-结束标记" class="headerlink" title="1.3 结束标记"></a>1.3 结束标记</h3><p>MySQL默认的结束标记是分号; 但有时候并不想让解释器碰到分号就结束，此时可以使用关键字<code>delimiter </code>指定结束标记，让解释器碰到指定标记时才开始执行所有语句</p>
+<p>语法：delimiter 结束标记</p>
+<p>实例：delimiter $，即告诉解释器碰到$才执行语句</p>
+<p>注意：不要加分号，否则会认为碰到<code>$;</code>才执行</p>
+<p>当使用DELIMITER命令时，应该避免使用反斜杠（‘\’）字符，因为反斜线是MySQL的转义字符。</p>
+<h2 id="2-存储过程的调用"><a href="#2-存储过程的调用" class="headerlink" title="2. 存储过程的调用"></a>2. 存储过程的调用</h2><p>调用语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CALL</span> 存储过程名(实参列表);<br></code></pre></td></tr></table></figure>
+
+<p>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">#调用<span class="hljs-keyword">in</span>模式的参数<br><span class="hljs-keyword">CALL</span> p1(<span class="hljs-string">&#x27;值&#x27;</span>)<br><br>#调用<span class="hljs-keyword">out</span>模式的参数<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@name</span>;<br><span class="hljs-keyword">CALL</span> p2(<span class="hljs-variable">@name</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@name</span>;<br><br>#调用<span class="hljs-keyword">inout</span>模式的参数<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@name</span> <span class="hljs-operator">=</span> 值;<br><span class="hljs-keyword">CALL</span> p3(<span class="hljs-variable">@name</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@name</span>;<br></code></pre></td></tr></table></figure>
+
+<p>对于out和inout，通常用自定义的用户变量（带@）来接收</p>
+<p>创建和调用过程实例：需要在命令提示符中使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs sql">#设置结束标记<br>DELIMITER $<br><br>#<span class="hljs-number">1.</span>空参列表:向major表中插入五条记录<br>#切换数据库<br>USE students<br>#创建存储过程<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> myp1()<br><span class="hljs-keyword">BEGIN</span> <br>	<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> major <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;java&#x27;</span>),(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;c++&#x27;</span>),(<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;python&#x27;</span>),(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;golang&#x27;</span>),(<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;sql&#x27;</span>);	<br><span class="hljs-keyword">END</span> $<br>#调用存储过程<br><span class="hljs-keyword">CALL</span> myp1()$<br><br><br>#<span class="hljs-number">2.</span>创建带<span class="hljs-keyword">in</span>模式参数的存储过程：根据员工名，查询对应的部门名信息<br>#切换数据库<br>USE myemployees<br>#创建存储过程<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> myp2(<span class="hljs-keyword">IN</span> e_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>))<br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">SELECT</span> e.`last_name`,d.`department_name`<br>	<span class="hljs-keyword">FROM</span> `employees` e<br>	<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> `departments` d <span class="hljs-keyword">ON</span> e.`department_id`<span class="hljs-operator">=</span>d.`department_id`<br>	<span class="hljs-keyword">WHERE</span> e.`last_name` <span class="hljs-operator">=</span> e_name;#e_name属于局部变量，可以在当前作用域直接使用<br><span class="hljs-keyword">END</span>$<br>#调用存储过程<br><span class="hljs-keyword">CALL</span> myp2(<span class="hljs-string">&#x27;K_ing&#x27;</span>)$<br><br><br>#<span class="hljs-number">3.</span>创建带多个<span class="hljs-keyword">in</span>模式参数的存储过程：判断输入的部门名和位置ID是否匹配<br>#创建存储过程<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> myp3(<span class="hljs-keyword">IN</span> d_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),<span class="hljs-keyword">IN</span> locat_id <span class="hljs-type">INT</span>)<br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">DECLARE</span> <span class="hljs-keyword">result</span> <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>;#创建一个变量用于存放判定的结果，创建用户变量来存放也可以<br>	<br>	<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">result</span><br>	<span class="hljs-keyword">FROM</span> `departments` d<br>	<span class="hljs-keyword">WHERE</span> d.`department_name` <span class="hljs-operator">=</span> d_name<br>	<span class="hljs-keyword">AND</span> d.`location_id` <span class="hljs-operator">=</span> locat_id;<br>	<br>	<span class="hljs-keyword">SELECT</span> IF(<span class="hljs-keyword">result</span><span class="hljs-operator">&gt;</span><span class="hljs-number">0</span>,<span class="hljs-string">&#x27;成功&#x27;</span>,<span class="hljs-string">&#x27;失败&#x27;</span>);<br><span class="hljs-keyword">END</span>$<br>#调用存储过程<br><span class="hljs-keyword">CALL</span> myp3(<span class="hljs-string">&#x27;Adm&#x27;</span>,<span class="hljs-string">&#x27;1700&#x27;</span>)$ #成功<br><span class="hljs-keyword">CALL</span> myp3(<span class="hljs-string">&#x27;Adm&#x27;</span>,<span class="hljs-string">&#x27;1800&#x27;</span>)$ #失败<br><br><br>#<span class="hljs-number">4.</span>创建<span class="hljs-keyword">out</span>模式参数的存储过程：根据输入的员工名，返回对应的部门名和location_id<br>#创建存储过程<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> myp4(<span class="hljs-keyword">IN</span> e_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),<span class="hljs-keyword">OUT</span> d_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),<span class="hljs-keyword">OUT</span> locat_id <span class="hljs-type">INT</span>)<br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">SELECT</span> d.`department_name`,d.`location_id` <span class="hljs-keyword">INTO</span> d_name,locat_id<br>	<span class="hljs-keyword">FROM</span> `employees` e<br>	<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> `departments` d<br>	<span class="hljs-keyword">ON</span> e.`department_id`<span class="hljs-operator">=</span>d.`department_id`<br>	<span class="hljs-keyword">WHERE</span> e.`last_name` <span class="hljs-operator">=</span> e_name;<br><span class="hljs-keyword">END</span>$<br>#调用存储过程<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@d</span>_name<span class="hljs-operator">=</span><span class="hljs-string">&#x27;&#x27;</span>;#定义用户变量，这行可省略<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@locat</span>_id<span class="hljs-operator">=</span><span class="hljs-number">0</span>;#定义用户变量，这行可省略<br><span class="hljs-keyword">CALL</span> myp4(<span class="hljs-string">&#x27;Abel&#x27;</span>,<span class="hljs-variable">@d</span>_name,<span class="hljs-variable">@locat</span>_id);#调用存储过程<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@d</span>_name,<span class="hljs-variable">@locat</span>_id$#查看结果：Sal,<span class="hljs-number">2500</span><br><br><br># 留一个问题，调用下面这个时，返回的是两条结果，该用什么变量接收呢<br><span class="hljs-keyword">CALL</span> myp4(<span class="hljs-string">&#x27;K_ing&#x27;</span>,<span class="hljs-variable">@d</span>_name,<span class="hljs-variable">@locat</span>_id);<br><br><br>#<span class="hljs-number">5.</span>创建带<span class="hljs-keyword">inout</span>模式参数的存储过程：传入a和b两个值，最终a和b都翻倍并返回<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> myp5(<span class="hljs-keyword">INOUT</span> a <span class="hljs-type">INT</span>,<span class="hljs-keyword">INOUT</span> b <span class="hljs-type">INT</span>)<br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">SET</span> a<span class="hljs-operator">=</span>a<span class="hljs-operator">*</span><span class="hljs-number">2</span>;<br>	<span class="hljs-keyword">SET</span> b<span class="hljs-operator">=</span>b<span class="hljs-operator">*</span><span class="hljs-number">2</span>; <br><span class="hljs-keyword">END</span>$<br><br>#调用存储过程<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@m</span><span class="hljs-operator">=</span><span class="hljs-number">10</span>;<br><span class="hljs-keyword">SET</span> <span class="hljs-variable">@n</span><span class="hljs-operator">=</span><span class="hljs-number">20</span>;<br><span class="hljs-keyword">CALL</span> myp5(<span class="hljs-variable">@m</span>,<span class="hljs-variable">@n</span>);<br><span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@m</span>,<span class="hljs-variable">@n</span>$ #<span class="hljs-number">20</span>,<span class="hljs-number">40</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-存储过程的查看"><a href="#3-存储过程的查看" class="headerlink" title="3. 存储过程的查看"></a>3. 存储过程的查看</h2><p><strong>1. 使用SHOW CREATE语句查看存储过程的创建信息</strong></p>
+<p>语法：craete容易漏掉，存储过程名<strong>无需加引号</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">procedure</span> 存储过程名;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">show create procedure myp1;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>2. 使用SHOW STATUS语句查看存储过程的状态信息</strong></p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">PROCEDURE</span> STATUS [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>这个语句返回子程序的特征，如数据库、名字、类型、创建者及创建和修改日期。</p>
+<p>[LIKE ‘pattern’]：匹配存储过程或函数的名称，可以省略。当省略不写时，会列出MySQL数据库中存在的所有存储过程或函数的信息。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">PROCEDURE</span> STATUS <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;myp1&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>不能使用<code>desc</code></p>
+<h2 id="4-存储过程的删除"><a href="#4-存储过程的删除" class="headerlink" title="4. 存储过程的删除"></a>4. 存储过程的删除</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">procedure</span> [IF <span class="hljs-keyword">EXISTS</span>] 存储过程名;<br></code></pre></td></tr></table></figure>
+
+<p>每次只能删除一个，如<code>DROP PROCEDURE p1;</code>是可以的，<code>DROP PROCEDURE p2,p3;</code>不可以</p>
+<p><strong>存储过程名不用加单引号！！！</strong> 例如有个存储过程名字叫 myprocedure，则删除语句为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">drop procedure myprocedure;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-存储过程的修改"><a href="#5-存储过程的修改" class="headerlink" title="5. 存储过程的修改"></a>5. 存储过程的修改</h2><p><strong>暂时略过，想要改就先删除再添加新的</strong></p>
+<h2 id="6-关于存储过程使用的争议"><a href="#6-关于存储过程使用的争议" class="headerlink" title="6. 关于存储过程使用的争议"></a>6. 关于存储过程使用的争议</h2><p>不少大公司都要求大型项目使用存储过程，比如微软、IBM 等公司。但是国内的阿里并不推荐开发人员使用存储过程</p>
+<blockquote>
+<h4 id="阿里开发规范"><a href="#阿里开发规范" class="headerlink" title="阿里开发规范"></a>阿里开发规范</h4><p>【强制】禁止使用存储过程，存储过程难以调试和扩展，更没有移植性。</p>
+</blockquote>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p><strong>1、存储过程可以一次编译多次使用。</strong>存储过程只在创建时进行编译，之后的使用都不需要重新编译，这就提升了 SQL 的执行效率。</p>
+<p><strong>2、可以减少开发工作量。</strong>将代码<code>封装</code>成模块，实际上是编程的核心思想之一，这样可以把复杂的问题拆解成不同的模块，然后模块之间可以<code>重复使用</code>，在减少开发工作量的同时，还能保证代码的结构清晰。</p>
+<p><strong>3、存储过程的安全性强。</strong>我们在设定存储过程的时候可以<code>设置对用户的使用权限</code>，这样就和视图一样具有较强的安全性。</p>
+<p><strong>4、可以减少网络传输量。</strong>因为代码封装到存储过程中，每次使用只需要调用存储过程即可，这样就减少了网络传输量。</p>
+<p><strong>5、良好的封装性。</strong>在进行相对复杂的数据库操作时，原本需要使用一条一条的 SQL 语句，可能要连接多次数据库才能完成的操作，现在变成了一次存储过程，只需要<code>连接一次即可</code>。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p><strong>1、可移植性差。</strong>存储过程不能跨数据库移植，比如在 MySQL、Oracle 和 SQL Server 里编写的存储过程，在换成其他数据库时都需要重新编写。</p>
+<p><strong>2、调试困难。</strong>只有少数 DBMS 支持存储过程的调试。对于复杂的存储过程来说，开发和维护都不容易。虽然也有一些第三方工具可以对存储过程进行调试，但要收费。</p>
+<p><strong>3、存储过程的版本管理很困难。</strong>比如数据表索引发生变化了，可能会导致存储过程失效。我们在开发软件的时候往往需要进行版本管理，但是存储过程本身没有版本控制，版本迭代更新的时候很麻烦。</p>
+<p><strong>4、它不适合高并发的场景。</strong>高并发的场景需要减少数据库的压力，有时数据库会采用分库分表的方式，而且对可扩展性要求很高，在这种情况下，存储过程会变得难以维护，增加数据库的压力，显然就不适用了。</p>
+<h1 id="四、函数"><a href="#四、函数" class="headerlink" title="四、函数"></a>四、函数</h1><p>一组预先编译好的SQL语句的集合，理解成批处理语句。有且仅有一个返回</p>
+<h2 id="1-与存储过程的区别"><a href="#1-与存储过程的区别" class="headerlink" title="1. 与存储过程的区别"></a>1. 与存储过程的区别</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>关键字</th>
+<th>调用语法</th>
+<th>返回值</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储过程</td>
+<td>PROCEDURE</td>
+<td>CALL 存储过程()</td>
+<td>理解为有0个或多个</td>
+<td>一般用于批量插入、批量更新</td>
+</tr>
+<tr>
+<td>存储函数</td>
+<td>FUNCTION</td>
+<td>SELECT 函数()</td>
+<td>只能是一个</td>
+<td>一般用于查询结果为一个值并返回时</td>
+</tr>
+</tbody></table>
+<p>此外，<strong>存储函数可以放在查询语句中使用，存储过程不行</strong>。反之，存储过程的功能更加强大，包括能够执行对表的操作（比如创建表，删除表等）和事务操作，这些功能是存储函数不具备的。</p>
+<h2 id="2-函数的创建"><a href="#2-函数的创建" class="headerlink" title="2. 函数的创建"></a>2. 函数的创建</h2><p>MySQL有个参数<code>SET GLOBAL log_bin_trust_function_creators=TRUE</code> ，如果设置为0（默认值），用户不得创建或修改存储函数，除非它们具有除<code>CREATE ROUTINE</code>或<code>ALTER ROUTINE</code>特权之外的SUPER权限。 设置为0还强制使用<code>DETERMINISTIC</code>特性或<code>READS SQL DATA</code>或<code>NO SQL</code>特性声明函数的限制。 如果变量设置为1，MySQL不会对创建存储函数实施这些限制。</p>
+<p>因此在创建函数时需要将这个参数设置为1</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> log_bin_trust_function_creators<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span>;<br></code></pre></td></tr></table></figure>
+
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> 函数名(参数名 参数类型) <span class="hljs-keyword">RETURNS</span> 返回类型<br><span class="hljs-keyword">BEGIN</span><br>	函数体<br><span class="hljs-keyword">END</span><br></code></pre></td></tr></table></figure>
+
+<p>注意点：</p>
+<ul>
+<li>注意关键字 function 和 returns</li>
+<li>函数体中需要加上return语句<code>return 值</code>，尽管不加不报错</li>
+<li>函数体中仅有一句话，则可以省略begin end</li>
+<li>和存储过程一样，需要使用 delimiter语句设置结束标记</li>
+</ul>
+<h2 id="3-函数的调用"><a href="#3-函数的调用" class="headerlink" title="3. 函数的调用"></a>3. 函数的调用</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> 函数名(参数列表);<br></code></pre></td></tr></table></figure>
+
+
+
+<p>案例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> log_bin_trust_function_creators<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span>;<br>#<span class="hljs-number">1.</span>无参有返回：返回公司的员工个数<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> myf1() <span class="hljs-keyword">RETURNS</span> <span class="hljs-type">INT</span><br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">DECLARE</span> c <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>; #定义局部变量<br>	<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">INTO</span> c<br>	<span class="hljs-keyword">FROM</span> employees;<br>	<span class="hljs-keyword">RETURN</span> c;<br><span class="hljs-keyword">END</span>$<br><br><span class="hljs-keyword">SELECT</span> myf1()$<br><br><br>#<span class="hljs-number">2.</span>有参有返回：根据员工名，返回它的工资<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> myf2(e_name <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)) <span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">DOUBLE</span><br><span class="hljs-keyword">BEGIN</span><br>	<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sal</span><span class="hljs-operator">=</span><span class="hljs-number">0</span>; #定义用户变量<br>	<span class="hljs-keyword">SELECT</span> e.`salary` <span class="hljs-keyword">INTO</span> <span class="hljs-variable">@sal</span><br>	<span class="hljs-keyword">FROM</span> `employees` e<br>	<span class="hljs-keyword">WHERE</span> e.`last_name` <span class="hljs-operator">=</span> e_name;<br>	<span class="hljs-keyword">RETURN</span> <span class="hljs-variable">@sal</span>;<br><span class="hljs-keyword">END</span>$<br><br><span class="hljs-keyword">SELECT</span> myf2(<span class="hljs-string">&#x27;Abel&#x27;</span>)$<br></code></pre></td></tr></table></figure>
+
+<p>返回值定义为局部变量和用户变量都可以，<strong>局部变量更常用</strong></p>
+<h2 id="4-函数的查看"><a href="#4-函数的查看" class="headerlink" title="4. 函数的查看"></a>4. 函数的查看</h2><p>与存储过程的查看基本一致，关键字由<code>procedure</code>改为<code>function</code></p>
+<p><strong>1. 使用SHOW CREATE语句查看函数的创建信息</strong></p>
+<p>语法：craete容易漏掉，函数名<strong>无需加引号</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">function</span> 函数名;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">show create function myf1;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>2. 使用SHOW STATUS语句查看函数的状态信息</strong></p>
+<p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">function</span> STATUS [<span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;pattern&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>这个语句返回子程序的特征，如数据库、名字、类型、创建者及创建和修改日期。</p>
+<p>[LIKE ‘pattern’]：匹配存储过程或函数的名称，可以省略。当省略不写时，会列出MySQL数据库中存在的所有存储过程或函数的信息。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">function</span> STATUS <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;myf1&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-函数的删除"><a href="#5-函数的删除" class="headerlink" title="5. 函数的删除"></a>5. 函数的删除</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">drop</span> <span class="hljs-keyword">function</span> [IF <span class="hljs-keyword">EXISTS</span>] 函数名;<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP FUNCTION CountProc;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-函数的修改"><a href="#6-函数的修改" class="headerlink" title="6. 函数的修改"></a>6. 函数的修改</h2><p><strong>暂时略过，想要改就先删除再添加新的</strong></p>
+<h1 id="五、游标"><a href="#五、游标" class="headerlink" title="五、游标"></a>五、游标</h1><h2 id="1-什么是游标（或光标）"><a href="#1-什么是游标（或光标）" class="headerlink" title="1. 什么是游标（或光标）"></a>1. 什么是游标（或光标）</h2><p>虽然我们也可以通过筛选条件 WHERE 和 HAVING，或者是限定返回记录的关键字 LIMIT 返回一条记录，但是，却无法在结果集中像指针一样，向前定位一条记录、向后定位一条记录，或者是<code>随意定位到某一条记录</code>，并对记录的数据进行处理。</p>
+<p>这个时候，就可以用到游标。游标，提供了一种灵活的操作方式，让我们能够对结果集中的每一条记录进行定位，并对指向的记录中的数据进行操作的数据结构。<strong>游标让 SQL 这种面向集合的语言有了面向过程开发的能力。</strong></p>
+<p>在 SQL 中，游标是一种临时的数据库对象，可以指向存储在数据库表中的数据行指针。这里游标<code>充当了指针的作用</code>，我们可以通过操作游标来对数据行进行操作。</p>
+<p>MySQL中游标可以在存储过程和函数中使用。</p>
+<h2 id="2-使用游标步骤"><a href="#2-使用游标步骤" class="headerlink" title="2. 使用游标步骤"></a>2. 使用游标步骤</h2><p>游标必须在声明处理程序之前被声明，并且变量和条件还必须在声明游标或处理程序之前被声明。</p>
+<p>如果我们想要使用游标，一般需要经历四个步骤。不同的 DBMS 中，使用游标的语法可能略有不同。</p>
+<h3 id="2-1-声明游标"><a href="#2-1-声明游标" class="headerlink" title="2.1 声明游标"></a>2.1 声明游标</h3><p>在MySQL中，使用DECLARE关键字来声明游标，其语法的基本形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DECLARE cursor_name CURSOR FOR select_statement; <br></code></pre></td></tr></table></figure>
+
+<p>这里 select_statement 代表的是 SELECT 语句，返回一个用于创建游标的结果集。要使用 SELECT 语句来获取数据结果集，而此时还没有开始遍历数据</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DECLARE cur_emp CURSOR FOR <br>SELECT employee_id,salary FROM employees;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>这个语法适用于 MySQL，SQL Server，DB2 和 MariaDB。如果是用 Oracle 或者 PostgreSQL，需要写成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DECLARE cursor_name CURSOR IS select_statement;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-打开游标"><a href="#2-2-打开游标" class="headerlink" title="2.2 打开游标"></a>2.2 打开游标</h3><p>打开游标的语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">OPEN cursor_name<br></code></pre></td></tr></table></figure>
+
+<p>当我们定义好游标之后，如果想要使用游标，必须先打开游标。打开游标的时候 SELECT 语句的查询结果集就会送到游标工作区，为后面游标的<code>逐条读取</code>结果集中的记录做准备。</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">OPEN　cur_emp ;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-使用游标（从游标中取得数据）"><a href="#2-3-使用游标（从游标中取得数据）" class="headerlink" title="2.3 使用游标（从游标中取得数据）"></a>2.3 使用游标（从游标中取得数据）</h3><p>语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">FETCH cursor_name INTO var_name [, var_name] ...<br></code></pre></td></tr></table></figure>
+
+<p>这句的作用是使用 cursor_name 这个游标来读取当前行，并且将数据保存到 var_name 这个变量中，游标指针指到下一行。如果游标读取的数据行有多个列名，则在 INTO 关键字后面赋值给多个变量名即可。</p>
+<p>注意：var_name必须在声明游标之前就定义好。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">FETCH　cur_emp INTO emp_id, emp_sal ;<br></code></pre></td></tr></table></figure>
+
+<p>注意：<strong>游标的查询结果集中的字段数，必须跟 INTO 后面的变量数一致</strong>，否则，在存储过程执行的时候，MySQL 会提示错误。</p>
+<h3 id="2-4-关闭游标"><a href="#2-4-关闭游标" class="headerlink" title="2.4 关闭游标"></a>2.4 关闭游标</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CLOSE cursor_name<br></code></pre></td></tr></table></figure>
+
+<p>有 OPEN 就会有 CLOSE，也就是打开和关闭游标。当我们使用完游标后需要关闭掉该游标。因为游标会<code>占用系统资源</code>，如果不及时关闭，<strong>游标会一直保持到存储过程结束</strong>，影响系统运行的效率。而关闭游标的操作，会释放游标占用的系统资源。</p>
+<p>关闭游标之后，我们就不能再检索查询结果中的数据行，如果需要检索只能再次打开游标。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CLOSE　cur_emp;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-举例"><a href="#3-举例" class="headerlink" title="3. 举例"></a>3. 举例</h2><p>创建存储过程“get_count_by_limit_total_salary()”，声明IN参数 limit_total_salary，DOUBLE类型；声明OUT参数total_count，INT类型。函数的功能可以实现累加薪资最高的几个员工的薪资值，直到薪资总和达到limit_total_salary参数的值，返回累加的人数给total_count。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELIMITER //<br><br>CREATE PROCEDURE get_count_by_limit_total_salary(IN limit_total_salary DOUBLE,OUT total_count INT)<br><br>BEGIN<br>	DECLARE sum_salary DOUBLE DEFAULT 0;  #记录累加的总工资<br>	DECLARE cursor_salary DOUBLE DEFAULT 0; #记录某一个工资值<br>	DECLARE emp_count INT DEFAULT 0; #记录循环个数<br>	#定义游标<br>	DECLARE emp_cursor CURSOR FOR SELECT salary FROM employees ORDER BY salary DESC;<br>	#打开游标<br>	OPEN emp_cursor;<br>	<br>	REPEAT<br>		#使用游标（从游标中获取数据）<br>		FETCH emp_cursor INTO cursor_salary;<br>		<br>		SET sum_salary = sum_salary + cursor_salary;<br>		SET emp_count = emp_count + 1;<br>		<br>		UNTIL sum_salary &gt;= limit_total_salary<br>	END REPEAT;<br>	<br>	SET total_count = emp_count;<br>	#关闭游标<br>	CLOSE emp_cursor;<br>	<br>END //<br><br>DELIMITER ;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>游标是 MySQL 的一个重要的功能，为<code>逐条读取</code>结果集中的数据，提供了完美的解决方案。跟在应用层面实现相同的功能相比，游标可以在存储程序中使用，效率高，程序也更加简洁。</p>
+<p>但同时也会带来一些性能问题，比如在使用游标的过程中，会对数据行进行<code>加锁</code>，这样在业务并发量大的时候，不仅会影响业务之间的效率，还会<code>消耗系统资源</code>，造成内存不足，这是因为游标是在内存中进行的处理。</p>
+<p>建议：养成用完之后就关闭的习惯，这样才能提高系统的整体效率。</p>
+<h1 id="六、触发器"><a href="#六、触发器" class="headerlink" title="六、触发器"></a>六、触发器</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>触发器是由<code>事件来触发</code>某个操作，这些事件包括<code>INSERT</code>、<code>UPDATE</code>、<code>DELETE</code>事件。所谓事件就是指用户的动作或者触发某项行为。如果定义了触发程序，当数据库执行这些语句时候，就相当于事件发生了，就会<code>自动</code>激发触发器执行相应的操作。</p>
+<p>当对数据表中的数据执行插入、更新和删除操作，需要自动执行一些数据库逻辑时，可以使用触发器来实现。</p>
+<p><strong>只有表才支持触发器</strong>，视图不支持，临时表也不支持</p>
+<h2 id="2-触发器的创建"><a href="#2-触发器的创建" class="headerlink" title="2. 触发器的创建"></a>2. 触发器的创建</h2><h3 id="2-1-创建触发器语法"><a href="#2-1-创建触发器语法" class="headerlink" title="2.1 创建触发器语法"></a>2.1 创建触发器语法</h3><p>创建触发器的语法结构是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TRIGGER 触发器名称 <br>&#123;BEFORE|AFTER&#125; &#123;INSERT|UPDATE|DELETE&#125; ON 表名 <br>FOR EACH ROW <br>触发器执行的语句块;<br></code></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><p><code>表名</code>：表示触发器监控的对象。</p>
+</li>
+<li><p><code>BEFORE|AFTER</code>：表示触发的时间。BEFORE 表示在事件之前触发；AFTER 表示在事件之后触发。</p>
+</li>
+<li><p><code>INSERT|UPDATE|DELETE</code>：表示触发的事件。</p>
+<ul>
+<li>INSERT 表示插入记录时触发；</li>
+<li>UPDATE 表示更新记录时触发；</li>
+<li>DELETE 表示删除记录时触发。</li>
+</ul>
+</li>
+<li><p><code>触发器执行的语句块</code>：可以是单条SQL语句，也可以是由BEGIN…END结构组成的复合语句块。</p>
+</li>
+</ul>
+<p>举例：</p>
+<p>创建名称为before_insert的触发器，向test_trigger数据表插入数据之前，向test_trigger_log数据表中插入before_insert的日志信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELIMITER //<br><br>CREATE TRIGGER before_insert<br>BEFORE INSERT ON test_trigger <br>FOR EACH ROW<br>BEGIN<br>	INSERT INTO test_trigger_log (t_log)<br>	VALUES(&#x27;before_insert&#x27;);<br><br>END //<br><br>DELIMITER ;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-查看、删除触发器"><a href="#3-查看、删除触发器" class="headerlink" title="3. 查看、删除触发器"></a>3. 查看、删除触发器</h2><h3 id="3-1-查看触发器"><a href="#3-1-查看触发器" class="headerlink" title="3.1 查看触发器"></a>3.1 查看触发器</h3><p>查看触发器是查看数据库中已经存在的触发器的定义、状态和语法信息等。</p>
+<p>方式1：查看当前数据库的所有触发器的定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW TRIGGERS\G<br></code></pre></td></tr></table></figure>
+
+<p>方式2：查看当前数据库中某个触发器的定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SHOW CREATE TRIGGER 触发器名<br></code></pre></td></tr></table></figure>
+
+<p>方式3：从系统库information_schema的TRIGGERS表中查询“salary_check_trigger”触发器的信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT * FROM information_schema.TRIGGERS;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-删除触发器"><a href="#3-2-删除触发器" class="headerlink" title="3.2 删除触发器"></a>3.2 删除触发器</h3><p>触发器也是数据库对象，删除触发器也用DROP语句，语法格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP TRIGGER IF EXISTS 触发器名称;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="4-触发器的优缺点"><a href="#4-触发器的优缺点" class="headerlink" title="4. 触发器的优缺点"></a>4. 触发器的优缺点</h2><p>优点：</p>
+<ul>
+<li>触发器可以确保数据的完整性</li>
+<li>触发器可以帮助我们记录操作日志</li>
+<li>触发器还可以用在操作数据前，对数据进行合法性检查。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>最大的一个问题就是可读性差</li>
+<li>相关数据的变更，可能会导致触发器出错</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Mysql基础：05.变量、视图、存储过程、函数、游标、触发器</div>
+      <div>http://example.com/2022/05/01/MySQL/Mysql基础：05.变量、视图、存储过程、函数、游标、触发器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年5月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
