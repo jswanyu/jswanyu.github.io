@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="wanyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="黑马的实战篇教程是用一个点评项目来运用Redis，这里记录一下 1. 导入后端项目导入黑马点评项目，先用sql文件建表，然后复制idea项目到工作目录，然后在IDEA里打开项目，在配置文件中修改MySQL和Redis的相关配置 再把资料里的nginx文件夹拷贝到工作目录，在nginx所在目录下打开一个CMD窗口，输入命令： 1start nginx.exe  打开chrome浏览器，访问: htt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客">
+<meta property="og:url" content="http://example.com/2022/06/16/Redis/04.Redis%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E4%B8%80%EF%BC%9A%E7%9F%AD%E4%BF%A1%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="博客">
+<meta property="og:description" content="黑马的实战篇教程是用一个点评项目来运用Redis，这里记录一下 1. 导入后端项目导入黑马点评项目，先用sql文件建表，然后复制idea项目到工作目录，然后在IDEA里打开项目，在配置文件中修改MySQL和Redis的相关配置 再把资料里的nginx文件夹拷贝到工作目录，在nginx所在目录下打开一个CMD窗口，输入命令： 1start nginx.exe  打开chrome浏览器，访问: htt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E9%9B%86%E7%BE%A4%E7%9A%84session%E5%85%B1%E4%BA%AB%E9%97%AE%E9%A2%98.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E4%B8%8E%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-Redis%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E7%BB%93%E6%9E%9C%E4%B8%AD%E7%9A%84%E8%AF%B7%E6%B1%82tkoen.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF-%E9%80%BB%E8%BE%91%E6%A1%86%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF-%E9%80%BB%E8%BE%91%E6%A1%86%E5%9B%BE.png">
+<meta property="article:published_time" content="2022-06-16T09:46:27.138Z">
+<meta property="article:modified_time" content="2022-06-15T14:38:44.109Z">
+<meta property="article:author" content="wanyu">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA.png">
+  
+  
+  <title>博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-16 17:46" pubdate>
+        2022年6月16日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      13k 字
+    </span>
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <p>黑马的实战篇教程是用一个点评项目来运用Redis，这里记录一下</p>
+<h1 id="1-导入后端项目"><a href="#1-导入后端项目" class="headerlink" title="1. 导入后端项目"></a>1. 导入后端项目</h1><p>导入黑马点评项目，先用sql文件建表，然后复制idea项目到工作目录，然后在IDEA里打开项目，在配置文件中修改MySQL和Redis的相关配置</p>
+<p>再把资料里的nginx文件夹拷贝到工作目录，在nginx所在目录下打开一个CMD窗口，输入命令：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-literal">start</span> nginx.exe<br></code></pre></td></tr></table></figure>
+
+<p>打开chrome浏览器，访问: <a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a> ，即可看到页面。在空白页面点击鼠标右键，选择检查，即可打开开发者工具，然后打开手机模式</p>
+<h1 id="2-基于Session实现登录"><a href="#2-基于Session实现登录" class="headerlink" title="2. 基于Session实现登录"></a>2. 基于Session实现登录</h1><h2 id="2-1-发送短信验证码"><a href="#2-1-发送短信验证码" class="headerlink" title="2.1 发送短信验证码"></a>2.1 发送短信验证码</h2><p>功能展示</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA.png" srcset="/img/loading.gif" lazyload alt="image-20220613234932578"></p>
+<p>功能逻辑</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="image-20220613235129586"></p>
+<p>功能代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ServiceImpl</span>&lt;UserMapper, User&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IUserService</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Result <span class="hljs-title function_">sendCode</span><span class="hljs-params">(String phone, HttpSession session)</span> &#123;<br>        <span class="hljs-comment">// 1.校验手机号</span><br>        <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>            <span class="hljs-comment">// 2.如果不符合，返回错误信息</span><br>            <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号格式错误！&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 3.符合，生成验证码</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> RandomUtil.randomNumbers(<span class="hljs-number">6</span>);<br><br>        <span class="hljs-comment">// 4.保存验证码到 session</span><br>        session.setAttribute(<span class="hljs-string">&quot;code&quot;</span>,code);<br><br>        <span class="hljs-comment">// 5.发送验证码</span><br>        log.debug(<span class="hljs-string">&quot;发送短信验证码成功，验证码：&#123;&#125;&quot;</span>, code);<br>        <span class="hljs-comment">// 返回ok</span><br>        <span class="hljs-keyword">return</span> Result.ok();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中发送验证码只是简单的后台打印下，没有真正的发送</p>
+<h2 id="2-2-短信验证码登录"><a href="#2-2-短信验证码登录" class="headerlink" title="2.2 短信验证码登录"></a>2.2 短信验证码登录</h2><p>功能展示</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E5%B1%95%E7%A4%BA.png" srcset="/img/loading.gif" lazyload alt="image-20220614124619440"></p>
+<p>功能逻辑</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="image-20220614124832196"></p>
+<p>功能代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 登录和注册功能</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> loginForm 登录参数，包含手机号、验证码；或者手机号、密码</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">login</span><span class="hljs-params">(LoginFormDTO loginForm, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// 1.校验手机号</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">phone</span> <span class="hljs-operator">=</span> loginForm.getPhone();<br>    <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>        <span class="hljs-comment">// 2.如果不符合，返回错误信息</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号格式错误！&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 3.校验验证码</span><br>    <span class="hljs-type">Object</span> <span class="hljs-variable">cacheCode</span> <span class="hljs-operator">=</span> session.getAttribute(<span class="hljs-string">&quot;code&quot;</span>);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> loginForm.getCode();<br>    <span class="hljs-keyword">if</span> (cacheCode == <span class="hljs-literal">null</span> || !cacheCode.equals(code)) &#123;<br>        <span class="hljs-comment">// 不一致，报错</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;验证码错误&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 4.一致，根据手机号查询用户 select * from tb_user where phone = ? 这里使用了MybatisPlus，代码比较简洁</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> query().eq(<span class="hljs-string">&quot;phone&quot;</span>, phone).one();<br><br>    <span class="hljs-comment">// 5.判断用户是否存在</span><br>    <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 6.不存在，创建新用户并保存</span><br>        user = createUserWithPhone(phone);<br>    &#125;<br><br>    <span class="hljs-comment">// 7.保存用户信息到Session里</span><br>    session.setAttribute(<span class="hljs-string">&quot;user&quot;</span>,user);<br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 创建并保存用户</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> phone</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> User</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">private</span> User <span class="hljs-title function_">createUserWithPhone</span><span class="hljs-params">(String phone)</span> &#123;<br>    <span class="hljs-comment">// 1.创建用户</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>();<br>    user.setPhone(phone);<br>    user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomString(<span class="hljs-number">10</span>));<br>    <span class="hljs-comment">// 2.保存用户</span><br>    save(user);<br>    <span class="hljs-keyword">return</span> user;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-拦截器登录验证"><a href="#2-3-拦截器登录验证" class="headerlink" title="2.3 拦截器登录验证"></a>2.3 拦截器登录验证</h2><p>用户登录成功之后，以后每次请求资源自然不能都要登录，而是改为每次请求之前都要校验登录状态。而我们自然不希望在每个Controller里都编写校验登录的代码，耦合性太强，这里需要使用拦截器进行登录验证。</p>
+<p>功能逻辑</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="image-20220614130627614"></p>
+<p>值得一提的是，为了确保获取当前访问的用户，拦截器需要将每个用户信息传递到Controller里，这里选择将用户保存到 ThreadLocal 里，保证线程的安全问题</p>
+<p>拦截器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">package</span> com.hmdp.utils;<br>...<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 进入controller之前进行登录校验</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> request</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> handler</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 1.获取Session</span><br>        <span class="hljs-type">HttpSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> request.getSession();<br>        <span class="hljs-comment">// 2.获取session中的用户</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> session.getAttribute(<span class="hljs-string">&quot;user&quot;</span>);<br>        <span class="hljs-comment">// 3.判断用户是否存在</span><br>        <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 4. 不存在，拦截，返回401状态码</span><br>            response.setStatus(<span class="hljs-number">401</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">// 5.存在，保存用户信息到ThreadLocal</span><br>        UserHolder.saveUser((UserDTO) user);<br>        <span class="hljs-comment">// 6.放行</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 业务执行完毕销毁对应的用户信息，避免内存泄漏</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> request</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> handler</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ex</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 移除用户</span><br>        UserHolder.removeUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>配置拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">package</span> com.hmdp.config;<br>...<br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        <span class="hljs-comment">// 登录拦截器</span><br>        registry.addInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoginInterceptor</span>())<br>                .excludePathPatterns(<br>                        <span class="hljs-string">&quot;/shop/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/voucher/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/shop-type/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/upload/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/blog/hot&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/code&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/login&quot;</span><br>                );<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>这里黑马给的nginx代码 login.html 跳转返回的是index.html首页，视频演示的是跳转到info.html详情页，如果要和视频保持一致，就去nginx文件夹里找到 login.html 把跳转代码改了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html">axios.post(&quot;/user/login&quot;, this.form)<br>.then((&#123;data&#125;) =&gt; &#123;<br>    if(data)&#123;<br>      // 保存用户信息到session<br>      sessionStorage.setItem(&quot;token&quot;, data);<br>    &#125;<br>    // 跳转到首页<br>    location.href = &quot;/info.html&quot;<br></code></pre></td></tr></table></figure>
+
+<p>如果还是有问题，建议继续往后面看视频，还有一些数据类型转换的东西没有讲完，可能是那一部分原因导致的跳转失败。并且此处应该更关注后端尤其是数据库里的现象，不用太在意前端现象</p>
+<h2 id="2-4-隐藏用户敏感信息"><a href="#2-4-隐藏用户敏感信息" class="headerlink" title="2.4 隐藏用户敏感信息"></a>2.4 隐藏用户敏感信息</h2><p>之前Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该在HTTP里传输，另一方面多余的信息也会带来额外的内存消耗，因此可以建立UserDTO，仅使用必要的信息完成数据传输</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">package</span> com.hmdp.dto;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserDTO</span> &#123;<br>    <span class="hljs-keyword">private</span> Long id;<br>    <span class="hljs-keyword">private</span> String nickName;<br>    <span class="hljs-keyword">private</span> String icon;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>随后可以将Session里存取的User也换成UserDTO</p>
+<h1 id="3-集群的session共享问题"><a href="#3-集群的session共享问题" class="headerlink" title="3. 集群的session共享问题"></a>3. 集群的session共享问题</h1><p><strong>session共享问题</strong>：多台Tomcat并不共享session存储空间，由于负载均衡，集群会把请求切换到不同的tomcat服务，这时其他的tomcat没有之前的session，导致数据丢失。</p>
+<p>tomcat也有过一些解决方案，比如在tomcat集群里拷贝所有的Session，但这会导致内存和时间上的浪费</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-%E9%9B%86%E7%BE%A4%E7%9A%84session%E5%85%B1%E4%BA%AB%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="image-20220615111417359"></p>
+<p>session的替代方案应该满足：</p>
+<ul>
+<li>数据共享</li>
+<li>内存存储</li>
+<li>key、value结构</li>
+</ul>
+<p>所以可以使用Redis作为替代方案</p>
+<h1 id="4-基于Redis实现共享session登录"><a href="#4-基于Redis实现共享session登录" class="headerlink" title="4. 基于Redis实现共享session登录"></a>4. 基于Redis实现共享session登录</h1><p>Redis代替session需要考虑的问题：</p>
+<ul>
+<li>为value选择合适的Redis数据结构</li>
+<li>选择合适的key方便存取</li>
+<li>选择合适的存储粒度</li>
+</ul>
+<h2 id="4-1-发送短信验证码"><a href="#4-1-发送短信验证码" class="headerlink" title="4.1 发送短信验证码"></a>4.1 发送短信验证码</h2><p>之前是将验证码保存到Session里，现在要将验证码保存到Redis里</p>
+<ul>
+<li><p>为value选择合适的Redis数据结构：由于验证码就是6位数字，所以value可以选择String类型</p>
+</li>
+<li><p>选择合适的key：key显然不能是之前session里的”code”了，因为每个session里有自己的code，现在如果再用code作为key，显然不能满足不同请求的需求。这里可以将手机号作为key，有两方面的原因：</p>
+<ul>
+<li><p>存：每个用户提交的手机号是不同的，根据不同手机号往redis里存验证码，能够保证key的唯一性</p>
+</li>
+<li><p>取：后续的功能里，即之前讲的2.2用户使用短信验证码登录时，直接使用session里的信息，不用考虑取信息的问题，tomcat自动帮你维护了，但现在用Redis得考虑怎么取数据。而用手机号作为key，刚好能够在用户使用短信验证码登录时提供的手机号去Reids里取出验证码</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>代码：更新 sendCode() 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Resource</span><br><span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 发送手机验证码</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">sendCode</span><span class="hljs-params">(String phone, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// 1.校验手机号</span><br>    <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>        <span class="hljs-comment">// 2.如果不符合，返回错误信息</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号格式错误！&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 3.符合，生成验证码</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> RandomUtil.randomNumbers(<span class="hljs-number">6</span>);<br><br>    <span class="hljs-comment">// 4.保存验证码到 Redis // set key value ex 120</span><br>    stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, code, LOGIN_CODE_TTL, TimeUnit.MINUTES);<br><br>    <span class="hljs-comment">// 5.发送验证码</span><br>    log.debug(<span class="hljs-string">&quot;发送短信验证码成功，验证码：&#123;&#125;&quot;</span>, code);<br>    <span class="hljs-comment">// 返回ok</span><br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="4-2-短信验证码登录"><a href="#4-2-短信验证码登录" class="headerlink" title="4.2 短信验证码登录"></a>4.2 短信验证码登录</h2><p>之前短信验证码登录有一个必不可缺的逻辑就是校验验证码之后总需要保存用户对象信息到session里，方便后续每次请求里对该信息进行处理，现在不用session了，可以将其存在redis里，还是考虑两个问题：</p>
+<ul>
+<li>为value选择合适的Redis数据结构：保存一个对象，Redis通常有两种数据结构可选，一是String结构，以JSON字符串来保存，比较直观。二是Hash结构，它可以将对象中的每个字段独立存储，可以针对单个字段做CRUD，并且内存占用更少（JSON里有不必要的符号）。一般如果数据较少的话，两个都行，数据较多从优化的角度，Hash结构更适合。此处我们选择Hash结构</li>
+<li>选择合适的key：这里也可以将手机号作为key，但不推荐，原因后面讲，而是用一个随机字符串 token，作为key，存储用户数据。也有两方面原因：<ul>
+<li>存：随机字符串能够保证key的唯一性，能够存数据</li>
+<li>取：后续的功能里，即之前讲的2.3登录验证时，用户每次请求时，是携带cookie的，里面有sessionID，这样就能用session里的用户信息进行判断，这是tomcat帮我们维护的。现在不用session了，得去redis里取出用户信息，这里就可以根据 token 取出，即把 token 作为用户的登陆凭证，取代之前的cookie。那么如何让用户每次请求时都带上 token 呢，这里需要我们在保存用户信息到Redis之后，不能结束流程，而是要将 token 通过响应信息返回给客户端，以便于客户端以后每次请求时都带上这个token。这里也是不将手机号作为key的原因，在响应中放这种敏感信息是不合理的。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E9%AA%8C%E8%AF%81%E7%A0%81%E7%99%BB%E5%BD%95%E4%B8%8E%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="image-20220615125514215"></p>
+<p>代码：更新 login() 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 登录和注册功能</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> loginForm 登录参数，包含手机号、验证码；或者手机号、密码</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">login</span><span class="hljs-params">(LoginFormDTO loginForm, HttpSession session)</span> &#123;<br>    <span class="hljs-comment">// 1.校验手机号</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">phone</span> <span class="hljs-operator">=</span> loginForm.getPhone();<br>    <span class="hljs-keyword">if</span> (RegexUtils.isPhoneInvalid(phone)) &#123;<br>        <span class="hljs-comment">// 2.如果不符合，返回错误信息</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;手机号格式错误！&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 3.从redis获取验证码并校验</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">cacheCode</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(LOGIN_CODE_KEY + phone);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">code</span> <span class="hljs-operator">=</span> loginForm.getCode();<br>    <span class="hljs-keyword">if</span> (cacheCode == <span class="hljs-literal">null</span> || !cacheCode.equals(code)) &#123;<br>        <span class="hljs-comment">// 不一致，报错</span><br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;验证码错误&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 4.一致，根据手机号查询用户 select * from tb_user where phone = ? 这里使用了MybatisPlus，代码比较简洁</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> query().eq(<span class="hljs-string">&quot;phone&quot;</span>, phone).one();<br><br>    <span class="hljs-comment">// 5.判断用户是否存在</span><br>    <span class="hljs-keyword">if</span> (user == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 6.不存在，创建新用户并保存</span><br>        user = createUserWithPhone(phone);<br>    &#125;<br><br>    <span class="hljs-comment">// 7.保存用户信息到 redis中</span><br>    <span class="hljs-comment">// 7.1.随机生成token，作为登录令牌。UUID是工具类，toStirng如果给参数true表示不生成带下划线的随机字符串</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> UUID.randomUUID().toString(<span class="hljs-literal">true</span>);<br>    <span class="hljs-comment">// 7.2.将User对象先转为UserDTO再转为HashMap存储到redis里，都是用的BeanUtil里的工具。这里由于UserDTO有long型的id，转换时需要自定义规则</span><br>    <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> BeanUtil.copyProperties(user, UserDTO.class);<br>    Map&lt;String, Object&gt; userMap = BeanUtil.beanToMap(userDTO, <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;(),<br>            CopyOptions.create()                 <span class="hljs-comment">// 自定义规则</span><br>                    .setIgnoreNullValue(<span class="hljs-literal">true</span>)    <span class="hljs-comment">// 忽略空的值（UserDTO里有icon属性暂时还没管）</span><br>                    .setFieldValueEditor((fieldName, fieldValue) -&gt; fieldValue.toString()));  <span class="hljs-comment">// 将所有的属性都转成String类型</span><br>    <span class="hljs-comment">// 7.3.存储</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">tokenKey</span> <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>    stringRedisTemplate.opsForHash().putAll(tokenKey, userMap);<br>    <span class="hljs-comment">// 7.4.设置token有效期，模仿session设置为30min</span><br>    stringRedisTemplate.expire(tokenKey, LOGIN_USER_TTL, TimeUnit.MINUTES);<br><br>    <span class="hljs-comment">// 8.返回token</span><br>    <span class="hljs-keyword">return</span> Result.ok(token);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里关于token有效期有一个问题是，expire这个函数是设定死了30min之后失效，不管这期间有没有继续访问请求，但实际上的逻辑应该是如果用户继续不断访问，则应该不断更新有效期，只有用户完全不访问了，再等30min才失去登录状态。这里的逻辑写在后续的拦截器中</p>
+<h2 id="4-3-拦截器登录验证"><a href="#4-3-拦截器登录验证" class="headerlink" title="4.3 拦截器登录验证"></a>4.3 拦截器登录验证</h2><p>拦截器的功能逻辑如下图所示</p>
+<img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E5%8A%9F%E8%83%BD%E9%80%BB%E8%BE%91.png" srcset="/img/loading.gif" lazyload alt="image-20220615164223203" style="zoom:67%;" />
+
+<p>代码：更新 LoginInterceptor</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LoginInterceptor</span><span class="hljs-params">(StringRedisTemplate stringRedisTemplate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.stringRedisTemplate = stringRedisTemplate;<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 进入controller之前进行登录校验</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> request</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> handler</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 1.获取请求头中的token</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> request.getHeader(<span class="hljs-string">&quot;authorization&quot;</span>); <span class="hljs-comment">// 前端代码里这样写的</span><br>        <span class="hljs-keyword">if</span> (StrUtil.isBlank(token)) &#123;<br>            <span class="hljs-comment">// token为空，拦截，返回401状态码</span><br>            response.setStatus(<span class="hljs-number">401</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">// 2.基于TOKEN获取redis中的用户</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">key</span>  <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>        Map&lt;Object, Object&gt; userMap = stringRedisTemplate.opsForHash().entries(key);<br>        <span class="hljs-comment">// 3.判断用户是否存在</span><br>        <span class="hljs-keyword">if</span> (userMap.isEmpty()) &#123;<br>            <span class="hljs-comment">// 4.用户不存在，拦截，返回401状态码</span><br>            response.setStatus(<span class="hljs-number">401</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">// 5.将查询到的hash数据转为UserDTO</span><br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> BeanUtil.fillBeanWithMap(userMap, <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserDTO</span>(), <span class="hljs-literal">false</span>);<br>        <span class="hljs-comment">// 6.存在，保存用户信息到 ThreadLocal</span><br>        UserHolder.saveUser(userDTO);<br>        <span class="hljs-comment">// 7.刷新token有效期</span><br>        stringRedisTemplate.expire(key, LOGIN_USER_TTL, TimeUnit.MINUTES);<br>        <span class="hljs-comment">// 8.放行</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 业务执行完毕销毁对应的用户信息，避免内存泄漏</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> request</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> handler</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ex</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 移除用户</span><br>        UserHolder.removeUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>更新WebMvcConfigurer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        <span class="hljs-comment">// 登录拦截器</span><br>        registry.addInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoginInterceptor</span>(stringRedisTemplate))<br>                .excludePathPatterns(<br>                        <span class="hljs-string">&quot;/shop/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/voucher/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/shop-type/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/upload/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/blog/hot&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/code&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/login&quot;</span><br>                );<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<p>redis 的内容</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-Redis%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" srcset="/img/loading.gif" lazyload alt="Snipaste_2022-06-15_18-43-43"></p>
+<p>每次请求中登录验证的 token</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E7%BB%93%E6%9E%9C%E4%B8%AD%E7%9A%84%E8%AF%B7%E6%B1%82tkoen.png" srcset="/img/loading.gif" lazyload alt="Snipaste_2022-06-15_18-44-25"></p>
+<p>注意，在拦截器类 LoginInterceptor 注入 StringRedisTemplate可能会失败，参考笔记：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7109412059917320200">问题解决：springboot拦截器无法注入 StringRedisTemplate - 掘金 (juejin.cn)</a></p>
+<h2 id="4-4-优化拦截器登陆验证"><a href="#4-4-优化拦截器登陆验证" class="headerlink" title="4.4 优化拦截器登陆验证"></a>4.4 优化拦截器登陆验证</h2><p>在前面的拦截器思路中（如下图所示），拦截器负责更新 token 的有效期，但其实有些网页请求是不用拦截的，比如商户信息。现在假设一个用户登录了之后浏览了30分钟的商户信息，这30分钟没有用到拦截器，然后 token 就过期了，用户得重新登录，这显然是不合理的，因此我们需要对拦截器做出优化。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF-%E9%80%BB%E8%BE%91%E6%A1%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220615221757251"></p>
+<p>优化方法：</p>
+<p>可以新增加一个拦截器拦截一切信息，在这个拦截器里负责获取、查询、更新 token，原先的 LoginInterceptor 拦截器只负责查询用户是否存在，逻辑图如下，这样就可以解决前面提到的问题。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E7%9F%AD%E4%BF%A1%E7%99%BB%E9%99%86-Redis%E6%8B%A6%E6%88%AA%E5%99%A8%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF-%E9%80%BB%E8%BE%91%E6%A1%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220615222048131"></p>
+<p>代码：</p>
+<p>新添加拦截器 RefreshTokenInterceptor，注意此处是拦截一切请求，所以查不到 token 也没事，放行就行。查不到用户也放行，用户判断放到原先的 LoginInterceptor 拦截器去处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RefreshTokenInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">RefreshTokenInterceptor</span><span class="hljs-params">(StringRedisTemplate stringRedisTemplate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.stringRedisTemplate = stringRedisTemplate;<br>    &#125;<br><br>    <span class="hljs-comment">// 拦截一切请求，获取、查询、更新 token</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 1.获取请求头中的token</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> request.getHeader(<span class="hljs-string">&quot;authorization&quot;</span>);<br>        <span class="hljs-keyword">if</span> (StrUtil.isBlank(token)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;   <span class="hljs-comment">// 注意这里的变化，此处是拦截一切请求，所以查不到token也没事，放行就行</span><br>        &#125;<br>        <span class="hljs-comment">// 2.基于TOKEN获取redis中的用户</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">key</span>  <span class="hljs-operator">=</span> LOGIN_USER_KEY + token;<br>        Map&lt;Object, Object&gt; userMap = stringRedisTemplate.opsForHash().entries(key);<br>        <span class="hljs-comment">// 3.判断用户是否存在</span><br>        <span class="hljs-keyword">if</span> (userMap.isEmpty()) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 同上，放行</span><br>        &#125;<br>        <span class="hljs-comment">// 5.将查询到的hash数据转为UserDTO</span><br>        <span class="hljs-type">UserDTO</span> <span class="hljs-variable">userDTO</span> <span class="hljs-operator">=</span> BeanUtil.fillBeanWithMap(userMap, <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserDTO</span>(), <span class="hljs-literal">false</span>);<br>        <span class="hljs-comment">// 6.存在，保存用户信息到 ThreadLocal</span><br>        UserHolder.saveUser(userDTO);<br>        <span class="hljs-comment">// 7.刷新token有效期</span><br>        stringRedisTemplate.expire(key, LOGIN_USER_TTL, TimeUnit.MINUTES);<br>        <span class="hljs-comment">// 8.放行</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 业务执行完毕销毁对应的用户信息，避免内存泄漏</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">afterCompletion</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 移除用户</span><br>        UserHolder.removeUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>更新 LoginInterceptor，只需要去ThreadLocal中查询是否有用户</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoginInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">HandlerInterceptor</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">preHandle</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 1.判断是否需要拦截（ThreadLocal中是否有用户）</span><br>        <span class="hljs-keyword">if</span> (UserHolder.getUser() == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 没有，需要拦截，设置状态码</span><br>            response.setStatus(<span class="hljs-number">401</span>);<br>            <span class="hljs-comment">// 拦截</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">// 有用户，则放行</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>更新拦截器配置类，注意添加拦截器 registry.addInterceptor() 时，用 order() 方法指定顺序，确保 token刷新拦截器比登录验证拦截器先执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addInterceptors</span><span class="hljs-params">(InterceptorRegistry registry)</span> &#123;<br>        <span class="hljs-comment">// token刷新拦截器</span><br>        registry.addInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RefreshTokenInterceptor</span>(stringRedisTemplate)).addPathPatterns(<span class="hljs-string">&quot;/**&quot;</span>).order(<span class="hljs-number">0</span>);<br>        <span class="hljs-comment">// 登录验证拦截器</span><br>        registry.addInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoginInterceptor</span>())<br>                .excludePathPatterns(<br>                        <span class="hljs-string">&quot;/shop/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/voucher/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/shop-type/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/upload/**&quot;</span>,<br>                        <span class="hljs-string">&quot;/blog/hot&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/code&quot;</span>,<br>                        <span class="hljs-string">&quot;/user/login&quot;</span><br>                ).order(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<p>登录之后不断访问 个人主页 和 首页，去查看Redis里 token 的TTL ，应该是不断被刷新重置的。这样就能够解决登录状态刷新的问题</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/16/Redis/01.%20%E5%88%9D%E8%AF%86Redis/">
+                        <span class="hidden-mobile">Redis：01.初始Redis</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
