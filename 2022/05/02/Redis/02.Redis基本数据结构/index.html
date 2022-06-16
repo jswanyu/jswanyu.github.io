@@ -19,22 +19,16 @@
     <meta name="description" content="1. Redis数据结构介绍Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样： 基本类型：String， Hash，List， Set， SortedSet 特殊类型：GEO，BitMap， HuperLog 2. Redis通用命令Redis为了方便我们学习，将操作不同数据类型的命令也做了分组，在官网（ https:&#x2F;&#x2F;redis.io&#x2F;co">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis：02.Redis基本数据结构">
-<meta property="og:url" content="http://example.com/2022/06/16/Redis/02.Redis%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:url" content="http://example.com/2022/05/02/Redis/02.Redis%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="1. Redis数据结构介绍Redis是一个key-value的数据库，key一般是String类型，不过value的类型多种多样： 基本类型：String， Hash，List， Set， SortedSet 特殊类型：GEO，BitMap， HuperLog 2. Redis通用命令Redis为了方便我们学习，将操作不同数据类型的命令也做了分组，在官网（ https:&#x2F;&#x2F;redis.io&#x2F;co">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Key%E7%9A%84%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Hash%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/List%E7%9A%84%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4%E7%90%86%E8%A7%A3.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E6%BC%94%E7%A4%BAList%E7%9A%84BLPOP%E5%91%BD%E4%BB%A4.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E6%BC%94%E7%A4%BAList%E7%9A%84BLPOP%E5%91%BD%E4%BB%A41.png">
-<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E6%BC%94%E7%A4%BAList%E7%9A%84BLPOP%E5%91%BD%E4%BB%A42.png">
-<meta property="article:published_time" content="2022-06-16T09:13:56.000Z">
-<meta property="article:modified_time" content="2022-06-16T09:49:04.054Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2022-05-02T02:13:56.000Z">
+<meta property="article:modified_time" content="2022-06-16T12:03:54.493Z">
 <meta property="article:author" content="万宇">
-<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/Key%E7%9A%84%E5%B1%82%E7%BA%A7%E7%BB%93%E6%9E%84.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
   
   
   
@@ -154,18 +148,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 关于
@@ -195,7 +177,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -212,8 +194,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-16 17:13" pubdate>
-          2022年6月16日 下午
+        <time datetime="2022-05-02 10:13" pubdate>
+          2022年5月2日 上午
         </time>
       </span>
     
@@ -433,13 +415,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Redis/">#Redis</a>
-      
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
     </div>
+  
   
 </div>
 
@@ -450,7 +446,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis：02.Redis基本数据结构</div>
-      <div>http://example.com/2022/06/16/Redis/02.Redis基本数据结构/</div>
+      <div>http://example.com/2022/05/02/Redis/02.Redis基本数据结构/</div>
     </div>
     <div class="license-meta">
       
@@ -462,7 +458,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月16日</div>
+          <div>2022年5月2日</div>
         </div>
       
       
