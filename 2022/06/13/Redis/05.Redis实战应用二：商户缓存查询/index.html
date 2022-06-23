@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
 <meta property="article:published_time" content="2022-06-13T06:39:22.000Z">
-<meta property="article:modified_time" content="2022-06-21T15:48:22.331Z">
+<meta property="article:modified_time" content="2022-06-22T04:46:30.631Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
@@ -211,7 +211,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.3k 字
+          7.4k 字
         
       </span>
     
@@ -454,7 +454,33 @@
 <p>执行过程是redis缓存未命中后，先去DB里查，发现不存在，就往redis里存空值</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C1.png" srcset="/img/loading.gif" lazyload alt="image-20220621233808104"></p>
 <p>后面再次查询（刷新网页）时，就不会再去DB里查了（可以通过清空后台信息查看）</p>
-<h1 id="五、缓存雪崩"><a href="#五、缓存雪崩" class="headerlink" title="五、缓存雪崩"></a>五、缓存雪崩</h1>
+<h1 id="五、缓存雪崩"><a href="#五、缓存雪崩" class="headerlink" title="五、缓存雪崩"></a>五、缓存雪崩</h1><p><strong>缓存雪崩</strong>是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>给不同的Key的TTL添加随机值（很多热点数据是提前存进redis里的，设置随机的超时时间）</li>
+<li>利用Redis集群提高服务的可用性</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9-%E6%A8%A1%E5%9E%8B%E5%B1%95%E7%A4%BA.png" srcset="/img/loading.gif" lazyload alt="image-20220622091419380"></p>
+<p>设置随机超时时间很简单，这里就没有代码演示了</p>
+<h1 id="六、缓存击穿"><a href="#六、缓存击穿" class="headerlink" title="六、缓存击穿"></a>六、缓存击穿</h1><h2 id="1-理论知识-2"><a href="#1-理论知识-2" class="headerlink" title="1.  理论知识"></a>1.  理论知识</h2><p><strong>缓存击穿问题</strong>也叫热点Key问题（不同于缓存雪崩是大部分key失效，缓存击穿只是部分key，但这部分key很重要，是热点内容），就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂（有时需要多张表查询并进行复杂运算）</strong>的key突然失效了，无数的请求访问（因为它是热点key，有大量请求会在缓存重建过程中不断访问）会在瞬间给数据库带来巨大的冲击。</p>
+<p>常见的解决方案有两种：</p>
+<p>（1）互斥锁：重建缓存前获取锁，其他线程来了就等着，直到释放锁</p>
+<p>优点：没有额外的内存消耗；保证一致性；实现简单</p>
+<p>缺点：线程需要等待，性能受影响；可能有死锁风险</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E4%BA%92%E6%96%A5%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" srcset="/img/loading.gif" lazyload alt="image-20220622093251295"></p>
+<p>（2）逻辑过期：不设置真正的过期时间（TTL），让key永久生效。但我们又怎么知道到底什么时候缓存会失效呢，这里可以把时效的时间（当前时间+有效期）写到value里，让他只是逻辑上的过期时间。但其实这个key是没有TTL的，再搭配上合适的内存淘汰策略，理论上来讲是可以永远能查到的，不会存在未命中的情况。</p>
+<p>当然了，实际上我们总要判断一下key再逻辑上是否过期了，去value里取值就可以了，如果逻辑时间已过期，说明要更新一下数据。但这里特殊在它让另一个线程去重建缓存，当前线程直接返回过期数据（缓存重建完之前来的线程都是返回旧值）等缓存重建完，再来的线程，就是返回新值了</p>
+<p>优点：线程无需等待，性能较好</p>
+<p>缺点：不保证一致性、有额外内存消耗、实现复杂</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F.png" srcset="/img/loading.gif" lazyload alt="image-20220622094823087"></p>
+<p>总结：两种方案都是解决缓存重建这个过程中产生的并发问题，互斥锁保证了一致性但牺牲了可用性，而逻辑过期不能保证一致性，但可用性高。这也是分布式系统常见的可用性和一致性之间的抉择问题，根据需求选择。</p>
+<h2 id="2-代码解决缓存击穿"><a href="#2-代码解决缓存击穿" class="headerlink" title="2. 代码解决缓存击穿"></a>2. 代码解决缓存击穿</h2><p><strong>方案一：基于互斥锁方式</strong></p>
+<p>这里的锁不能用 synchronized 或者 lock，它们是得到锁进行操作，没得到就等待，但我们希望是没得到锁休眠一段时间再查询缓存，所以需要用自定义的锁。Redis里 String 类型有命令 setnx 能够有这样类似的效果，只有 key 不存在时才能设置值，这样有多个线程同时 setnx 时，只有第一个能成功，其他都阻塞，直到把这个 key 删掉</p>
+<p><strong>方案二：基于逻辑过期方式</strong></p>
+<p>（这里只是看了视频，视频里用了JMeter来进行压测，代码没写，节约时间，后续如果用到再继续补充）</p>
+
               
             </div>
             <hr/>
