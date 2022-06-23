@@ -19,7 +19,7 @@
     <meta name="description" content="参考资料：黑马redis课程、3种常用的缓存读写策略 | JavaGuide 一、什么是缓存缓存就是数据交换的缓冲区（称作Cache），是存贮数据的临时地方，一般读写性能较高。 缓存的作用：  降低后端负载（不用去访问数据库） 提高读写效率，降低响应时间  缓存的成本：  数据一致性成本（数据更新导致缓存里还是旧数据）  代码维护成本  运维成本   二、添加Redis缓存本小节应用的功能背景是查">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis：05.Redis实战应用二：商户缓存查询">
-<meta property="og:url" content="http://jswanyu.github.io/2022/06/13/Redis/05.Redis%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E4%BA%8C%EF%BC%9A%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:url" content="http://jswanyu.github.io/2022/06/13/Redis/Redis%EF%BC%9A05.Redis%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E4%BA%8C%EF%BC%9A%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98%E6%9F%A5%E8%AF%A2/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="参考资料：黑马redis课程、3种常用的缓存读写策略 | JavaGuide 一、什么是缓存缓存就是数据交换的缓冲区（称作Cache），是存贮数据的临时地方，一般读写性能较高。 缓存的作用：  降低后端负载（不用去访问数据库） 提高读写效率，降低响应时间  缓存的成本：  数据一致性成本（数据更新导致缓存里还是旧数据）  代码维护成本  运维成本   二、添加Redis缓存本小节应用的功能背景是查">
 <meta property="og:locale" content="zh_CN">
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -518,7 +518,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis：05.Redis实战应用二：商户缓存查询</div>
-      <div>http://jswanyu.github.io/2022/06/13/Redis/05.Redis实战应用二：商户缓存查询/</div>
+      <div>http://jswanyu.github.io/2022/06/13/Redis/Redis：05.Redis实战应用二：商户缓存查询/</div>
     </div>
     <div class="license-meta">
       
@@ -665,6 +665,21 @@
   </script>
 
 
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
 
