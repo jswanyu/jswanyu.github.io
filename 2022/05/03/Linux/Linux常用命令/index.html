@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Linux%E5%9B%BE%E6%A0%87.jpeg">
 <meta property="article:published_time" content="2022-05-03T08:19:56.000Z">
-<meta property="article:modified_time" content="2022-06-23T03:33:51.122Z">
+<meta property="article:modified_time" content="2022-06-24T10:13:38.875Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Linux%E5%9B%BE%E6%A0%87.jpeg">
@@ -211,7 +211,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.3k 字
+          6.1k 字
         
       </span>
     
@@ -492,6 +492,36 @@
 
 
 
+
+
+
+
+
+
+
+
+<h1 id="五、yum常用命令"><a href="#五、yum常用命令" class="headerlink" title="五、yum常用命令"></a>五、yum常用命令</h1><h2 id="1-install-安装"><a href="#1-install-安装" class="headerlink" title="1. install 安装"></a>1. install 安装</h2><p>安装指定的软件：yum install <package_name> </p>
+<p>可安裝的软件清单：yum list</p>
+<h2 id="2-update-更新"><a href="#2-update-更新" class="headerlink" title="2. update 更新"></a>2. update 更新</h2><p>列出可更新的软件清单：yum check-update </p>
+<p>更新所有软件：yum update </p>
+<p>更新指定的软件：yum update <package_name></p>
+<h2 id="3-remove-删除"><a href="#3-remove-删除" class="headerlink" title="3. remove 删除"></a>3. remove 删除</h2><p><strong>删除</strong>软件包命令：yum <strong>remove</strong> <package_name></p>
+<h2 id="4-search-查找"><a href="#4-search-查找" class="headerlink" title="4. search 查找"></a>4. search 查找</h2><p>查找软件包命令：yum search  例子：找出以 pam 为开头的软件名称</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">yum <span class="hljs-built_in">list</span> pam*<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-clean-清除缓存"><a href="#5-clean-清除缓存" class="headerlink" title="5. clean 清除缓存"></a>5. clean 清除缓存</h2><p>yum clean packages: 清除缓存目录下的软件包 yum clean headers: 清除缓存目录下的 headers yum clean oldheaders: 清除缓存目录下旧的 headers yum clean, yum clean all (&#x3D; yum clean packages; yum clean oldheaders) :清除缓存目录下的软件包及旧的 headers</p>
+<h2 id="6-设置yum源"><a href="#6-设置yum源" class="headerlink" title="6. 设置yum源"></a>6. 设置yum源</h2><p>首先备份&#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup<br></code></pre></td></tr></table></figure>
+
+<p>下载<strong>对应版本</strong> repo 文件, 放入 &#x2F;etc&#x2F;yum.repos.d&#x2F; (操作前请做好相应备份)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">wget http:<span class="hljs-comment">//mirrors.163.com/.help/CentOS6-Base-163.repo</span><br>mv CentOS6-Base<span class="hljs-number">-163.</span>repo CentOS-Base.repo<br></code></pre></td></tr></table></figure>
+
+<p>运行以下命令生成缓存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">yum clean all<br>yum makecache<br></code></pre></td></tr></table></figure>
+
+<p>除了网易之外，国内还有其他不错的 yum 源，比如中科大和搜狐。</p>
 <p>参考：</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095405691497611277#heading-0">【Linux】Linux常用命令 - 掘金 (juejin.cn)</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7106302473005957134#heading-20">Linux常用命令手册 - 掘金 (juejin.cn)</a></p>

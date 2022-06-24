@@ -16,16 +16,16 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="DQL（Data Query Language）：数据查询语言 1. 基础查询1.1 SELECT…1234567891011121314# sql数据表使用尚硅谷b站教程的myemployees.sqlUSE myemployees;#1.查询常量：select 常量值;#注意：字符型和日期型的常量值必须用单引号引起来，数值型不需要SELECT 100；SELECT ‘join’;#2.查询函数">
+    <meta name="description" content="容易出错的地方：  条件查询判断什么地方为空，一定要 is null，而不是 &#x3D; null（null 在MySQL中不代表任何值，通过运算符是得不到任何结果的，因此只能用 is null）  DQL（Data Query Language）：数据查询语言 1. 基础查询1.1 SELECT…1234567891011121314# sql数据表使用尚硅谷b站教程的myemployees.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL基础：02.DQL 数据查询语言">
 <meta property="og:url" content="http://jswanyu.github.io/2022/04/23/MySQL/MySQL%E5%9F%BA%E7%A1%80%EF%BC%9A02.DQL%20%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="DQL（Data Query Language）：数据查询语言 1. 基础查询1.1 SELECT…1234567891011121314# sql数据表使用尚硅谷b站教程的myemployees.sqlUSE myemployees;#1.查询常量：select 常量值;#注意：字符型和日期型的常量值必须用单引号引起来，数值型不需要SELECT 100；SELECT ‘join’;#2.查询函数">
+<meta property="og:description" content="容易出错的地方：  条件查询判断什么地方为空，一定要 is null，而不是 &#x3D; null（null 在MySQL中不代表任何值，通过运算符是得不到任何结果的，因此只能用 is null）  DQL（Data Query Language）：数据查询语言 1. 基础查询1.1 SELECT…1234567891011121314# sql数据表使用尚硅谷b站教程的myemployees.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
 <meta property="article:published_time" content="2022-04-23T01:13:34.000Z">
-<meta property="article:modified_time" content="2022-06-20T01:40:44.940Z">
+<meta property="article:modified_time" content="2022-06-24T09:58:30.467Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/MySQL%E5%9B%BE%E6%A0%87.png">
@@ -255,7 +255,11 @@
             
             <div class="markdown-body">
               
-              <p>DQL（Data Query Language）：数据<strong>查询</strong>语言</p>
+              <p><font color = red>容易出错的地方：</font></p>
+<ul>
+<li>条件查询判断什么地方为空，一定要 is null，而不是 &#x3D; null（null 在MySQL中不代表任何值，通过运算符是得不到任何结果的，因此只能用 is null）</li>
+</ul>
+<p>DQL（Data Query Language）：数据<strong>查询</strong>语言</p>
 <h2 id="1-基础查询"><a href="#1-基础查询" class="headerlink" title="1. 基础查询"></a>1. 基础查询</h2><h3 id="1-1-SELECT…"><a href="#1-1-SELECT…" class="headerlink" title="1.1 SELECT…"></a>1.1 SELECT…</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql"># <span class="hljs-keyword">sql</span>数据表使用尚硅谷b站教程的myemployees.sql<br>USE myemployees;<br><br>#<span class="hljs-number">1.</span>查询常量：<span class="hljs-keyword">select</span> 常量值;<br>#注意：字符型和日期型的常量值必须用单引号引起来，数值型不需要<br><span class="hljs-keyword">SELECT</span> <span class="hljs-number">100</span>；<br><span class="hljs-keyword">SELECT</span> ‘<span class="hljs-keyword">join</span>’;<br><br>#<span class="hljs-number">2.</span>查询函数（函数后面会具体讲）<br>#<span class="hljs-keyword">select</span> 函数名(实参列表);<br><span class="hljs-keyword">SELECT</span> VERSION();<br><br>#<span class="hljs-number">3.</span>查询表达式 <br><span class="hljs-keyword">SELECT</span> <span class="hljs-number">100</span><span class="hljs-operator">%</span><span class="hljs-number">98</span>;<br></code></pre></td></tr></table></figure>
 
 <h3 id="1-2-SELECT-…-FROM"><a href="#1-2-SELECT-…-FROM" class="headerlink" title="1.2 SELECT … FROM"></a>1.2 SELECT … FROM</h3><p>语法：<code>select 查询列表 from 表名</code></p>
