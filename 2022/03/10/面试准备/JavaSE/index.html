@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-06-23T09:14:55.837Z">
+<meta property="article:modified_time" content="2022-06-27T09:59:15.724Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -213,7 +213,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          47k 字
+          48k 字
         
       </span>
     
@@ -221,6 +221,14 @@
     
 
     
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
     
   </div>
 
@@ -365,7 +373,7 @@
 <p>数组可以只声明，用new创建之后，JVM会自动将每个元素赋为初始值0</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">int</span> a;  <span class="hljs-comment">// 应改为int a = 0;</span><br>System.out.println(a); <span class="hljs-comment">// 报错</span><br><br><span class="hljs-type">int</span>[] b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">1</span>];<br>System.out.println(b[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 0</span><br><br>String c; <span class="hljs-comment">// 应改为 String c = null 或 String c = &quot;&quot;;</span><br>System.out.println(c); <span class="hljs-comment">// 报错</span><br></code></pre></td></tr></table></figure>
 
-<p>如果是全局变量则可以不同初始化，后续面向对象里会提到细节</p>
+<p>如果是类的静态变量和成员变量则可以不用初始化，后续面向对象里会提到细节</p>
 <h3 id="隐式-自动-类型转换和显示-强制-类型转换"><a href="#隐式-自动-类型转换和显示-强制-类型转换" class="headerlink" title="隐式(自动)类型转换和显示(强制)类型转换"></a>隐式(自动)类型转换和显示(强制)类型转换</h3><p>隐式(自动)类型转换：从存储范围小的类型到存储范围大的类型。</p>
 <p>byte → short(char) → int → long → float → double</p>
 <p>显示(强制)类型转换：从存储范围大的类型到存储范围小的类型。</p>
@@ -404,12 +412,19 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 声明一个Integer对象，隐含自动装箱</span><br><span class="hljs-type">Integer</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> <span class="hljs-number">9</span>;<br><span class="hljs-comment">// 进行计算时隐含的有自动拆箱</span><br>System.out.print(num--);<br></code></pre></td></tr></table></figure>
 
 <p>9是属于基本数据类型的，原则上它是不能直接赋值给一个对象Integer的。但jdk1.5 开始引入了自动装箱&#x2F;拆箱机制，就可以进行这样的声明，自动将基本数据类型转化为对应的封装类型，成为一个对象以后就可以调用对象所声明的所有的方法。而进行运算时候又会转为基本数据类型，因为对象时不能直接进行运算的，而是要转化为基本数据类型后才能进行加减乘除。</p>
-<h3 id="只使用基本类型或者包装类型可以吗？"><a href="#只使用基本类型或者包装类型可以吗？" class="headerlink" title="只使用基本类型或者包装类型可以吗？"></a>只使用基本类型或者包装类型可以吗？</h3><p>单从java语言来说只是用包装类型可以，但基本类型使用效率更高，更节省内存，而变成工程中基本类型的使用大量且频繁，所以使用基本类型可以节省大量资源，提高效率。</p>
+<p>注意自动拆箱过程中，包装类可能是 null 值，转成基本数据类型会出问题，可以用 equal 的写法去解决。这里只记录了布尔类型，其他类型暂时没记录</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Boolean</span> <span class="hljs-variable">success</span> <span class="hljs-operator">=</span> ...<br><span class="hljs-keyword">return</span> Boolean.TRUE.equals(success); <span class="hljs-comment">// 这样写是为了防止包装类有null值，还拆箱</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="只使用基本类型或者包装类型可以吗？"><a href="#只使用基本类型或者包装类型可以吗？" class="headerlink" title="只使用基本类型或者包装类型可以吗？"></a>只使用基本类型或者包装类型可以吗？</h3><p>单从java语言来说只是用包装类型可以，但基本类型使用效率更高，更节省内存，而编程工程中基本类型的使用大量且频繁，所以使用基本类型可以节省大量资源，提高效率。</p>
 <p>但是只有基本类型就会有点问题（集合），基本类型可以实现大部分操作，但是基本类型不具备类的特性，包装类型是对基本类型的封装，两者之间可以相互转化，丰富了基本类型的操作。</p>
 <h3 id="int-和-Integer-有什么区别"><a href="#int-和-Integer-有什么区别" class="headerlink" title="int 和 Integer 有什么区别?"></a>int 和 Integer 有什么区别?</h3><p>Integer是int的包装类；int是基本数据类型；</p>
 <p>Integer实际是对象的引用，指向此new的Integer对象；int是直接存储数据值 ；</p>
 <p>Integer的默认值是null；int的默认值是0。</p>
-<h3 id="Integer变量和int变量的对比"><a href="#Integer变量和int变量的对比" class="headerlink" title="Integer变量和int变量的对比"></a>Integer变量和int变量的对比</h3><p>Integer变量和int变量比较时，只要两个变量的值是相等的，则结果为true，因为包装类Integer和基本数据类型int比较时，java会自动拆包为int，然后进行比较，实际上就变为两个int变量的比较</p>
+<h3 id="Integer变量和int变量的比较"><a href="#Integer变量和int变量的比较" class="headerlink" title="Integer变量和int变量的比较"></a>Integer变量和int变量的比较</h3><p>Integer变量和int变量比较时，只要两个变量的值是相等的，则结果为true，因为包装类Integer和基本数据类型int比较时，java会自动拆包为int，然后进行比较，实际上就变为两个int变量的比较</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">1000</span>;<br><span class="hljs-type">Integer</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">1000</span>);<br><span class="hljs-type">Integer</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-number">1000</span>;<br>System.out.println(a==b); <span class="hljs-comment">// true</span><br>System.out.println(a==c); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
 
@@ -436,7 +451,7 @@
 <h3 id="非new生成的Integer变量和new-Integer-生成变量的对比"><a href="#非new生成的Integer变量和new-Integer-生成变量的对比" class="headerlink" title="非new生成的Integer变量和new Integer()生成变量的对比"></a>非new生成的Integer变量和new Integer()生成变量的对比</h3><p>（个人理解，资料和博客上不太全）</p>
 <p>如果是-128到127范围内，非new生成的Integer变量指向的是java常量池中的对象，而new Integer()生成的变量指向堆中新建的对象，两者在内存中的地址不同。</p>
 <p>如果不是-128到127的范围，则两种方式在堆中创建不同的对象，自然也不同</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Integer</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">10</span>);<br><span class="hljs-type">Integer</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>System.out.println(a==b); <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Integer</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">10</span>);<br><span class="hljs-type">Integer</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>System.out.println(a==b); <span class="hljs-comment">// false</span><br><span class="hljs-type">Integer</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Integer</span>(<span class="hljs-number">1000</span>);<br><span class="hljs-type">Integer</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> <span class="hljs-number">1000</span>;<br>System.out.println(c==d); <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
 
 
 
@@ -488,8 +503,9 @@
 <li>public表示可以被该项目的所有包中的所有类访问</li>
 </ul>
 <p>类的属性一般使用private修饰访问权限，但会提供相应的get&#x2F;set方法来访问相关属性，这些方法通常是public修饰的，以提供对属性的赋值与读取操作</p>
-<h3 id="运算符-amp-amp-和-amp-，-和"><a href="#运算符-amp-amp-和-amp-，-和" class="headerlink" title="运算符&amp;&amp;和&amp;，||和|"></a>运算符&amp;&amp;和&amp;，||和|</h3><p>&amp;&amp; 和&amp; 都可以表示逻辑与，但他们是有区别的，共同点是他们两边的条件都成立的时候最终结果才是true ；不同点是&amp;&amp; 只要是第一个条件不成立为false ，就不会再去判断第二个条件，最终结果直接为false ，而&amp; 判断的是所有的条件。</p>
-<p>|| 和| 都表示逻辑或，共同点是只要两个判断条件其中有一个成立最终的结果就是true ，区别是|| 只要满足第一个条件，后面的条件就不再判断，而| 要对所有的条件进行判断。</p>
+<h3 id="运算符-amp-amp-和-amp-，-和"><a href="#运算符-amp-amp-和-amp-，-和" class="headerlink" title="运算符&amp;&amp;和&amp;，||和|"></a>运算符&amp;&amp;和&amp;，||和|</h3><p>&amp;&amp; 和 &amp; 都可以表示逻辑与，但他们是有区别的，共同点是他们两边的条件都成立的时候最终结果才是true ；不同点是&amp;&amp; 只要是第一个条件不成立为false ，就不会再去判断第二个条件，最终结果直接为false ，而&amp; 判断的是所有的条件。</p>
+<p>|| 和 | 都表示逻辑或，共同点是只要两个判断条件其中有一个成立最终的结果就是true ，区别是 || 只要满足第一个条件，后面的条件就不再判断，而| 要对所有的条件进行判断。</p>
+<p>即 &amp;&amp; 和 || 都有短路特性</p>
 <h3 id="break-continue-的区别及作用"><a href="#break-continue-的区别及作用" class="headerlink" title="break , continue 的区别及作用"></a>break , continue 的区别及作用</h3><p>break 跳出总上一层循环，不再执行循环(结束当前的循环体)</p>
 <p>continue 跳出本次循环，继续执行下次循环(结束正在执行的循环 进入下一个循环条件)</p>
 <h3 id="Java中final的作用"><a href="#Java中final的作用" class="headerlink" title="Java中final的作用"></a>Java中final的作用</h3><p>Java中final关键字仅可以用来修饰类、方法和变量（包括成员变量和局部变量）：</p>
@@ -498,43 +514,49 @@
 <li>当final修饰<strong>方法</strong>时，被修饰的方法无法被所在类的子类重写，但可以被重载，一个类的private方法会隐式的被指定为final方法。</li>
 <li>当final修饰<strong>变量</strong>时，如果是基本数据类型，被修饰的变量<strong>必须被初始化</strong>(赋值)，且后续不能修改其值，实质上是<strong>常量</strong>；如果是引用类型，则在对其初始化之后便不能再让其指向另一个对象。即引用的<strong>地址不能改变</strong>，但是这个引用所指向的<strong>对象里面的内容可以改变</strong>。即final修饰其实是防止其被重新初始化 也就是被重新new 一个 或者被 &#x3D; 赋值而已</li>
 </ul>
-<h3 id="Java中finalize的作用"><a href="#Java中finalize的作用" class="headerlink" title="Java中finalize的作用"></a>Java中finalize的作用</h3><p>finalize 是在 java.lang.Object 里定义的方法，也就是说每一个对象都有这么个方法，这个方法在gc 启动，该对象被回收的时候被调用。一个对象的 finalize 方法只会被调用一次，finalize 被调用不一定会立即回收该对象，所以有可能调用finalize 后，该对象又不需要被回收了，然后到了真正要被回收的时候，因为前面调用过一次，所以不会再次调用 finalize 了，进而产生问题，因此不推荐使用 finalize 方法。</p>
-<h3 id="Java中static的作用"><a href="#Java中static的作用" class="headerlink" title="Java中static的作用"></a>Java中static的作用</h3><p>static关键字的基本作用：方便在没有实例化对象的情况下来进行调用方法或者变量，只要类被加载了，就可以通过类名去进行访问。static可以用来修饰类的成员方法、类的成员变量，另外可以编写static代码块来优化程序性能</p>
+<h3 id="Java中static的作用"><a href="#Java中static的作用" class="headerlink" title="Java中static的作用"></a>Java中static的作用</h3><p>static 可以用来修饰类的成员方法、类的成员变量，另外可以编写static代码块来优化程序性能</p>
+<p>static关键字的基本作用：方便在没有实例化对象的情况下来进行调用方法或者变量，只要类被加载了，就可以通过类名去进行访问。</p>
 <p>static方法一般称作静态方法，由于静态方法不依赖于任何对象就可以进行访问，因此对于静态方法来说，是没有this的，因为它不依附于任何对象，既然都没有对象，就谈不上this了。并且由于这个特性，在<strong>静态方法中不能访问类的非静态成员变量和非静态成员方法</strong>，因为非静态成员方法&#x2F;变量都是必须依赖具体的对象才能够被调用，但是在<strong>非静态成员方法中是可以访问静态成员方法&#x2F;变量</strong>的</p>
 <p>static变量也称作静态变量，静态变量和非静态变量的区别是：静态变量被所有的对象所共享，在内存中只有一个副本，它当且仅当在类初次加载时会被初始化。而非静态变量是对象所拥有的，在创建对象的时候被初始化，存在多个副本，各个对象拥有的副本互不影响。static成员变量的初始化顺序按照定义的顺序进行初始化。</p>
-<p>static关键字还有一个比较关键的作用就是 用来形成静态代码块以优化程序性能。static块可以置于类中的任何地方，类中可以有多个static块。在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。为什么说static块可以用来优化程序性能，是因为它的特性:只会在类加载的时候执行一次。</p>
+<p>static关键字还有一个比较关键的作用就是 用来形成静态代码块以优化程序性能。static块可以置于类中的任何地方，类中可以有多个static块。在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。为什么说static块可以用来优化程序性能，是因为它的特性：只会在类加载的时候执行一次。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 每次调用isBornBoomer的时候都会生成startDate和birthDate两个对象，造成了空间浪费</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>    <span class="hljs-keyword">private</span> Date birthDate;<br>     <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(Date birthDate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.birthDate = birthDate;<br>    &#125;<br>     <br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isBornBoomer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Date</span> <span class="hljs-variable">startDate</span> <span class="hljs-operator">=</span> Date.valueOf(<span class="hljs-string">&quot;1997&quot;</span>);<br>        <span class="hljs-type">Date</span> <span class="hljs-variable">endDate</span> <span class="hljs-operator">=</span> Date.valueOf(<span class="hljs-string">&quot;2019&quot;</span>);<br>        <span class="hljs-keyword">return</span> birthDate.compareTo(startDate)&gt;=<span class="hljs-number">0</span> &amp;&amp; birthDate.compareTo(endDate) &lt; <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 这里使用了static块只需要进行一次的初始化操作节省内存空间，优化性能</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>    <span class="hljs-keyword">private</span> Date birthDate;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Date startDate,endDate;<br> <br>    <span class="hljs-keyword">static</span>&#123;<br>        startDate = Date.valueOf(<span class="hljs-string">&quot;1997&quot;</span>);<br>        endDate = Date.valueOf(<span class="hljs-string">&quot;2019&quot;</span>);<br>    &#125;<br>     <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(Date birthDate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.birthDate = birthDate;<br>    &#125;<br>     <br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isBornBoomer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> birthDate.compareTo(startDate)&gt;=<span class="hljs-number">0</span> &amp;&amp; birthDate.compareTo(endDate) &lt; <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
 <h3 id="static关键字会改变类中成员的访问权限吗？"><a href="#static关键字会改变类中成员的访问权限吗？" class="headerlink" title="static关键字会改变类中成员的访问权限吗？"></a>static关键字会改变类中成员的访问权限吗？</h3><p>与C&#x2F;C++中的static不同，Java中的static关键字不会影响到变量或者方法的作用域。在Java中能够影响到访问权限的只有private、public、protected（包括包访问权限）这几个关键字</p>
 <h3 id="非静态方法能通过this访问静态成员变量吗？"><a href="#非静态方法能通过this访问静态成员变量吗？" class="headerlink" title="非静态方法能通过this访问静态成员变量吗？"></a>非静态方法能通过this访问静态成员变量吗？</h3><p>可以，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）</p>
-<h3 id="static能作用于局部变量么？"><a href="#static能作用于局部变量么？" class="headerlink" title="static能作用于局部变量么？"></a>static能作用于局部变量么？</h3><p>Java中切记：static是不允许用来修饰局部变量。不要问为什么，这是Java语法的规定。但在C&#x2F;C++中static是可以作用域局部变量的</p>
+<h3 id="static能作用于局部变量么？"><a href="#static能作用于局部变量么？" class="headerlink" title="static能作用于局部变量么？"></a>static能作用于局部变量么？</h3><p>Java中切记：static是不允许用来修饰局部变量。不要问为什么，这是Java语法的规定，static修饰变量只能修饰全局成员变量。但在C&#x2F;C++中static是可以作用域局部变量的。</p>
 <h3 id="Java中是否可以重写-override-或者重载一个private或者是static的方法？"><a href="#Java中是否可以重写-override-或者重载一个private或者是static的方法？" class="headerlink" title="Java中是否可以重写(override)或者重载一个private或者是static的方法？"></a>Java中是否可以重写(override)或者重载一个private或者是static的方法？</h3><p>都不可以重写，父类中修饰了一个private的方法，子类继承之后，对子类也是不可见的。子类重写则在编译阶段就会报错。</p>
 <p>Java中static方法不能被重写&#x2F;覆盖，因为方法重写是基于运行时动态绑定的，而static方法是编译时静态绑定的。static方法跟类的任何实例都不相关，所以概念上不适用</p>
 <p>都可以重载。</p>
 <h3 id="java构造函数、静态代码块、构造代码块的执行顺序是什么？"><a href="#java构造函数、静态代码块、构造代码块的执行顺序是什么？" class="headerlink" title="java构造函数、静态代码块、构造代码块的执行顺序是什么？"></a>java构造函数、静态代码块、构造代码块的执行顺序是什么？</h3><p>基本上代码块分为三种</p>
 <ul>
-<li><p>静态代码块：用static声明，jvm加载类的时候执行，只执行一次，并优于各种代码块以及构造函数。静态代码块中的变量是局部变量，一个类中可以有多个静态代码块</p>
+<li><p>静态代码块：用static声明，jvm加载类的时候执行，<strong>只执行一次，并优于各种代码块以及构造函数</strong>。静态代码块中的变量是局部变量，一个类中可以有多个静态代码块</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>	<span class="hljs-keyword">static</span>&#123;<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>构造代码块：由{ }定义，不加任何修饰符，每一次创建对象的时候执行，优先于构造函数。有对象建立才会运行构造代码块，类不能调用构造代码块。构造函数可能有多个，调用不同构造函数会进行不同的初始化，但构造代码块都会执行</p>
+<li><p>构造代码块：由{ }定义，不加任何修饰符，每一次创建对象的时候执行，<strong>优先于构造函数</strong>。有对象建立才会运行构造代码块，类不能调用构造代码块。构造函数可能有多个，调用不同构造函数会进行不同的初始化，但构造代码块都会执行</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>	&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行构造代码块&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>普通代码块：方法后面使用”{}”括起来的代码片段,不能单独执行,必须调下其方法名才可以执行.</p>
 </li>
 </ul>
-<p>静态代码块是给类初始化的，构造代码块是给对象初始化用的</p>
+<p><strong>静态代码块是给类初始化的，构造代码块是给对象初始化用的</strong></p>
 <p>代码块执行顺序：静态代码块—&gt; 构造代码块 —&gt; 构造函数—&gt; 普通代码块</p>
 <p>继承中代码块执行顺序：父类静态块—&gt;子类静态块—&gt;父类构造代码块—&gt;父类构造器—&gt;子类构造代码块—&gt;子类构造器</p>
 <h3 id="this关键字"><a href="#this关键字" class="headerlink" title="this关键字"></a>this关键字</h3><p>this 关键字可用来引用当前类的实例变量。主要用于形参与成员名字重名，用this 来区分。</p>
 <p>this 关键字可用于调用当前类方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">fun1</span><span class="hljs-params">()</span>&#123;<br>		System.out.println(<span class="hljs-string">&quot;hello,word&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">fun2</span><span class="hljs-params">()</span>&#123;<br>		<span class="hljs-built_in">this</span>.fun1();<span class="hljs-comment">//this可省略</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>this() 可以用来调用当前类的构造函数。(注意： this() 一定要放在构造函数的第一行，否则编译不通过)</p>
+<p>this() 可以用来调用当前类的构造函数。（注意： this() 一定要放在构造函数的第一行，否则编译不通过）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>	<span class="hljs-keyword">private</span> String name;<br>	<span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br>	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name)</span> &#123;<br>		<span class="hljs-built_in">this</span>.name = name;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> &#123;<br>		<span class="hljs-built_in">this</span>(name);<br>		<span class="hljs-built_in">this</span>.age = age;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>this 关键字可作为调用方法中的参数传递。</p>
 <p>this 关键字可作为参数在构造函数调用中传递。</p>
-<p>this 关键字可用于从方法返回当前类的实例</p>
+<p>this 关键字可用于从方法返回当前类的实例。</p>
 <h3 id="super关键字"><a href="#super关键字" class="headerlink" title="super关键字"></a>super关键字</h3><ul>
-<li>super 可以用来引用直接父类的实例变量。和this 类似，主要用于区分父类和子类中相同的字段</li>
+<li>super 可以用来引用直接父类的实例变量。和 this 类似，主要用于区分父类和子类中相同的字段</li>
 <li>super 可以用来调用直接父类构造函数。(注意： super() 一定要放在构造函数的第一行，否则编译不通过)</li>
 <li>super 可以用来调用直接父类方法。</li>
 </ul>
@@ -546,13 +568,15 @@
 <h3 id="this与super的区别"><a href="#this与super的区别" class="headerlink" title="this与super的区别"></a>this与super的区别</h3><p>相同点：</p>
 <ul>
 <li>super() 和this() 都必须在构造函数的第一行进行调用，否则就是错误的</li>
-<li>this() 和super() 都指的是对象，所以，均不可以在static 环境中使用。</li>
+<li>this() 和super() 都指的是对象，所以，均不可以在 static 环境中使用。</li>
 </ul>
 <p>不同点：</p>
 <ul>
 <li>super() 主要是对父类构造函数的调用， this() 是对重载构造函数的调用</li>
 <li>super() 主要是在继承了父类的子类的构造函数中使用，是在不同类中的使用； this() 主要是在同一类的不同构造函数中的使用</li>
 </ul>
+<h3 id="Java中-finalize-的作用"><a href="#Java中-finalize-的作用" class="headerlink" title="Java中 finalize 的作用"></a>Java中 finalize 的作用</h3><p>（了解即可）</p>
+<p>finalize 是在 java.lang.Object 里定义的方法，也就是说每一个对象都有这么个方法，这个方法在 gc 启动，该对象被回收的时候被调用。一个对象的 finalize 方法只会被调用一次，finalize 被调用不一定会立即回收该对象，所以有可能调用finalize 后，该对象又不需要被回收了，然后到了真正要被回收的时候，因为前面调用过一次，所以不会再次调用 finalize 了，进而产生问题，因此不推荐使用 finalize 方法。</p>
 <h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h3 id="面向对象和面向过程的区别？"><a href="#面向对象和面向过程的区别？" class="headerlink" title="面向对象和面向过程的区别？"></a>面向对象和面向过程的区别？</h3><p>面向过程性能比面向对象高，因为面向对象在类调用时需要实例化，开销比较大，比较消耗资源</p>
 <p>面向对象易维护、易复用、易扩展，由于面向对象有封装、继承、多态性的特性，可以设计出低耦合的系统，使系统更加灵活、更加易于维护。</p>
 <h3 id="面向对象五大基本原则是什么"><a href="#面向对象五大基本原则是什么" class="headerlink" title="面向对象五大基本原则是什么?"></a>面向对象五大基本原则是什么?</h3><ul>
@@ -1522,6 +1546,29 @@
 
 
               
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/MySQL/" title="面试准备：MySQL">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">面试准备：MySQL</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%99%BA%E5%8A%9B%E9%A2%98/" title="面试准备：智力题">
+                        <span class="hidden-mobile">面试准备：智力题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
 
             
@@ -1655,21 +1702,6 @@
   </script>
 
 
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 
 
 

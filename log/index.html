@@ -16,15 +16,15 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2022.06.25 打卡  MySQL题目练习：SQL进阶挑战-删除记录。delete from 表名【 where 筛选条件】。时间函数：TIMESTAMPDIFF(unit, start_time, end_time) 开始时间和结束时间不能弄混 刷题：栈-20有效括号、155最小栈 Redis：优惠券秒杀-一人一单   2022.06.24 打卡  MySQL题目练习：SQL进阶挑战-更新">
+    <meta name="description" content="2022.06.26 打卡  MySQL题目练习：SQL进阶挑战–修改表 ：alter table 表名 add|drop|modify|change  列名 【列类型 约束】; 刷题：栈–394.字符串解码 背八股-Java基础 Redis：优惠券秒杀，redis分布式锁简单版本、解决误删锁   2022.06.26 打卡  MySQL题目练习：SQL进阶挑战–创建新表 create table">
 <meta property="og:type" content="website">
 <meta property="og:title" content="log">
 <meta property="og:url" content="http://jswanyu.github.io/log/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="2022.06.25 打卡  MySQL题目练习：SQL进阶挑战-删除记录。delete from 表名【 where 筛选条件】。时间函数：TIMESTAMPDIFF(unit, start_time, end_time) 开始时间和结束时间不能弄混 刷题：栈-20有效括号、155最小栈 Redis：优惠券秒杀-一人一单   2022.06.24 打卡  MySQL题目练习：SQL进阶挑战-更新">
+<meta property="og:description" content="2022.06.26 打卡  MySQL题目练习：SQL进阶挑战–修改表 ：alter table 表名 add|drop|modify|change  列名 【列类型 约束】; 刷题：栈–394.字符串解码 背八股-Java基础 Redis：优惠券秒杀，redis分布式锁简单版本、解决误删锁   2022.06.26 打卡  MySQL题目练习：SQL进阶挑战–创建新表 create table">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-16T12:18:43.000Z">
-<meta property="article:modified_time" content="2022-06-25T17:03:49.772Z">
+<meta property="article:modified_time" content="2022-06-27T13:48:25.725Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -64,7 +64,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -210,23 +210,38 @@
                 
 
 <article class="page-content">
-  <p>2022.06.25 打卡</p>
+  <p>2022.06.26 打卡</p>
 <ul>
-<li>MySQL题目练习：SQL进阶挑战-删除记录。delete from 表名【 where 筛选条件】。时间函数：TIMESTAMPDIFF(unit, start_time, end_time) 开始时间和结束时间不能弄混</li>
+<li>MySQL题目练习：SQL进阶挑战–修改表 ：alter table 表名 <strong>add|drop|modify|change</strong>  列名 【列类型 约束】;</li>
+<li>刷题：栈–394.字符串解码</li>
+<li>背八股-Java基础</li>
+<li>Redis：优惠券秒杀，redis分布式锁简单版本、解决误删锁</li>
+</ul>
+<hr>
+<p>2022.06.26 打卡</p>
+<ul>
+<li>MySQL题目练习：SQL进阶挑战–创建新表 create table is not exists 表名( ) 注意各个约束，比如主键PRIMARY KEY，自增长AUTO_INCREMENT，唯一性 UNIQUE， 非空 NOT NULL，字符串 varchar一定要加长度等</li>
+<li>背八股-Java基础</li>
+<li>Redis：优惠券秒杀，单机模式下的一人一单业务结束，引入集群模式下存在的问题</li>
+</ul>
+<hr>
+<p>2022.06.25 打卡</p>
+<ul>
+<li>MySQL题目练习：SQL进阶挑战–删除记录。delete from 表名【 where 筛选条件】。时间函数：TIMESTAMPDIFF(unit, start_time, end_time) 开始时间和结束时间不能弄混</li>
 <li>刷题：栈-20有效括号、155最小栈</li>
-<li>Redis：优惠券秒杀-一人一单</li>
+<li>Redis：优惠券秒杀-一人一单业务</li>
 </ul>
 <hr>
 <p>2022.06.24 打卡</p>
 <ul>
-<li>MySQL题目练习：SQL进阶挑战-更新记录。条件查询判断什么地方为空，一定要 is null，而不是 &#x3D; null。update  表名  set  列&#x3D;新值, 列&#x3D;新值,… 【where 筛选条件】</li>
+<li>MySQL题目练习：SQL进阶挑战–更新记录。条件查询判断什么地方为空，一定要 is null，而不是 &#x3D; null。update  表名  set  列&#x3D;新值, 列&#x3D;新值,… 【where 筛选条件】</li>
 <li>学习linux yum常用指令，目前不太用到</li>
 <li>Redis：优惠券秒杀-优惠券下单</li>
 </ul>
 <hr>
 <p>2022.06.23 打卡</p>
 <ul>
-<li>MySQL题目练习：SQL进阶挑战-插入记录，insert into 表名(字段1，…)  values (值1，…),( ),( )</li>
+<li>MySQL题目练习：SQL进阶挑战–插入记录，insert into 表名(字段1，…)  values (值1，…),( ),( )</li>
 <li>复习linux文件指令</li>
 <li>刷题：198打家劫舍</li>
 <li>Redis：优惠券秒杀-全局唯一ID</li>
@@ -383,21 +398,6 @@
   </script>
 
 
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 
 
 
