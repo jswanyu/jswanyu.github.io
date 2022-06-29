@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-06-17T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-06-21T16:05:22.037Z">
+<meta property="article:modified_time" content="2022-06-27T16:09:02.977Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -213,7 +213,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          4.6k 字
         
       </span>
     
@@ -289,6 +289,71 @@
 <li>计数器：通过String进行自增自减实现计数功能</li>
 <li>消息队列：Redis提供了发布、订阅、阻塞队列等功能，可以实现一个简单的消息队列。</li>
 </ul>
+<h3 id="Redis键的过期删除策略"><a href="#Redis键的过期删除策略" class="headerlink" title="Redis键的过期删除策略"></a>Redis键的过期删除策略</h3><p>常见的过期删除策略是惰性删除、定期删除、定时删除。</p>
+<ul>
+<li>惰性删除：只有访问这个键时才会检查它是否过期，如果过期则清除。优点：最大化地节约CPU资源。缺点：如果大量过期键没有被访问，会一直占用大量内存。</li>
+<li>定时删除：为每个设置过期时间的key都创造一个定时器，到了过期时间就清除。优点：该策略可以立即清除过期的键。缺点：会占用大量的CPU资源去处理过期的数据。</li>
+<li>定期删除：每隔一段时间就对一些键进行检查，删除其中过期的键。该策略是惰性删除和定时删除的一个折中，既避免了占用大量CPU资源又避免了出现大量过期键不被清除占用内存的情况。</li>
+</ul>
+<p>Redis中同时使用了惰性删除和定期删除两种。</p>
+<h3 id="Redis的内存淘汰机制是什么样的？"><a href="#Redis的内存淘汰机制是什么样的？" class="headerlink" title="Redis的内存淘汰机制是什么样的？"></a>Redis的内存淘汰机制是什么样的？</h3><p>Redis是基于内存的，所以容量肯定是有限的，有效的内存淘汰机制对Redis是非常重要的。当存入的数据超过Redis最大允许内存后，会触发Redis的内存淘汰策略。在Redis4.0前一共有6种淘汰策略。</p>
+<ul>
+<li>volatile-lru：当Redis内存不足时，会在设置了过期时间的键中使用LRU算法移除那些最少使用的键。（注：在面试中，手写LRU算法也是个高频题，使用双向链表和哈希表作为数据结构）</li>
+<li>volatile-ttl：从设置了过期时间的键中移除将要过期的</li>
+<li>volatile-random：从设置了过期时间的键中随机淘汰一些</li>
+<li>allkeys-lru：当内存空间不足时，根据LRU算法移除一些键</li>
+<li>allkeys-random：当内存空间不足时，随机移除某些键</li>
+<li>noeviction：当内存空间不足时，新的写入操作会报错</li>
+</ul>
+<p>前三个是在<strong>设置了过期时间的键的空间</strong>进行移除，后三个是在<strong>全局的空间</strong>进行移除。在Redis4.0后可以增加两个：</p>
+<ul>
+<li>volatile-lfu：从设置过期时间的键中移除一些最不经常使用的键（LFU算法：Least FrequentlyUsed)）</li>
+<li>allkeys-lfu：当内存不足时，从所有的键中移除一些最不经常使用的键</li>
+</ul>
+<p>这两个也是一个是在设置了过期时间的键的空间，一个是在全局空间。</p>
+<h3 id="Redis为什么这么快？"><a href="#Redis为什么这么快？" class="headerlink" title="Redis为什么这么快？"></a>Redis为什么这么快？</h3><p>Redis为什么这么快主要有以下几个原因：</p>
+<ul>
+<li>运行在内存中</li>
+<li>数据结构简单</li>
+<li>使用多路IO复用技术</li>
+<li>单线程实现，单线程避免了线程切换、锁等造成的性能开销。</li>
+</ul>
+<h3 id="Redis是单线程还是多线程？"><a href="#Redis是单线程还是多线程？" class="headerlink" title="Redis是单线程还是多线程？"></a>Redis是单线程还是多线程？</h3><p>Redis6.0之前是单线程的，为什么Redis6.0之前采用单线程而不采用多线程呢？</p>
+<p>简单来说，就是Redis官方认为没必要，单线程的Redis的瓶颈通常在CPU的IO，而在使用Redis时几乎不存在CPU成为瓶颈的情况。使用Redis主要的瓶颈在内存和网络，并且使用单线程也存在一些优点，比如系统的复杂度较低，可为维护性较高，避免了并发读写所带来的一系列问题。</p>
+<h3 id="Redis是单线程的，如何提高CPU的利用率？"><a href="#Redis是单线程的，如何提高CPU的利用率？" class="headerlink" title="Redis是单线程的，如何提高CPU的利用率？"></a>Redis是单线程的，如何提高CPU的利用率？</h3><p>可以在一个服务器上部署多个Redis实例，把他们当作不同的服务器使用。</p>
+<h3 id="Redis6-0之后为什么引入了多线程？"><a href="#Redis6-0之后为什么引入了多线程？" class="headerlink" title="Redis6.0之后为什么引入了多线程？"></a>Redis6.0之后为什么引入了多线程？</h3><p>前面也说了Redis的瓶颈在内存和网络，Redis6.0引入多线程主要是为了解决网路IO读写这个瓶颈，执行命令还是单线程执行的，所以也不存在线程安全问题。</p>
+<p>Redis6.0默认是没有开启的，如需开启，需要修改配置文件redis.conf：io-threads-do-reads no，no改为yes</p>
+<h3 id="什么是Redis的持久化？"><a href="#什么是Redis的持久化？" class="headerlink" title="什么是Redis的持久化？"></a>什么是Redis的持久化？</h3><p>因为Redis是基于内存的，为了让防止一些意外情况导致数据丢失，需要将数据持久化到磁盘上。</p>
+<h3 id="Redis常见的持久化机制有哪些？有什么有优缺点？"><a href="#Redis常见的持久化机制有哪些？有什么有优缺点？" class="headerlink" title="Redis常见的持久化机制有哪些？有什么有优缺点？"></a>Redis常见的持久化机制有哪些？有什么有优缺点？</h3><h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><h3 id="什么是Redis的事务"><a href="#什么是Redis的事务" class="headerlink" title="什么是Redis的事务"></a>什么是Redis的事务</h3><p>Redis的事务是一个单独的隔离操作，事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断，所以Redis事务是在一个队列中，一次性、顺序性、排他性地执行一系列命令。</p>
+<p>Redis 事务的主要作用就是串联多个命令防止别的命令插队。</p>
+<h3 id="Redis事务的相关命令"><a href="#Redis事务的相关命令" class="headerlink" title="Redis事务的相关命令"></a>Redis事务的相关命令</h3><p>Redis事务相关的命令主要有以下几种：</p>
+<ul>
+<li>DISCARD：命令取消事务，放弃执行事务队列内的所有命令，恢复连接为非 (transaction) 模式，如果正在使用 WATCH 命令监视某个(或某些) key，那么取消所有监视，等同于执行命令UNWATCH 。</li>
+<li>EXEC：执行事务队列内的所有命令。</li>
+<li>MULTI：用于标记一个事务块的开始。</li>
+<li>UNWATCH：用于取消 WATCH命令对所有 key 的监视。如果已经执行过了EXEC或DISCARD命令，则无需再执行UNWATCH命令，因为执行EXEC命令时，开始执行事务，WATCH命令也会生效，而DISCARD命令在取消事务的同时也会取消所有对 key 的监视，所以不需要再执行UNWATCH命令了</li>
+<li>WATCH：用于标记要监视的key，以便有条件地执行事务，WATCH命令可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行。</li>
+</ul>
+<h3 id="Redis事务执行的三个阶段"><a href="#Redis事务执行的三个阶段" class="headerlink" title="Redis事务执行的三个阶段"></a>Redis事务执行的三个阶段</h3><ol>
+<li>开始事务（MULTI）</li>
+<li>命令入列</li>
+<li>执行事务（EXEC）</li>
+</ol>
+<h3 id="Redis事务的特性"><a href="#Redis事务的特性" class="headerlink" title="Redis事务的特性"></a>Redis事务的特性</h3><ul>
+<li>Redis事务不保证原子性，单条的Redis命令是原子性的，但事务不能保证原子性。</li>
+<li>Redis事务是有隔离性的，但没有隔离级别，事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。（顺序性、排他性）</li>
+<li>Redis事务不支持回滚，Redis执行过程中的命令执行失败，其他命令仍然可以执行。（一次性）</li>
+</ul>
+<h3 id="Redis事务为什么不支持回滚？"><a href="#Redis事务为什么不支持回滚？" class="headerlink" title="Redis事务为什么不支持回滚？"></a>Redis事务为什么不支持回滚？</h3><p>在Redis的事务中，命令允许失败，但是Redis会继续执行其它的命令而不是回滚所有命令，是不支持回滚的。</p>
+<p>主要原因有以下两点：</p>
+<ul>
+<li>Redis 命令只在两种情况失败：<ul>
+<li>语法错误的时候才失败（在命令输入的时候不检查语法）。</li>
+<li>要执行的key数据类型不匹配：这种错误实际上是编程错误，这应该在开发阶段被测试出来，而不是生产上。</li>
+</ul>
+</li>
+<li>因为不需要回滚，所以Redis内部实现简单并高效。（在Redis为什么是单线程而不是多线程也用了这个思想，实现简单并且高效）</li>
+</ul>
 <h2 id="Redis缓存相关"><a href="#Redis缓存相关" class="headerlink" title="Redis缓存相关"></a>Redis缓存相关</h2><h3 id="Redis为什么常常用做缓存？相比于guava有什么优势？"><a href="#Redis为什么常常用做缓存？相比于guava有什么优势？" class="headerlink" title="Redis为什么常常用做缓存？相比于guava有什么优势？"></a>Redis为什么常常用做缓存？相比于guava有什么优势？</h3><p>缓存的定义是访问速度比一般随机存取存储器快的一种高速存储器，而因为Redis是基于内存提供了高性能的数据存取功能，其比较显著的优势就是非常地快。</p>
 <p>缓存可以分为本地缓存或者分布式缓存，比较常用的guava缓存就是一种本地缓存，其主要特点是轻量并且快速，生命周期随着JVM的销毁而结束，缺点是在多实例的情况下，每个实例都要自己保存一份缓存，这样会导致缓存的一致性出现问题。</p>
 <p>Redis则是分布式缓存，在多实例情况下，每个实例都共享一份缓存数据，缓存具备一致性。缺点是要保持Redis的高可用整体架构会比较复杂。</p>
@@ -303,6 +368,62 @@
 <h3 id="说下什么是缓存雪崩、缓存穿透、缓存击穿，及它们的解决方案"><a href="#说下什么是缓存雪崩、缓存穿透、缓存击穿，及它们的解决方案" class="headerlink" title="说下什么是缓存雪崩、缓存穿透、缓存击穿，及它们的解决方案"></a>说下什么是缓存雪崩、缓存穿透、缓存击穿，及它们的解决方案</h3><p>缓存穿透</p>
 <p>缓存雪崩</p>
 <p>缓存击穿</p>
+<h2 id="Redis的分布式问题"><a href="#Redis的分布式问题" class="headerlink" title="Redis的分布式问题"></a>Redis的分布式问题</h2><h3 id="什么是分布式锁？"><a href="#什么是分布式锁？" class="headerlink" title="什么是分布式锁？"></a>什么是分布式锁？</h3><p>锁在程序中的作用主要是同步，就是保证共享资源在同一时刻只能被同一个线程访问。分布式锁则是为了保证在分布式场景下，共享资源在同一时刻只能被同一个线程访问，或者说是用来控制分布式系统之间同步访问共享资源。</p>
+<h3 id="分布式锁具有哪些特性？"><a href="#分布式锁具有哪些特性？" class="headerlink" title="分布式锁具有哪些特性？"></a>分布式锁具有哪些特性？</h3><ul>
+<li>互斥性：在任意时刻，同一条数据只能被一台机器上的一个线程执行</li>
+<li>高可用性：当部分节点宕机后，客户端仍可以正常地获取锁和释放锁</li>
+<li>独占性：加锁和解锁必须同一台服务器执行，不能在一个服务器上加锁，在另一个服务器上释放锁</li>
+<li>防锁超时：如果客户端没有主动释放锁，服务器会在一定时间后自动释放锁， 防止客户端宕机或者网络异常导致宕机</li>
+</ul>
+<h3 id="分布式锁的实现方法？"><a href="#分布式锁的实现方法？" class="headerlink" title="分布式锁的实现方法？"></a>分布式锁的实现方法？</h3><p>基本思路就是要在整个系统中提供一个全局、唯一的获取锁的“东西”，然后每个系统在需要加锁时，都去问这个“东西”拿到一把锁，这样不同的系统拿到的就可以认为是同一把锁。</p>
+<p>常见的分布式锁实现方案有三种：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><strong>MySQL</strong></th>
+<th align="center"><strong>Redis</strong></th>
+<th align="center"><strong>Zookeeper</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>互斥</strong></td>
+<td align="center">利用mysql本身的互斥锁机制</td>
+<td align="center">利用setnx这样的互斥命令</td>
+<td align="center">利用节点的唯一性和有序性实现互斥</td>
+</tr>
+<tr>
+<td align="center"><strong>高可用</strong></td>
+<td align="center">低</td>
+<td align="center">中</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td align="center"><strong>高性能</strong></td>
+<td align="center">低</td>
+<td align="center">高</td>
+<td align="center">中</td>
+</tr>
+<tr>
+<td align="center"><strong>安全性</strong></td>
+<td align="center">断开连接，自动释放锁</td>
+<td align="center">利用锁超时时间，到期释放</td>
+<td align="center">临时节点，断开连接自动释放</td>
+</tr>
+<tr>
+<td align="center"><strong>优点</strong></td>
+<td align="center">直接借助数据库容易理解</td>
+<td align="center">性能好，实现起来较为方便</td>
+<td align="center">有效地解决单点问题，不可重入问题，非阻塞问题以及锁无法释放的问题，实现起来较为简单。</td>
+</tr>
+<tr>
+<td align="center"><strong>缺点</strong></td>
+<td align="center">在使用关系型数据库实现分布式锁的过程中会出现各种问题，例如数据库单点问题和可重入问题，并且在解决过程中会使得整个方案越来越复杂</td>
+<td align="center">key的过期时间设置难以确定，如何设置的失效时间太短，方法没等执行完，锁就自动释放了，那么就会产生并发问题。如果设置的时间太长，其他获取锁的线程就可能要平白的多等一段时间。Redis的集群部署虽然能解决单点问题，但是并不是强一致性的，锁的不够健壮</td>
+<td align="center">性能上不如使用缓存实现分布式锁</td>
+</tr>
+</tbody></table>
+<h3 id="Redis如何实现分布式锁？"><a href="#Redis如何实现分布式锁？" class="headerlink" title="Redis如何实现分布式锁？"></a>Redis如何实现分布式锁？</h3><p>Redis实现分布式锁的主要命令：SETNX，该命令的作用是当key不存在时设置key的值，当Key存在时，什么都不做。</p>
 
               
             </div>

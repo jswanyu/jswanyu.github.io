@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-06-27T09:59:15.724Z">
+<meta property="article:modified_time" content="2022-06-28T15:32:09.500Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -518,7 +518,7 @@
 <p>static关键字的基本作用：方便在没有实例化对象的情况下来进行调用方法或者变量，只要类被加载了，就可以通过类名去进行访问。</p>
 <p>static方法一般称作静态方法，由于静态方法不依赖于任何对象就可以进行访问，因此对于静态方法来说，是没有this的，因为它不依附于任何对象，既然都没有对象，就谈不上this了。并且由于这个特性，在<strong>静态方法中不能访问类的非静态成员变量和非静态成员方法</strong>，因为非静态成员方法&#x2F;变量都是必须依赖具体的对象才能够被调用，但是在<strong>非静态成员方法中是可以访问静态成员方法&#x2F;变量</strong>的</p>
 <p>static变量也称作静态变量，静态变量和非静态变量的区别是：静态变量被所有的对象所共享，在内存中只有一个副本，它当且仅当在类初次加载时会被初始化。而非静态变量是对象所拥有的，在创建对象的时候被初始化，存在多个副本，各个对象拥有的副本互不影响。static成员变量的初始化顺序按照定义的顺序进行初始化。</p>
-<p>static关键字还有一个比较关键的作用就是 用来形成静态代码块以优化程序性能。static块可以置于类中的任何地方，类中可以有多个static块。在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。为什么说static块可以用来优化程序性能，是因为它的特性：只会在类加载的时候执行一次。</p>
+<p>static关键字还有一个比较关键的作用就是 用来形成静态代码块以优化程序性能。static块可以置于类中的任何地方，静态代码块的主要用途是可以用来优化程序的性能，因为它只会在类加载时加载一次，很多时候会将一些只需要进行一次的初始化操作都放在static 代码块中进行。类中可以有多个static块。在类初次被加载的时候，会按照static块的顺序来执行每个static块，并且只会执行一次。为什么说static块可以用来优化程序性能，是因为它的特性：只会在类加载的时候执行一次。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 每次调用isBornBoomer的时候都会生成startDate和birthDate两个对象，造成了空间浪费</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>    <span class="hljs-keyword">private</span> Date birthDate;<br>     <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(Date birthDate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.birthDate = birthDate;<br>    &#125;<br>     <br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isBornBoomer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Date</span> <span class="hljs-variable">startDate</span> <span class="hljs-operator">=</span> Date.valueOf(<span class="hljs-string">&quot;1997&quot;</span>);<br>        <span class="hljs-type">Date</span> <span class="hljs-variable">endDate</span> <span class="hljs-operator">=</span> Date.valueOf(<span class="hljs-string">&quot;2019&quot;</span>);<br>        <span class="hljs-keyword">return</span> birthDate.compareTo(startDate)&gt;=<span class="hljs-number">0</span> &amp;&amp; birthDate.compareTo(endDate) &lt; <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 这里使用了static块只需要进行一次的初始化操作节省内存空间，优化性能</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>    <span class="hljs-keyword">private</span> Date birthDate;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Date startDate,endDate;<br> <br>    <span class="hljs-keyword">static</span>&#123;<br>        startDate = Date.valueOf(<span class="hljs-string">&quot;1997&quot;</span>);<br>        endDate = Date.valueOf(<span class="hljs-string">&quot;2019&quot;</span>);<br>    &#125;<br>     <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(Date birthDate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.birthDate = birthDate;<br>    &#125;<br>     <br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isBornBoomer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> birthDate.compareTo(startDate)&gt;=<span class="hljs-number">0</span> &amp;&amp; birthDate.compareTo(endDate) &lt; <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -622,8 +622,8 @@
 <ul>
 <li>子类转为父类</li>
 </ul>
-<p>让父类的引用指向子类的实例即可，这是多态。</p>
-<p>方法：注意此时父类引用只能调用父类方法，如果子类重写父类方法，则调用子类重写的方法，不能调用子类未重写的方法。</p>
+<p>子类引用赋给父类对象即可，这是多态。</p>
+<p>方法：注意此时父类引用只能调用<strong>父类方法</strong>，如果子类重写父类方法，则调用子类重写的方法，不能调用子类未重写的方法。</p>
 <p>属性：属性不存在重写，那么父类的引用调用的为父类的属性。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Father</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Son</span>();<br>a.func(); <span class="hljs-comment">// 子类func</span><br>a.func1(); <span class="hljs-comment">// 父类func1</span><br><span class="hljs-comment">// a.func2(); 报错</span><br>System.out.println(a.value); <span class="hljs-comment">// 0</span><br></code></pre></td></tr></table></figure>
 
@@ -639,7 +639,8 @@
 
 <p>因此一般都认为子类可以转为父类，但父类不能转为子类</p>
 <h3 id="Java中，类是单继承多实现，接口是多继承"><a href="#Java中，类是单继承多实现，接口是多继承" class="headerlink" title="Java中，类是单继承多实现，接口是多继承"></a>Java中，类是单继承多实现，接口是多继承</h3><p>java的类只支持单继承，如果子类继承的多个父类里面有相同的方法或者属性，子类将不知道具体继承哪一个，会产生歧义。</p>
-<p>但类可以实现多个接口，通过实现接口拓展了类的功能，若实现的多个接口中有重复的方法也没关系，因为实现类中必须重写接口中的方法，所以调用时还是调用的实现类中重写的方法，不会导致歧义。也不用担心属性重复问题，由于接口的所有属性都是 static final修饰的，是常量，在编译时期确定了其值，若在使用时，两个相同的常量值不同，在编译时期就不能通过，不会导致歧义。</p>
+<p>但类可以实现多个接口，通过实现接口拓展了类的功能，若实现的多个接口中有重复的方法也没关系，因为实现类中必须重写接口中的方法，所以调用时还是调用的实现类中重写的方法，不会导致歧义。</p>
+<p>也不用担心属性重复问题，由于接口的所有属性都是 static final修饰的，是常量，在编译时期确定了其值，若在使用时，两个相同的常量值不同，在编译时期就不能通过，不会导致歧义。</p>
 <p>接口可以继承多个接口，原因和上面一样。</p>
 <h3 id="Java的方法分派？"><a href="#Java的方法分派？" class="headerlink" title="Java的方法分派？"></a>Java的方法分派？</h3><p>方法分派指的是虚拟机如何确定应该执行哪个方法。</p>
 <p>静态分派（方法重载）：编译器确定，根据调用者的声明类型和方法参数类型。</p>
@@ -778,7 +779,7 @@
 <p>前两者都需要显式地调用构造方法。对于clone机制，需要注意浅拷贝和深拷贝的区别，对于序列化机制需要明确其实现原理，在java中序列化可以通过实现Externalizable或者Serializable来实现</p>
 <h3 id="什么是不可变对象-好处是什么"><a href="#什么是不可变对象-好处是什么" class="headerlink" title="什么是不可变对象?好处是什么?"></a>什么是不可变对象?好处是什么?</h3><p>不可变对象指对象一旦被创建，状态就不能再改变,任何修改都会创建一个新的对象，如 String、Integer及其它包装类。</p>
 <p>不可变对象最大的好处是线程安全</p>
-<h3 id="能否创建一个包含可变对象的不可变对象"><a href="#能否创建一个包含可变对象的不可变对象" class="headerlink" title="能否创建一个包含可变对象的不可变对象?"></a>能否创建一个包含可变对象的不可变对象?</h3><p>当然可以,比如final Person[] persons &#x3D; new Persion[]{ } . persons 是不可变对象的引用,但其数组中的Person实例却是可变的.这种情况下需要特别谨慎,不要共享可变对象的引用.这种情况下，如果数据需要变化时,就返回原对象的一个拷贝</p>
+<h3 id="能否创建一个包含可变对象的不可变对象"><a href="#能否创建一个包含可变对象的不可变对象" class="headerlink" title="能否创建一个包含可变对象的不可变对象?"></a>能否创建一个包含可变对象的不可变对象?</h3><p>可以，比如final Person[] persons &#x3D; new Persion[]{ } . persons 是不可变对象的引用,但其数组中的Person实例却是可变的。这种情况下需要特别谨慎，不要共享可变对象的引用.这种情况下，如果数据需要变化时，就返回原对象的一个拷贝</p>
 <h3 id="值传递和引用传递的区别的什么？为什么说Java中只有值传递？"><a href="#值传递和引用传递的区别的什么？为什么说Java中只有值传递？" class="headerlink" title="值传递和引用传递的区别的什么？为什么说Java中只有值传递？"></a>值传递和引用传递的区别的什么？为什么说Java中只有值传递？</h3><p>值传递：指的是在方法调用时，将实际参数<strong>复制一份</strong>传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。</p>
 <p>引用传递：指的是在方法调用时，将实际参数的地址直接传递到方法中，在方法中对参数所进行的修改，将影响到实际参数。</p>
 <p>java中方法参数传递方式只有按值传递。</p>
@@ -809,7 +810,7 @@
 <p>  对于引用数据类型， &#x3D;&#x3D; 比较的是内存地址。</p>
 </li>
 <li><p>equals()</p>
-<p>  对于没有重写equals 方法的类（默认是不重写）， equals 方法和&#x3D;&#x3D; 作用类似；基本类型比较值，引用类型比较地址</p>
+<p>  对于没有重写equals 方法的类（默认是不重写）， equals 方法和 &#x3D;&#x3D; 作用类似；基本类型比较值，引用类型比较地址</p>
 <p>  对于重写过equals 方法的类，equals 一般会重写为比较值了</p>
 </li>
 </ul>
