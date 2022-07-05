@@ -25,13 +25,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-06-28T15:32:09.500Z">
+<meta property="article:modified_time" content="2022-07-05T12:09:50.335Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>面试准备：JavaSE和集合 - Wynn&#39;s blog</title>
@@ -72,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -221,14 +219,6 @@
     
 
     
-    
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-      
     
   </div>
 
@@ -855,8 +845,7 @@
 <p>String toString() ：返回该对象的字符串表示</p>
 <p>void wait() ：在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待</p>
 <h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><h3 id="什么是java的反射机制？"><a href="#什么是java的反射机制？" class="headerlink" title="什么是java的反射机制？"></a>什么是java的反射机制？</h3><p>反射是<strong>动态获取信息</strong>以及<strong>动态调用对象方法</strong>的一种机制。</p>
-<p>Java反射就是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；并且能改变它的属性。而这也是Java被视为动态语言的一个关键性质。</p>
-<p>Java反射的功能是在运行时判断任意一个对象所属的类，在运行时构造任意一个类的对象，在运行时判断任意一个类所具有的成员变量和方法，在运行时调用任意一个对象的方法，生成动态代理。</p>
+<p>Java反射就是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够构造对象并调用它的任意方法和属性；并且能改变它的属性。而这也是Java被视为动态语言的一个关键性质。</p>
 <h3 id="为什么引入反射概念？反射机制的应用有哪些？"><a href="#为什么引入反射概念？反射机制的应用有哪些？" class="headerlink" title="为什么引入反射概念？反射机制的应用有哪些？"></a>为什么引入反射概念？反射机制的应用有哪些？</h3><p>从 Oracle 官方文档中可以看出，反射主要应用在以下几方面：</p>
 <ul>
 <li>反射让开发人员可以通过外部类的全路径名创建对象，并使用这些类，实现一些扩展的功能。</li>
@@ -873,7 +862,7 @@
 <li>如果是基本类型的包装类，可以调用包装类的Type属性来获得该包装类的Class对象。</li>
 </ul>
 <p>地址相同，加载到内存中的运行时类，会缓存一定的时间，同一个运行时类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Class</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> Person.class;<br><span class="hljs-type">Person</span> <span class="hljs-variable">p1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br><span class="hljs-type">Class</span> <span class="hljs-variable">c2</span> <span class="hljs-operator">=</span> p1.getClass();<br><span class="hljs-type">Class</span> <span class="hljs-variable">c3</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;Person&quot;</span>);<br>System.out.println(c1 == c2);  <span class="hljs-comment">//true</span><br>System.out.println(c1 == c3);  <span class="hljs-comment">//true</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Class</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;Person&quot;</span>);<br><span class="hljs-type">Class</span> <span class="hljs-variable">c2</span> <span class="hljs-operator">=</span> Person.class;<br><span class="hljs-type">Person</span> <span class="hljs-variable">p1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<br><span class="hljs-type">Class</span> <span class="hljs-variable">c3</span> <span class="hljs-operator">=</span> p1.getClass();<br>System.out.println(c1 == c2);  <span class="hljs-comment">//true</span><br>System.out.println(c1 == c3);  <span class="hljs-comment">//true</span><br></code></pre></td></tr></table></figure>
 
 
 
@@ -884,7 +873,7 @@
 <li><p>获取类之后需要创建运行时类的对象（实例），区别于用new去创建对象，运行时类创建对象使用方法：<code>clazz.newInstance()</code>，在Java9之后更推荐先创建其构造器，再创建实例，即<code>clazz.getDeclaredConstructor().-newInstance()</code></p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> clazz.newInstance();<br><span class="hljs-comment">// Object person = clazz.getDeclaredConstructor().newInstance()</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>调用不同的反射API 获取或设置想要的类信息。比如成员变量属性值、成员方法</p>
+<li><p>调用不同的反射API 获取或设置想要的类信息。比如成员变量属性值、成员方法，设置属性是set，调用方法是invoke</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Field</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> clazz.getDeclaredField(<span class="hljs-string">&quot;name&quot;</span>);<br>name.set(person,<span class="hljs-string">&quot;Tom&quot;</span>);<br><span class="hljs-comment">// 注意想要调用方法时需要使用`Method.invoke()`方法，参数1：方法的调用者  参数2：给方法形参赋值的实参,invoke()的返回值即为对应类中调用的方法的返回值。如果是静态方法，因为没有实例，所以直接给invoke函数传入运行时类即可，或者传入null</span><br><span class="hljs-type">Method</span> <span class="hljs-variable">show</span> <span class="hljs-operator">=</span> clazz.getDeclaredMethod(<span class="hljs-string">&quot;show&quot;</span>, String.class);<br>show.invoke(person, <span class="hljs-string">&quot;北京&quot;</span>);<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="创建运行时类的对象的前提是什么？"><a href="#创建运行时类的对象的前提是什么？" class="headerlink" title="创建运行时类的对象的前提是什么？"></a>创建运行时类的对象的前提是什么？</h3><p>运行时类必须提供空参的构造器，并且访问权限得够。通常，设置为<strong>public</strong>。否则调用<code>clazz.newInstance()</code>无法创建对象</p>
@@ -902,7 +891,7 @@
 <h3 id="反射机制的原理是什么？"><a href="#反射机制的原理是什么？" class="headerlink" title="反射机制的原理是什么？"></a>反射机制的原理是什么？</h3><p>有点复杂，如果问到再看</p>
 <h3 id="什么是动态代理？"><a href="#什么是动态代理？" class="headerlink" title="什么是动态代理？"></a>什么是动态代理？</h3><p>动态代理就是，在<strong>程序运行期</strong>，创建目标对象的代理对象，并<strong>对目标对象中的方法进行功能性增强</strong>的一种技术。在生成代理对象的过程中，目标对象不变，代理对象中的方法是目标对象方法的增强方法。可以理解为<strong>运行期间，对象中方法的动态拦截，在拦截方法的前后执行功能操作</strong>。</p>
 <h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><h3 id="Java中的泛型是什么"><a href="#Java中的泛型是什么" class="headerlink" title="Java中的泛型是什么 ?"></a>Java中的泛型是什么 ?</h3><p>泛型就是将类型参数化，其在编译时才确定具体的参数。这种参数类型可以用在类、接口和方法的创建中，分别称为泛型类、泛型接口、泛型方法。</p>
-<p>泛型是一种语法糖，泛型这种语法糖的基本原理是类型擦除（使用泛型的时候加上的类型参数，编译器在编译的时候去掉类型参数）。Java中的泛型基本上都是在编译器这个层次来实现的，也就是说：泛型只存在于编译阶段，而不存在于运行阶段。在编译后的 class 文件中，是没有泛型这个概念的。</p>
+<p>泛型是一种语法糖，泛型这种语法糖的基本原理是类型擦除（使用泛型的时候加上的类型参数，编译器在编译的时候去掉类型参数）。Java中的泛型基本上都是在编译器这个层次来实现的，也就是说：<strong>泛型只存在于编译阶段，而不存在于运行阶段。在编译后的 class 文件中，是没有泛型这个概念的</strong>。</p>
 <h3 id="使用泛型的好处是什么"><a href="#使用泛型的好处是什么" class="headerlink" title="使用泛型的好处是什么?"></a>使用泛型的好处是什么?</h3><p>没有泛型时，使用 Object 来实现通用、不同类型的处理，每次使用时都需要强制转换成想要的类型，在编译时编译器并不知道类型转换是否正常，运行时才知道，不安全</p>
 <p>所以泛型的好处有：</p>
 <ul>
@@ -923,13 +912,13 @@
 
 <p>可以看到通过反射进行add 操作， ArrayList<Integer> 竟然可以存储字符串，这是因为在反射就是在运行期调用的add 方法，在<strong>运行期泛型信息已经被擦除</strong>。</p>
 <p>既然存在类型擦除，那么Java是如何保证在ArrayList<Integer> 添加字符串会报错呢？Java编译器是通过先检查代码中泛型的类型，然后再进行类型擦除，再进行编译。</p>
-<h3 id="什么是泛型中的限定通配符和非限定通配符"><a href="#什么是泛型中的限定通配符和非限定通配符" class="headerlink" title="什么是泛型中的限定通配符和非限定通配符 ?"></a>什么是泛型中的限定通配符和非限定通配符 ?</h3><p>限定通配符对类型进行了限制。有两种限定通配符，一种是<code>&lt;? extends T&gt;</code>它通过确保类型必须是T的子类来设定类型的<strong>上界</strong>，另一种是<code>&lt;? super T&gt;</code>它通过确保类型必须是T的父类来设定类型的<strong>下界</strong>。泛型类型必须用限定内的类型来进行初始化，否则会导致编译错误</p>
-<p>非限定通配符 ？,可以用任意类型来替代。如List&lt;?&gt; 的意思是这个集合是一个可以持有任意类型的集合，它可以是List<A> ，也可以是List<B> ,或者List<C> 等等</p>
-<h3 id="List可以转成List-吗"><a href="#List可以转成List-吗" class="headerlink" title="List可以转成List 吗"></a>List<String>可以转成List <Object>吗</h3><p>不可以，二者无法互相转换。真这样做的话会导致编译错误。因为List <Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储String。</p>
 <h3 id="判断ArrayList与ArrayList的运行时类是否相等？"><a href="#判断ArrayList与ArrayList的运行时类是否相等？" class="headerlink" title="判断ArrayList与ArrayList的运行时类是否相等？"></a>判断ArrayList<String>与ArrayList<Integer>的运行时类是否相等？</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java">ArrayList&lt;String&gt; a = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;String&gt;();<br>ArrayList&lt;Integer&gt; b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;Integer&gt;();<br><span class="hljs-type">Class</span> <span class="hljs-variable">c1</span> <span class="hljs-operator">=</span> a.getClass();<br><span class="hljs-type">Class</span> <span class="hljs-variable">c2</span> <span class="hljs-operator">=</span> b.getClass();<br>System.out.println(c1 == c2); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
 <p>输出的结果是 true。因为无论对于 ArrayList 还是 ArrayList，它们的 Class 类型都是一直的，都是ArrayList.class。</p>
 <p>那它们声明时指定的 String 和 Integer 到底体现在哪里呢？答案是体现在类编译的时候。当 JVM 进行类编译时，会进行泛型检查，如果一个集合被声明为 String类型，那么它往该集合存取数据的时候就会对数据进行判断，从而避免存入或取出错误的数据。</p>
+<h3 id="什么是泛型中的限定通配符和非限定通配符"><a href="#什么是泛型中的限定通配符和非限定通配符" class="headerlink" title="什么是泛型中的限定通配符和非限定通配符 ?"></a>什么是泛型中的限定通配符和非限定通配符 ?</h3><p>限定通配符对类型进行了限制。有两种限定通配符，一种是<code>&lt;? extends T&gt;</code>它通过确保类型必须是T的子类来设定类型的<strong>上界</strong>，另一种是<code>&lt;? super T&gt;</code>它通过确保类型必须是T的父类来设定类型的<strong>下界</strong>。泛型类型必须用限定内的类型来进行初始化，否则会导致编译错误</p>
+<p>非限定通配符 ？,可以用任意类型来替代。如List&lt;?&gt; 的意思是这个集合是一个可以持有任意类型的集合，它可以是List<A> ，也可以是List<B> ,或者List<C> 等等</p>
+<h3 id="List可以转成List-吗"><a href="#List可以转成List-吗" class="headerlink" title="List可以转成List 吗"></a>List<String>可以转成List <Object>吗</h3><p>不可以，二者无法互相转换。真这样做的话会导致编译错误。因为List <Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储String。</p>
 <h3 id="Array中可以用泛型吗"><a href="#Array中可以用泛型吗" class="headerlink" title="Array中可以用泛型吗?"></a>Array中可以用泛型吗?</h3><p>不可以。这也是为什么《Effective Java》一书中建议使用 List 来代替 Array，因为 List可以提供编译期的类型安全保证，而 Array 却不能。</p>
 <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><h3 id="Java的异常体系，Error和Exception的区别，运行时异常一般异常区别"><a href="#Java的异常体系，Error和Exception的区别，运行时异常一般异常区别" class="headerlink" title="Java的异常体系，Error和Exception的区别，运行时异常一般异常区别"></a>Java的异常体系，Error和Exception的区别，运行时异常一般异常区别</h3><p>Throwable（表示可抛出）是所有异常和错误的超类，两个直接子类为Error和Exception，分别表示错误和异常。异常又可分为运行时异常（不检查异常）和非运行时异常（检查异常）。</p>
 <p><strong>Error</strong>是程序<strong>无法处理</strong>的错误，是由JVM产生和抛出的。例如，系统崩溃，内存不足(OutOfMemoryError)，堆栈溢出（StackOverFlowError）等，编译器不会对这类错误进行检测，一旦这类错误发生，通常应用程序会被终止（JVM会选择<strong>线程终止</strong>），仅靠应用程序本身无法恢复。Error发生时我们没办法通过 catch 来进行捕获 。</p>
@@ -940,7 +929,7 @@
 <li>非运行时异常（编译时异常、受检查异常） ：是Exception 中除 RuntimeException 及其子类之外的异常。例如IO 相关的异常、ClassNotFoundException 、SQLException 等 。编译器要求必须处置的异常，<strong>如果不处理，程序就不能编译通过</strong>。</li>
 </ul>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/JavaSE-%E5%BC%82%E5%B8%B8%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220402214427811"></p>
-<h3 id="throw-和-throws-的区别是什么？"><a href="#throw-和-throws-的区别是什么？" class="headerlink" title="throw 和 throws 的区别是什么？"></a>throw 和 throws 的区别是什么？</h3><p>throw关键字用于<strong>方法体内部</strong>，只能用于抛出一种异常，用来抛出方法或代码块中的异常，受查异常和非受查异常都可以被抛出。如果<strong>抛出了检查异常，则应该在方法头部声明方法可能抛出的异常类型</strong>，该方法的调用者必须处理或继续抛出异常。如果<strong>所有方法都层层上抛获取的异常，最终JVM会进行处理</strong>，处理方式就是打印异常消息和堆栈信息。</p>
+<h3 id="throw-和-throws-的区别是什么？"><a href="#throw-和-throws-的区别是什么？" class="headerlink" title="throw 和 throws 的区别是什么？"></a>throw 和 throws 的区别是什么？</h3><p>throw关键字用于<strong>方法体内部</strong>，只能用于抛出一种异常，用来抛出方法或代码块中的异常，编译时异常和运行时异常都可以被抛出。如果<strong>抛出了编译时异常，则应该在方法头部声明方法可能抛出的异常类型</strong>，该方法的调用者必须处理或继续抛出异常。如果<strong>所有方法都层层上抛获取的异常，最终JVM会进行处理</strong>，处理方式就是打印异常消息和堆栈信息。</p>
 <p> throws关键字用于<strong>方法上（方法名后面）的方法声明部分</strong>，可以抛出多个异常，用来标识该方法可能抛出的异常列表。调用该方法的方法中必须包含可处理异常的代码，否则也要在方法签名中用 throws 关键字声明相应的异常</p>
 <h3 id="Java常见异常有哪些？"><a href="#Java常见异常有哪些？" class="headerlink" title="Java常见异常有哪些？"></a>Java常见异常有哪些？</h3><ul>
 <li>java.lang.IllegalAccessError：违法访问错误。</li>
@@ -986,7 +975,7 @@
 <p>  关于return语句，看一下你类的class字节码文件就知道了。 return的时候是复制了一个变量然后返回，所以之后finally操作的变量如果是基本类型的话不会影响返回值。 但是如果返回值是引用类型的话，因为指向同一个对象所以还是有影响的。</p>
 </li>
 </ul>
-<h3 id="JVM-是如何处理异常的？"><a href="#JVM-是如何处理异常的？" class="headerlink" title="JVM 是如何处理异常的？"></a>JVM 是如何处理异常的？</h3><p>在一个方法中如果发生异常，这个方法会创建一个异常对象，并转交给 JVM，该异常对象包含异常名称，异常描述以及异常发生时应用程序的状态。<strong>创建异常对象并转交给 JVM 的过程称为抛出异常</strong>。可能有一系列的方法调用，最终才进入抛出异常的方法，这一系列方法调用的有序列表叫做调用栈。</p>
+<h3 id="JVM-是如何处理异常的？"><a href="#JVM-是如何处理异常的？" class="headerlink" title="JVM 是如何处理异常的？"></a>JVM 是如何处理异常的？</h3><p>在一个方法中如果发生异常，这个方法会<strong>创建一个异常对象</strong>，并转交给 JVM，该异常对象包含异常名称，异常描述以及异常发生时应用程序的状态。<strong>创建异常对象并转交给 JVM 的过程称为抛出异常</strong>。可能有一系列的方法调用，最终才进入抛出异常的方法，这一系列方法调用的有序列表叫做调用栈。</p>
 <p><strong>JVM 会顺着调用栈去查找看是否有可以处理异常的代码，如果有，则调用异常处理代码</strong>。如果 JVM 没有找到可以处理该异常的代码块，JVM 就会将该异常转交给<strong>默认的异常处理器</strong>（默认处理器为 JVM 的一部分），默认异常处理器打印出异常信息<strong>并终止应用程序</strong>。</p>
 <h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>Annotation 注解可以看成是java中的一种标记记号，用来给java中的类，成员，方法，参数等任何程序元素添加一些额外的说明信息，同时不改变程序语义。注解可以分为三类：基本注解，元注解，自定义注解</p>
 <ul>
@@ -1053,10 +1042,10 @@
 <h3 id="什么是serialVersionUID？为什么还要显示指定serialVersionUID的值"><a href="#什么是serialVersionUID？为什么还要显示指定serialVersionUID的值" class="headerlink" title="什么是serialVersionUID？为什么还要显示指定serialVersionUID的值?"></a>什么是serialVersionUID？为什么还要显示指定serialVersionUID的值?</h3><p>serialVersionUID 用来表明类的不同版本间的兼容性。Java的序列化机制是通过在运行时判断类的serialVersionUID来验证版本一致性的。</p>
 <p>在进行反序列化时，JVM会把传来的字节流中的serialVersionUID与本地相应实体（类）的serialVersionUID进行比较，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常</p>
 <p>serialVersionUID用来表明类的不同版本间的兼容性。简言之，其目的是以序列化对象进行版本控制，有关各版本反序列化时是否兼容。如果类没有显示定义这个静态常量，它的值是JVM根据类的内部细节自动生成的。若类的实例变量做了修改（比如该类增加了一个属性），serialVersionUID可能发生变化。故建议，显式声明。简单来说，Java的序列化机制是通过在运行时判断类的serialVersionUID来验证版本一致性的。在进行反序列化时，JVM会把传来的字节流中的serialVersionUID与本地相应实体类的serialVersionUID进行比较，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常</p>
-<p>在实际开发中, 不显示指定serialVersionUID的情况会导致什么问题? 如果我们的类写完后不再修改, 那当然不会有问题, 但这在实际开发中是不可能的, 我们的类会不断迭代, 一旦类被修改了, 那旧对象反序列化就会报错. 所以在实际开发中, 我们都会显示指定一个serialVersionUID, 值是多少无所谓, 只要不变就行。</p>
+<p>在实际开发中, 不显示指定serialVersionUID的情况会导致什么问题? 如果我们的类写完后不再修改, 那当然不会有问题, 但这在实际开发中是不可能的，我们的类会不断迭代, 一旦类被修改了, 那旧对象反序列化就会报错. 所以在实际开发中, 我们都会显示指定一个serialVersionUID, 值是多少无所谓, 只要不变就行。</p>
 <h3 id="serialVersionUID什么时候修改？"><a href="#serialVersionUID什么时候修改？" class="headerlink" title="serialVersionUID什么时候修改？"></a>serialVersionUID什么时候修改？</h3><blockquote>
 <p>10〖强制〗序列化类新增属性时，请不要修改seriatversionUID字段，避免反序列失败；如果完全不兼容升级，避免反序列化混乱，那么请修改serialVersionUID值。</p>
-<p>说明：注意se1iatversionUID不一致会抛出序列化运行时异常。</p>
+<p>说明：注意 serialVersionUID 不一致会抛出序列化运行时异常。</p>
 </blockquote>
 <h3 id="Java-序列化中如果有些字段不想进行序列化，怎么办？"><a href="#Java-序列化中如果有些字段不想进行序列化，怎么办？" class="headerlink" title="Java 序列化中如果有些字段不想进行序列化，怎么办？"></a>Java 序列化中如果有些字段不想进行序列化，怎么办？</h3><p>对于不想进行序列化的变量，使用 <code>transient</code> 关键字修饰。</p>
 <p>transient 关键字的作用是控制变量的序列化，在变量声明前加上该关键字，可以阻止该变量被序列化到文件中，在被反序列化后， transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。<strong>transient 只能修饰变量，不能修饰类和方法。</strong></p>
@@ -1637,30 +1626,6 @@
     <div class="footer-inner">
   
   
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
-  
   
   
 </div>
@@ -1703,6 +1668,21 @@
   </script>
 
 
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
 
@@ -1842,8 +1822,6 @@
   });
 </script>
 
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
