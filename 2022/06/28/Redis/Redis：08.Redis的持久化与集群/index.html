@@ -1,0 +1,957 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="单点Redis的问题：  数据丢失问题：实现Redis数据持久化 并发能力问题：搭建主从集群，实现读写分离 故障恢复问题：利用Redis哨兵，实现健康检测和自动恢复 存储能力问题：搭建分片集群，利用插槽机制实现动态扩容  一、Redis持久化1. RDB持久化RDB全称Redis Database Backup file（Redis数据备份文件），也被叫做Redis数据快照。简单来说就是把内存中的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis：08.Redis的持久化与集群">
+<meta property="og:url" content="http://jswanyu.github.io/2022/06/28/Redis/Redis%EF%BC%9A08.Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E9%9B%86%E7%BE%A4/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="单点Redis的问题：  数据丢失问题：实现Redis数据持久化 并发能力问题：搭建主从集群，实现读写分离 故障恢复问题：利用Redis哨兵，实现健康检测和自动恢复 存储能力问题：搭建分片集群，利用插槽机制实现动态扩容  一、Redis持久化1. RDB持久化RDB全称Redis Database Backup file（Redis数据备份文件），也被叫做Redis数据快照。简单来说就是把内存中的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
+<meta property="article:published_time" content="2022-06-28T09:53:22.000Z">
+<meta property="article:modified_time" content="2022-07-07T12:56:47.281Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
+  
+  
+  
+  <title>Redis：08.Redis的持久化与集群 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/log/">
+                <i class="iconfont icon-tags-fill"></i>
+                日志
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis：08.Redis的持久化与集群"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-28 17:53" pubdate>
+          2022年6月28日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.5k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redis：08.Redis的持久化与集群</h1>
+            
+            <div class="markdown-body">
+              
+              <p>单点Redis的问题：</p>
+<ul>
+<li><strong>数据丢失问题</strong>：实现Redis数据持久化</li>
+<li><strong>并发能力问题</strong>：搭建主从集群，实现读写分离</li>
+<li><strong>故障恢复问题</strong>：利用Redis哨兵，实现健康检测和自动恢复</li>
+<li><strong>存储能力问题</strong>：搭建分片集群，利用插槽机制实现动态扩容</li>
+</ul>
+<h1 id="一、Redis持久化"><a href="#一、Redis持久化" class="headerlink" title="一、Redis持久化"></a>一、Redis持久化</h1><h2 id="1-RDB持久化"><a href="#1-RDB持久化" class="headerlink" title="1. RDB持久化"></a>1. RDB持久化</h2><p>RDB全称Redis Database Backup file（Redis数据备份文件），也被叫做Redis数据快照。简单来说就是把内存中的所有数据都记录到磁盘中。当Redis实例故障重启后，从磁盘读取快照文件，恢复数据。快照文件称为RDB文件，默认是保存在当前运行目录。</p>
+<p>RDB是redis默认的持久化方式，按照一定的时间间隔将内存的数据以快照的形式保存到硬盘，恢复时将快照读取到内存中。RDB持久化有两种：</p>
+<ul>
+<li><p>一种是<code>save</code>，会导致主进程执行RDB，这个过程中其它所有命令都会被阻塞。只有在redis停机之前，进行一次save，完成持久化，或者是在数据迁移时才可能用到。</p>
+</li>
+<li><p>一种是<code>bgsave</code>，这个命令执行后会开启一个独立子进程完成RDB，主进程可以持续处理用户请求，不受影响。子进程共享主进程的内存数据（不是复制数据，是复制页表–即虚拟内存和物理内存之间的对应关系）。完成fork后读取内存数据并写入新的 RDB 文件，写完后替换旧文件，用二进制压缩存储。</p>
+<p>  fork时采用的是copy-on-write技术：</p>
+<ul>
+<li>当主进程执行读操作时，访问共享内存；</li>
+<li>当主进程执行写操作时，则会拷贝一份数据，执行写操作。</li>
+</ul>
+<p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-RDB%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="image-20220705230423415"></p>
+<p>  Redis内部有触发RDB的机制，可以在redis.conf文件中找到，格式如下：</p>
+  <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 900秒内，如果至少有1个key被修改，则执行bgsave </span><br><span class="hljs-attribute">save</span> <span class="hljs-number">900</span> <span class="hljs-number">1</span>  <br><span class="hljs-attribute">save</span> <span class="hljs-number">300</span> <span class="hljs-number">10</span>  <br><span class="hljs-attribute">save</span> <span class="hljs-number">60</span> <span class="hljs-number">10000</span> <br><br><span class="hljs-comment"># 如果是save &quot;&quot; 则表示禁用RDB</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>RDB的其它配置也可以在redis.conf文件中设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 是否压缩 ,建议不开启，压缩也会消耗cpu，磁盘的话不值钱</span><br>rdbcompression <span class="hljs-built_in">yes</span><br><br><span class="hljs-comment"># RDB文件名称</span><br>dbfilename dump.rdb  <br><br><span class="hljs-comment"># 文件保存的路径目录</span><br><span class="hljs-built_in">dir</span> ./ <br></code></pre></td></tr></table></figure>
+
+
+
+<p>优点：</p>
+<ul>
+<li>适合对大规模的数据恢复，比AOF的启动效率高</li>
+<li>只有一个文件 dump.rdb，方便持久化</li>
+<li>性能最大化，在开始持久化时，它唯一需要做的只是fork出子进程，之后再由子进程完成这些持久化的工作，这样就可以极大的避免服务进程执行IO操作了。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>数据安全性低，RDB执行间隔时间长，两次RDB之间写入数据有丢失的风险（在下一次RDB之前就宕机，会丢失最后一次快照的修改）</li>
+<li>fork子进程、压缩、写出RDB文件都比较耗时。由于RDB是通过fork子进程来协助完成数据持久化工作的，因此当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至是1秒钟。</li>
+</ul>
+<h2 id="2-AOF持久化"><a href="#2-AOF持久化" class="headerlink" title="2. AOF持久化"></a>2. AOF持久化</h2><p>AOF全称为Append Only File（追加文件）。</p>
+<p>AOF持久化以日志的形式记录Redis处理的每一个写和删除的命令都会以文本方式记录在AOF文件（不记录查询操作），可以看做是命令日志文件，可以打开文件看到详细的操作记录。</p>
+<p>AOF默认是关闭的，需要修改redis.conf配置文件来开启AOF：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># 是否开启AOF功能，默认是no</span><br><span class="hljs-attribute">appendonly</span> <span class="hljs-literal">yes</span><br><span class="hljs-comment"># AOF文件的名称</span><br>appendfilename <span class="hljs-string">&quot;appendonly.aof&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>AOF的命令记录的频率也可以通过redis.conf文件来配，有三种策略</p>
+<ul>
+<li>appendfsync always ：表示每执行一次写命令，立即记录到AOF文件。这是主进程的操作，虽然能够保证不丢失数据，但影响性能</li>
+<li>appendfsync everysec ：写命令执行完先放入AOF缓冲区，然后表示每隔1秒将缓冲区数据写到AOF文件，是默认方案。可能会丢失数据，就是这1s内万一宕机了会丢失1s数据。</li>
+<li>appendfsync no：写命令执行完先放入AOF缓冲区，由操作系统决定何时将缓冲区内容写回磁盘</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>配置项</strong></th>
+<th><strong>刷盘时机</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Always</td>
+<td>同步刷盘</td>
+<td>可靠性高，几乎不丢数据</td>
+<td>性能影响大</td>
+</tr>
+<tr>
+<td>everysec</td>
+<td>每秒刷盘</td>
+<td>性能适中</td>
+<td>最多丢失1秒数据</td>
+</tr>
+<tr>
+<td>no</td>
+<td>操作系统控制</td>
+<td>性能最好</td>
+<td>可靠性较差，可能丢失大量数据</td>
+</tr>
+</tbody></table>
+<p>因为是记录命令，AOF文件会比RDB文件大的多。而且AOF会记录对同一个key的多次写操作，但只有最后一次写操作才有意义。通过执行<code>bgrewriteaof</code>命令，可以让AOF<strong>文件执行重写功能，用最少的命令达到相同效果</strong>。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> num <span class="hljs-comment">123</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">name jack</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">num 666</span><br>--------------执行bgrewriteaof后------------------------<br>mset <span class="hljs-comment">name jack num 666</span><br></code></pre></td></tr></table></figure>
+
+<p>Redis也会在触发阈值时自动去重写AOF文件。阈值也可以在redis.conf中配置：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># AOF文件比上次文件 增长超过多少百分比则触发重写</span><br><span class="hljs-attribute">auto</span>-aof-rewrite-percentage <span class="hljs-number">100</span><br><span class="hljs-comment"># AOF文件体积最小多大以上才触发重写 </span><br><span class="hljs-attribute">auto</span>-aof-rewrite-min-size <span class="hljs-number">64</span>mb <br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-RDB和AOF对比"><a href="#3-RDB和AOF对比" class="headerlink" title="3. RDB和AOF对比"></a>3. RDB和AOF对比</h2><p>RDB和AOF各有自己的优缺点，如果对数据安全性要求较高，在实际开发中往往会<strong>结合</strong>两者来使用。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><strong>RDB</strong></th>
+<th align="center"><strong>AOF</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">持久化方式</td>
+<td align="center">定时对整个内存做快照</td>
+<td align="center">记录每一次执行的命令</td>
+</tr>
+<tr>
+<td align="center">数据完整性</td>
+<td align="center">不完整，两次备份之间会丢失</td>
+<td align="center">相对完整，取决于刷盘策略</td>
+</tr>
+<tr>
+<td align="center">文件大小</td>
+<td align="center">会有压缩，文件体积小</td>
+<td align="center">记录命令，文件体积很大</td>
+</tr>
+<tr>
+<td align="center">宕机恢复速度</td>
+<td align="center">很快</td>
+<td align="center">慢</td>
+</tr>
+<tr>
+<td align="center">数据恢复优先级</td>
+<td align="center">低，因为数据完整性不如AOF</td>
+<td align="center">高，因为数据完整性更高</td>
+</tr>
+<tr>
+<td align="center">系统资源占用</td>
+<td align="center">高，大量CPU和内存消耗</td>
+<td align="center">低，主要是磁盘IO资源  但AOF重写时会占用大量CPU和内存资源</td>
+</tr>
+<tr>
+<td align="center">使用场景</td>
+<td align="center">可以容忍数分钟的数据丢失，追求更快的启动速度</td>
+<td align="center">对数据安全性要求较高</td>
+</tr>
+</tbody></table>
+<p><strong>总结：可以容忍数分钟的数据丢失，追求更快的启动速度选择RDB；对数据安全性要求较高选择AOF</strong></p>
+<h1 id="二、Redis主从"><a href="#二、Redis主从" class="headerlink" title="二、Redis主从"></a>二、Redis主从</h1><h2 id="1-主从架构模型"><a href="#1-主从架构模型" class="headerlink" title="1. 主从架构模型"></a>1. 主从架构模型</h2><p>单节点Redis的并发能力是有上限的，要进一步提高Redis的并发能力，就需要搭建主从集群，实现读写分离。</p>
+<p>主节点：master   从节点：slave&#x2F;replica</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-redis%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220706203658934"></p>
+<p>注意写操作只能去主节点，读操作可以去从节点，实现读写分离，主节点和从节点之间的数据会保持同步</p>
+<p>搭建主从架构redis，具体搭建流程参考课前资料《Redis集群.md》，核心命令为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">在<span class="hljs-selector-tag">B</span>节点执行命令：slaveof <span class="hljs-selector-tag">A</span>的IP <span class="hljs-selector-tag">A</span>的port<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-数据同步原理"><a href="#2-数据同步原理" class="headerlink" title="2. 数据同步原理"></a>2. 数据同步原理</h2><h3 id="2-1-全量同步"><a href="#2-1-全量同步" class="headerlink" title="2.1 全量同步"></a>2.1 全量同步</h3><p>主从第一次建立连接时，会执行<strong>全量同步</strong>，将master节点的所有数据都拷贝给slave节点，流程：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%90%8C%E6%AD%A5.png" srcset="/img/loading.gif" lazyload alt="image-20220706204336507"></p>
+<p>这里有一个问题，master如何得知salve是第一次来连接呢？？</p>
+<p>有几个概念，可以作为判断依据：</p>
+<ul>
+<li><strong>Replication Id</strong>：简称replid，是数据集的标记，id一致则说明是同一数据集。每一个master都有唯一的replid，slave则会继承master节点的replid</li>
+<li><strong>offset</strong>：偏移量，随着记录在repl_baklog中的数据增多而逐渐增大。slave完成同步时也会记录当前同步的offset。如果slave的offset小于master的offset，说明slave数据落后于master，需要更新。</li>
+</ul>
+<p>因此slave做数据同步，必须向master声明自己的replication id 和offset，master才可以判断到底需要同步哪些数据。</p>
+<p><strong>因为slave原本也是一个master，有自己的replid和offset，当第一次变成slave，与master建立连接时，发送的replid和offset是自己的replid和offset。</strong></p>
+<p>master判断发现slave发送来的replid与自己的不一致，说明这是一个全新的slave，就知道要做全量同步了。</p>
+<p>master会将自己的replid和offset都发送给这个slave，slave保存这些信息。以后slave的replid就与master一致了。</p>
+<p>因此，<strong>master判断一个节点是否是第一次同步的依据，就是看replid是否一致</strong>。</p>
+<p>如图：</p>
+<img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%85%A8%E9%87%8F%E5%90%8C%E6%AD%A5.png" srcset="/img/loading.gif" lazyload alt="image-20220706212520331" style="zoom:80%;" />
+
+<p>完整流程描述：</p>
+<ul>
+<li>slave节点请求增量同步</li>
+<li>master节点判断replid，发现不一致，拒绝增量同步</li>
+<li>master将完整内存数据生成RDB，发送RDB到slave</li>
+<li>slave清空本地数据，加载master的RDB</li>
+<li>master将RDB期间的命令记录在repl_baklog，并持续将log中的命令发送给slave</li>
+<li>slave执行接收到的命令，保持与master之间的同步</li>
+</ul>
+<h3 id="2-2-增量同步"><a href="#2-2-增量同步" class="headerlink" title="2.2 增量同步"></a>2.2 增量同步</h3><p>全量同步需要先做RDB，然后将RDB文件通过网络传输给slave，成本太高了。因此除了第一次做全量同步，其它大多数时候slave与master都是做<strong>增量同步</strong>。</p>
+<p>主从第一次同步是<strong>全量同步</strong>，但如果slave重启后同步，则执行<strong>增量同步</strong></p>
+<p>什么是增量同步？就是只更新slave与master存在差异的部分数据。如图：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5.png" srcset="/img/loading.gif" lazyload alt="image-20220706213356961"></p>
+<p>那么master怎么知道slave与自己的数据差异在哪里呢？这就要说到全量同步时的repl_baklog文件了。</p>
+<p>这个文件是一个固定大小的数组，只不过数组是环形，也就是说<strong>角标到达数组末尾后，会再次从0开始读写</strong>，这样数组头部的数据就会被覆盖。</p>
+<p>repl_baklog中会记录Redis处理过的命令日志及offset，包括master当前的offset，和slave已经拷贝到的offset，slave与master的offset之间的差异，就是salve需要增量拷贝的数据了。随着不断有数据写入，master的offset逐渐变大，slave也不断的拷贝，追赶master的offset，直到数组快被填满。此时，如果有新的数据写入，就会覆盖数组中的旧数据。不过，旧的数据只要是绿色的，说明是已经被同步到slave的数据，即便被覆盖了也没什么影响。因为未同步的仅仅是红色部分。</p>
+<div align="center">
+   <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5-repl_baklog%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload  height=250>
+    <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5-repl_baklog%E5%8E%9F%E7%90%861.png" srcset="/img/loading.gif" lazyload height=250>
+    <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5-repl_baklog%E5%8E%9F%E7%90%862.png" srcset="/img/loading.gif" lazyload height=250>
+</div>
+
+<p>但是，如果slave出现网络阻塞，导致master的offset远远超过了slave的offset，如果master继续写入新数据，其offset就会覆盖旧的数据，直到将slave现在的offset也覆盖。棕色框中的红色部分，就是尚未同步，但是却已经被覆盖的数据。此时如果slave恢复，需要同步，却发现自己的offset都没有了，<strong>无法完成增量同步了。只能做全量同步。</strong></p>
+<p>即repl_baklog大小有上限，写满后会覆盖最早的数据。如果slave断开时间过久，导致尚未备份的数据被覆盖，则无法基于log做增量同步，只能再次全量同步。</p>
+<div align="center">
+   <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5-repl_baklog%E5%8E%9F%E7%90%863.png" srcset="/img/loading.gif" lazyload  height=250>
+    <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86-%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5-repl_baklog%E5%8E%9F%E7%90%864.png" srcset="/img/loading.gif" lazyload height=250>
+</div>
+
+
+
+<h2 id="3-主从同步优化"><a href="#3-主从同步优化" class="headerlink" title="3. 主从同步优化"></a>3. 主从同步优化</h2><p>主从同步可以保证主从数据的一致性，非常重要。</p>
+<p>可以从以下几个方面来优化Redis主从就集群：</p>
+<ul>
+<li><p>在master中配置repl-diskless-sync yes启用无磁盘复制（直接把信息通过网络流发送，避开磁盘读写这个环节，因为磁盘IO速度一般都是比较慢的，适用于磁盘慢，网络快的场景），避免全量同步时的磁盘IO，提高全量同步的性能。</p>
+</li>
+<li><p>Redis单节点上的内存占用不要太大，减少RDB导致的过多磁盘IO，提高全量同步的性能。</p>
+</li>
+<li><p>适当提高repl_baklog的大小，发现slave宕机时尽快实现故障恢复，尽可能避免全量同步</p>
+</li>
+<li><p>限制一个master上的slave节点数量，如果实在是太多slave，则可以采用主-从-从链式结构，减少master压力</p>
+<p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E4%BC%98%E5%8C%96-%E4%B8%BB%E4%BB%8E%E4%BB%8E%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220706215131864"></p>
+</li>
+</ul>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>简述全量同步和增量同步区别？</p>
+<ul>
+<li>全量同步：master将完整内存数据生成RDB，发送RDB到slave。后续命令则记录在repl_baklog，逐个发送给slave。</li>
+<li>增量同步：slave提交自己的offset到master，master获取repl_baklog中从offset之后的命令给slave</li>
+</ul>
+<p>什么时候执行全量同步？</p>
+<ul>
+<li>slave节点第一次连接master节点时</li>
+<li>slave节点断开时间太久，repl_baklog中的offset已经被覆盖时</li>
+</ul>
+<p>什么时候执行增量同步？</p>
+<ul>
+<li>slave节点断开又恢复，并且在repl_baklog中能找到offset时</li>
+</ul>
+<h1 id="三、Redis哨兵"><a href="#三、Redis哨兵" class="headerlink" title="三、Redis哨兵"></a>三、Redis哨兵</h1><p>slave节点宕机恢复后可以找master节点同步数据，那master节点宕机怎么办？</p>
+<h2 id="1-哨兵结构和作用"><a href="#1-哨兵结构和作用" class="headerlink" title="1. 哨兵结构和作用"></a>1. 哨兵结构和作用</h2><p>Redis提供了哨兵（Sentinel）机制来实现主从集群的自动故障恢复。哨兵的结构如图：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%93%A8%E5%85%B5%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220707102344415"></p>
+<p>哨兵的作用如下：</p>
+<ul>
+<li><strong>监控</strong>：Sentinel 会不断检查您的master和slave是否按预期工作</li>
+<li><strong>自动故障恢复</strong>：如果master故障，Sentinel会将一个slave提升为master。当故障实例恢复后也以新的master为主</li>
+<li><strong>通知</strong>：Sentinel充当Redis客户端的服务发现来源，当集群发生故障转移时，会将最新信息推送给Redis的客户端</li>
+</ul>
+<h2 id="2-哨兵监控原理"><a href="#2-哨兵监控原理" class="headerlink" title="2. 哨兵监控原理"></a>2. 哨兵监控原理</h2><p>Sentinel基于心跳机制监测服务状态，每隔1秒向集群的每个实例发送ping命令：</p>
+<ul>
+<li><p>主观下线：如果某sentinel节点发现某实例未在规定时间响应，则认为该实例<strong>主观下线</strong>。</p>
+</li>
+<li><p>客观下线：若超过指定数量（quorum）的sentinel都认为该实例主观下线，则该实例<strong>客观下线</strong>。quorum值最好超过Sentinel实例数量的一半。（投票机制）</p>
+<p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%93%A8%E5%85%B5%E7%9B%91%E6%8E%A7%E5%8E%9F%E7%90%86.png" srcset="/img/loading.gif" lazyload alt="image-20220707102646921"></p>
+</li>
+</ul>
+<h2 id="3-故障恢复步骤和原理"><a href="#3-故障恢复步骤和原理" class="headerlink" title="3. 故障恢复步骤和原理"></a>3. 故障恢复步骤和原理</h2><p>一旦发现master故障，sentinel需要在salve中选择一个作为新的master，选择依据是这样的：</p>
+<ul>
+<li>首先会判断slave节点与master节点断开时间长短，如果超过指定值（down-after-milliseconds * 10）则会排除该slave节点</li>
+<li>然后判断slave节点的<strong>slave-priority</strong>值，越小优先级越高，如果是0则永不参与选举</li>
+<li>如果slave-prority一样，则判断slave节点的<strong>offset值</strong>，越大说明数据越新，优先级越高</li>
+<li>最后是判断slave节点的运行id大小，越小优先级越高。</li>
+</ul>
+<p>当选出一个新的master后，该如何实现切换呢？</p>
+<p>流程如下：</p>
+<ul>
+<li>sentinel给备选的slave1节点（假设其是7002端口）发送<code>slaveof no one</code>命令，让该节点成为master</li>
+<li>sentinel给所有其它slave发送slaveof 192.168.150.101 7002 命令，让这些slave成为新master的从节点，开始从新的master上同步数据。</li>
+<li>最后，sentinel将故障节点标记为slave，当故障节点恢复后会自动成为新的master的slave节点</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%93%A8%E5%85%B5%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D.png" srcset="/img/loading.gif" lazyload alt="image-20220707103139226"></p>
+<p>注意选择好新的 master 之后，一个哨兵节点完成恢复工作即可，不用麻烦所有的哨兵节点</p>
+<h2 id="4-RedisTemplate的哨兵模式"><a href="#4-RedisTemplate的哨兵模式" class="headerlink" title="4. RedisTemplate的哨兵模式"></a>4. RedisTemplate的哨兵模式</h2><p>在Sentinel集群监管下的Redis主从集群，其节点会因为自动故障转移而发生变化，Redis的客户端必须感知这种变化，及时更新连接信息。Spring的RedisTemplate底层利用lettuce实现了节点的感知和自动切换。</p>
+<p>在Spring项目中，我们应该导入redis的starter依赖 并 在配置文件application.yml中指定sentinel相关信息，这里不能配置主从节点的信息，因为主从节点是会变化的，但是哨兵节点不会，所以我们配置哨兵节点信息</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>	<span class="hljs-attr">redis:</span><br>		<span class="hljs-attr">sentinel:</span><br>			<span class="hljs-attr">master:</span> <span class="hljs-string">mymaster</span> <span class="hljs-comment"># 指定master名称</span><br>			<span class="hljs-attr">nodes:</span> <span class="hljs-comment"># 指定redis-sentinel集群信息</span><br>				<span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:27001</span><br>				<span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:27002</span><br>				<span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:27003</span><br></code></pre></td></tr></table></figure>
+
+<p>配置好之后，如果主机从机发生故障，主从模式和哨兵机制会自动帮助恢复主机从机，就不用我们做什么了</p>
+<p>当然了还需要配置主从读写分离，让读操作只能去从节点，写操作只能去主节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Bean</span> <br><span class="hljs-keyword">public</span> LettuceClientConfigurationBuilderCustomizer <span class="hljs-title function_">configurationBuilderCustomizer</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> configBuilder -&gt; configBuilder.readFrom(ReadFrom.REPLICA_PREFERRED);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里的ReadFrom是配置Redis的读取策略，是一个枚举，包括下面选择：</p>
+<ul>
+<li>MASTER：从主节点读取</li>
+<li>MASTER_PREFERRED：优先从master节点读取，master不可用才读取replica</li>
+<li>REPLICA：从slave（replica）节点读取</li>
+<li>REPLICA _PREFERRED：优先从slave（replica）节点读取，所有的slave都不可用才读取master</li>
+</ul>
+<p>很显然选择第四个，更符合我们的要求</p>
+<p>至于具体的演示，视频里讲的很清楚，redis底层确实能够保证主从节点的安全。</p>
+<h1 id="四、Redis分片集群"><a href="#四、Redis分片集群" class="headerlink" title="四、Redis分片集群"></a>四、Redis分片集群</h1><p>主从和哨兵可以解决高可用、高并发读的问题。但是依然有两个问题没有解决：海量数据存储问题、高并发写的问题</p>
+<h2 id="1-分片集群"><a href="#1-分片集群" class="headerlink" title="1. 分片集群"></a>1. 分片集群</h2><p>使用分片集群可以解决上述问题，分片集群特征：</p>
+<ul>
+<li>集群中有多个master，每个master保存不同数据</li>
+<li>每个master都可以有多个slave节点</li>
+<li>master之间通过ping监测彼此健康状态（不使用哨兵机制）</li>
+<li>客户端请求可以访问集群任意节点，最终都会被转发到正确节点</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4.png" srcset="/img/loading.gif" lazyload alt="image-20220707110518079"></p>
+<h2 id="2-散列插槽"><a href="#2-散列插槽" class="headerlink" title="2. 散列插槽"></a>2. 散列插槽</h2><p>插槽原理</p>
+<p>Redis会把每一个master节点映射到0~16383共16384个插槽（hash slot）上，查看集群信息时就能看到：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4-%E6%95%A3%E5%88%97%E6%8F%92%E6%A7%BD%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload alt="image-20220707111502048"></p>
+<p>数据key不是与节点绑定，而是与插槽绑定。redis会根据key的有效部分计算插槽值，分两种情况：</p>
+<ul>
+<li>key中包含”{}”，且“{}”中至少包含1个字符，“{}”中的部分是有效部分</li>
+<li>key中不包含“{}”，整个key都是有效部分</li>
+</ul>
+<p>例如：key是num，那么就根据num计算，如果是{itcast}num，则根据itcast计算。计算方式是利用CRC16算法得到一个hash值，然后对16384取余，得到的结果就是slot值。</p>
+<blockquote>
+<p> 如何将同一类数据固定的保存在同一个Redis实例？</p>
+<p>这一类数据使用相同的有效部分，例如key都以{typeId}为前缀</p>
+</blockquote>
+<p>比如在7001这个节点执行set a 1时，对a做hash运算，对16384取余，得到的结果是15495，因此要存储到7003节点。</p>
+<p>到了7003后，执行<code>get num</code>时，对num做hash运算，对16384取余，得到的结果是2765，因此需要切换到7001节点（set num时放到了7001里）</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4-%E6%95%A3%E5%88%97%E6%8F%92%E6%A7%BD%E7%A4%BA%E4%BE%8B1.png" srcset="/img/loading.gif" lazyload alt="image-20220707111705141"></p>
+<p>Redis如何判断某个key应该在哪个实例？</p>
+<ul>
+<li>将16384个插槽分配到不同的实例</li>
+<li>根据key的有效部分计算哈希值，对16384取余</li>
+<li>余数作为插槽，寻找插槽所在实例即可</li>
+</ul>
+<h2 id="3-集群伸缩"><a href="#3-集群伸缩" class="headerlink" title="3. 集群伸缩"></a>3. 集群伸缩</h2><p>帮助命令，会出现很多和集群相关的命令，这样不用死记硬背</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">redis-<span class="hljs-keyword">cli</span> --<span class="hljs-keyword">cluster</span> <span class="hljs-keyword">help</span><br></code></pre></td></tr></table></figure>
+
+<p>所谓的集群伸缩其实就是给集群添加或者删除节点</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">redis-cli --cluster<span class="hljs-built_in"> add-node </span> 添加的节点ip  [可选的ip]<br></code></pre></td></tr></table></figure>
+
+<p>可选 ip 写了即代表前面的ip是后面这个ip的从机，否则前面的ip自己就是主机</p>
+<p>通过命令查看集群状态：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">redis-<span class="hljs-keyword">cli</span> -p 7001 <span class="hljs-keyword">cluster</span> nodes<br></code></pre></td></tr></table></figure>
+
+<p>光加入主机没用，因为上面没有插槽，数据是跟着插槽走的，所以要给新加入的主机分配插槽，还是可以去查看帮助命令，这里就直接写了</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">redis-<span class="hljs-keyword">cli</span> --<span class="hljs-keyword">cluster</span> reshard 待减少插槽的主机ip<br></code></pre></td></tr></table></figure>
+
+<p>然后redis会问移动多少个插槽，移到哪个主机ip（复制新加入主机的id即可），还会询问你的插槽是从哪里移动过来的？填写待减少插槽的主机的id即可</p>
+<p>整个过程如果以后要用到看视频回顾即可，总之记住分片集群是可伸缩的，但数据是跟着插槽走的</p>
+<h2 id="4-故障转移"><a href="#4-故障转移" class="headerlink" title="4. 故障转移"></a>4. 故障转移</h2><p>分片集群不使用哨兵机制，但也能实现故障转移的功能</p>
+<h3 id="4-1-自动故障转移"><a href="#4-1-自动故障转移" class="headerlink" title="4.1 自动故障转移"></a>4.1 自动故障转移</h3><p>当集群中有一个master宕机会发生什么呢？直接停止一个redis实例，例如7002</p>
+<p>（1）首先是该实例与其它实例失去连接</p>
+<p>（2）然后是疑似宕机</p>
+<p>（3）最后是确定下线，自动提升一个slave为新的master：</p>
+<p>（4）当7002再次启动，就会变为一个slave节点了：</p>
+<h3 id="4-2-手动故障转移"><a href="#4-2-手动故障转移" class="headerlink" title="4.2 手动故障转移"></a>4.2 手动故障转移</h3><p>涉及到设备升级，因此需要手动实现故障转移</p>
+<p>利用cluster failover命令可以手动让集群中的某个master宕机，切换到执行cluster failover命令的这个slave节点，实现无感知的数据迁移。</p>
+<p>略</p>
+<h2 id="5-RedisTemplate访问分片集群"><a href="#5-RedisTemplate访问分片集群" class="headerlink" title="5. RedisTemplate访问分片集群"></a>5. RedisTemplate访问分片集群</h2><p>RedisTemplate底层同样基于lettuce实现了分片集群的支持，而使用的步骤与哨兵模式基本一致：</p>
+<p>1）引入redis的starter依赖</p>
+<p>2）配置分片集群地址</p>
+<p>3）配置读写分离</p>
+<p>与哨兵模式相比，其中只有分片集群的配置方式略有差异，如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">cluster:</span> <span class="hljs-comment"># 变化点</span><br>      <span class="hljs-attr">nodes:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:7001</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:7002</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:7003</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:8001</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:8002</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span><span class="hljs-string">:8003</span><br></code></pre></td></tr></table></figure>
+
+<p>其他与哨兵机制一样</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis：08.Redis的持久化与集群</div>
+      <div>http://jswanyu.github.io/2022/06/28/Redis/Redis：08.Redis的持久化与集群/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/28/Redis/Redis%EF%BC%9A08.%E6%8C%81%E4%B9%85%E5%8C%96%E3%80%81%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E3%80%81%E5%93%A8%E5%85%B5%E3%80%81%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4/" title="Redis：08.持久化、主从集群、哨兵、分片集群">
+                        <span class="hidden-mobile">Redis：08.持久化、主从集群、哨兵、分片集群</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

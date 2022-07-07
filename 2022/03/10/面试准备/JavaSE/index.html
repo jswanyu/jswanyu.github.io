@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-07-05T12:09:50.335Z">
+<meta property="article:modified_time" content="2022-07-07T12:52:26.716Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -1084,11 +1084,12 @@
 </ul>
 <h3 id="什么是字符串常量池？"><a href="#什么是字符串常量池？" class="headerlink" title="什么是字符串常量池？"></a>什么是字符串常量池？</h3><p>java中常量池的概念主要有四个： 全局字符串常量池， class文件常量池， 运行时常量池，基本类型包装类对象常量池。我们现在所说的就是全局字符串常量池</p>
 <p>字符串作为最常用也是最基础的引用数据类型，jvm为了提升性能和减少内存开销，避免字符的重复创建，其维护了一块特殊的内存空间，即字符串池（StringTable），当需要使用字符串时，先去字符串池中查看该字符串是否已经存在，如果存在，则可以直接使用，如果不存在，初始化，并将该字符串放入字符串常量池中。</p>
+<p><font color=red>关于串池的位置，待补充完整</font></p>
 <p>字符串常量池的位置也是随着jdk版本的不同而位置不同。在jdk6中，常量池的位置在永久代（方法区）中，此时常量池中存储的是对象。在jdk7中，常量池的位置在堆中，此时，常量池存储的就是引用了。在jdk8中，永久代（方法区）被元空间取代了。</p>
 <h3 id="字符串常量池的好处"><a href="#字符串常量池的好处" class="headerlink" title="字符串常量池的好处"></a>字符串常量池的好处</h3><p>避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享，在编译阶段就把所有的字符串文字放到一个常量池中。</p>
 <ul>
 <li>节省内存空间：常量池中所有相同的字符串常量被合并，只占用一个空间。</li>
-<li>节省运行时间：比较字符串时，&#x3D;&#x3D;比equals()快。对于两个引用变量，只用&#x3D;&#x3D;判断引用是否相等，也就可以判断实际值是否相等。</li>
+<li>节省运行时间：比较字符串时，<code>==</code>比equals()快。对于两个引用变量，只用<code>==</code>判断引用是否相等，也就可以判断实际值是否相等。</li>
 </ul>
 <h3 id="String-str-x3D-”abc”与-String-str-x3D-new-String-“abc”-一样吗？new-String-“abc”-创建了几个对象"><a href="#String-str-x3D-”abc”与-String-str-x3D-new-String-“abc”-一样吗？new-String-“abc”-创建了几个对象" class="headerlink" title="String str&#x3D;”abc”与 String str&#x3D;new String(“abc”)一样吗？new String(“abc”)创建了几个对象?"></a>String str&#x3D;”abc”与 String str&#x3D;new String(“abc”)一样吗？new String(“abc”)创建了几个对象?</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">String</span> <span class="hljs-variable">str1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;abc&quot;</span>;              <span class="hljs-comment">// 方式一</span><br><span class="hljs-type">String</span> <span class="hljs-variable">str2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">&quot;abc&quot;</span>);  <span class="hljs-comment">// 方式二</span><br></code></pre></td></tr></table></figure>
 
@@ -1540,9 +1541,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/MySQL/" title="面试准备：MySQL">
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%99%BA%E5%8A%9B%E9%A2%98/" title="面试准备：智力题">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">面试准备：MySQL</span>
+                        <span class="hidden-mobile">面试准备：智力题</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -1550,8 +1551,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/JVM/" title="面试准备：JVM">
-                        <span class="hidden-mobile">面试准备：JVM</span>
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="面试准备：计算机网络">
+                        <span class="hidden-mobile">面试准备：计算机网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
