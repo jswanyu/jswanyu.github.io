@@ -16,16 +16,16 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="梳理一下此项目的逻辑和细节 一、短信登录给用户发送登录验证码和登录凭证，记住用户登录状态，使用token刷新拦截器和登录验证拦截器进行登录状态检查，保护特定需登录使用的资源。并且将验证码和token都存到redis中，解决了集群session共享问题。 1. 隐藏用户敏感信息一开始Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该在HTTP里传输，另一方面多余的信">
+    <meta name="description" content="梳理一下此项目的内容和逻辑，很多细节可以去对应的笔记章节复习 一、短信登录给用户发送登录验证码和登录凭证，记住用户登录状态，使用token刷新拦截器和登录验证拦截器进行登录状态检查，保护特定需登录使用的资源。并且将验证码和token都存到redis中，解决了集群session共享问题。 1. 隐藏用户敏感信息一开始Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该">
 <meta property="og:type" content="article">
 <meta property="og:title" content="项目：商户点评项目">
 <meta property="og:url" content="http://jswanyu.github.io/2022/06/27/%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="梳理一下此项目的逻辑和细节 一、短信登录给用户发送登录验证码和登录凭证，记住用户登录状态，使用token刷新拦截器和登录验证拦截器进行登录状态检查，保护特定需登录使用的资源。并且将验证码和token都存到redis中，解决了集群session共享问题。 1. 隐藏用户敏感信息一开始Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该在HTTP里传输，另一方面多余的信">
+<meta property="og:description" content="梳理一下此项目的内容和逻辑，很多细节可以去对应的笔记章节复习 一、短信登录给用户发送登录验证码和登录凭证，记住用户登录状态，使用token刷新拦截器和登录验证拦截器进行登录状态检查，保护特定需登录使用的资源。并且将验证码和token都存到redis中，解决了集群session共享问题。 1. 隐藏用户敏感信息一开始Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E5%9B%BE%E6%A0%87.jpeg">
 <meta property="article:published_time" content="2022-06-27T04:36:02.000Z">
-<meta property="article:modified_time" content="2022-07-08T14:58:51.072Z">
+<meta property="article:modified_time" content="2022-07-10T16:32:43.986Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E5%9B%BE%E6%A0%87.jpeg">
@@ -136,18 +136,6 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/log/">
-                <i class="iconfont icon-tags-fill"></i>
-                日志
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 时间线
@@ -211,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.2k 字
+          13k 字
         
       </span>
     
@@ -255,7 +243,7 @@
             
             <div class="markdown-body">
               
-              <p>梳理一下此项目的逻辑和细节</p>
+              <p>梳理一下此项目的内容和逻辑，很多细节可以去对应的笔记章节复习</p>
 <h1 id="一、短信登录"><a href="#一、短信登录" class="headerlink" title="一、短信登录"></a>一、短信登录</h1><p>给用户发送登录验证码和登录凭证，记住用户登录状态，使用token刷新拦截器和登录验证拦截器进行登录状态检查，保护特定需登录使用的资源。并且将验证码和token都存到redis中，解决了集群session共享问题。</p>
 <h2 id="1-隐藏用户敏感信息"><a href="#1-隐藏用户敏感信息" class="headerlink" title="1. 隐藏用户敏感信息"></a>1. 隐藏用户敏感信息</h2><p>一开始Session里存取的都是完整的User，包括密码等属性，一方面这是敏感信息，不应该在HTTP里传输，另一方面多余的信息也会带来额外的内存消耗，因此可以建立UserDTO，仅使用必要的信息完成数据传输。后面的user都是使用DTO对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserDTO</span> &#123;<br>    <span class="hljs-keyword">private</span> Long id;<br>    <span class="hljs-keyword">private</span> String nickName;<br>    <span class="hljs-keyword">private</span> String icon;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -314,7 +302,82 @@
 
 
 
-<h1 id="二、商铺信息缓存"><a href="#二、商铺信息缓存" class="headerlink" title="二、商铺信息缓存"></a>二、商铺信息缓存</h1><h1 id="三、优惠券秒杀"><a href="#三、优惠券秒杀" class="headerlink" title="三、优惠券秒杀"></a>三、优惠券秒杀</h1><h1 id="四、社交功能"><a href="#四、社交功能" class="headerlink" title="四、社交功能"></a>四、社交功能</h1>
+<h1 id="二、商铺信息缓存"><a href="#二、商铺信息缓存" class="headerlink" title="二、商铺信息缓存"></a>二、商铺信息缓存</h1><h2 id="1-添加缓存"><a href="#1-添加缓存" class="headerlink" title="1. 添加缓存"></a>1. 添加缓存</h2><p>用户请求商铺信息第一次会去DB里取，然后会添加进redis，作为缓存</p>
+<ul>
+<li>redis的key：店铺id</li>
+<li>redis的value：String类型，商铺对象转为JSON字符串</li>
+</ul>
+<div align="center">
+   <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-Redis%E7%BC%93%E5%AD%98%E6%A8%A1%E5%9E%8B.png" srcset="/img/loading.gif" lazyload  height=500>
+    <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-Redis%E6%9F%A5%E8%AF%A2%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E6%B5%81%E7%A8%8B%E6%A1%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload height=500>
+</div>
+
+
+
+<h2 id="2-缓存更新"><a href="#2-缓存更新" class="headerlink" title="2. 缓存更新"></a>2. 缓存更新</h2><p>缓存更新策略的最佳实践方案：</p>
+<ul>
+<li>低一致性需求：使用Redis自带的内存淘汰机制</li>
+<li>高一致性需求：主动更新，采取旁路缓存策略，先更新DB，再删除cache，并以超时剔除作为兜底方案</li>
+<li>强一致性需求：主动更新，采取旁路缓存策略，先更新DB，再删除cache，并加锁避免线程安全问题，并以超时剔除作为兜底方案</li>
+</ul>
+<p>后两者读写操作需要注意：</p>
+<ul>
+<li>读操作：缓存命中则直接返回，缓存未命中则查询数据库，并写入缓存，设定超时时间</li>
+<li>写操作：先更新数据库，然后再删除缓存，要确保数据库与缓存操作的原子性</li>
+</ul>
+<p>因此相比添加缓存，这里变动两个需求：</p>
+<ul>
+<li><p>根据id查询店铺时，如果缓存未命中，则查询数据库，将数据库结果写入缓存，变化就是要设置一个超时时间，作为缓存更新的超时剔除兜底方案，ShopServiceImpl.java</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-comment">// 6.存在，写入redis，并设置超时时间</span><br>    stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES); <span class="hljs-comment">// 超时时间：30分钟</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>根据id修改店铺时，先修改数据库，再删除缓存，redis理论篇已经分析过。注意要加上事务注解，ShopServiceImpl.java</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-meta">@Transactional</span> <span class="hljs-comment">// 声明式事务</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">update</span><span class="hljs-params">(Shop shop)</span> &#123;<br>    <span class="hljs-type">Long</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> shop.getId();<br>    <span class="hljs-keyword">if</span> (id == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺id不能为空&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 1.更新数据库</span><br>    updateById(shop);<br>    <span class="hljs-comment">// 2.删除缓存</span><br>    stringRedisTemplate.delete(CACHE_SHOP_KEY + id);<br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-解决缓存穿透"><a href="#3-解决缓存穿透" class="headerlink" title="3. 解决缓存穿透"></a>3. 解决缓存穿透</h2><p>采用缓存空对象的方案来解决缓存穿透，逻辑上做出对应变更，如下图所示</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F-%E7%BC%93%E5%AD%98%E7%A9%BA%E5%AF%B9%E8%B1%A1-%E9%80%BB%E8%BE%91%E6%A1%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220621231354482"></p>
+<p>也就是在查询DB之后，改动商铺是否存在的判断，如果不存在，不仅仅返回商铺信息不存在，还要把空值写入redis，并设置较短超时时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">Shop</span> <span class="hljs-variable">shop</span> <span class="hljs-operator">=</span> getById(id);<br><span class="hljs-comment">// 5.不存在，返回错误</span><br><span class="hljs-keyword">if</span>(shop == <span class="hljs-literal">null</span>)&#123;<br>    <span class="hljs-comment">// 解决缓存穿透：将空值写入redis，设置较短超时时间：2分钟</span><br>    stringRedisTemplate.opsForValue().set(key, <span class="hljs-string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);<br>    <span class="hljs-comment">// 返回错误信息</span><br>    <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺不存在&quot;</span>);<br>&#125;<br><span class="hljs-comment">// 6.存在，写入redis，并设置超时时间：30分钟</span><br>stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES);<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-解决缓存雪崩"><a href="#4-解决缓存雪崩" class="headerlink" title="4. 解决缓存雪崩"></a>4. 解决缓存雪崩</h2><p><strong>缓存雪崩</strong>是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+<p><strong>解决方案：</strong>给不同的Key的TTL添加随机值（很多热点数据是提前存进redis里的，设置随机的超时时间）</p>
+<h2 id="5-解决缓存击穿"><a href="#5-解决缓存击穿" class="headerlink" title="5. 解决缓存击穿"></a>5. 解决缓存击穿</h2><p><strong>缓存击穿问题</strong>也叫热点Key问题（不同于缓存雪崩是大部分key失效，缓存击穿只是部分key，但这部分key很重要，是热点内容），就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂（有时需要多张表查询并进行复杂运算）</strong>的key突然失效了，无数的请求访问（因为它是热点key，有大量请求会在缓存重建过程中不断访问）会在瞬间给数据库带来巨大的冲击。</p>
+<p>解决方案：逻辑过期–不设置真正的过期时间（TTL），让key永久生效。但我们又怎么知道到底什么时候缓存会失效呢，这里可以把时效的时间（当前时间+有效期）写到value里，让他只是逻辑上的过期时间。但其实这个key是没有TTL的，再搭配上合适的内存淘汰策略，理论上来讲是可以永远能查到的，不会存在未命中的情况。</p>
+<p>当用户开始查询redis时，判断是否命中，如果没有命中则直接返回空数据，不查询数据库，而一旦命中后，将value取出，判断value中的过期时间是否满足，如果没有过期，则直接返回redis中的数据。如果过期，则判断获取锁（同样使用setnx）是否成功，成功则开启独立线程去重构缓存，自己本线程直接返回旧值，如果获取锁没成功，则表示现在锁被别人获取了，还是直接返回旧值。独立线程重构缓存完成后释放互斥锁。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F%E8%A7%A3%E5%86%B3.png" srcset="/img/loading.gif" lazyload alt="image-20220709115209330"></p>
+<p>新建一个实体类，对原来代码没有侵入性。放到工具包里</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisData</span> &#123;<br>    <span class="hljs-keyword">private</span> LocalDateTime expireTime;<br>    <span class="hljs-keyword">private</span> Object data;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>ShopServiceImpl</strong>，严格按照上面的逻辑图编写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> Shop <span class="hljs-title function_">queryWithLogicalExpire</span><span class="hljs-params">( Long id )</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> CACHE_SHOP_KEY + id;<br>    <span class="hljs-comment">// 1.从redis查询商铺缓存</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">json</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(key);<br>    <span class="hljs-comment">// 2.判断是否存在</span><br>    <span class="hljs-keyword">if</span> (StrUtil.isBlank(json)) &#123;<br>        <span class="hljs-comment">// 3.存在，直接返回</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>    <span class="hljs-comment">// 4.命中，需要先把json反序列化为对象</span><br>    <span class="hljs-type">RedisData</span> <span class="hljs-variable">redisData</span> <span class="hljs-operator">=</span> JSONUtil.toBean(json, RedisData.class);<br>    <span class="hljs-type">Shop</span> <span class="hljs-variable">shop</span> <span class="hljs-operator">=</span> JSONUtil.toBean((JSONObject) redisData.getData(), Shop.class);<br>    <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">expireTime</span> <span class="hljs-operator">=</span> redisData.getExpireTime();<br>    <span class="hljs-comment">// 5.判断是否过期</span><br>    <span class="hljs-keyword">if</span>(expireTime.isAfter(LocalDateTime.now())) &#123;<br>        <span class="hljs-comment">// 5.1.未过期，直接返回店铺信息</span><br>        <span class="hljs-keyword">return</span> shop;<br>    &#125;<br>    <span class="hljs-comment">// 5.2.已过期，需要缓存重建</span><br>    <span class="hljs-comment">// 6.缓存重建</span><br>    <span class="hljs-comment">// 6.1.获取互斥锁</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">lockKey</span> <span class="hljs-operator">=</span> LOCK_SHOP_KEY + id;<br>    <span class="hljs-type">boolean</span> <span class="hljs-variable">isLock</span> <span class="hljs-operator">=</span> tryLock(lockKey);<br>    <span class="hljs-comment">// 6.2.判断是否获取锁成功</span><br>    <span class="hljs-keyword">if</span> (isLock)&#123;<br>        CACHE_REBUILD_EXECUTOR.submit( ()-&gt;&#123;<br>            <span class="hljs-keyword">try</span>&#123;<br>                <span class="hljs-comment">// 重建缓存，这里实际应该设置为30min，方便测试设置成了10s</span><br>                    <span class="hljs-built_in">this</span>.saveShop2Redis(id,<span class="hljs-number">10L</span>);<br>            &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>            &#125;<span class="hljs-keyword">finally</span> &#123;<br>                unlock(lockKey);<br>            &#125;<br>        &#125;);<br>    &#125;<br>    <span class="hljs-comment">// 6.4.未获取锁成功，或者获取锁之后，都直接返回过期的商铺信息。这里只有独立线程会更新缓存</span><br>    <span class="hljs-keyword">return</span> shop;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(String key)</span> &#123;<br>    <span class="hljs-type">Boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().setIfAbsent(key, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-number">10</span>, TimeUnit.SECONDS);<br>    <span class="hljs-keyword">return</span> BooleanUtil.isTrue(flag);<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">unlock</span><span class="hljs-params">(String key)</span> &#123;<br>    stringRedisTemplate.delete(key);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样改写后，对应的 queryById 直接调用逻辑过期方法即可。测试前先预热缓存</p>
+<p>测试的时候我们应该测试如下内容：</p>
+<ul>
+<li>商户信息变更之后，redis缓存能否更新成功</li>
+<li>缓存一致性问题，前几个先来的线程查询到的仍然是旧值，缓存更新后，访问的才是新的值</li>
+<li>多线程访问同一个店铺的场景下，是否只进行一次缓存重建。</li>
+</ul>
+<h2 id="6-封装缓存工具"><a href="#6-封装缓存工具" class="headerlink" title="6. 封装缓存工具"></a>6. 封装缓存工具</h2><p>基于StringRedisTemplate封装一个缓存工具类，满足下列需求：</p>
+<ul>
+<li>方法1：将任意Java对象序列化为json并存储在string类型的key中，并且可以设置TTL过期时间</li>
+<li>方法2：将任意Java对象序列化为json并存储在string类型的key中，并且可以设置逻辑过期时间，用于处理缓</li>
+</ul>
+<p>存击穿问题</p>
+<ul>
+<li>方法3：根据指定类型的key查询缓存，并反序列化为指定类型，利用缓存空值的方式解决缓存穿透问题</li>
+<li>方法4：根据指定类型的key查询缓存，并反序列化为指定类型，需要利用逻辑过期解决缓存击穿问题</li>
+</ul>
+<p>方法1和3是对应普通缓存，并解决缓存穿透的；方法2和4是对应解决缓存击穿的</p>
+<p>核心内容：泛型的使用、函数式编程、lamda表达式的使用，看下面这一个就大概能理解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 根据指定类型的key查询缓存，并反序列化为指定类型，利用缓存空值的方式解决缓存穿透问题</span><br><span class="hljs-comment">// 之前返回类型固定为店铺，现在使用泛型R，参数里加上Class&lt;R&gt; type，表示手动传入对象类型，进行泛型推断</span><br><span class="hljs-comment">// keyPrefix是redis里的前缀，前缀+id，才是redis里的key。ID也不一定为Long型，所以也使用泛型</span><br><span class="hljs-keyword">public</span> &lt;R,ID&gt; R <span class="hljs-title function_">queryWithPassThrough</span><span class="hljs-params">(String keyPrefix, ID id, Class&lt;R&gt; type, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span>&#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> keyPrefix + id;<br>    <span class="hljs-comment">// 1.从redis查询对象类型的缓存</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">json</span> <span class="hljs-operator">=</span> stringRedisTemplate.opsForValue().get(key);<br>    <span class="hljs-comment">// 2.判断是否存在</span><br>    <span class="hljs-keyword">if</span> (StrUtil.isNotBlank(json)) &#123;<br>        <span class="hljs-comment">// 3.存在，直接返回。返回的类型不再是店铺，而是传进来的type</span><br>        <span class="hljs-keyword">return</span> JSONUtil.toBean(json, type);<br>    &#125;<br>    <span class="hljs-comment">// 判断命中的是否是空值。这里很容易忘记，查到的缓存只有三种情况：查到(正常情况)；空值(“”)；为null</span><br>    <span class="hljs-comment">// 所以不等于空就只能是空值了，上面的isNotBlank()方法是认定只有字符串有内容才返回true，比如“abc”。其他类似NULL(为空),&quot;&quot;(空值)返回都是false</span><br>    <span class="hljs-comment">// 或者直接写 if (&quot;&quot;.equals(shopJson))</span><br>    <span class="hljs-keyword">if</span> (json != <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 返回一个错误信息</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 4.缓存不存在，根据id查询数据库。这里需要格外关注，使用到了函数式编程，不同对象的数据库查询方法自然不同，这里既然不知道是什么对象类型，只能把问题抛给调用者</span><br>    <span class="hljs-comment">// 所以我们在参数里加上函数，有参(参数类型ID)有返回值(返回值类型R)，起名dbFallback，apply方法就是调用这个函数，并把id作为参数传进去</span><br>    <span class="hljs-type">R</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> dbFallback.apply(id);<br>    <span class="hljs-comment">// 5.DB里也不存在，返回错误</span><br>    <span class="hljs-keyword">if</span> (r == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 将空值写入redis，避免缓存穿透。TTL为2min</span><br>        stringRedisTemplate.opsForValue().set(key, <span class="hljs-string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);<br>        <span class="hljs-comment">// 返回错误信息</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>    <span class="hljs-comment">// 6.DB里存在，写入redis，调用了前面的普通设置缓存的方法，还需要参数时间和单位</span><br>    <span class="hljs-built_in">this</span>.set(key, r, time, unit);<br>    <span class="hljs-keyword">return</span> r;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>ShopServiceImpl中更新方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Resource</span><br><span class="hljs-keyword">private</span> CacheClient cacheClient;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-comment">// 调用缓存工具类内的方法 queryWithPassThrough 解决缓存穿透</span><br>    <span class="hljs-comment">// 参数：店铺前缀，店铺id，店铺类型对象，根据id查询DB里店铺的方法，时间，时间单位</span><br>    <span class="hljs-comment">// 这里的方法引用this::getById是lamda表达式的简写，实际为：id -&gt; getById(id)，因为这里是在ShopServiceImpl里，继承了ShopMapper，所以知道getById是查询店铺类型</span><br>    <span class="hljs-comment">// 这里的逻辑过期时间设置为30min</span><br>    <span class="hljs-type">Shop</span> <span class="hljs-variable">shop</span> <span class="hljs-operator">=</span> cacheClient.queryWithPassThrough(CACHE_SHOP_KEY, id, Shop.class, <span class="hljs-built_in">this</span>::getById, CACHE_SHOP_TTL, TimeUnit.MINUTES);<br><br><br>    <span class="hljs-keyword">if</span> (shop == <span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺不存在&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> Result.ok(shop);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>封装之后能够让各个对象都是用缓存工具类里的方法，添加、更新缓存，以及使用缓存穿透、击穿等解决方案</p>
+<h1 id="三、优惠券秒杀"><a href="#三、优惠券秒杀" class="headerlink" title="三、优惠券秒杀"></a>三、优惠券秒杀</h1><h1 id="四、社交功能"><a href="#四、社交功能" class="headerlink" title="四、社交功能"></a>四、社交功能</h1>
               
             </div>
             <hr/>

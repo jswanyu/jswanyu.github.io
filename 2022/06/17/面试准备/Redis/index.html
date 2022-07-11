@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-06-17T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-07-08T14:06:22.377Z">
+<meta property="article:modified_time" content="2022-07-09T02:34:53.042Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -127,18 +127,6 @@
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/log/">
-                <i class="iconfont icon-tags-fill"></i>
-                日志
               </a>
             </li>
           
@@ -591,7 +579,7 @@
 <h3 id="说下什么是缓存穿透、缓存雪崩、缓存击穿，及它们的解决方案"><a href="#说下什么是缓存穿透、缓存雪崩、缓存击穿，及它们的解决方案" class="headerlink" title="说下什么是缓存穿透、缓存雪崩、缓存击穿，及它们的解决方案"></a>说下什么是缓存穿透、缓存雪崩、缓存击穿，及它们的解决方案</h3><p><strong>缓存穿透</strong>：是指客户端请求的数据在<strong>缓存中和数据库中都不存在，这样缓存永远不会生效</strong>，大量无效请求打到数据库，给数据库带来巨大压力。</p>
 <p>被动解决方案（问题来了去解决）：</p>
 <ul>
-<li>缓存空对象（额外内存消耗，需要设置超时时间）</li>
+<li>缓存空对象（额外内存消耗，设置较短的超时时间）</li>
 <li>布隆过滤：布隆过滤器可以判断这个key在不在数据库中，不在数据库里就不会让其打到数据库里，特点是如果判断这个key不在数据库中，那么这个key一定不在数据库中，如果判断这个key在数据库中，也不能保证这个key一定在数据库中。就是会有少数的漏网之鱼</li>
 </ul>
 <p>主动解决方案（提前预防）：</p>
