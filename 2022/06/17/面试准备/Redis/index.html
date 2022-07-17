@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-06-17T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-07-09T02:34:53.042Z">
+<meta property="article:modified_time" content="2022-07-17T09:47:48.994Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k 字
+          16k 字
         
       </span>
     
@@ -289,6 +289,13 @@
 <p>可以通过Redis的zset命令实现延迟队列，ZSET是Redis的有序集合，通过zadd score1 value1 命令向内存中生产消息，并利用设置好的时间戳作为score进行排序，然后通过zrangebysocre 查询符合条件的所有待处理的任务，循环执行，也可以zrangebyscore key min max withscores limit 0 1 查询最早的一条任务，来进行消费（滚动分页的感觉）</p>
 <h3 id="Redis-里面有1亿个-key，其中有-10-个-key-是包含-java，如何将它们全部找出来？"><a href="#Redis-里面有1亿个-key，其中有-10-个-key-是包含-java，如何将它们全部找出来？" class="headerlink" title="Redis 里面有1亿个 key，其中有 10 个 key 是包含 java，如何将它们全部找出来？"></a>Redis 里面有1亿个 key，其中有 10 个 key 是包含 java，如何将它们全部找出来？</h3><p>可以使用Redis的KEYS命令，用于查找所有匹配给定模式 pattern 的 key ，虽然时间复杂度为O(n)，但常量时间相当小。</p>
 <p>注意：生产环境使用 KEYS命令需要非常小心，在大的数据库上执行命令会影响性能，KEYS指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个命令适合用来调试和特殊操作，像改变键空间布局。不要在你的代码中使用 KEYS 。如果你需要一个寻找键空间中的key子集，考虑使用 SCAN 或 sets。</p>
+<h3 id="Redis并发竞争key问题应该如何解决？"><a href="#Redis并发竞争key问题应该如何解决？" class="headerlink" title="Redis并发竞争key问题应该如何解决？"></a>Redis并发竞争key问题应该如何解决？</h3><p>Redis并发竞争key就是多个客户端操作一个key，可能会导致数据出现问题，主要有以下几种解决办法：</p>
+<ul>
+<li>乐观锁， watch 命令可以方便的实现乐观锁。watch 命令会监视给定的每一个key，当 exec 时如果监视的任一个key自从调用watch后发生过变化，则整个事务会回滚，不执行任何动作。不能在分片集群中使用</li>
+<li>分布式锁，适合分布式场景</li>
+<li>时间戳，适合有序场景，比如A想把key设置为1，B想把key设置为2，C想把key设置为3，对每个操作加上时间戳，写入前先比较自己的时间戳是不是早于现有记录的时间戳，如果早于，就不写入了</li>
+<li>消息队列，串行化处理</li>
+</ul>
 <h2 id="Redis单线程-x2F-多线程"><a href="#Redis单线程-x2F-多线程" class="headerlink" title="Redis单线程&#x2F;多线程"></a>Redis单线程&#x2F;多线程</h2><h3 id="Redis是单线程还是多线程？"><a href="#Redis是单线程还是多线程？" class="headerlink" title="Redis是单线程还是多线程？"></a>Redis是单线程还是多线程？</h3><ul>
 <li>如果仅仅聊Redis的核心业务部分（命令处理），答案是单线程</li>
 <li>如果是聊整个Redis，那么答案就是多线程</li>
@@ -656,7 +663,23 @@
 <td align="center">性能上不如使用缓存实现分布式锁</td>
 </tr>
 </tbody></table>
-<h3 id="Redis如何实现分布式锁？"><a href="#Redis如何实现分布式锁？" class="headerlink" title="Redis如何实现分布式锁？"></a>Redis如何实现分布式锁？</h3><p>Redis实现分布式锁的主要命令：SETNX，该命令的作用是当key不存在时设置key的值，当Key存在时，什么都不做。</p>
+<p>简单来说，redis和zookeeper都可以，zookeeper可靠性高，但性能没redis好</p>
+<h3 id="Redis如何实现分布式锁？"><a href="#Redis如何实现分布式锁？" class="headerlink" title="Redis如何实现分布式锁？"></a>Redis如何实现分布式锁？</h3><p>Redis实现分布式锁的主要命令：SETNX，该命令的作用是当key不存在时设置key的值，当Key存在时，什么都不做。最简单的方式就是：加锁和解锁</p>
+<p>redis获取锁–&gt;获取到锁之后执行业务–&gt;执行完删除锁–&gt;结束</p>
+<p>几个要完善的点：</p>
+<ul>
+<li>把删除锁的操作放到 finally 代码块中，防止 try 里出现异常，也是能正常释放锁</li>
+<li>给锁设置过期时间，防止redis执行业务时宕机</li>
+<li>为锁加一个标识，例如生成一个UUID，作为锁的标识，每个线程获取锁时都会生成一个不同的UUID作为锁的标识，在进行删除锁时会进行判断，锁的标识和自己生成UUID相等时才进行删除操作，这样就避免线程1释放了线程2的锁。</li>
+<li>如何确定锁的过期时间：在加锁时，先设置一个预估的过期时间，然后开启一个守护线程，定时去检测这个锁的失效时间，如果锁快要过期了，操作共享资源还未完成，那么就自动对锁进行续期，重新设置过期时间</li>
+<li>实现可重入锁：对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时才能释放锁。</li>
+<li>线程1获取了锁，线程2没有获取到锁，那么线程2怎么知道线程1啥时候释放了锁，进而再去获取锁呢：<ul>
+<li>可以通过客户端轮询的方式，就是线程2过一会就来看看是不是能获取锁了。这种方式比较消耗服务器资源，当并发量比较大时，会影响服务器的效率。</li>
+<li>通过Redis的发布订阅功能，当获取锁失败时，订阅锁释放消息，获取锁成功后释放时，发送锁释放消息。</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么是RedLock？"><a href="#什么是RedLock？" class="headerlink" title="什么是RedLock？"></a>什么是RedLock？</h3><p>为了实现多节点Redis的分布式锁，Redis的作者提出了RedLock算法。</p>
 
               
             </div>
