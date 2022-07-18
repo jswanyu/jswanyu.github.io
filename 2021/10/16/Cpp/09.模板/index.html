@@ -1,0 +1,774 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="C++模板模板就是建立通用的模具，大大提高复用性模板的特点：  模板不可以直接使用，它只是一个框架 模板的通用并不是万能的  C++另一种编程思想称为 泛型编程 ，主要利用的技术就是模板 C++提供两种模板机制：  函数模板  类模板   1 函数模板建立一个通用函数，其函数返回值类型和形参类型可以不具体制定，用一个虚拟的类型来代表 1.1 语法 template函数声明或定义  每个函数模板都是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++：09.模板">
+<meta property="og:url" content="http://jswanyu.github.io/2021/10/16/Cpp/09.%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="C++模板模板就是建立通用的模具，大大提高复用性模板的特点：  模板不可以直接使用，它只是一个框架 模板的通用并不是万能的  C++另一种编程思想称为 泛型编程 ，主要利用的技术就是模板 C++提供两种模板机制：  函数模板  类模板   1 函数模板建立一个通用函数，其函数返回值类型和形参类型可以不具体制定，用一个虚拟的类型来代表 1.1 语法 template函数声明或定义  每个函数模板都是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/cpp%E5%9B%BE%E6%A0%87.jpg">
+<meta property="article:published_time" content="2021-10-16T02:21:22.000Z">
+<meta property="article:modified_time" content="2022-07-18T15:42:51.889Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/cpp%E5%9B%BE%E6%A0%87.jpg">
+  
+  
+  
+  <title>C++：09.模板 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/cpp%E6%A8%AA%E5%B9%85.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++：09.模板"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-10-16 10:21" pubdate>
+          2021年10月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++：09.模板</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="C-模板"><a href="#C-模板" class="headerlink" title="C++模板"></a>C++模板</h1><p>模板就是建立通用的模具，大大提高复用性<br>模板的特点：</p>
+<ul>
+<li>模板不可以直接使用，它只是一个框架</li>
+<li>模板的通用并不是万能的</li>
+</ul>
+<p>C++另一种编程思想称为 泛型编程 ，主要利用的技术就是模板</p>
+<p>C++提供两种模板机制：</p>
+<ul>
+<li><p>函数模板</p>
+</li>
+<li><p>类模板</p>
+</li>
+</ul>
+<h2 id="1-函数模板"><a href="#1-函数模板" class="headerlink" title="1 函数模板"></a>1 函数模板</h2><p>建立一个通用函数，其函数返回值类型和形参类型可以不具体制定，用一个虚拟的类型来代表</p>
+<h3 id="1-1-语法"><a href="#1-1-语法" class="headerlink" title="1.1 语法"></a>1.1 语法</h3><blockquote>
+<p>template<typename T><br>函数声明或定义</p>
+</blockquote>
+<p>每个函数模板都是上面这种结构嗷</p>
+<p>解释：</p>
+<p>template   —  声明创建模板<br>typename —  表面其后面的符号是一种数据类型，可以用class代替，有人用typename T表示函数模板，用class T表示类模板，还有人二个模板都用class T<br>T                 —   通用的数据类型，名称可以替换，通常为大写字母T</p>
+<h3 id="1-2-函数模板调用"><a href="#1-2-函数模板调用" class="headerlink" title="1.2 函数模板调用"></a>1.2 函数模板调用</h3><ul>
+<li><p>自动类型推导（隐式类型转换），数据类型T一致才可以使用</p>
+</li>
+<li><p>显示指定类型，在函数调用的小括号前加上一个&lt;&gt;，里面指定类型</p>
+</li>
+</ul>
+<h3 id="1-3-函数模板实例"><a href="#1-3-函数模板实例" class="headerlink" title="1.3 函数模板实例"></a>1.3 函数模板实例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//利用模板提供通用的交换函数</span><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">my_swap</span><span class="hljs-params">(T &amp;a,T &amp;b)</span></span><br><span class="hljs-function"></span>&#123;<br>	T temp = a;<br>	a = b;<br>	b = temp;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">int</span> b = <span class="hljs-number">20</span>;<br>	<span class="hljs-type">char</span> c = <span class="hljs-string">&#x27;x&#x27;</span>;<br>	<br>	<span class="hljs-comment">//1、自动类型推导，必须推导出一致的数据类型T才可以使用</span><br>	<span class="hljs-built_in">my_swap</span>(a, b);<br>	<span class="hljs-comment">//my_swap(a, c);  报错，两个类型不一致</span><br><br>	<span class="hljs-comment">//2、显示指定类型，加一个指定的类型</span><br>	<span class="hljs-built_in">my_swap</span>&lt;<span class="hljs-type">int</span>&gt;(a, b);  <span class="hljs-comment">//这里只能指定int类型，因为a,b就是Int型，</span><br>                         <span class="hljs-comment">//也不能和c换，不支持将char型和int型的直接赋值运算，1/4个字节</span><br>	<br>	cout &lt;&lt; <span class="hljs-string">&quot;a = &quot;</span> &lt;&lt; a &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;b = &quot;</span> &lt;&lt; b &lt;&lt; endl;<br>    <br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>a &#x3D; 10</p>
+<p>b &#x3D; 10</p>
+</blockquote>
+<p>如果不能自动推导类型，函数模板必须要确定出T的数据类型才可以使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;func调用&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//func();//直接调用会报错，因为他并没有确定出T的数据类型</span><br>	<span class="hljs-built_in">func</span>&lt;<span class="hljs-type">int</span>&gt;();  <span class="hljs-comment">//除非显式指定数据类型</span><br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>func调用</p>
+</blockquote>
+<h3 id="1-4-普通函数与函数模板区别"><a href="#1-4-普通函数与函数模板区别" class="headerlink" title="1.4 普通函数与函数模板区别"></a>1.4 普通函数与函数模板区别</h3><ul>
+<li>普通函数调用时可以发生自动类型转换（隐式类型转换）</li>
+<li>函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换</li>
+<li>如果利用显示指定类型的方式，可以发生类型转换</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">myAdd01</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> a + b;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function">T <span class="hljs-title">myAdd02</span><span class="hljs-params">(T a,T b)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> a + b;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">int</span> b = <span class="hljs-number">20</span>;<br>	<span class="hljs-type">char</span> c = <span class="hljs-string">&#x27;c&#x27;</span>;<br><br>	cout &lt;&lt; <span class="hljs-built_in">myAdd01</span>(a, c) &lt;&lt; endl;<br>	<span class="hljs-comment">//正确，将char类型的&#x27;c&#x27;隐式转换为int类型  &#x27;c&#x27; 对应 ASCII码 99</span><br>	<br>	<span class="hljs-comment">//cout &lt;&lt; myAdd02(a, c) &lt;&lt; endl;</span><br>	<span class="hljs-comment">//错误，利用自动类型推导，不会发生隐式类型转换，a和c的类型不一致</span><br><br>	cout &lt;&lt; <span class="hljs-built_in">myAdd02</span>&lt;<span class="hljs-type">int</span>&gt;(a, c) &lt;&lt; endl;<br>	<span class="hljs-comment">//正确，显示指定类型，告诉模板强制转换为int类型</span><br>    <br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>109</p>
+<p>109</p>
+</blockquote>
+<p><strong>总结：</strong>如果是使用模板，建议使用显示强制转换指定数据类型，因为可以自己确定通用类型T</p>
+<h3 id="1-5-普通函数与函数模板的调用规则"><a href="#1-5-普通函数与函数模板的调用规则" class="headerlink" title="1.5 普通函数与函数模板的调用规则"></a>1.5 普通函数与函数模板的调用规则</h3><ul>
+<li><p>如果函数模板和普通函数都可以实现，优先调用普通函数</p>
+</li>
+<li><p>可以通过空模板参数列表来强制调用函数模板</p>
+</li>
+<li><p>函数模板也可以发生重载</p>
+</li>
+<li><p>如果函数模板可以产生更好的匹配,优先调用函数模板</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">myPrint</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;调用的普通函数&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">myPrint</span><span class="hljs-params">(T a,T b)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;调用的模板函数&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">myPrint</span><span class="hljs-params">(T a, T b,T c)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;调用重载的模板&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">int</span> b = <span class="hljs-number">20</span>;<br><br>	<span class="hljs-comment">//1. 如果函数模板和普通函数都可以实现，优先调用普通函数</span><br>	<span class="hljs-comment">//注意：如果告诉编译器普通函数是有的，但只是声明没有实现，或者不在当前文件内实现，就会报错找不到。就是说只要有普通函数就先调用普通函数，找不到函数体自然报错</span><br>	<span class="hljs-built_in">myPrint</span>(a, b);    <span class="hljs-comment">//输出：调用的普通函数</span><br><br>	<span class="hljs-comment">//2. 可以通过空模板参数列表来强制调用函数模板</span><br>	myPrint&lt;&gt;(a, b);  <span class="hljs-comment">//输出：调用的模板函数</span><br><br>	<span class="hljs-comment">//3. 函数模板也可以发生重载</span><br>    <span class="hljs-comment">//这里传入3个参数，编译器会找更符合要求的函数</span><br>	<span class="hljs-type">int</span> c = <span class="hljs-number">30</span>;<br>	<span class="hljs-built_in">myPrint</span>(a, b, c); <span class="hljs-comment">//输出：调用重载的模板</span><br><br>	<span class="hljs-comment">//4. 如果函数模板可以产生更好的匹配,优先调用函数模板</span><br>	<span class="hljs-comment">//因为编译器认为调用普通函数还要把char转为Int，而模板可以直接推出T是char</span><br>	<span class="hljs-type">char</span> c1 = <span class="hljs-string">&#x27;a&#x27;</span>;<br>	<span class="hljs-type">char</span> c2 = <span class="hljs-string">&#x27;b&#x27;</span>;<br>	<span class="hljs-built_in">myPrint</span>(c1, c2); <span class="hljs-comment">//输出：调用的模板函数</span><br>	<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>总结：既然提供了函数模板，最好就不要提供普通函数，否则容易出现二义性</p>
+<h3 id="1-6-函数模板的重载"><a href="#1-6-函数模板的重载" class="headerlink" title="1.6 函数模板的重载"></a>1.6 函数模板的重载</h3><p>模板的通用性并不是万能的，在下面代码中提供的赋值操作，如果T的数据类型传入的a和b是一个数组或者自定义的类，就无法实现了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T a, T b)</span></span><br><span class="hljs-function"></span>&#123;<br>	a = b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>C++为了解决这种问题，提供模板的重载，可以为这些特定的类型在原有普通函数模板的基础上提供具体化的模板，语法：</p>
+<p><code>template&lt;&gt; 函数类型 函数名(参数列表)</code></p>
+<p>具体化：显示原有函数模板的原型和意思，具体化比常规模板优先调用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//定义类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">People</span>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">People</span>(string name, <span class="hljs-type">int</span> age)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>		<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>	&#125;<br>	string m_Name;<br>	<span class="hljs-type">int</span> m_Age;<br>&#125;;<br><br><span class="hljs-comment">//普通函数模板</span><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">myCompare</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span> (a == b)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">//模板重载</span><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">myCompare</span><span class="hljs-params">(People&amp; p1, People&amp; p2)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span> (p1.m_Name == p2.m_Name &amp;&amp; p1.m_Age == p2.m_Age)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">int</span> b = <span class="hljs-number">20</span>;<br>	<span class="hljs-comment">//内置数据类型可以直接使用通用的函数模板</span><br>	<span class="hljs-type">bool</span> ret1 = <span class="hljs-built_in">myCompare</span>(a, b);<br>	<span class="hljs-keyword">if</span> (ret1)<br>	&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;a == b &quot;</span> &lt;&lt; endl;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;a != b &quot;</span> &lt;&lt; endl;<br>	&#125;<br><br><br>	<span class="hljs-function">People <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-function">People <span class="hljs-title">p2</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-comment">//自定义数据类型，不会调用普通的函数模板</span><br>	<span class="hljs-comment">//可以创建具体化的Person数据类型的模板，用于特殊处理这个类型</span><br>	<span class="hljs-type">bool</span> ret2 = <span class="hljs-built_in">myCompare</span>(p1, p2);<br>	<span class="hljs-keyword">if</span> (ret2)<br>	&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;p1 == p2 &quot;</span> &lt;&lt; endl;<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;p1 != p2 &quot;</span> &lt;&lt; endl;<br>	&#125;<br>    <br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>a !&#x3D; b<br>p1 &#x3D;&#x3D; p2</p>
+</blockquote>
+<p>总结：</p>
+<ul>
+<li>利用具体化的模板，可以解决自定义类型的通用化</li>
+<li>学习模板并不是为了写模板，而是在STL能够运用系统提供的模板</li>
+</ul>
+<h2 id="2-类模板"><a href="#2-类模板" class="headerlink" title="2 类模板"></a>2 类模板</h2><p>类模板作用：建立一个通用类，类中的成员 数据类型可以不具体制定，用一个<strong>虚拟的类型</strong>来代表。</p>
+<h3 id="2-1-语法"><a href="#2-1-语法" class="headerlink" title="2.1 语法"></a>2.1 语法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br>类定义/声明<br></code></pre></td></tr></table></figure>
+
+<p><strong>解释：</strong></p>
+<p>template    —  声明创建模板</p>
+<p>typename  —  表面其后面的符号是一种数据类型，可以用class代替</p>
+<p>T                  —  通用的数据类型，名称可以替换，通常为大写字母</p>
+<h3 id="2-2-类模板调用"><a href="#2-2-类模板调用" class="headerlink" title="2.2 类模板调用"></a>2.2 类模板调用</h3><p>类模板调用时必须要显示指定类型，在类后面加&lt;&gt;，里面写上具体的类型</p>
+<h3 id="2-3-类模板实例"><a href="#2-3-类模板实例" class="headerlink" title="2.3 类模板实例"></a>2.3 类模板实例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">NameType</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgeType</span>&gt; <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(NameType name, AgeType age)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;mName = name;<br>		<span class="hljs-keyword">this</span>-&gt;mAge = age;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;name: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mName &lt;&lt; <span class="hljs-string">&quot; age: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mAge &lt;&lt; endl;<br>	&#125;<br><span class="hljs-keyword">public</span>:<br>	NameType mName;<br>	AgeType mAge;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <br>	<span class="hljs-comment">// 指定NameType 为string类型，AgeType 为 int类型</span><br>	Person&lt;string, <span class="hljs-type">int</span>&gt;<span class="hljs-built_in">P1</span>(<span class="hljs-string">&quot;孙悟空&quot;</span>, <span class="hljs-number">999</span>);<br>	P1.<span class="hljs-built_in">showPerson</span>();<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>总结：类模板和函数模板语法相似，在声明模板template后面加类，此类称为类模板</p>
+<h3 id="2-4-类模板与函数模板区别"><a href="#2-4-类模板与函数模板区别" class="headerlink" title="2.4 类模板与函数模板区别"></a>2.4 类模板与函数模板区别</h3><p>类模板与函数模板区别主要有两点：</p>
+<ul>
+<li><p>类模板没有自动类型推导的使用方式</p>
+</li>
+<li><p>类模板在模板参数列表中可以有默认参数</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">NameType</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgeType</span>=<span class="hljs-type">int</span>&gt;  <span class="hljs-comment">//类模板中的模板参数列表 可以指定默认参数</span><br><span class="hljs-keyword">class</span> Person<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(NameType name, AgeType age)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;mName = name;<br>		<span class="hljs-keyword">this</span>-&gt;mAge = age;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;name: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mName &lt;&lt; <span class="hljs-string">&quot; age: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mAge &lt;&lt; endl;<br>	&#125;<br><span class="hljs-keyword">public</span>:<br>	NameType mName;<br>	AgeType mAge;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// Person p(&quot;孙悟空&quot;, 1000); // 错误 类模板使用时候，不可以用自动类型推导</span><br>	Person &lt;string ,<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">p1</span>(<span class="hljs-string">&quot;孙悟空&quot;</span>, <span class="hljs-number">1000</span>); <span class="hljs-comment">//必须使用显示指定类型的方式，使用类模板</span><br>	p1.<span class="hljs-built_in">showPerson</span>();<br>    <br>    Person &lt;string&gt; <span class="hljs-built_in">p2</span>(<span class="hljs-string">&quot;猪八戒&quot;</span>, <span class="hljs-number">999</span>); <span class="hljs-comment">//类模板已经指定了AgeType为int</span><br>	p2.<span class="hljs-built_in">showPerson</span>();<br>    <br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-类模板中成员函数创建时机"><a href="#2-5-类模板中成员函数创建时机" class="headerlink" title="2.5 类模板中成员函数创建时机"></a>2.5 类模板中成员函数创建时机</h3><p>类模板中成员函数和普通类中成员函数创建时机是有区别的：</p>
+<p><strong>普通类</strong>:中的成员函数一开始就可以创建</p>
+<p>**类模板:**中的成员函数在调用时才创建</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//定义两个普通类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person1</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;Person1 show&quot;</span> &lt;&lt; endl;<br>	&#125;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person2</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;Person2 show&quot;</span> &lt;&lt; endl;<br>	&#125;<br>&#125;;<br><br><span class="hljs-comment">//定义类模板</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<br>    T obj;<br>    <br>	<span class="hljs-comment">//类模板中的成员函数，并不是一开始就创建的，而是在模板调用时再生成</span><br>    <span class="hljs-comment">//所以下面两行写完是能够编译成功，因为虽然不知道obj是什么数据类型，但模板调用的时候才生成类模板中成员函数，此时类模板还没调用</span><br>    <span class="hljs-comment">//下面调用的时候他才能判断这个类型能不能调用showPerson1还是showPerson2</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun1</span><span class="hljs-params">()</span> </span>&#123; obj.<span class="hljs-built_in">showPerson1</span>(); &#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun2</span><span class="hljs-params">()</span> </span>&#123; obj.<span class="hljs-built_in">showPerson2</span>(); &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <br>    MyClass&lt;Person1&gt; m;<br>    m.<span class="hljs-built_in">fun1</span>();  <span class="hljs-comment">//这个会成功运行</span><br>	<span class="hljs-comment">//m.fun2();//编译会出错，因为Person1不能去调用showPerson2，也说明了模板调用的时候才生成类模板中成员函数</span><br>    <br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-6-类模板对象做函数参数"><a href="#2-6-类模板对象做函数参数" class="headerlink" title="2.6 类模板对象做函数参数"></a>2.6 类模板对象做函数参数</h3><p>类模板实例化出的对象是可以作为函数的参数的，其向函数传参的方式有如下三种</p>
+<ol>
+<li>指定传入的类型   —  直接显示对象的数据类型，较常用</li>
+<li>参数模板化           —  将对象中的参数变为模板进行传递</li>
+<li>整个类模板化       —  将这个对象类型 模板化进行传递</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//类模板</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">NameType</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">AgeType</span> = <span class="hljs-type">int</span>&gt; <br><span class="hljs-keyword">class</span> Person<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(NameType name, AgeType age)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;mName = name;<br>		<span class="hljs-keyword">this</span>-&gt;mAge = age;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;name: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mName &lt;&lt; <span class="hljs-string">&quot; age: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;mAge &lt;&lt; endl;<br>	&#125;<br><span class="hljs-keyword">public</span>:<br>	NameType mName;<br>	AgeType mAge;<br>&#125;;<br><br><br><span class="hljs-comment">//1、指定传入的类型</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPerson1</span><span class="hljs-params">(Person&lt;string, <span class="hljs-type">int</span>&gt; &amp;p)</span>   <span class="hljs-comment">//就是在原有的Person &amp;p 中间加入&lt;&gt;指定具体类型</span></span><br><span class="hljs-function"></span>&#123;<br>	p.<span class="hljs-built_in">showPerson</span>();<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test01</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Person &lt;string, <span class="hljs-type">int</span> &gt;<span class="hljs-built_in">p</span>(<span class="hljs-string">&quot;孙悟空&quot;</span>, <span class="hljs-number">100</span>);<br>	<span class="hljs-built_in">printPerson1</span>(p);<br>&#125;<br><br><br><span class="hljs-comment">//2、参数模板化</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPerson2</span><span class="hljs-params">(Person&lt;T1, T2&gt;&amp;p)</span>  <span class="hljs-comment">//不指定具体类型，而是同样用模板，在调用时实例化对象的时候自动根据对象的类型传入</span></span><br><span class="hljs-function"></span>&#123;<br>	p.<span class="hljs-built_in">showPerson</span>();<br>	cout &lt;&lt; <span class="hljs-string">&quot;T1的类型为： &quot;</span> &lt;&lt; <span class="hljs-built_in">typeid</span>(T1).<span class="hljs-built_in">name</span>() &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;T2的类型为： &quot;</span> &lt;&lt; <span class="hljs-built_in">typeid</span>(T2).<span class="hljs-built_in">name</span>() &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test02</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Person &lt;string, <span class="hljs-type">int</span> &gt;<span class="hljs-built_in">p</span>(<span class="hljs-string">&quot;猪八戒&quot;</span>, <span class="hljs-number">90</span>);<br>	<span class="hljs-built_in">printPerson2</span>(p);<br>&#125;<br><br><br><span class="hljs-comment">//3、整个类模板化</span><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPerson3</span><span class="hljs-params">(T &amp; p)</span>    <span class="hljs-comment">//直接将整个类模板化，调用时让编译器自动推导类型</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;T的类型为： &quot;</span> &lt;&lt; <span class="hljs-built_in">typeid</span>(T).<span class="hljs-built_in">name</span>() &lt;&lt; endl;<br>	p.<span class="hljs-built_in">showPerson</span>();<br><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test03</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Person &lt;string, <span class="hljs-type">int</span> &gt;<span class="hljs-built_in">p</span>(<span class="hljs-string">&quot;唐僧&quot;</span>, <span class="hljs-number">30</span>);<br>	<span class="hljs-built_in">printPerson3</span>(p);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>	<span class="hljs-built_in">test01</span>();<br>	<span class="hljs-built_in">test02</span>();<br>	<span class="hljs-built_in">test03</span>();<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>总结：使用比较广泛是第一种：指定传入的类型。可读性更好一些。</p>
+<h3 id="2-7-类模板与继承"><a href="#2-7-类模板与继承" class="headerlink" title="2.7 类模板与继承"></a>2.7 类模板与继承</h3><p>类模板也是类，涉及到继承的问题。有以下几点需要注意：</p>
+<ul>
+<li>当子类继承的父类是一个类模板时，子类在声明的时候，要指定出父类中T的类型，如果不指定，编译器无法给子类分配内存（不知道类型，不知道分配多大内存）</li>
+<li>如果想灵活指定出父类中T的类型，子类也需变为类模板</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//定义类模板</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	T m;<br>&#125;;<br><br><span class="hljs-comment">//class Son:public Base  //错误，c++编译需要给子类分配内存，必须知道父类中T的类型才可以向下继承</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Son</span> :<span class="hljs-keyword">public</span> Base&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-comment">//必须指定一个类型</span><br>&#123;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test01</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Son child1;<br>    cout &lt;&lt; <span class="hljs-built_in">typeid</span>(child1.m).<span class="hljs-built_in">name</span>() &lt;&lt; endl;   <span class="hljs-comment">//int</span><br>&#125;<br><br><br><span class="hljs-comment">//上面这种指定类型的做法也有一个问题就是T只能是int类型了，如果想灵活指定出父类中T的类型，子类也需变为类模板</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Son2</span> :<span class="hljs-keyword">public</span> Base&lt;T1&gt;&#123;&#125;;  <span class="hljs-comment">//不具体指定哪种类型，而是也用模板</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test02</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Son2&lt;<span class="hljs-type">int</span>&gt; child2;   <span class="hljs-comment">//灵活指定类型</span><br>    Son2&lt;<span class="hljs-type">char</span>&gt; child3;<br>    cout &lt;&lt; <span class="hljs-built_in">typeid</span>(child2.m).<span class="hljs-built_in">name</span>() &lt;&lt; endl;   <span class="hljs-comment">//int</span><br>    cout &lt;&lt; <span class="hljs-built_in">typeid</span>(child3.m).<span class="hljs-built_in">name</span>() &lt;&lt; endl;   <span class="hljs-comment">//char</span><br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>,<span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Son3</span> :<span class="hljs-keyword">public</span> Base&lt;T2&gt;   <span class="hljs-comment">//T1是自己要用的模板，T2是继承来自父类的模板</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    T1 n;<br>&#125;; <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test03</span><span class="hljs-params">()</span></span>&#123;<br>    Son3&lt;<span class="hljs-type">char</span>,<span class="hljs-type">int</span>&gt; child4;  <span class="hljs-comment">//第一个char传给T1，是Son3自己的参数，第二个int传给T2，这是传给父类的</span><br>    cout &lt;&lt; <span class="hljs-built_in">typeid</span>(child4.n).<span class="hljs-built_in">name</span>() &lt;&lt; endl;   <span class="hljs-comment">//char</span><br>    cout &lt;&lt; <span class="hljs-built_in">typeid</span>(child4.m).<span class="hljs-built_in">name</span>() &lt;&lt; endl;   <span class="hljs-comment">//int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-8-类模板成员函数类外实现"><a href="#2-8-类模板成员函数类外实现" class="headerlink" title="2.8 类模板成员函数类外实现"></a>2.8 类模板成员函数类外实现</h3><p>类模板也是类，类中自然可以定义成员函数，一般成员函数都采用类外实现，这样使得类的结构更加清晰</p>
+<p>类外实现成员函数的格式其实就是加一个&lt;&gt;填入模板参数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//类模板</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-comment">//成员函数类内声明</span><br>	<span class="hljs-built_in">Person</span>(T1 name, T2 age);  <span class="hljs-comment">//构造函数</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson</span><span class="hljs-params">()</span></span>;        <span class="hljs-comment">//成员函数</span><br><br><span class="hljs-keyword">public</span>:<br>	T1 m_Name;<br>	T2 m_Age;<br>&#125;;<br><br><span class="hljs-comment">//构造函数的类外实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br>Person&lt;T1, T2&gt;::<span class="hljs-built_in">Person</span>(T1 name, T2 age)   <span class="hljs-comment">//原本应该是Person::Person(T1 name, T2 age)，在两个冒号前加上&lt;&gt;即可</span><br>&#123;<br>	<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>	<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>&#125;<br><br><span class="hljs-comment">//成员函数的类外实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br>Person&lt;T1, T2&gt;::<span class="hljs-built_in">showPerson</span>()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;姓名: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;m_Name &lt;&lt; <span class="hljs-string">&quot; 年龄:&quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;m_Age &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-function">erson&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">20</span>)</span></span>;<br>	p.<span class="hljs-built_in">showPerson</span>();<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-9-类模板分文件编写"><a href="#2-9-类模板分文件编写" class="headerlink" title="2.9 类模板分文件编写"></a>2.9 类模板分文件编写</h3><p><strong>问题：</strong></p>
+<p>日常的程序编写过程中，类的定义一般放在头文件，类的具体内容放在源文件，但由于类模板具有特殊性，类模板中成员函数创建时机是在调用阶段，这就导致分文件编写时链接不到，只包含头文件是会编译出错的</p>
+<p><strong>解决：</strong></p>
+<ul>
+<li>解决方式1：直接包含.cpp源文件</li>
+<li>解决方式2：将声明和实现写到同一个文件中，并更改后缀名为.hpp，hpp是约定的名称，并不是强制，app, bpp均可，但一般用hpp</li>
+</ul>
+<p>示例：person.hpp中代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> once</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(T1 name, T2 age);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">showPerson</span><span class="hljs-params">()</span></span>;<br><span class="hljs-keyword">public</span>:<br>	T1 m_Name;<br>	T2 m_Age;<br>&#125;;<br><br><span class="hljs-comment">//构造函数 类外实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br>Person&lt;T1, T2&gt;::<span class="hljs-built_in">Person</span>(T1 name, T2 age) &#123;<br>	<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>	<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>&#125;<br><br><span class="hljs-comment">//成员函数 类外实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-type">void</span> Person&lt;T1, T2&gt;::<span class="hljs-built_in">showPerson</span>() &#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;姓名: &quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;m_Name &lt;&lt; <span class="hljs-string">&quot; 年龄:&quot;</span> &lt;&lt; <span class="hljs-keyword">this</span>-&gt;m_Age &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>main.cpp或者其他cpp文件中代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//#include &quot;person.h&quot;</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;person.cpp&quot;</span> <span class="hljs-comment">//解决方式1，包含cpp源文件</span></span><br><br><span class="hljs-comment">//解决方式2，将声明和实现写到一起，文件后缀名改为.hpp</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;person.hpp&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-function">Person&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">10</span>)</span></span>;<br>	p.<span class="hljs-built_in">showPerson</span>();<br>	<span class="hljs-built_in">ystem</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-10-类模板与友元"><a href="#2-10-类模板与友元" class="headerlink" title="2.10 类模板与友元"></a>2.10 类模板与友元</h3><p>前面知道，全局函数想要访问类中的私有成员，是需要使用友元的。也需要再次提醒的是，尽管友元函数的原型有在类的定义中出现过，但是友元函数并不是成员函数。</p>
+<p>方法一：全局函数类内实现 - 直接在类模板内声明友元即可，比较简单，更推荐使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span><br>&#123;<br>	<span class="hljs-comment">//全局函数配合友元,直接在类内实现</span><br>	<span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">printPerson</span><span class="hljs-params">(Person&lt;T1, T2&gt; &amp; p)</span></span>&#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;姓名： &quot;</span> &lt;&lt; p.m_Name &lt;&lt; <span class="hljs-string">&quot; 年龄：&quot;</span> &lt;&lt; p.m_Age &lt;&lt; endl;<br>	&#125;<br>    <br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(T1 name, T2 age)&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>		<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>	&#125;<br>    <br><span class="hljs-keyword">private</span>:<br>	T1 m_Name;<br>	T2 m_Age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-function">Person&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-built_in">printPerson</span>(p);  <span class="hljs-comment">//需要再次提醒，printPerson()并不是成员函数，这里并不是使用p.showPerson()的格式</span><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>方法二：全局函数类外实现 - 需要提前让编译器知道全局函数的存在</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">//类外实现需要注意的是，需要先做函数模板声明，下方在做函数模板定义，在做友元，这个顺序不能错，需要</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt; <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T1, <span class="hljs-keyword">class</span> T2&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPerson2</span><span class="hljs-params">(Person&lt;T1, T2&gt; &amp; p)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;类外实现 ---- 姓名： &quot;</span> &lt;&lt; p.m_Name &lt;&lt; <span class="hljs-string">&quot; 年龄：&quot;</span> &lt;&lt; p.m_Age &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span><br>&#123;<br>	<span class="hljs-comment">////全局函数配合友元  类外实现</span><br>	<span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> printPerson2&lt;&gt;(Person&lt;T1, T2&gt; &amp; p);   <span class="hljs-comment">//上面声明的printPerson2是一个函数模板，这里再声明的时候需要加上&lt;&gt;</span><br>    <br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>(T1 name, T2 age)&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>		<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	T1 m_Name;<br>	T2 m_Age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-function">Person&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-built_in">printPerson2</span>(p);  <span class="hljs-comment">//需要再次提醒，printPerson2()并不是成员函数，这里并不是使用p.showPerson2()的格式</span><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-11-类模板综合案例"><a href="#2-11-类模板综合案例" class="headerlink" title="2.11  类模板综合案例"></a>2.11  类模板综合案例</h3><p>案例描述:  实现一个通用的数组类，要求如下：</p>
+<ul>
+<li>可以对内置数据类型以及自定义数据类型的数据进行存储</li>
+<li>将数组中的数据存储到堆区</li>
+<li>构造函数中可以传入数组的容量</li>
+<li>提供对应的拷贝构造函数以及operator&#x3D;防止浅拷贝问题</li>
+<li>提供尾插法和尾删法对数组中的数据进行增加和删除</li>
+<li>可以通过下标的方式访问数组中的元素</li>
+<li>可以获取数组中当前元素个数和数组的容量</li>
+</ul>
+<p><strong>示例：</strong></p>
+<p>myArray.hpp中代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> once</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyArray</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <br>	<span class="hljs-comment">//构造函数</span><br>	<span class="hljs-built_in">MyArray</span>(<span class="hljs-type">int</span> capacity)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Capacity = capacity;<br>		<span class="hljs-keyword">this</span>-&gt;m_Size = <span class="hljs-number">0</span>;<br>		pAddress = <span class="hljs-keyword">new</span> T[<span class="hljs-keyword">this</span>-&gt;m_Capacity];<br>	&#125;<br><br>	<span class="hljs-comment">//拷贝构造</span><br>	<span class="hljs-built_in">MyArray</span>(<span class="hljs-type">const</span> MyArray &amp; arr)<br>	&#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Capacity = arr.m_Capacity;<br>		<span class="hljs-keyword">this</span>-&gt;m_Size = arr.m_Size;<br>		<span class="hljs-keyword">this</span>-&gt;pAddress = <span class="hljs-keyword">new</span> T[<span class="hljs-keyword">this</span>-&gt;m_Capacity];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>-&gt;m_Size; i++)<br>		&#123;<br>			<span class="hljs-comment">//如果T为对象，而且还包含指针，必须需要重载 = 操作符，因为这个等号不是 构造 而是赋值，</span><br>			<span class="hljs-comment">// 普通类型可以直接= 但是指针类型需要深拷贝</span><br>			<span class="hljs-keyword">this</span>-&gt;pAddress[i] = arr.pAddress[i];<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-comment">//重载= 操作符  防止浅拷贝问题</span><br>	MyArray&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> MyArray&amp; myarray) &#123;<br><br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;pAddress != <span class="hljs-literal">NULL</span>) &#123;<br>			<span class="hljs-keyword">delete</span>[] <span class="hljs-keyword">this</span>-&gt;pAddress;<br>			<span class="hljs-keyword">this</span>-&gt;m_Capacity = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">this</span>-&gt;m_Size = <span class="hljs-number">0</span>;<br>		&#125;<br><br>		<span class="hljs-keyword">this</span>-&gt;m_Capacity = myarray.m_Capacity;<br>		<span class="hljs-keyword">this</span>-&gt;m_Size = myarray.m_Size;<br>		<span class="hljs-keyword">this</span>-&gt;pAddress = <span class="hljs-keyword">new</span> T[<span class="hljs-keyword">this</span>-&gt;m_Capacity];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>-&gt;m_Size; i++) &#123;<br>			<span class="hljs-keyword">this</span>-&gt;pAddress[i] = myarray[i];<br>		&#125;<br>		<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>	&#125;<br><br>	<span class="hljs-comment">//重载[] 操作符  arr[0]</span><br>	T&amp; <span class="hljs-keyword">operator</span> [](<span class="hljs-type">int</span> index)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;pAddress[index]; <span class="hljs-comment">//不考虑越界，用户自己去处理</span><br>	&#125;<br><br>	<span class="hljs-comment">//尾插法</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Push_back</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp; val)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;m_Capacity == <span class="hljs-keyword">this</span>-&gt;m_Size)<br>		&#123;<br>			<span class="hljs-keyword">return</span>;<br>		&#125;<br>		<span class="hljs-keyword">this</span>-&gt;pAddress[<span class="hljs-keyword">this</span>-&gt;m_Size] = val;<br>		<span class="hljs-keyword">this</span>-&gt;m_Size++;<br>	&#125;<br><br>	<span class="hljs-comment">//尾删法</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Pop_back</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;m_Size == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">return</span>;<br>		&#125;<br>		<span class="hljs-keyword">this</span>-&gt;m_Size--;<br>	&#125;<br><br>	<span class="hljs-comment">//获取数组容量</span><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getCapacity</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;m_Capacity;<br>	&#125;<br><br>	<span class="hljs-comment">//获取数组大小</span><br>	<span class="hljs-function"><span class="hljs-type">int</span>	<span class="hljs-title">getSize</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;m_Size;<br>	&#125;<br><br><br>	<span class="hljs-comment">//析构</span><br>	~<span class="hljs-built_in">MyArray</span>()<br>	&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;pAddress != <span class="hljs-literal">NULL</span>)<br>		&#123;<br>			<span class="hljs-keyword">delete</span>[] <span class="hljs-keyword">this</span>-&gt;pAddress;<br>			<span class="hljs-keyword">this</span>-&gt;pAddress = <span class="hljs-literal">NULL</span>;<br>			<span class="hljs-keyword">this</span>-&gt;m_Capacity = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">this</span>-&gt;m_Size = <span class="hljs-number">0</span>;<br>		&#125;<br>	&#125;<br><br><span class="hljs-keyword">private</span>:<br>	T * pAddress;  <span class="hljs-comment">//指向一个堆空间，这个空间存储真正的数据</span><br>	<span class="hljs-type">int</span> m_Capacity; <span class="hljs-comment">//容量</span><br>	<span class="hljs-type">int</span> m_Size;   <span class="hljs-comment">// 大小</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>test.cpp中</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;myArray.hpp&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printIntArray</span><span class="hljs-params">(MyArray&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span> </span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-built_in">getSize</span>(); i++) &#123;<br>		cout &lt;&lt; arr[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>	&#125;<br>	cout &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-comment">//测试内置数据类型</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test01</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function">MyArray&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">array1</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>	&#123;<br>		array1.<span class="hljs-built_in">Push_back</span>(i);<br>	&#125;<br>	cout &lt;&lt; <span class="hljs-string">&quot;array1打印输出：&quot;</span> &lt;&lt; endl;<br>	<span class="hljs-built_in">printIntArray</span>(array1);<br>	cout &lt;&lt; <span class="hljs-string">&quot;array1的大小：&quot;</span> &lt;&lt; array1.<span class="hljs-built_in">getSize</span>() &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;array1的容量：&quot;</span> &lt;&lt; array1.<span class="hljs-built_in">getCapacity</span>() &lt;&lt; endl;<br><br>	cout &lt;&lt; <span class="hljs-string">&quot;--------------------------&quot;</span> &lt;&lt; endl;<br><br>	<span class="hljs-function">MyArray&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">array2</span><span class="hljs-params">(array1)</span></span>;<br>	array2.<span class="hljs-built_in">Pop_back</span>();<br>	cout &lt;&lt; <span class="hljs-string">&quot;array2打印输出：&quot;</span> &lt;&lt; endl;<br>	<span class="hljs-built_in">printIntArray</span>(array2);<br>	cout &lt;&lt; <span class="hljs-string">&quot;array2的大小：&quot;</span> &lt;&lt; array2.<span class="hljs-built_in">getSize</span>() &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;array2的容量：&quot;</span> &lt;&lt; array2.<span class="hljs-built_in">getCapacity</span>() &lt;&lt; endl;<br>&#125;<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Person</span>() &#123;&#125; <br>		<span class="hljs-built_in">Person</span>(string name, <span class="hljs-type">int</span> age) &#123;<br>		<span class="hljs-keyword">this</span>-&gt;m_Name = name;<br>		<span class="hljs-keyword">this</span>-&gt;m_Age = age;<br>	&#125;<br><span class="hljs-keyword">public</span>:<br>	string m_Name;<br>	<span class="hljs-type">int</span> m_Age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPersonArray</span><span class="hljs-params">(MyArray&lt;Person&gt;&amp; personArr)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; personArr.<span class="hljs-built_in">getSize</span>(); i++) &#123;<br>		cout &lt;&lt; <span class="hljs-string">&quot;姓名：&quot;</span> &lt;&lt; personArr[i].m_Name &lt;&lt; <span class="hljs-string">&quot; 年龄： &quot;</span> &lt;&lt; personArr[i].m_Age &lt;&lt; endl;<br>	&#125;<br><br>&#125;<br><br><span class="hljs-comment">//测试自定义数据类型</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test02</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//创建数组</span><br>	<span class="hljs-function">MyArray&lt;Person&gt; <span class="hljs-title">pArray</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br>	<span class="hljs-function">Person <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-string">&quot;孙悟空&quot;</span>, <span class="hljs-number">30</span>)</span></span>;<br>	<span class="hljs-function">Person <span class="hljs-title">p2</span><span class="hljs-params">(<span class="hljs-string">&quot;韩信&quot;</span>, <span class="hljs-number">20</span>)</span></span>;<br>	<span class="hljs-function">Person <span class="hljs-title">p3</span><span class="hljs-params">(<span class="hljs-string">&quot;妲己&quot;</span>, <span class="hljs-number">18</span>)</span></span>;<br>	<span class="hljs-function">Person <span class="hljs-title">p4</span><span class="hljs-params">(<span class="hljs-string">&quot;王昭君&quot;</span>, <span class="hljs-number">15</span>)</span></span>;<br>	<span class="hljs-function">Person <span class="hljs-title">p5</span><span class="hljs-params">(<span class="hljs-string">&quot;赵云&quot;</span>, <span class="hljs-number">24</span>)</span></span>;<br><br>	<span class="hljs-comment">//插入数据</span><br>	pArray.<span class="hljs-built_in">Push_back</span>(p1);<br>	pArray.<span class="hljs-built_in">Push_back</span>(p2);<br>	pArray.<span class="hljs-built_in">Push_back</span>(p3);<br>	pArray.<span class="hljs-built_in">Push_back</span>(p4);<br>	pArray.<span class="hljs-built_in">Push_back</span>(p5);<br><br>	<span class="hljs-built_in">printPersonArray</span>(pArray);<br><br>	cout &lt;&lt; <span class="hljs-string">&quot;pArray的大小：&quot;</span> &lt;&lt; pArray.<span class="hljs-built_in">getSize</span>() &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-string">&quot;pArray的容量：&quot;</span> &lt;&lt; pArray.<span class="hljs-built_in">getCapacity</span>() &lt;&lt; endl;<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <br>	<span class="hljs-comment">//test01();</span><br>	<span class="hljs-built_in">test02</span>();<br>    <br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Cpp/" class="category-chain-item">Cpp</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++：09.模板</div>
+      <div>http://jswanyu.github.io/2021/10/16/Cpp/09.模板/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年10月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
