@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-06-25T15:37:55.612Z">
+<meta property="article:modified_time" content="2022-07-20T12:04:23.967Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -373,9 +373,13 @@
 <p>饥饿：线程由于优先级太低，始终得不到 CPU 调度执行，也不能够结束。以打印机打印文件为例，当有多个线程需要打印文件，系统按照短文件优先的策略进行打印，但当短文件的打印任务一直不间断地出现，那长文件的打印任务会被一直推迟，导致饥饿。</p>
 <p>产生饥饿的原因：高优先级的线程占用了低优先级线程的CPU时间，线程被永久堵塞在一个等待进入同步块的状态，因为其他线程总是能在它之前持续地对该同步块进行访问。</p>
 <p>死锁、饥饿的区别：饥饿可自行解开，死锁不行。</p>
+<h3 id="怎么定位程序哪里发生了死锁？"><a href="#怎么定位程序哪里发生了死锁？" class="headerlink" title="怎么定位程序哪里发生了死锁？"></a>怎么定位程序哪里发生了死锁？</h3><p>1、使用 jps -l 定位进程号</p>
+<p>2、使用 jstack 进程号 找到死锁问题</p>
 <h3 id="Java内存的可见性问题"><a href="#Java内存的可见性问题" class="headerlink" title="Java内存的可见性问题"></a>Java内存的可见性问题</h3><p>Java内存模型规定，线程对共享变量的操作必须在自己的本地内存中进行，不能直接在主内存中操作共享变量。这会导致内存不可见的问题。如下图，一开始run是true，t1读到的也是true，但是t1是把他读到了自己线程的本地内存（高速缓存）里，这就导致主线程对run的修改对t1来说是不可见的</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E4%B8%BB%E5%AD%98%E5%92%8C%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AD%98.png" srcset="/img/loading.gif" lazyload alt="image-20220121221529370"></p>
 <p>通过synchronized 关键字（重量级锁，性能低）和 volatile 关键字就可以解决（volatile 变量都是<strong>直接操作主存</strong>）。</p>
+<h3 id="x3D-x3D-讲讲JMM（java内存模型）-x3D-x3D"><a href="#x3D-x3D-讲讲JMM（java内存模型）-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;讲讲JMM（java内存模型）&#x3D;&#x3D;"></a>&#x3D;&#x3D;讲讲JMM（java内存模型）&#x3D;&#x3D;</h3><p>不要把java内存模型和jvm内存模型混为一谈</p>
+<p>掘金搜JMM整理下</p>
 <h2 id="线程的创建、调度和状态"><a href="#线程的创建、调度和状态" class="headerlink" title="线程的创建、调度和状态"></a>线程的创建、调度和状态</h2><h3 id="创建线程一共有哪几种方法？"><a href="#创建线程一共有哪几种方法？" class="headerlink" title="创建线程一共有哪几种方法？"></a>创建线程一共有哪几种方法？</h3><p>继承 Thread 类创建线程</p>
 <p>实现 Runnable 接口创建线程</p>
 <p>使用Callable 和FutureTask 创建线程</p>
@@ -857,12 +861,7 @@
 
 
 
-
-
-
-
-
-
+<p>&#x3D;&#x3D;生产者与消费者&#x3D;&#x3D;</p>
 
               
             </div>
@@ -943,9 +942,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="面试准备：计算机网络">
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/Redis/" title="面试准备：Redis">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">面试准备：计算机网络</span>
+                        <span class="hidden-mobile">面试准备：Redis</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

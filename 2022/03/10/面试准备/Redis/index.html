@@ -19,13 +19,13 @@
     <meta name="description" content="Redis什么是Redis？Redis是一个高性能的非关系型的键值对数据库，使用C编写实现的。与传统的数据库不同的是Redis是存在内存中的，所以读写速度非常快，每秒可以处理超过10万次的读写操作，这也是Redis常常被用作缓存的原因。 Redis的优缺点？优点：  读写性能好 支持数据持久化，有AOF和RDB两中持久化方式 数据结构丰富，支持String、List、Set、Hash等结构 支持事">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试准备：Redis">
-<meta property="og:url" content="http://jswanyu.github.io/2022/06/17/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/Redis/index.html">
+<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/Redis/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="Redis什么是Redis？Redis是一个高性能的非关系型的键值对数据库，使用C编写实现的。与传统的数据库不同的是Redis是存在内存中的，所以读写速度非常快，每秒可以处理超过10万次的读写操作，这也是Redis常常被用作缓存的原因。 Redis的优缺点？优点：  读写性能好 支持数据持久化，有AOF和RDB两中持久化方式 数据结构丰富，支持String、List、Set、Hash等结构 支持事">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
-<meta property="article:published_time" content="2022-06-17T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-07-17T09:47:48.994Z">
+<meta property="article:published_time" content="2022-03-10T03:53:03.000Z">
+<meta property="article:modified_time" content="2022-07-20T15:12:15.239Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -187,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-06-17 09:12" pubdate>
-          2022年6月17日 上午
+        <time datetime="2022-03-10 11:53" pubdate>
+          2022年3月10日 中午
         </time>
       </span>
     
@@ -261,8 +261,14 @@
 <li>运行在内存中（最重要）</li>
 <li>使用多路IO复用技术</li>
 <li>单线程实现，单线程避免了线程切换、锁等造成的性能开销</li>
-<li>数据结构简单</li>
+<li>redis全程使用<strong>hash结构</strong>，读取速度快，再比如有序集合使用的跳表</li>
 </ul>
+<h4 id="为什么用Redis不用Map？"><a href="#为什么用Redis不用Map？" class="headerlink" title="为什么用Redis不用Map？"></a>为什么用Redis不用Map？</h4><p>1、Redis可以实现分布式的缓存，Map只存在创建它的程序里</p>
+<p>2、Redis可以分配很大的内存来做缓存，而Map受到JVM的限制</p>
+<p>3、Redis的缓存可以持久化，Map存在于内存中，重启后丢失</p>
+<p>4、Redis可以处理每秒百万级的并发，而Map只是普通对象</p>
+<p>5、Redis缓存有过期机制，而Map无此功能</p>
+<p>6、Redis有丰富的API，Map简单太多了</p>
 <h3 id="Redis的数据类型有哪些？"><a href="#Redis的数据类型有哪些？" class="headerlink" title="Redis的数据类型有哪些？"></a>Redis的数据类型有哪些？</h3><p>Redis的常见的数据类型有String、Hash、Set、List、ZSet。还有三种不那么常见的数据类型：Bitmap、HyperLogLog、Geospatial。</p>
 <h3 id="Redis的数据结构有哪些？"><a href="#Redis的数据结构有哪些？" class="headerlink" title="Redis的数据结构有哪些？"></a>Redis的数据结构有哪些？</h3><p>很多</p>
 <h3 id="Redis的应用场景有哪些？"><a href="#Redis的应用场景有哪些？" class="headerlink" title="Redis的应用场景有哪些？"></a>Redis的应用场景有哪些？</h3><ul>
@@ -540,14 +546,14 @@
 <p>缓存可以分为本地缓存或者分布式缓存，比较常用的guava缓存就是一种本地缓存，其主要特点是轻量并且快速，生命周期随着JVM的销毁而结束，缺点是在多实例的情况下，每个实例都要自己保存一份缓存，这样会导致缓存的一致性出现问题。</p>
 <p>Redis则是分布式缓存，在多实例情况下，每个实例都共享一份缓存数据，缓存具备一致性。缺点是要保持Redis的高可用整体架构会比较复杂。</p>
 <p>redis缓存的基本思路：缓存命中则直接返回，缓存未命中则查询数据库，并写入缓存，设定超时时间</p>
-<h3 id="缓存更新中数据一致性是指什么？"><a href="#缓存更新中数据一致性是指什么？" class="headerlink" title="缓存更新中数据一致性是指什么？"></a>缓存更新中数据一致性是指什么？</h3><p>在分布式系统中，一致性是指多副本问题中的数据一致性。一致性可以分为强一致性、弱一致性和最终一致性</p>
+<h3 id="x3D-x3D-缓存的数据一致性问题？-x3D-x3D"><a href="#x3D-x3D-缓存的数据一致性问题？-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;缓存的数据一致性问题？&#x3D;&#x3D;"></a>&#x3D;&#x3D;缓存的数据一致性问题？&#x3D;&#x3D;</h3><p>在分布式系统中，一致性是指多副本问题中的数据一致性。一致性可以分为强一致性、弱一致性和最终一致性</p>
 <ul>
 <li>强一致性：当更新操作完成之后，任何多个后续进程或者线程的访问都会返回最新的更新过的值。强一致性对用户比较友好，但对系统性能影响比较大。</li>
 <li>弱一致性：系统并不保证后续进程或者线程的访问都会返回最新的更新过的值。</li>
 <li>最终一致性：也是弱一致性的一种特殊形式，系统中所有的副本经过一段时间的异步同步之后，最终能够达到一个一致性的状态，也就是说在数据的一致性上存在一个短暂的延迟</li>
 </ul>
 <p>大多数系统都是采用的最终一致性。</p>
-<h3 id="缓存更新如何保证缓存与数据库双写时的数据一致性？"><a href="#缓存更新如何保证缓存与数据库双写时的数据一致性？" class="headerlink" title="缓存更新如何保证缓存与数据库双写时的数据一致性？"></a>缓存更新如何保证缓存与数据库双写时的数据一致性？</h3><p>这个问题是没有最优解的，只能数据一致性和性能之间找到一个最适合业务的平衡点</p>
+<h3 id="x3D-x3D-缓存更新如何保证缓存与数据库双写时的数据一致性？-x3D-x3D"><a href="#x3D-x3D-缓存更新如何保证缓存与数据库双写时的数据一致性？-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;缓存更新如何保证缓存与数据库双写时的数据一致性？&#x3D;&#x3D;"></a>&#x3D;&#x3D;缓存更新如何保证缓存与数据库双写时的数据一致性？&#x3D;&#x3D;</h3><p>这个问题是没有最优解的，只能数据一致性和性能之间找到一个最适合业务的平衡点</p>
 <p>针对不同的业务场景，可以选择不同的更新策略</p>
 <ul>
 <li>低一致性需求：使用redis自身的内存淘汰机制，顶多再加个超时剔除。例如店铺类型的查询缓存，长时间都不会变</li>
@@ -718,7 +724,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>面试准备：Redis</div>
-      <div>http://jswanyu.github.io/2022/06/17/面试准备/Redis/</div>
+      <div>http://jswanyu.github.io/2022/03/10/面试准备/Redis/</div>
     </div>
     <div class="license-meta">
       
@@ -730,7 +736,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年6月17日</div>
+          <div>2022年3月10日</div>
         </div>
       
       
@@ -755,6 +761,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%81Git/" title="面试准备：计算机网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">面试准备：计算机网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/JUC/" title="面试准备：JUC">
+                        <span class="hidden-mobile">面试准备：JUC</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

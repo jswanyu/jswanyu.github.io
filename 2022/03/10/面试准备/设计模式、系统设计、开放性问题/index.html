@@ -16,23 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="系统设计题需要注意的是，在面试过程中是比较紧张的，但遇到这种系统设计题，一定先不要急着回答，一定要先需要设计系统的一些使用场景。 系统设计步骤常见的系统设计题有设计一个秒杀系统、红包雨、URL短网址等，完成一个系统设计题大概需要分为四步：  第一步：像面试官不断提问，搞清楚系统的使用场景 系统的功能是什么 系统的目标群体是什么 系统的用户量有多大 希望每秒钟处理多少请求？ 希望处理多少数据？ 希望">
+    <meta name="description" content="1 设计模式单例一个类在内存中只存在一个对象 步骤：1、构造函数私有化；2、在类中创建一个本类对象；3、提供一个方法可以获取到该对象 12345678&#x2F;&#x2F;饿汉式class Single &amp;#123;    private static final Single s &#x3D; new Single();    private Single() &amp;#123;&amp;#125;    public static S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面试准备：系统设计">
-<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:title" content="面试准备：设计模式、系统设计、开放性问题">
+<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%81%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E3%80%81%E5%BC%80%E6%94%BE%E6%80%A7%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="系统设计题需要注意的是，在面试过程中是比较紧张的，但遇到这种系统设计题，一定先不要急着回答，一定要先需要设计系统的一些使用场景。 系统设计步骤常见的系统设计题有设计一个秒杀系统、红包雨、URL短网址等，完成一个系统设计题大概需要分为四步：  第一步：像面试官不断提问，搞清楚系统的使用场景 系统的功能是什么 系统的目标群体是什么 系统的用户量有多大 希望每秒钟处理多少请求？ 希望处理多少数据？ 希望">
+<meta property="og:description" content="1 设计模式单例一个类在内存中只存在一个对象 步骤：1、构造函数私有化；2、在类中创建一个本类对象；3、提供一个方法可以获取到该对象 12345678&#x2F;&#x2F;饿汉式class Single &amp;#123;    private static final Single s &#x3D; new Single();    private Single() &amp;#123;&amp;#125;    public static S">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-06-23T04:35:59.135Z">
+<meta property="article:modified_time" content="2022-07-20T15:05:09.640Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
   
   
   
-  <title>面试准备：系统设计 - Wynn&#39;s blog</title>
+  <title>面试准备：设计模式、系统设计、开放性问题 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="面试准备：系统设计"></span>
+            <span id="subtitle" data-typed-text="面试准备：设计模式、系统设计、开放性问题"></span>
           
         </div>
 
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          994 字
+          2.5k 字
         
       </span>
     
@@ -239,11 +239,22 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">面试准备：系统设计</h1>
+            <h1 style="display: none">面试准备：设计模式、系统设计、开放性问题</h1>
             
             <div class="markdown-body">
               
-              <h1 id="系统设计题"><a href="#系统设计题" class="headerlink" title="系统设计题"></a>系统设计题</h1><p>需要注意的是，在面试过程中是比较紧张的，但遇到这种系统设计题，一定先不要急着回答，一定要先需要设计系统的一些使用场景。</p>
+              <p>1</p>
+<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h3 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h3><p>一个类在内存中只存在一个对象</p>
+<p>步骤：1、构造函数私有化；2、在类中创建一个本类对象；3、提供一个方法可以获取到该对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//饿汉式</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Single</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Single</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Single</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">Single</span><span class="hljs-params">()</span> &#123;&#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Single <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> s;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//懒汉式:延时加载</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Single</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">Single</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">Single</span><span class="hljs-params">()</span> &#123;&#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Single <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span> (s == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">//Synchronized解决多线程安全问题</span><br>            Synchronized(Single.class)<br>            &#123;<br>                <span class="hljs-keyword">if</span> (s == <span class="hljs-literal">null</span>) &#123;<br>                    <span class="hljs-comment">//双重判断解决效率问题</span><br>                    s = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Single</span>();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> s;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="系统设计题"><a href="#系统设计题" class="headerlink" title="系统设计题"></a>系统设计题</h1><p>需要注意的是，在面试过程中是比较紧张的，但遇到这种系统设计题，一定先不要急着回答，一定要先需要设计系统的一些使用场景。</p>
 <h2 id="系统设计步骤"><a href="#系统设计步骤" class="headerlink" title="系统设计步骤"></a>系统设计步骤</h2><p>常见的系统设计题有设计一个秒杀系统、红包雨、URL短网址等，完成一个系统设计题大概需要分为四步：</p>
 <ul>
 <li>第一步：像面试官不断提问，搞清楚系统的使用场景<ul>
@@ -306,6 +317,45 @@
 <p>  通过了解这些软件的QPS可以更清楚地找出系统的瓶颈所在。</p>
 </li>
 </ul>
+<p>&#x3D;&#x3D;微信红包的设计实现&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;抖音收藏功能在数据库侧的实现&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;如何设计一个高并发的系统&#x3D;&#x3D;</p>
+<h3 id="微博、朋友圈是怎么实现的？"><a href="#微博、朋友圈是怎么实现的？" class="headerlink" title="微博、朋友圈是怎么实现的？"></a>微博、朋友圈是怎么实现的？</h3><p>这些产品都是Feed流类型产品，一般都是按照时间“从上往下流动”，Feed其实是一个信息单元，比如一条朋友圈状态、一条微博，只要关注某些发布者就能获取到源源不断的新鲜信息。</p>
+<p><strong>Feed流系统特点</strong></p>
+<p>Feed流本质上是一个数据流，是将“N个发布者的信息单元”通过“关注关系”传送给“M个接收者”。</p>
+<p>从数据层面看，数据分为三类，分别是：</p>
+<ul>
+<li>发布者的数据：微博的个人页面，朋友圈的个人相册</li>
+<li>关注关系：微博中是关注，是单向流，朋友圈是好友，是双向流，但信息流动永远是单向</li>
+<li>接收者的数据：按某种顺序（一般是时间）组织在一起，越新的数据越要排在前面</li>
+</ul>
+<p>设计Feed流系统时最核心的是确定清楚产品层面的定义，需要考虑的因素包括：</p>
+<ul>
+<li>产品用户规模：用户规模在十万、千万、十亿级时，设计难度和侧重点会不同</li>
+<li>关注关系（单向、双写）：如果是双向，那么就不会有大V，否则会有大V存在</li>
+</ul>
+<p><strong>Feed流系统设计</strong></p>
+<p>1、产品定义：关注关系是单向还是双向，排序是时间还是推荐</p>
+<p>2、存储：数据可靠不丢失，易于水平扩展，在数据规模很大时可以采用分布式的NoSQL（可靠性高于关系型数据库，数据天然分布在多台机器上）</p>
+<p>3、同步：</p>
+<ul>
+<li>推模式（写扩散）：发送者发送了一个消息后立即将这个消息推送给接收者，但是接收者此时不一定在线，需要在同步库存储这个数据</li>
+<li>拉模式（读扩散）：发送者发送一条消息后将消息写入自己的发件箱，粉丝上线后再去自己关注着的发件箱里面去读取。</li>
+<li>推拉结合模式</li>
+</ul>
+<p>4、元数据：</p>
+<ul>
+<li>用户详情和列表：分布式NoSQL或关系型数据库都可</li>
+<li>关注或好友关系：根据数据量来选择数据库类型</li>
+<li>推送session池：分布式NoSQL或关系型数据库都可</li>
+</ul>
+<p>5、评论、赞、搜索…</p>
+<h3 id="电脑版微信登录的二维码包含什么信息？"><a href="#电脑版微信登录的二维码包含什么信息？" class="headerlink" title="电脑版微信登录的二维码包含什么信息？"></a>电脑版微信登录的二维码包含什么信息？</h3><p>了解OAuth2.0原理，移动端微信已经登录，获得<strong>access_token</strong>，</p>
+<p>再与扫描的二维码中的字符串进行组合编码，发送给服务器，</p>
+<p>服务器给浏览器网页的监听器发送消息，网页解析消息，并得到access_token，实现登录。</p>
+<p>二维码只是充当一个掩码作用…</p>
+<h3 id="如何计算两份代码的相似度？"><a href="#如何计算两份代码的相似度？" class="headerlink" title="如何计算两份代码的相似度？"></a>如何计算两份代码的相似度？</h3><p>diff逐行&#x2F;逐字比较</p>
+<h3 id="重构代码时要考虑哪些方面？（面向对象角度）"><a href="#重构代码时要考虑哪些方面？（面向对象角度）" class="headerlink" title="重构代码时要考虑哪些方面？（面向对象角度）"></a>重构代码时要考虑哪些方面？（面向对象角度）</h3><p>面向接口编程、单一职责：一个类只做一件事、高内聚低耦合</p>
 
               
             </div>
@@ -343,8 +393,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>面试准备：系统设计</div>
-      <div>http://jswanyu.github.io/2022/03/10/面试准备/系统设计/</div>
+      <div>面试准备：设计模式、系统设计、开放性问题</div>
+      <div>http://jswanyu.github.io/2022/03/10/面试准备/设计模式、系统设计、开放性问题/</div>
     </div>
     <div class="license-meta">
       
@@ -386,9 +436,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%99%BA%E5%8A%9B%E9%A2%98/" title="面试准备：智力题">
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/JavaSE/" title="面试准备：JavaSE和集合">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">面试准备：智力题</span>
+                        <span class="hidden-mobile">面试准备：JavaSE和集合</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -396,7 +446,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="面试准备：计算机网络">
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E3%80%81Git/" title="面试准备：计算机网络">
                         <span class="hidden-mobile">面试准备：计算机网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
