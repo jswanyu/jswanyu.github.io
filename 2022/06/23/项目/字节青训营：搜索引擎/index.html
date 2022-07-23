@@ -16,21 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Maven1. Maven的生命周期 每个生命周期都有这个特点：不管用户要求执行的命令对应生命周期中的哪一个阶段，Maven都会自动从当前生命周期的最初位置开始执行，直到完成用户下达的指令   1、&#x3D;&#x3D;Clean 生命周期&#x3D;&#x3D;：清理项目，包含三个 phase ： pre-clean：执行清理前需要完成的工作。 clean：清理上一次构建生成的文件。 post">
+    <meta name="description" content="暂时记录部分 技术栈主要技术栈：Java MySQL Spring SpringBoot Redis Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 算法Jieba分词TFIDF算法TF-IDF算法介绍： TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/07/20/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/Spring/index.html">
+<meta property="og:title" content="字节青训营项目：搜索引擎">
+<meta property="og:url" content="http://jswanyu.github.io/2022/06/23/%E9%A1%B9%E7%9B%AE/%E5%AD%97%E8%8A%82%E9%9D%92%E8%AE%AD%E8%90%A5%EF%BC%9A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="Maven1. Maven的生命周期 每个生命周期都有这个特点：不管用户要求执行的命令对应生命周期中的哪一个阶段，Maven都会自动从当前生命周期的最初位置开始执行，直到完成用户下达的指令   1、&#x3D;&#x3D;Clean 生命周期&#x3D;&#x3D;：清理项目，包含三个 phase ： pre-clean：执行清理前需要完成的工作。 clean：清理上一次构建生成的文件。 post">
+<meta property="og:description" content="暂时记录部分 技术栈主要技术栈：Java MySQL Spring SpringBoot Redis Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 算法Jieba分词TFIDF算法TF-IDF算法介绍： TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-20T15:05:17.099Z">
-<meta property="article:modified_time" content="2022-07-20T15:06:01.090Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2022-06-23T10:37:22.000Z">
+<meta property="article:modified_time" content="2022-07-22T13:53:06.200Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>字节青训营项目：搜索引擎 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -168,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%AD%97%E8%8A%82%E9%9D%92%E8%AE%AD%E8%90%A5%E6%A8%AA%E5%B9%85.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="字节青训营项目：搜索引擎"></span>
           
         </div>
 
@@ -185,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-07-20 23:05" pubdate>
-          2022年7月20日 晚上
+        <time datetime="2022-06-23 18:37" pubdate>
+          2022年6月23日 晚上
         </time>
       </span>
     
@@ -197,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          761 字
         
       </span>
     
@@ -237,53 +239,50 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">字节青训营项目：搜索引擎</h1>
             
             <div class="markdown-body">
               
-              <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><h3 id="1-Maven的生命周期"><a href="#1-Maven的生命周期" class="headerlink" title="1. Maven的生命周期"></a>1. Maven的生命周期</h3><blockquote>
-<p>每个生命周期都有这个特点：不管用户要求执行的命令对应生命周期中的哪一个阶段，Maven都会自动从当前生命周期的最初位置开始执行，直到完成用户下达的指令</p>
+              <p>暂时记录部分</p>
+<h1 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h1><p>主要技术栈：Java MySQL Spring SpringBoot Redis Vue</p>
+<p>算法：Jieba分词、TFIDF词频权重计算</p>
+<p>工具：布隆过滤器</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="Jieba分词"><a href="#Jieba分词" class="headerlink" title="Jieba分词"></a>Jieba分词</h2><h2 id="TFIDF算法"><a href="#TFIDF算法" class="headerlink" title="TFIDF算法"></a>TFIDF算法</h2><p>TF-IDF算法介绍：</p>
+<p>TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章中出现的频率TF高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
+<blockquote>
+<p>比如“我喜爱篮球”，我，喜爱会在其他文章（语句）中经常出现，但篮球偶尔出现，那么能给这条语句分类的关键词应该是“篮球”</p>
 </blockquote>
-<ul>
-<li>1、&#x3D;&#x3D;<strong>Clean 生命周期</strong>&#x3D;&#x3D;：清理项目，包含三个 phase ：<ul>
-<li>pre-clean：执行清理前需要完成的工作。</li>
-<li>clean：清理上一次构建生成的文件。</li>
-<li>post-clean：执行清理后需要完成的工作</li>
-</ul>
-</li>
-<li>2、**&#x3D;&#x3D;Default 生命周期&#x3D;&#x3D;**：构建项目，重要的 phase 如下：<ul>
-<li>validate：验证工程是否正确，所有需要的资源是否可用。</li>
-<li>compile：编译项目的源代码。</li>
-<li>test：使用合适的单元测试框架来测试已编译的源代码。这些测试不需要已打包和布署。</li>
-<li>package：把已编译的代码打包成可发布的格式，比如 jar、war 等。</li>
-<li>integration-test：如有需要，将包处理和发布到一个能够进行集成测试的环境。</li>
-<li>verify：运行所有检查，验证包是否有效且达到质量标准。</li>
-<li>install：把包安装到maven本地仓库，可以被其他工程作为依赖来使用。</li>
-<li>deploy：在集成或者发布环境下执行，将最终版本的包拷贝到远程的repository，使得其他的开发者或者工程可以共享。</li>
-</ul>
-</li>
-<li>3、**&#x3D;&#x3D;Site 生命周期&#x3D;&#x3D;**：建立和发布项目站点，phase 如下：<ul>
-<li>pre-site：生成项目站点之前需要完成的工作</li>
-<li>site：生成项目站点文档</li>
-<li>post-site：生成项目站点之后需要完成的工作</li>
-<li>site-deploy：将项目站点发布到服务器</li>
-</ul>
-</li>
-</ul>
-<p>各个生命周期相互独立，一个生命周期的阶段前后依赖。</p>
-<h3 id="2-Maven的Scope属性有哪些？"><a href="#2-Maven的Scope属性有哪些？" class="headerlink" title="2. Maven的Scope属性有哪些？"></a>2. Maven的Scope属性有哪些？</h3><ul>
-<li><strong>compile</strong> <strong>（编译范围）</strong>： &#x3D;&#x3D;compile是默认的范围&#x3D;&#x3D;；如果没有提供一个范围，那该依赖的范围就是编译范围。编译范围依赖在所有的classpath 中可用，同时它们也会被打包。</li>
-<li><strong>provided</strong> <strong>（已提供范围）</strong>：类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar。 </li>
-<li><strong>runtime</strong> <strong>（运行时范围）</strong>：只在运行时使用，如JDBC驱动，适用运行和测试阶段。 </li>
-<li><strong>test</strong> <strong>（测试范围）</strong>：test范围依赖 在一般的编译和运行时都不需要，它们只有在测试编译和测试运行阶段可用。</li>
-<li><strong>system</strong> <strong>（系统范围）</strong>：（注意该范围是不推荐使用的）与provided 类似，但是你必须显式的提供一个对于本地系统中JAR 文件的路径。这么做是为了允许基于本地对象编译，而这些对象是系统类库的一部分。这样的构件应该是一直可用的，Maven 也不会在仓库中去寻找它。如果你将一个依赖范围设置成系统范围，你必须同时提供一个 systemPath 元素。</li>
-</ul>
+<p>TFIDF实际上是：TF * IDF，TF词频(Term Frequency)，IDF反文档频率(Inverse Document Frequency)。<br>$$<br>TF &#x3D; \frac{一个词在文章中出现的次数 }{文章总词数}<br>$$</p>
+<p>$$<br>IDF &#x3D; log\frac{总文章数}{一个词在多少篇文章中出现过}<br>$$</p>
+<p>案例：假如一篇文件的总词语数是100个，而词语“母牛”出现了3次，那么“母牛”一词在该文件中的词频就是3&#x2F;100&#x3D;0.03。一个计算文件频率 (DF) 的方法是测定有多少份文件出现过“母牛”一词，然后除以文件集里包含的文件总数。所以，如果“母牛”一词在1,000份文件出现过，而文件总数是10,000,000份的话，其逆向文件频率就是 lg(10,000,000 &#x2F; 1,000)&#x3D;4。最后的TF-IDF的分数为0.03 * 4&#x3D;0.12。</p>
+<p>在本项目中，idf值本来需要根据语料库按照公式进行计算，不过jieba分词已经提供了一份很好的 idf 字典，所以默认直接使用jieba分词的 idf 字典</p>
 
               
             </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A1%B9%E7%9B%AE/" class="category-chain-item">项目</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -294,8 +293,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/07/20/面试准备/Spring/</div>
+      <div>字节青训营项目：搜索引擎</div>
+      <div>http://jswanyu.github.io/2022/06/23/项目/字节青训营：搜索引擎/</div>
     </div>
     <div class="license-meta">
       
@@ -307,7 +306,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年7月20日</div>
+          <div>2022年6月23日</div>
         </div>
       
       
@@ -337,12 +336,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/06/27/%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/" title="项目：商户点评项目">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">项目：商户点评项目</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/28/Redis/Redis%EF%BC%9A08.Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E9%9B%86%E7%BE%A4/" title="Redis：08.Redis的持久化与集群">
-                        <span class="hidden-mobile">Redis：08.Redis的持久化与集群</span>
+                      <a href="/2022/06/23/Redis/Redis%EF%BC%9A07.%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E5%9B%9B%EF%BC%9A%E7%A4%BE%E4%BA%A4%E5%8A%9F%E8%83%BD/" title="Redis：07.实战应用四：社交功能">
+                        <span class="hidden-mobile">Redis：07.实战应用四：社交功能</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
