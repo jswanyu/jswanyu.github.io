@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-07-20T14:35:57.482Z">
+<meta property="article:modified_time" content="2022-07-28T09:38:17.897Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -507,7 +507,7 @@
 <h3 id="非静态方法能通过this访问静态成员变量吗？"><a href="#非静态方法能通过this访问静态成员变量吗？" class="headerlink" title="非静态方法能通过this访问静态成员变量吗？"></a>非静态方法能通过this访问静态成员变量吗？</h3><p>可以，所有的静态方法和静态变量都可以通过对象访问（只要访问权限足够）</p>
 <h3 id="static能作用于局部变量么？"><a href="#static能作用于局部变量么？" class="headerlink" title="static能作用于局部变量么？"></a>static能作用于局部变量么？</h3><p>Java中切记：static是不允许用来修饰局部变量。不要问为什么，这是Java语法的规定，static修饰变量只能修饰全局成员变量。但在C&#x2F;C++中static是可以作用域局部变量的。</p>
 <h3 id="Java中是否可以重写-override-或者重载一个private或者是static的方法？"><a href="#Java中是否可以重写-override-或者重载一个private或者是static的方法？" class="headerlink" title="Java中是否可以重写(override)或者重载一个private或者是static的方法？"></a>Java中是否可以重写(override)或者重载一个private或者是static的方法？</h3><p>都不可以重写，父类中修饰了一个private的方法，子类继承之后，对子类也是不可见的。子类重写则在编译阶段就会报错。</p>
-<p>Java中static方法不能被重写&#x2F;覆盖，因为方法重写是基于运行时动态绑定的，而static方法是编译时静态绑定的。static方法跟类的任何实例都不相关，所以概念上不适用</p>
+<p>Java中static方法不能被重写&#x2F;覆盖，因为方法重写是基于运行时动态绑定的，而static方法是编译时静态绑定的。static方法跟类的任何实例都不相关，所以概念上不适用。当我们在子类中改变方法体时，子类的该方法只是将父类的方法进行了<strong>隐藏</strong>，而非重写，<strong>这两个方法没有关系</strong>。父类引用指向子类对象时，只会调用父类的静态方法，所以<strong>不具有多态性</strong>。</p>
 <p>都可以重载。</p>
 <h3 id="java构造函数、静态代码块、构造代码块的执行顺序是什么？"><a href="#java构造函数、静态代码块、构造代码块的执行顺序是什么？" class="headerlink" title="java构造函数、静态代码块、构造代码块的执行顺序是什么？"></a>java构造函数、静态代码块、构造代码块的执行顺序是什么？</h3><p>基本上代码块分为三种</p>
 <ul>
@@ -623,7 +623,7 @@
 <h3 id="Java的方法分派？"><a href="#Java的方法分派？" class="headerlink" title="Java的方法分派？"></a>Java的方法分派？</h3><p>方法分派指的是虚拟机如何确定应该执行哪个方法。</p>
 <p>静态分派（方法重载）：编译器确定，根据调用者的声明类型和方法参数类型。</p>
 <p>动态分派（方法重写）：运行时确定，根据调用者的实际类型分派。</p>
-<h3 id="重载（Overload）和重写（Override）的区别是什么？"><a href="#重载（Overload）和重写（Override）的区别是什么？" class="headerlink" title="重载（Overload）和重写（Override）的区别是什么？"></a>重载（Overload）和重写（Override）的区别是什么？</h3><p>方法的重载和重写都是实现多态的方式，区别在于前者实现的是编译时的多态性，而后者实现的是运行时的多态性。</p>
+<h3 id="重载（Overload）和重写（Override）的区别是什么？"><a href="#重载（Overload）和重写（Override）的区别是什么？" class="headerlink" title="重载（Overload）和重写（Override）的区别是什么？"></a>重载（Overload）和重写（Override）的区别是什么？</h3><p>方法的重载和重写都是<strong>实现多态</strong>的方式，区别在于前者实现的是编译时的多态性，而后者实现的是运行时的多态性。</p>
 <p>重载(overloading) 是在一个类里面，方法名字相同，而参数不同。返回类型可以相同也可以不同。每个重载的方法（或者构造函数）都必须有一个<strong>独一无二的参数类型列表</strong>。最常用的地方就是构造器的重载。</p>
 <p>重写发生在子类与父类之间, 重写方法返回值和形参都不能改变，与方法返回值和访问修饰符无关，即重载的方法不能根据返回类型进行区分。即外壳不变，核心重写</p>
 <h3 id="重载的方法能否根据返回值类型进行区分？"><a href="#重载的方法能否根据返回值类型进行区分？" class="headerlink" title="重载的方法能否根据返回值类型进行区分？"></a>重载的方法能否根据返回值类型进行区分？</h3><p>不能根据返回值类型来区分重载的方法。因为调用时不指定类型信息，编译器不知道你要调用哪个函数。</p>
@@ -1315,12 +1315,13 @@
 <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="HashMap、HashSet、Hashtable的区别"><a href="#HashMap、HashSet、Hashtable的区别" class="headerlink" title="HashMap、HashSet、Hashtable的区别"></a>HashMap、HashSet、Hashtable的区别</h3><p><strong>Hashtable和HashMap主要区别</strong>：HashMap几乎可以等价于Hashtable，除了以下几点</p>
 <ul>
 <li>接受null值：HashMap可以接受null（也不建议这样设置），Hashtable不可以</li>
-<li>线程安全性：hashmap是线程不安全的，hashtable线程安全（这个区别就像Vector和ArrayList一样）</li>
-<li>继承：hashmap继承自AbstractMap类，而hashtable继承自Dictionary类。但二者都实现了Map接口。</li>
+<li>线程安全性和效率：hashmap是线程不安全但效率高的，hashtable线程安全但效率低</li>
+<li>继承：hashmap继承自AbstractMap类，hashtable继承自Dictionary类（已废弃）。但二者都实现了Map接口。</li>
 <li>计算hash方式：HashMap计算hash对key的hashcode进行了二次hash，以获得更好的散列值，然后对table数组长度取摸；Hashtable计算hash是直接使用key的hashcode对table数组的长度直接进行取模</li>
 <li>容量：HashMap的初始容量为16，Hashtable初始容量为11，两者的填充因子默认都是0.75。HashMap扩容时是当前容量翻倍即capacity × 2，Hashtable扩容时是容量翻倍+1即：capacity×2+1</li>
 </ul>
 <p>HashSet不是key value结构，仅仅是存储不重复的元素，底层基于HashMap实现，只是包含HashMap中的key而已，也是非线程安全的</p>
+<h3 id="HashMap为什么非线程安全？"><a href="#HashMap为什么非线程安全？" class="headerlink" title="HashMap为什么非线程安全？"></a>HashMap为什么非线程安全？</h3><p>HashMap在多线程情况下，在put的时候，插入的元素超过了容量（由负载因子决定）的范围就会触发扩容操作，就是rehash，这个会重新将原数组的内容<strong>重新hash到新的扩容数组</strong>中，在多线程的环境下，同时存在其他的元素也在进行put操作，如果hash值相同，可能出现同时在同一数组下用链表表示，造成<strong>闭环</strong>，导致在get时会出现<strong>死循环</strong>，所以HashMap是线程不安全的</p>
 <h3 id="HashMap在JDK1-7和JDK1-8中有哪些不同？HashMap的底层实现？"><a href="#HashMap在JDK1-7和JDK1-8中有哪些不同？HashMap的底层实现？" class="headerlink" title="HashMap在JDK1.7和JDK1.8中有哪些不同？HashMap的底层实现？"></a>HashMap在JDK1.7和JDK1.8中有哪些不同？HashMap的底层实现？</h3><table>
 <thead>
 <tr>
@@ -1363,6 +1364,8 @@
 
 <p>这里简单解释下JDK1.8的hash函数，面试经常问这个，两次扰动分别是key.hashCode() 与key.hashCode() 右移16位进行异或。这样做的目的是，高16位不变，低16位与高16位进行异或操作，进而减少碰撞的发生，高低Bit都参与到Hash的计算。如何不进行扰动处理，因为hash值有32位，直接对数组的长度求余，起作用只是hash值的几个低位。</p>
 <p>JDK1.8的函数经过了一次异或一次位运算一共两次扰动，而JDK1.7经过了四次位运算五次异或一共九次扰动。</p>
+<h3 id="JDK1-8对hash算法和寻址算法进行了哪些优化？"><a href="#JDK1-8对hash算法和寻址算法进行了哪些优化？" class="headerlink" title="JDK1.8对hash算法和寻址算法进行了哪些优化？"></a>JDK1.8对hash算法和寻址算法进行了哪些优化？</h3><p>1、hash算法：JDK1.7中通过key.hashcode()得到关键字的hash值，JDK1.8将hash值的<strong>高16位与低16位进行异或运算</strong>，使得hash值的低16位同时保留高16位和低16位的特征，对于两个hash值低16位相等，高16位不等的情况，<strong>减少hash冲突</strong>。</p>
+<p>2、寻址算法：JDK1.7位hash值对数组长度进行取模运算，JDK1.8变为<strong>hash&amp;(n-1)<strong>，n为数组长度。当数组长度是</strong>2的幂次</strong>时，hash值对数组长度取模和hash&amp;(n-1)的效果是一样的，但是<strong>与运算的性能更高</strong>。</p>
 <h3 id="HashMap为什么不直接使用hashCode-处理后的哈希值直接作为table的下标？"><a href="#HashMap为什么不直接使用hashCode-处理后的哈希值直接作为table的下标？" class="headerlink" title="HashMap为什么不直接使用hashCode()处理后的哈希值直接作为table的下标？"></a>HashMap为什么不直接使用hashCode()处理后的哈希值直接作为table的下标？</h3><p>Hash值的范围是-2147483648到2147483647，不可能建立一个这么大的数组来覆盖所有hash值。不可能在内存建立这么大的数组。</p>
 <h3 id="HashMap-的长度为什么是2的幂次方"><a href="#HashMap-的长度为什么是2的幂次方" class="headerlink" title="HashMap 的长度为什么是2的幂次方"></a>HashMap 的长度为什么是2的幂次方</h3><p>因为HashMap 是通过key 的hash值来确定存储的位置，计算完hash值后会对数组的长度进行取余操作，如果数组的长度是2的幂次方， (length - 1)&amp;hash 等同于hash%length ，可以用(length - 1)&amp;hash <strong>这种位运算来代替%取余的操作进而提高性能</strong>。</p>
 <h3 id="HashMap是怎么解决哈希冲突的？"><a href="#HashMap是怎么解决哈希冲突的？" class="headerlink" title="HashMap是怎么解决哈希冲突的？"></a>HashMap是怎么解决哈希冲突的？</h3><p>哈希冲突： hashMap 在存储元素时会先计算key 的hash值来确定存储位置，因为key 的hash值计算最后有个对数组长度取余的操作，所以即使不同的key 也可能计算出相同的hash值，这样就引起了hash冲突。hashMap 的底层结构中的链表&#x2F;红黑树就是用来解决这个问题的。</p>
@@ -1462,6 +1465,7 @@
 <td>不支持</td>
 </tr>
 </tbody></table>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>ConcurrentHashMap 底层是基于 <code>数组 + 链表</code> 组成的，不过在 jdk1.7 和 1.8 中具体实现稍有不同。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35190492/article/details/103589011">https://blog.csdn.net/qq_35190492/article/details/103589011</a></p>
 
               
             </div>
@@ -1542,9 +1546,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%99%BA%E5%8A%9B%E9%A2%98/" title="面试准备：智力题">
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%81Linux/" title="面试准备：操作系统与Linux">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">面试准备：智力题</span>
+                        <span class="hidden-mobile">面试准备：操作系统与Linux</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -1552,8 +1556,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%81%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E3%80%81%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%AD%89%E5%BC%80%E6%94%BE%E6%80%A7%E9%97%AE%E9%A2%98/" title="面试准备：设计模式、系统设计、开放性问题">
-                        <span class="hidden-mobile">面试准备：设计模式、系统设计、开放性问题</span>
+                      <a href="/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%99%BA%E5%8A%9B%E9%A2%98/" title="面试准备：智力题">
+                        <span class="hidden-mobile">面试准备：智力题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
