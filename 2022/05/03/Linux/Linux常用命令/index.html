@@ -16,23 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、简单命令date：显示系统时间 12[root@localhost ~]# dateMon Jun 13 00:26:44 PDT 2022  cal：显示日历 123456789[root@localhost ~]# cal      June 2022Su Mo Tu We Th Fr Sa          1  2  3  4 5  6  7  8  9 10 1112 13 14 1">
+    <meta name="description" content="1 一、简单了解LinuxLinux是一个操作系统，操作系统结构包括：  计算机硬件：例如CPU、内存、磁盘等 系统内核：所有Linux发行版的内核都是Linux，内核可以与计算机硬件交互，对外提供内核指令，用于操作计算机硬件。 系统应用：操作系统本身提供的应用、函数库，例如CentOS、Ubuntu、Fedora等。这些函数库是对内核指令的封装，使用更加方便。Ubuntu和CentOS都是基于L">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux常用命令">
+<meta property="og:title" content="Linux基础知识">
 <meta property="og:url" content="http://jswanyu.github.io/2022/05/03/Linux/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="一、简单命令date：显示系统时间 12[root@localhost ~]# dateMon Jun 13 00:26:44 PDT 2022  cal：显示日历 123456789[root@localhost ~]# cal      June 2022Su Mo Tu We Th Fr Sa          1  2  3  4 5  6  7  8  9 10 1112 13 14 1">
+<meta property="og:description" content="1 一、简单了解LinuxLinux是一个操作系统，操作系统结构包括：  计算机硬件：例如CPU、内存、磁盘等 系统内核：所有Linux发行版的内核都是Linux，内核可以与计算机硬件交互，对外提供内核指令，用于操作计算机硬件。 系统应用：操作系统本身提供的应用、函数库，例如CentOS、Ubuntu、Fedora等。这些函数库是对内核指令的封装，使用更加方便。Ubuntu和CentOS都是基于L">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Linux%E5%9B%BE%E6%A0%87.jpeg">
 <meta property="article:published_time" content="2022-05-03T08:19:56.000Z">
-<meta property="article:modified_time" content="2022-06-24T10:13:38.875Z">
+<meta property="article:modified_time" content="2022-08-01T08:42:39.492Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Linux%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Linux常用命令 - Wynn&#39;s blog</title>
+  <title>Linux基础知识 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux常用命令"></span>
+            <span id="subtitle" data-typed-text="Linux基础知识"></span>
           
         </div>
 
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.1k 字
+          6.7k 字
         
       </span>
     
@@ -239,11 +239,23 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux常用命令</h1>
+            <h1 style="display: none">Linux基础知识</h1>
             
             <div class="markdown-body">
               
-              <h1 id="一、简单命令"><a href="#一、简单命令" class="headerlink" title="一、简单命令"></a>一、简单命令</h1><p>date：显示系统时间</p>
+              <p>1</p>
+<h1 id="一、简单了解Linux"><a href="#一、简单了解Linux" class="headerlink" title="一、简单了解Linux"></a>一、简单了解Linux</h1><p>Linux是一个操作系统，操作系统结构包括：</p>
+<ul>
+<li>计算机硬件：例如CPU、内存、磁盘等</li>
+<li>系统内核：所有Linux发行版的内核都是Linux，内核可以与计算机硬件交互，对外提供<strong>内核指令</strong>，用于操作计算机硬件。</li>
+<li>系统应用：操作系统本身提供的应用、函数库，例如CentOS、Ubuntu、Fedora等。这些函数库是对内核指令的封装，使用更加方便。Ubuntu和CentOS都是基于Linux内核，无非是系统应用不同，提供的函数库有差异</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Linux/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB%E7%A4%BA%E6%84%8F%E5%9B%BE" srcset="/img/loading.gif" lazyload alt="image-20220730172233259"></p>
+<p>应用与计算机交互的流程如下：</p>
+<p>1）应用调用操作系统应用（函数库），实现各种功能</p>
+<p>2）系统函数库是对内核指令集的封装，会调用内核指令</p>
+<p>3）内核指令操作计算机硬件</p>
+<h1 id="二、常用命令"><a href="#二、常用命令" class="headerlink" title="二、常用命令"></a>二、常用命令</h1><h2 id="1-基础命令"><a href="#1-基础命令" class="headerlink" title="1. 基础命令"></a>1. 基础命令</h2><p>date：显示系统时间</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># date</span><br>Mon Jun <span class="hljs-number">13</span> <span class="hljs-number">00</span>:<span class="hljs-number">26</span>:<span class="hljs-number">44</span> PDT <span class="hljs-number">2022</span><br></code></pre></td></tr></table></figure>
 
 <p>cal：显示日历</p>
@@ -263,7 +275,7 @@
 
 
 
-<h1 id="二、文件与目录管理"><a href="#二、文件与目录管理" class="headerlink" title="二、文件与目录管理"></a>二、文件与目录管理</h1><p>linux文件系统是像一棵树，树干是&#x2F;（根）目录，树枝是子目录，树枝后面还有树枝（子目录中还有子目录），树枝最后是树叶，目录的最后是文件。</p>
+<h2 id="2-文件与目录管理"><a href="#2-文件与目录管理" class="headerlink" title="2. 文件与目录管理"></a>2. 文件与目录管理</h2><p>linux文件系统是像一棵树，树干是&#x2F;（根）目录，树枝是子目录，树枝后面还有树枝（子目录中还有子目录），树枝最后是树叶，目录的最后是文件。</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Linux/Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220613153407884"></p>
 <p>严谨的说，文件名是由<strong>目录+文件名</strong>组成的。</p>
 <p>对于目录和文件，有一些约定的表述，我们以 &#x2F;usr&#x2F;etc&#x2F;readme.txt 为例。</p>
@@ -285,7 +297,7 @@
 <p>rm（英文全拼：remove）: 删除文件或目录</p>
 <p>cp（英文全拼：copy file）: 复制文件或目录</p>
 <p>mv（英文全拼：move file）: 移动文件与目录，或修改文件与目录的名称</p>
-<h2 id="1-ls-列出目录"><a href="#1-ls-列出目录" class="headerlink" title="1. ls 列出目录"></a>1. ls 列出目录</h2><p>命令结构：ls 参数 目录名称</p>
+<h3 id="2-1-ls-列出目录"><a href="#2-1-ls-列出目录" class="headerlink" title="2.1 ls 列出目录"></a>2.1 ls 列出目录</h3><p>命令结构：ls 参数 目录名称</p>
 <p>选项与参数：</p>
 <table>
 <thead>
@@ -328,28 +340,28 @@
 
 
 
-<h2 id="2-cd-切换目录"><a href="#2-cd-切换目录" class="headerlink" title="2. cd 切换目录"></a>2. cd 切换目录</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-keyword">cd</span> src		 切换到当前目录下的src子目录<br><span class="hljs-keyword">cd</span> <span class="hljs-string">..</span>	     切换到上一层目录<br><span class="hljs-keyword">cd</span> /		 切换到系统根目录<br><span class="hljs-keyword">cd</span>			 切换到用户主目录<br><span class="hljs-keyword">cd</span> <span class="hljs-string">/usr/bin</span>	 切换到<span class="hljs-string">/usr/bin</span>目录<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-cd-切换目录"><a href="#2-2-cd-切换目录" class="headerlink" title="2.2 cd 切换目录"></a>2.2 cd 切换目录</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-keyword">cd</span> src		 切换到当前目录下的src子目录<br><span class="hljs-keyword">cd</span> <span class="hljs-string">..</span>	     切换到上一层目录<br><span class="hljs-keyword">cd</span> /		 切换到系统根目录<br><span class="hljs-keyword">cd</span>			 切换到用户主目录<br><span class="hljs-keyword">cd</span> <span class="hljs-string">/usr/bin</span>	 切换到<span class="hljs-string">/usr/bin</span>目录<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="3-pwd-显示目前所在的目录"><a href="#3-pwd-显示目前所在的目录" class="headerlink" title="3. pwd 显示目前所在的目录"></a>3. pwd 显示目前所在的目录</h2><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> src]<span class="hljs-meta"># pwd</span><br>/usr/<span class="hljs-keyword">local</span>/src<br></code></pre></td></tr></table></figure>
+<h3 id="2-3-pwd-显示目前所在的目录"><a href="#2-3-pwd-显示目前所在的目录" class="headerlink" title="2.3 pwd 显示目前所在的目录"></a>2.3 pwd 显示目前所在的目录</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> src]<span class="hljs-meta"># pwd</span><br>/usr/<span class="hljs-keyword">local</span>/src<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="4-mkdir-创建新目录"><a href="#4-mkdir-创建新目录" class="headerlink" title="4. mkdir 创建新目录"></a>4. mkdir 创建新目录</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">mkdir [-mp] 目录名称<br></code></pre></td></tr></table></figure>
+<h3 id="2-4-mkdir-创建新目录"><a href="#2-4-mkdir-创建新目录" class="headerlink" title="2.4 mkdir 创建新目录"></a>2.4 mkdir 创建新目录</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">mkdir [-mp] 目录名称<br></code></pre></td></tr></table></figure>
 
 <p>选项与参数：</p>
 <ul>
 <li>-m ：配置文件，无视权限</li>
 <li>-p ：多层创建目录</li>
 </ul>
-<h2 id="5-rmdir-删除空目录"><a href="#5-rmdir-删除空目录" class="headerlink" title="5. rmdir 删除空目录"></a>5. rmdir 删除空目录</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">rmdir [-p] 目录名称<br></code></pre></td></tr></table></figure>
+<h3 id="2-5-rmdir-删除空目录"><a href="#2-5-rmdir-删除空目录" class="headerlink" title="2.5 rmdir 删除空目录"></a>2.5 rmdir 删除空目录</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">rmdir [-p] 目录名称<br></code></pre></td></tr></table></figure>
 
 <p>选项与参数：</p>
 <ul>
 <li>-p ：从该目录起，一次删除多级空目录</li>
 </ul>
-<h2 id="6-rm-移除文件或目录"><a href="#6-rm-移除文件或目录" class="headerlink" title="6. rm 移除文件或目录"></a>6. rm 移除文件或目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> [-fir] 文件或目录<br></code></pre></td></tr></table></figure>
+<h3 id="2-6-rm-移除文件或目录"><a href="#2-6-rm-移除文件或目录" class="headerlink" title="2.6 rm 移除文件或目录"></a>2.6 rm 移除文件或目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> [-fir] 文件或目录<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">rm</span> file1.txt	删除指定的文件file1.txt<br><span class="hljs-built_in">rm</span> *			删除当前目录下的所有文件<br><span class="hljs-built_in">rm</span> –<span class="hljs-built_in">r</span> dir1		加<span class="hljs-literal">-r</span>递归删除dir1目录下的所有文件及子目录<br><span class="hljs-built_in">rm</span> –f file2.txt	加<span class="hljs-operator">-f</span>强迫删除文件file2.txt，即<span class="hljs-built_in">rm</span>命令会直接删除文件，不再询问<br></code></pre></td></tr></table></figure>
 
@@ -360,7 +372,7 @@
 <li>-r ：非常危险的选项！！！多层删除</li>
 <li>-v : 显示删除过程</li>
 </ul>
-<h2 id="7-cp-复制文件或目录"><a href="#7-cp-复制文件或目录" class="headerlink" title="7. cp 复制文件或目录"></a>7. cp 复制文件或目录</h2><p>（英文全拼：copy file）</p>
+<h3 id="2-7-cp-复制文件或目录"><a href="#2-7-cp-复制文件或目录" class="headerlink" title="2.7 cp 复制文件或目录"></a>2.7 cp 复制文件或目录</h3><p>（英文全拼：copy file）</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-selector-attr">[root@www ~]</span># cp <span class="hljs-selector-attr">[-adfilprsu]</span> 来源档(source) 目标档(destination)<br><span class="hljs-selector-attr">[root@www ~]</span># cp <span class="hljs-selector-attr">[options]</span> source1 source2 source3 .... directory<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">cp</span> data1.txt data2.txt		将data1.txt复制一份并命名为data2.txt<br><span class="hljs-built_in">cp</span> data3.txt /tmp/<span class="hljs-keyword">data</span>		将data3.txt复制到/tmp/<span class="hljs-keyword">data</span>目录中<br><span class="hljs-built_in">cp</span> –v zip.txt zip3.txt		加<span class="hljs-literal">-v</span>显示复制过程<br><span class="hljs-built_in">cp</span> –v –<span class="hljs-built_in">R</span> * backup		    加<span class="hljs-literal">-R</span>递归复制，将当前目录下所有文件（含子目录文件）复制到backup目录下<br></code></pre></td></tr></table></figure>
@@ -380,7 +392,7 @@
 <li>-u：若 destination 比 source 旧才升级 destination</li>
 <li>-v:  显示复制过程</li>
 </ul>
-<h2 id="8-mv-移动文件与目录，或修改名称"><a href="#8-mv-移动文件与目录，或修改名称" class="headerlink" title="8. mv 移动文件与目录，或修改名称"></a>8. mv 移动文件与目录，或修改名称</h2><p>（英文全拼：move file）</p>
+<h3 id="2-8-mv-移动文件与目录，或修改名称"><a href="#2-8-mv-移动文件与目录，或修改名称" class="headerlink" title="2.8 mv 移动文件与目录，或修改名称"></a>2.8 mv 移动文件与目录，或修改名称</h3><p>（英文全拼：move file）</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@www</span> ~]<span class="hljs-meta"># mv [-fiu] source destination</span><br>[root<span class="hljs-symbol">@www</span> ~]<span class="hljs-meta"># mv [options] source1 source2 source3 .... directory</span><br></code></pre></td></tr></table></figure>
 
 <p>选项与参数：</p>
@@ -393,18 +405,18 @@
 
 
 
-<h2 id="9-locate-查找文件"><a href="#9-locate-查找文件" class="headerlink" title="9. locate 查找文件"></a>9. locate 查找文件</h2><p>locate 命令可用来在整个linux文件树里搜索<strong>包含指定条件字符串的文件或目录</strong>。如</p>
+<h3 id="2-9-locate-查找文件"><a href="#2-9-locate-查找文件" class="headerlink" title="2.9 locate 查找文件"></a>2.9 locate 查找文件</h3><p>locate 命令可用来在整个linux文件树里搜索<strong>包含指定条件字符串的文件或目录</strong>。如</p>
 <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">locate</span> zh_CN 		列出所有包含“zh_CN”字符串的文件和目录<br></code></pre></td></tr></table></figure>
 
 <p>由于locate命令是从系统中保存文件及目录名称的数据库中搜索文件，虽然系统会定时更新数据库，但对于刚新增或删除的文件、目录，仍然可能会因为数据库尚未更新而无法查得，此时可用root身份运行updatedb命令更新，为此数据库得内容正确。</p>
-<h2 id="10-grep-搜索字符串"><a href="#10-grep-搜索字符串" class="headerlink" title="10. grep 搜索字符串"></a>10. grep 搜索字符串</h2><p>Linux grep （Globally search a Regular Expression and Print）命令用于查找文件里符合条件的字符串。非常常用</p>
+<h3 id="2-10-grep-搜索字符串"><a href="#2-10-grep-搜索字符串" class="headerlink" title="2.10 grep 搜索字符串"></a>2.10 grep 搜索字符串</h3><p>Linux grep （Globally search a Regular Expression and Print）命令用于查找文件里符合条件的字符串。非常常用</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">grep <span class="hljs-selector-attr">[选项]</span> 查找内容 <span class="hljs-selector-attr">[源文件]</span><br></code></pre></td></tr></table></figure>
 
 <p>例如</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
 
 <p>选项与参数过多，参考：<a target="_blank" rel="noopener" href="https://m.runoob.com/linux/linux-comm-grep.html">Linux grep 命令 | 菜鸟教程 (runoob.com)</a></p>
-<h1 id="三、文件内容查看"><a href="#三、文件内容查看" class="headerlink" title="三、文件内容查看"></a>三、文件内容查看</h1><p>速览：</p>
+<h2 id="3-文件内容查看"><a href="#3-文件内容查看" class="headerlink" title="3. 文件内容查看"></a>3. 文件内容查看</h2><p>速览：</p>
 <ul>
 <li>cat  由第一行开始显示文件内容</li>
 <li>tac  从最后一行开始显示，看出 tac 是 cat 的倒着写！</li>
@@ -414,7 +426,7 @@
 <li>head 只看头几行</li>
 <li>tail 只看尾巴几行</li>
 </ul>
-<h2 id="1-cat-由第一行开始显示文件内容"><a href="#1-cat-由第一行开始显示文件内容" class="headerlink" title="1. cat 由第一行开始显示文件内容"></a>1. cat 由第一行开始显示文件内容</h2><p>cat（“ <strong>concatenate</strong> ”的缩写）命令是Linux &#x2F; Unix等操作系统中最常用的命令之一。<strong>cat</strong>命令允许我们创建单个或多个文件，查看文件包含，连接文件以及在终端或文件中重定向输出。</p>
+<h3 id="3-1-cat-由第一行开始显示文件内容"><a href="#3-1-cat-由第一行开始显示文件内容" class="headerlink" title="3.1 cat 由第一行开始显示文件内容"></a>3.1 cat 由第一行开始显示文件内容</h3><p>cat（“ <strong>concatenate</strong> ”的缩写）命令是Linux &#x2F; Unix等操作系统中最常用的命令之一。<strong>cat</strong>命令允许我们创建单个或多个文件，查看文件包含，连接文件以及在终端或文件中重定向输出。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> [-AbEnTv] 文件名<br></code></pre></td></tr></table></figure>
 
 <p>选项与参数：</p>
@@ -430,8 +442,8 @@
 
 
 
-<h2 id="2-tac-从文件最后一行开始显示"><a href="#2-tac-从文件最后一行开始显示" class="headerlink" title="2. tac 从文件最后一行开始显示"></a>2. tac 从文件最后一行开始显示</h2><p>与cat命令刚好相反，倒过来显示文件内容</p>
-<h2 id="3-nl-查看文件顺便显示行号"><a href="#3-nl-查看文件顺便显示行号" class="headerlink" title="3. nl 查看文件顺便显示行号"></a>3. nl 查看文件顺便显示行号</h2><p>“number of lines”的缩写，nl命令在linux系统中用来计算文件中行号。nl 可以将输出的文件内容自动的加上行号！其默认的结果与 cat -n 有点不太一样， nl 可以将行号做比较多的显示设计，包括位数与是否自动补齐 0 等等的功能。 </p>
+<h3 id="3-2-tac-从文件最后一行开始显示"><a href="#3-2-tac-从文件最后一行开始显示" class="headerlink" title="3.2 tac 从文件最后一行开始显示"></a>3.2 tac 从文件最后一行开始显示</h3><p>与cat命令刚好相反，倒过来显示文件内容</p>
+<h3 id="3-3-nl-查看文件顺便显示行号"><a href="#3-3-nl-查看文件顺便显示行号" class="headerlink" title="3.3 nl 查看文件顺便显示行号"></a>3.3 nl 查看文件顺便显示行号</h3><p>“number of lines”的缩写，nl命令在linux系统中用来计算文件中行号。nl 可以将输出的文件内容自动的加上行号！其默认的结果与 cat -n 有点不太一样， nl 可以将行号做比较多的显示设计，包括位数与是否自动补齐 0 等等的功能。 </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">nl</span> [-bnw] 文件名<br></code></pre></td></tr></table></figure>
 
 <p>选项与参数：</p>
@@ -449,7 +461,7 @@
 </li>
 <li>-w ：行号栏位的占用的位数。</li>
 </ul>
-<h2 id="4-more-一页一页翻动"><a href="#4-more-一页一页翻动" class="headerlink" title="4. more 一页一页翻动"></a>4. more 一页一页翻动</h2><p>为了避免画面显示瞬间就闪过去，用户可以使用more命令，让画面在显示满一页时暂停</p>
+<h3 id="3-4-more-一页一页翻动"><a href="#3-4-more-一页一页翻动" class="headerlink" title="3.4 more 一页一页翻动"></a>3.4 more 一页一页翻动</h3><p>为了避免画面显示瞬间就闪过去，用户可以使用more命令，让画面在显示满一页时暂停</p>
 <figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">more</span> 文件名<br></code></pre></td></tr></table></figure>
 
 <p>在 more 这个程序的运行过程中，光标会在这里等待你的命令，有几个按键可以按的：</p>
@@ -466,15 +478,15 @@
 
 
 
-<h2 id="5-less-一页一页翻动"><a href="#5-less-一页一页翻动" class="headerlink" title="5. less 一页一页翻动"></a>5. less 一页一页翻动</h2><p>和more效果类似</p>
-<h2 id="6-head-取出文件前面几行"><a href="#6-head-取出文件前面几行" class="headerlink" title="6. head 取出文件前面几行"></a>6. head 取出文件前面几行</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">head [-n <span class="hljs-built_in">number</span>] 文件 <br></code></pre></td></tr></table></figure>
+<h3 id="3-5-less-一页一页翻动"><a href="#3-5-less-一页一页翻动" class="headerlink" title="3.5 less 一页一页翻动"></a>3.5 less 一页一页翻动</h3><p>和more效果类似</p>
+<h3 id="3-6-head-取出文件前面几行"><a href="#3-6-head-取出文件前面几行" class="headerlink" title="3.6 head 取出文件前面几行"></a>3.6 head 取出文件前面几行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">head [-n <span class="hljs-built_in">number</span>] 文件 <br></code></pre></td></tr></table></figure>
 
 <p>比如</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">head pom.<span class="hljs-keyword">xml</span>             <span class="hljs-title">默认显示前10</span>行文件内容<br>head -n <span class="hljs-number">20</span> pom.<span class="hljs-keyword">xml</span>       <span class="hljs-title">显示前20</span>行文件内容<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="7-tail-取出文件后面几行"><a href="#7-tail-取出文件后面几行" class="headerlink" title="7. tail 取出文件后面几行"></a>7. tail 取出文件后面几行</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">tail [-n <span class="hljs-built_in">number</span>] 文件 <br></code></pre></td></tr></table></figure>
+<h3 id="3-7-tail-取出文件后面几行"><a href="#3-7-tail-取出文件后面几行" class="headerlink" title="3.7 tail 取出文件后面几行"></a>3.7 tail 取出文件后面几行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">tail [-n <span class="hljs-built_in">number</span>] 文件 <br></code></pre></td></tr></table></figure>
 
 
 
@@ -488,19 +500,19 @@
 
 
 
-<h1 id="五、yum常用命令"><a href="#五、yum常用命令" class="headerlink" title="五、yum常用命令"></a>五、yum常用命令</h1><h2 id="1-install-安装"><a href="#1-install-安装" class="headerlink" title="1. install 安装"></a>1. install 安装</h2><p>安装指定的软件：yum install <package_name> </p>
+<h2 id="4-yum常用命令"><a href="#4-yum常用命令" class="headerlink" title="4. yum常用命令"></a>4. yum常用命令</h2><h3 id="4-1-install-安装"><a href="#4-1-install-安装" class="headerlink" title="4.1 install 安装"></a>4.1 install 安装</h3><p>安装指定的软件：yum install <package_name> </p>
 <p>可安裝的软件清单：yum list</p>
-<h2 id="2-update-更新"><a href="#2-update-更新" class="headerlink" title="2. update 更新"></a>2. update 更新</h2><p>列出可更新的软件清单：yum check-update </p>
+<h3 id="4-2-update-更新"><a href="#4-2-update-更新" class="headerlink" title="4.2 update 更新"></a>4.2 update 更新</h3><p>列出可更新的软件清单：yum check-update </p>
 <p>更新所有软件：yum update </p>
 <p>更新指定的软件：yum update <package_name></p>
-<h2 id="3-remove-删除"><a href="#3-remove-删除" class="headerlink" title="3. remove 删除"></a>3. remove 删除</h2><p><strong>删除</strong>软件包命令：yum <strong>remove</strong> <package_name></p>
-<h2 id="4-search-查找"><a href="#4-search-查找" class="headerlink" title="4. search 查找"></a>4. search 查找</h2><p>查找软件包命令：yum search  例子：找出以 pam 为开头的软件名称</p>
+<h3 id="4-3-remove-删除"><a href="#4-3-remove-删除" class="headerlink" title="4.3 remove 删除"></a>4.3 remove 删除</h3><p><strong>删除</strong>软件包命令：yum <strong>remove</strong> <package_name></p>
+<h3 id="4-4-search-查找"><a href="#4-4-search-查找" class="headerlink" title="4.4 search 查找"></a>4.4 search 查找</h3><p>查找软件包命令：yum search  例子：找出以 pam 为开头的软件名称</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">yum <span class="hljs-built_in">list</span> pam*<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="5-clean-清除缓存"><a href="#5-clean-清除缓存" class="headerlink" title="5. clean 清除缓存"></a>5. clean 清除缓存</h2><p>yum clean packages: 清除缓存目录下的软件包 yum clean headers: 清除缓存目录下的 headers yum clean oldheaders: 清除缓存目录下旧的 headers yum clean, yum clean all (&#x3D; yum clean packages; yum clean oldheaders) :清除缓存目录下的软件包及旧的 headers</p>
-<h2 id="6-设置yum源"><a href="#6-设置yum源" class="headerlink" title="6. 设置yum源"></a>6. 设置yum源</h2><p>首先备份&#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo</p>
+<h3 id="4-5-clean-清除缓存"><a href="#4-5-clean-清除缓存" class="headerlink" title="4.5 clean 清除缓存"></a>4.5 clean 清除缓存</h3><p>yum clean packages: 清除缓存目录下的软件包 yum clean headers: 清除缓存目录下的 headers yum clean oldheaders: 清除缓存目录下旧的 headers yum clean, yum clean all (&#x3D; yum clean packages; yum clean oldheaders) :清除缓存目录下的软件包及旧的 headers</p>
+<h3 id="4-6-设置yum源"><a href="#4-6-设置yum源" class="headerlink" title="4.6 设置yum源"></a>4.6 设置yum源</h3><p>首先备份&#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup<br></code></pre></td></tr></table></figure>
 
 <p>下载<strong>对应版本</strong> repo 文件, 放入 &#x2F;etc&#x2F;yum.repos.d&#x2F; (操作前请做好相应备份)</p>
@@ -510,6 +522,18 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">yum clean all<br>yum makecache<br></code></pre></td></tr></table></figure>
 
 <p>除了网易之外，国内还有其他不错的 yum 源，比如中科大和搜狐。</p>
+<h2 id="5-vim编辑器"><a href="#5-vim编辑器" class="headerlink" title="5. vim编辑器"></a>5. vim编辑器</h2><p>想要退出vim时，先按Esc，然后直接输入“ : ”就会在最下面显示出一行，vim开始进入命令模式（而不是write模式）</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs awk">:q  <br><span class="hljs-regexp">//</span>退出<br><br>:q! <br><span class="hljs-regexp">//</span>退出且不保存（:quit!的缩写）<br><br>:wq<br><span class="hljs-regexp">//</span>保存并退出<br><br>:wq!<br><span class="hljs-regexp">//</span>保存并退出即使文件没有写入权限（强制保存退出）<br><br>:x<br><span class="hljs-regexp">//</span>保存并退出（类似:wq，但是只有在有更改的情况下才保存）<br><br>:<span class="hljs-keyword">exit</span><br><span class="hljs-regexp">//</span>保存并退出（和:x相同）<br><br>:qa<br><span class="hljs-regexp">//</span>退出所有(:quitall的缩写)<br><br>:cq<br><span class="hljs-regexp">//</span>退出且不保存（即便有错误）<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
 <p>参考：</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095405691497611277#heading-0">【Linux】Linux常用命令 - 掘金 (juejin.cn)</a></p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7106302473005957134#heading-20">Linux常用命令手册 - 掘金 (juejin.cn)</a></p>
@@ -559,7 +583,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux常用命令</div>
+      <div>Linux基础知识</div>
       <div>http://jswanyu.github.io/2022/05/03/Linux/Linux常用命令/</div>
     </div>
     <div class="license-meta">
