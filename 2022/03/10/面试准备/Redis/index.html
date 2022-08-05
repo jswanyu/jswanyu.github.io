@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T03:53:03.000Z">
-<meta property="article:modified_time" content="2022-08-01T08:46:31.516Z">
+<meta property="article:modified_time" content="2022-08-01T14:01:49.243Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          16k 字
+          18k 字
         
       </span>
     
@@ -270,7 +270,9 @@
 <p>5、Redis缓存有过期机制，而Map无此功能</p>
 <p>6、Redis有丰富的API，Map简单太多了</p>
 <h3 id="Redis的数据类型有哪些？"><a href="#Redis的数据类型有哪些？" class="headerlink" title="Redis的数据类型有哪些？"></a>Redis的数据类型有哪些？</h3><p>Redis的常见的数据类型有String、Hash、Set、List、ZSet。还有三种不那么常见的数据类型：Bitmap、HyperLogLog、Geospatial。</p>
-<h3 id="Redis的数据结构有哪些？"><a href="#Redis的数据结构有哪些？" class="headerlink" title="Redis的数据结构有哪些？"></a>Redis的数据结构有哪些？</h3><p>很多</p>
+<h3 id="Redis的数据结构有哪些？"><a href="#Redis的数据结构有哪些？" class="headerlink" title="Redis的数据结构有哪些？"></a>Redis的数据结构有哪些？</h3><p>很多，待补充</p>
+<h3 id="redis有序集合使用的跳表是什么？"><a href="#redis有序集合使用的跳表是什么？" class="headerlink" title="redis有序集合使用的跳表是什么？"></a>redis有序集合使用的跳表是什么？</h3><p>redis中有序集合的底层采用跳表作为数据结构，有序链表只能逐一查询，导致操作起来非常慢，跳表在此基础上增加了多级索引，通过索引位置的几个跳转，实现数据的快速定位。</p>
+<p>跳表的查找复杂度是O(logN)。</p>
 <h3 id="Redis的应用场景有哪些？"><a href="#Redis的应用场景有哪些？" class="headerlink" title="Redis的应用场景有哪些？"></a>Redis的应用场景有哪些？</h3><ul>
 <li>缓存：Redis基于内存，读写速度非常快，并且有键过期功能和键淘汰策略，可以作为缓存使用。</li>
 <li>排行榜：Redis提供的有序集合可以很方便地实现排行榜。</li>
@@ -487,10 +489,12 @@
 <li><p>限制一个master上的slave节点数量，如果实在是太多slave，则可以采用主-从-从链式结构，减少master压力</p>
 </li>
 </ul>
-<h3 id="介绍一下Redis的哨兵模式"><a href="#介绍一下Redis的哨兵模式" class="headerlink" title="介绍一下Redis的哨兵模式"></a>介绍一下Redis的哨兵模式</h3><p>Redis提供了哨兵（Sentinel）机制来实现主从集群的自动故障恢复，哨兵模式的核心还是主从复制，不过相比于主从模式，多了一个哨兵集群，哨兵的作用如下：</p>
+<h3 id="介绍一下Redis的哨兵模式"><a href="#介绍一下Redis的哨兵模式" class="headerlink" title="介绍一下Redis的哨兵模式"></a>介绍一下Redis的哨兵模式</h3><p>redis哨兵模式是redis的高可用架构的一种方式，它是为了解决主从模式下主节点挂了不能自动故障转移的问题。哨兵的结构如图：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%93%A8%E5%85%B5%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220707102344415"></p>
+<p>Redis提供了哨兵（Sentinel）机制来实现主从集群的自动故障恢复，哨兵模式的核心还是主从复制，不过相比于主从模式，多了一个哨兵集群，哨兵的作用和原理（心跳机制+投票裁决）如下：</p>
 <ul>
 <li><strong>监控</strong>：Sentinel 会基于心跳机制不断监测主从节点的工作状态</li>
-<li><strong>自动故障恢复</strong>：如果master故障（超过半数哨兵认为其故障），Sentinel会将一个slave提升为master（有个优先级，没设置的话则以前文的<strong>offset值</strong>为准，越大说明数据越新，优先级越高）。当故障实例恢复后也以新的master为主</li>
+<li><strong>自动故障恢复</strong>：如果master故障（超过半数哨兵认为其故障，即客观下线），Sentinel会将一个slave提升为master（有个优先级，没设置的话则以前文的<strong>offset值</strong>为准，越大说明数据越新，优先级越高）。当故障实例恢复后也以新的master为主</li>
 <li><strong>通知</strong>：Sentinel充当Redis客户端的服务发现来源，当集群发生故障转移时，会将最新信息推送给Redis的客户端</li>
 </ul>
 <p>优点：</p>
@@ -503,6 +507,13 @@
 <li>主从集群本身的问题：哨兵模式只有一个主节点对外提供服务，没法支持很高的并发</li>
 <li>主从集群本身的问题：单个主节点内存也不宜设置得过大，否则会导致持久化文件过大，影响数据恢复或主从同步的效率</li>
 </ul>
+<h3 id="哨兵判断主管下线和客观下线？"><a href="#哨兵判断主管下线和客观下线？" class="headerlink" title="哨兵判断主管下线和客观下线？"></a>哨兵判断主管下线和客观下线？</h3><p>主观下线：每隔1秒每个sentinel对其他的redis节点（master，slave，sentinel）执行ping操作，若master超过down-after-milliseconds内没有回复，就对该节点进行主观下线，<strong>每个sentinel节点对redis节点失败的“偏见”</strong></p>
+<p>客观下线：当sentinel主观下线的节点是主节点时，sentinel会通过命令sentinel is-master-down-by-addr来询问其sentinel对主节点的判断，如果超过quorum个数就认为主节点需要客观下线, <strong>所有sentinel节点对redis节点失败达成共识</strong></p>
+<h3 id="如何选举sentinel的leader？"><a href="#如何选举sentinel的leader？" class="headerlink" title="如何选举sentinel的leader？"></a>如何选举sentinel的leader？</h3><p>使用raft协议（解决分布式系统一致性问题的协议）</p>
+<p>1）每个做主观下线的sentinel节点向其他sentinel节点发送命令，要求将自己设置为leader</p>
+<p>2）收到的sentinel可以同意或拒绝</p>
+<p>3）如果该sentinel节点发现自己的票数已经超过了半数并且超过了quorum那么当选leader</p>
+<p>4）如果此过程选举出了多个leader，那么将等待一段时间重新进行选举</p>
 <h3 id="Redis主从哨兵集群中数据会丢失吗（暂时了解即可）"><a href="#Redis主从哨兵集群中数据会丢失吗（暂时了解即可）" class="headerlink" title="Redis主从哨兵集群中数据会丢失吗（暂时了解即可）"></a>Redis主从哨兵集群中数据会丢失吗（暂时了解即可）</h3><p>会，有两种情况</p>
 <ul>
 <li>异步复制同步丢失：Redis主节点和从节点之间的复制是异步的，当主节点的数据未完全复制到从节点时就发生宕机了，master内存中的数据会丢失。</li>
@@ -513,7 +524,8 @@
 <p>其中，min-slaves-to-write默认情况下是0，min-slaves-max-lag默认情况下是10。</p>
 <p>上述参数表示至少有1个salve的与master的同步复制延迟不能超过10s，一旦所有的slave复制和同步的延迟达到了10s，那么此时master就不会接受任何请求。通过降低min-slaves-max-lag参数的值，可以避免在发生故障时大量的数据丢失，一旦发现延迟超过了该值就不会往master中写入数据。</p>
 <p>这种解决数据丢失的方法是降低系统的可用性来实现的。</p>
-<h3 id="介绍一下Redis的分片集群"><a href="#介绍一下Redis的分片集群" class="headerlink" title="介绍一下Redis的分片集群"></a>介绍一下Redis的分片集群</h3><p>主从和哨兵可以解决高可用、高并发读的问题。但是依然有两个问题没有解决：海量数据存储问题、高并发写的问题。使用分片集群可以解决上述问题，分片集群特征：</p>
+<h3 id="介绍一下Redis的分片集群"><a href="#介绍一下Redis的分片集群" class="headerlink" title="介绍一下Redis的分片集群"></a>介绍一下Redis的分片集群</h3><p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98-%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4.png" srcset="/img/loading.gif" lazyload alt="image-20220707110518079"></p>
+<p>主从和哨兵可以解决高可用、高并发读的问题。但是依然有两个问题没有解决：海量数据存储问题、高并发写的问题。使用分片集群可以解决上述问题，分片集群特征：</p>
 <ul>
 <li>集群中有多个master，每个master保存不同数据</li>
 <li>每个master都可以有多个slave节点。master进行读写，从节点仅作为备用节点作为故障转移使用，不提供请求</li>
@@ -528,6 +540,8 @@
 <li>key中不包含“{}”，整个key都是有效部分</li>
 </ul>
 <p>计算完哈希值，对16384取余，余数作为插槽，寻找插槽所在实例即可</p>
+<h3 id="redis中的哈希一致性算法？"><a href="#redis中的哈希一致性算法？" class="headerlink" title="redis中的哈希一致性算法？"></a>redis中的哈希一致性算法？</h3><p>在面对redis集群时需要选择一个节点进行缓存，普通的hash算法是取模：hash(IP地址或文件名)%服务器数量，但这种方式在服务器数量变动的时候，所有缓存的位置都要发生改变。</p>
+<p>因此诞生了Hash一致性算法，区别是<strong>对2^ 32-1取模</strong>，一致性Hash算法将整个Hash值控件组织成一个<strong>虚拟的圆环</strong>，将数据key使用相同的函数Hash计算出哈希值，并确定此数据在环上的位置，从此位置沿环顺时针“行走”，第一台遇到的服务器就是其应该定位到的服务器。为解决数据倾斜问题还引入了虚拟节点机制，具有较好的容错性和可扩展性。</p>
 <h3 id="分别集群最大的节点个数是多少？为什么？"><a href="#分别集群最大的节点个数是多少？为什么？" class="headerlink" title="分别集群最大的节点个数是多少？为什么？"></a>分别集群最大的节点个数是多少？为什么？</h3><p>16384（2^14）个，在redis节点发送心跳包时需要把所有的节点放到这个心跳包里，以便让节点知道当前集群信息，16384&#x3D;16k，在发送心跳包时使用char 进行bitmap压缩后是2k（ 2 * 8 (8 bit) * 1024(1k) &#x3D;16K ），也就是说使用2k的空间创建了16k的槽数。虽然使用CRC16算法最多可以分配65535（2^16-1）个槽位，65535&#x3D;65k，压缩后就是8k（ 8 * 8 (8 bit) * 1024(1k) &#x3D;65K ），也就是说需要8k的心跳包，作者认为这样做不太值得</p>
 <p>由于其他设计折衷，一般情况下一个redis集群不会有超过1000个master节点</p>
 <h3 id="Redis的分区是什么？有什么作用？"><a href="#Redis的分区是什么？有什么作用？" class="headerlink" title="Redis的分区是什么？有什么作用？"></a>Redis的分区是什么？有什么作用？</h3><p>分区是将数据分布在多个Redis实例上，以至于每个实例只包含一部分数据。作用是：</p>
@@ -691,6 +705,17 @@
 </ul>
 </li>
 </ul>
+<h3 id="Redis分布式锁的原理"><a href="#Redis分布式锁的原理" class="headerlink" title="Redis分布式锁的原理"></a>Redis分布式锁的原理</h3><p><img src="https://mmbiz.qpic.cn/mmbiz_png/1J6IbIcPCLZazheOViaR9icDhe4LQXYyx24WKZYBsGsnzicju8W7riccH10U33uaLwKic7HymG8qrtOoNZAgaajon6A/640?wx_fmt=png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>1、加锁机制：某个客户端要加锁，如果该客户端面对的是一个redis cluster集群，首先会根据hash节点选择一台机器。紧接着，就会发送一段lua脚本到redis上，保证这段复杂业务逻辑执行的<strong>原子性</strong>。lua脚本中包含的参数有加锁的key，key的默认生存时间，加锁的客户端的ID。加锁的逻辑是SETNX，即不存在才加锁。</p>
+<p>2、锁互斥机制：客户端2来尝试加锁时会发现锁已存在并且客户端ID不是自己的，此时会进入一个while循环，不停的尝试加锁。</p>
+<p>3、watch dog自动延期机制：客户端1一旦加锁成功，就会启动一个watch dog看门狗，<strong>他是一个后台线程，会每隔10秒检查一下</strong>，如果客户端1还持有锁key，那么就会不断的延长锁key的生存时间。</p>
+<p>4、可重入加锁机制：如果客户端1已经持有锁了还进行可重入的加锁那么就会对客户端1的加锁次数累加1。</p>
+<p>5、释放锁机制：执行lock.unlock()就可以释放分布式锁，每次对加锁次数减1，当加锁次数为0时从redis里删除这个key，然后另外的客户端2就可以尝试完成加锁了。</p>
+<h3 id="Redis分布式锁的缺点？"><a href="#Redis分布式锁的缺点？" class="headerlink" title="Redis分布式锁的缺点？"></a>Redis分布式锁的缺点？</h3><p>redis cluster，或者是redis master-slave架构的<strong>主从异步复制</strong>导致的redis分布式锁的最大缺陷：在redis master实例宕机的时候，可能导致多个客户端同时完成加锁。</p>
+<h3 id="如何解决主从架构的redis分布式锁主节点宕机锁丢失的问题？"><a href="#如何解决主从架构的redis分布式锁主节点宕机锁丢失的问题？" class="headerlink" title="如何解决主从架构的redis分布式锁主节点宕机锁丢失的问题？"></a>如何解决主从架构的redis分布式锁主节点宕机锁丢失的问题？</h3><p>使用redisson封装的redlock算法实现的分布式锁用法。</p>
+<p>redlock算法思想：不能只在一个redis实例上创建锁，应该是在多个redis实例上创建锁，必须在大多数redis节点上都成功创建锁，才能算这个整体的RedLock加锁成功，避免仅仅在一个redis实例上加锁而带来的问题。</p>
+<p>关键在于set的value要具有唯一性</p>
+<h3 id="redisson怎样保持value的一致性？"><a href="#redisson怎样保持value的一致性？" class="headerlink" title="redisson怎样保持value的一致性？"></a>redisson怎样保持value的一致性？</h3><p>UUID+threadId</p>
 <h3 id="什么是RedLock？"><a href="#什么是RedLock？" class="headerlink" title="什么是RedLock？"></a>什么是RedLock？</h3><p>为了实现多节点Redis的分布式锁，Redis的作者提出了RedLock算法。</p>
 
               

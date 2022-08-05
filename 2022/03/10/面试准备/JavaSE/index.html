@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-08-01T08:46:08.811Z">
+<meta property="article:modified_time" content="2022-08-04T13:00:50.274Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          49k 字
+          51k 字
         
       </span>
     
@@ -262,6 +262,14 @@
 <p>JRE是Java Runtime Environment缩写，它是运行已编译 Java 程序所需的所有内容的集合，包括 Java 虚拟机（JVM），Java 类库，java 命令和其他的一些基础构件。但是，它不能用于创建新程序。</p>
 <p>JDK是（Java Development Kit）的缩写，它是功能齐全的 Java SDK。它拥有 JRE 所拥有的一切，还有编译器（javac）和工具（如 javadoc 和 jdb）。它能够创建和编译程序。</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/JVM%20JRE%20JDK%E7%9A%84%E5%8C%BA%E5%88%AB.png" srcset="/img/loading.gif" lazyload alt="JVM JRE JDK的区别"></p>
+<h3 id="Oracle-JDK-和-OpenJDK-的区别是什么？"><a href="#Oracle-JDK-和-OpenJDK-的区别是什么？" class="headerlink" title="Oracle JDK 和 OpenJDK 的区别是什么？"></a>Oracle JDK 和 OpenJDK 的区别是什么？</h3><ul>
+<li>Oracle JDK 版本将每三年发布一次，而 OpenJDK 版本每三个月发布一次；</li>
+<li>OpenJDK 是一个参考模型并且是完全开源的，而 Oracle JDK 是OpenJDK 的一个实现，并不是完全开源的；</li>
+<li><strong>Oracle JDK 比 OpenJDK 更稳定</strong>。OpenJDK 和 Oracle JDK 的代码几乎相同，但 Oracle JDK 有更多的类和一些错误修复。因此，如果您想开发企业&#x2F;商业软件，建议选择 Oracle JDK，因为它经过了彻底的测试和稳定。某些情况下，有些人提到在使用 OpenJDK 可能会遇到了许多应用程序崩溃的问题，但是，只需切换到 Oracle JDK 就可以解决问题；</li>
+<li>在响应性和 JVM 性能方面，Oracle JDK 与 OpenJDK 相比提供了更好的性能；</li>
+<li>Oracle JDK 不会为即将发布的版本提供长期支持，用户每次都必须通过更新到最新版本获得支持来获取最新版本；</li>
+<li>Oracle JDK 根据二进制代码许可协议获得许可，而 OpenJDK 根据 GPLv2 许可获得许可。</li>
+</ul>
 <h3 id="什么是字节码-采用字节码的好处是什么"><a href="#什么是字节码-采用字节码的好处是什么" class="headerlink" title="什么是字节码?采用字节码的好处是什么?"></a>什么是字节码?采用字节码的好处是什么?</h3><p>之所以被称之为字节码，是因为字节码文件由十六进制值（4位）组成，而JVM以两个十六进制值（8位）为一组，即以字节为单位进行读取。在Java中一般是用javac命令编译源代码为字节码文件，再由 JVM 的类加载器加载字节码文件</p>
 <p>Java之所以可以“一次编译，到处运行”，一是因为JVM针对各种操作系统、平台都进行了定制，二是因为无论在什么平台，都可以编译生成固定格式的字节码（.class文件）供JVM使用。因此，也可以看出字节码对于Java生态的重要性。</p>
 <p>Java语言通过字节码的方式，在一定程度上解决了传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。所以Java程序运行时比较高效，而且，由于字节码并不专对一种特定的机器，因此，Java程序无须重新编译便可在多种不同的计算机上运行。</p>
@@ -347,6 +355,7 @@
 </tr>
 </tbody></table>
 <p>引用数据类型建立在基本数据类型的基础上，包括<strong>数组、类和接口</strong>。引用数据类型是由用户自定义，用来限制其他数据的类型。另外，Java 语言中不支持 C++ 中的指针类型、结构体类型、联合类型和枚举类型（Java的枚举是一种特殊的类）。</p>
+<p><strong>注意：String不是基本数据类型</strong></p>
 <h3 id="数据类型的初始化"><a href="#数据类型的初始化" class="headerlink" title="数据类型的初始化"></a>数据类型的初始化</h3><p>Java的基本数据类型如果是<strong>局部变量</strong>则必须要进行初始化，只声明的话后续无法使用。String同理</p>
 <p>数组可以只声明，用new创建之后，JVM会自动将每个元素赋为初始值0</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-type">int</span> a;  <span class="hljs-comment">// 应改为int a = 0;</span><br>System.out.println(a); <span class="hljs-comment">// 报错</span><br><br><span class="hljs-type">int</span>[] b = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">1</span>];<br>System.out.println(b[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 0</span><br><br>String c; <span class="hljs-comment">// 应改为 String c = null 或 String c = &quot;&quot;;</span><br>System.out.println(c); <span class="hljs-comment">// 报错</span><br></code></pre></td></tr></table></figure>
@@ -752,6 +761,7 @@
 </ul>
 </li>
 </ul>
+<p>当子类和父类之间存在逻辑上的层次结构，推荐使用抽象类，有利于功能的累积。当功能不需要，希望支持差别较大的两个或更多对象间的特定交互行为，推荐使用接口。使用接口能降低软件系统的耦合度，便于日后维护或添加删除方法。</p>
 <h3 id="抽象类能使用-final-修饰吗？"><a href="#抽象类能使用-final-修饰吗？" class="headerlink" title="抽象类能使用 final 修饰吗？"></a>抽象类能使用 final 修饰吗？</h3><p>不能，定义抽象类就是让其他类继承的，如果定义为 final 该类就不能被继承，这样彼此就会产生矛盾，所以 final 不能修饰抽象类</p>
 <h3 id="java-创建对象有哪几种方式？"><a href="#java-创建对象有哪几种方式？" class="headerlink" title="java 创建对象有哪几种方式？"></a>java 创建对象有哪几种方式？</h3><p>new创建新对象；通过反射机制；采用clone机制；通过序列化机制</p>
 <p>前两者都需要显式地调用构造方法。对于clone机制，需要注意浅拷贝和深拷贝的区别，对于序列化机制需要明确其实现原理，在java中序列化可以通过实现Externalizable或者Serializable来实现</p>
@@ -822,7 +832,8 @@
 <li><strong>若重写 equals() 方法，有必要重写 hashcode()方法</strong>，确保通过 equals()方法判断结果为true 的两个对象具备相等的 hashcode() 方法返回值。说得简单点就是：“如果两个对象相同，那么他们的 hashCode 应该相等”。不过请注意：这个只是规范，如果非要写一个类让 equals() 方法返回 true 而 hashCode() 方法返回两个不相等的值，编译和运行都是不会报错的。不过这样违反了Java 规范，程序也就埋下了 BUG。</li>
 <li>如果 equals() 方法返回 false，即两个对象“不相同”，并不要求对这两个对象调用hashCode() 方法得到两个不相同的数。说的简单点就是：“如果两个对象不相同，他们的hashCode 可能相同”。</li>
 </ul>
-<h3 id="为什么重写-equals-方法必须重写-hashcode-方法-？"><a href="#为什么重写-equals-方法必须重写-hashcode-方法-？" class="headerlink" title="为什么重写 equals 方法必须重写 hashcode 方法 ？"></a>为什么重写 equals 方法必须重写 hashcode 方法 ？</h3><p>因为Hash比equals方法的开销要小，速度更快，所以在涉及到hashcode的容器中（比如HashSet），判断自己是否持有该对象时，会先检查hashCode是否相等，如果hashCode不相等，就会直接认为不相等，并存入容器中，不会再调用equals进行比较。这样就会导致，如果该对象已经存在HashSet中，但是因为hashCode不同，还会再次被存入。即导致相同的对象散列到不同的位置而造成对象的不能覆盖的问题。</p>
+<h3 id="为什么重写-equals-方法必须重写-hashcode-方法-？"><a href="#为什么重写-equals-方法必须重写-hashcode-方法-？" class="headerlink" title="为什么重写 equals 方法必须重写 hashcode 方法 ？"></a>为什么重写 equals 方法必须重写 hashcode 方法 ？</h3><p>判断的时候先根据hashcode进行的判断，相同的情况下再根据equals()方法进行判断。如果只重写了equals方法，而不重写hashcode的方法，会造成hashcode的值不同，而equals()方法判断出来的结果为true。</p>
+<p>在Java中的一些容器中，不允许有两个完全相同的对象，插入的时候，如果判断相同则会进行覆盖。这时候如果只重写了equals（）的方法，而不重写hashcode的方法，Object中hashcode是根据对象的存储地址转换而形成的一个哈希值。这时候就有可能因为没有重写hashcode方法，造成相同的对象散列到不同的位置而造成对象的不能覆盖的问题。</p>
 <p><strong>因此要重写hashCode保证：如果equals判断是相等的，那hashCode值也要相等</strong></p>
 <h3 id="常见的Object方法"><a href="#常见的Object方法" class="headerlink" title="常见的Object方法"></a>常见的Object方法</h3><p>Object clone() ：创建与该对象的类相同的新对象</p>
 <p>boolean equals(Object) ：比较两对象是否相等</p>
@@ -1054,7 +1065,8 @@
 <p>在读写文件需要对内容按行处理，比如比较特定字符，处理某一行数据的时候一般会选择字符流。只是读写文件，和文件内容无关时，一般选择字节流。</p>
 <h3 id="字节流如何转为字符流？"><a href="#字节流如何转为字符流？" class="headerlink" title="字节流如何转为字符流？"></a>字节流如何转为字符流？</h3><p>字节输入流转字符输入流通过 InputStreamReader 实现，字节输出流转字符输出流通过 OutputStreamWriter 实现</p>
 <h3 id="Java-IO都有哪些设计模式？"><a href="#Java-IO都有哪些设计模式？" class="headerlink" title="Java IO都有哪些设计模式？"></a>Java IO都有哪些设计模式？</h3><p>暂略</p>
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="字符型常量和字符串常量的区别？"><a href="#字符型常量和字符串常量的区别？" class="headerlink" title="字符型常量和字符串常量的区别？"></a>字符型常量和字符串常量的区别？</h3><ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p><strong>注意：String不是基本数据类型</strong></p>
+<h3 id="字符型常量和字符串常量的区别？"><a href="#字符型常量和字符串常量的区别？" class="headerlink" title="字符型常量和字符串常量的区别？"></a>字符型常量和字符串常量的区别？</h3><ul>
 <li>形式上：字符常量是单引号引起的一个字符，字符串常量是双引号引起的若干个字符；</li>
 <li>含义上：字符常量相当于一个整型值( ASCII 值)，可以参加表达式运算；字符串常量代表一个地址值（该字符串在内存中存放位置），相当于对象；</li>
 <li>内存上：字符常量只占2个字节；字符串常量占若干个字节(至少一个字符结束标志)</li>
@@ -1139,7 +1151,7 @@
 <td>高</td>
 </tr>
 </tbody></table>
-<h1 id="Java集合"><a href="#Java集合" class="headerlink" title="Java集合"></a>Java集合</h1><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="什么是集合？常见的集合有哪些？"><a href="#什么是集合？常见的集合有哪些？" class="headerlink" title="什么是集合？常见的集合有哪些？"></a>什么是集合？常见的集合有哪些？</h3><p><strong>集合、数组</strong>都是对多个数据进行存储操作的结构，简称Java<strong>容器</strong>。此时的存储，主要是指<strong>内存</strong>层面的存储，<strong>不涉及持久化</strong>的存储（比如数据库）</p>
+<h1 id="Java集合"><a href="#Java集合" class="headerlink" title="Java集合"></a>Java集合</h1><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="什么是集合？常见的集合有哪些？他们有何区别"><a href="#什么是集合？常见的集合有哪些？他们有何区别" class="headerlink" title="什么是集合？常见的集合有哪些？他们有何区别"></a>什么是集合？常见的集合有哪些？他们有何区别</h3><p><strong>集合、数组</strong>都是对多个数据进行存储操作的结构，简称Java<strong>容器</strong>。此时的存储，主要是指<strong>内存</strong>层面的存储，<strong>不涉及持久化</strong>的存储（比如数据库）</p>
 <p>Java集合类主要由两个根接口Collection和Map派生出来的，Collection派生出了三个子接口：List、Set、Queue（Java5新增的队列），因此Java集合大致也可分成：</p>
 <ul>
 <li>List接口：存储有序（有序指存入的顺序和取出的顺序相同，不是按照元素的某些特性排序）的、可重复的数据 ，可存储多个null–&gt; ”动态数组“</li>
@@ -1172,9 +1184,11 @@
 </ul>
 <h3 id="线程安全的集合有哪些？线程不安全的呢？"><a href="#线程安全的集合有哪些？线程不安全的呢？" class="headerlink" title="线程安全的集合有哪些？线程不安全的呢？"></a>线程安全的集合有哪些？线程不安全的呢？</h3><p>线程安全的：</p>
 <ul>
-<li>Vector ：相当于有同步机制的ArrayList</li>
-<li>Stack ：栈</li>
-<li>HashTable</li>
+<li>HashTable: 哈希表的线程安全版，效率低</li>
+<li>ConcurrentHashMap：哈希表的线程安全版，效率高，用于替代HashTable</li>
+<li>Vector：线程安全版Arraylist</li>
+<li>Stack：线程安全版栈</li>
+<li>BlockingQueue及其子类：线程安全版队列</li>
 <li>enumeration ：枚举</li>
 </ul>
 <p>剩下的都是线程不安全的</p>
@@ -1200,6 +1214,10 @@
 <li>安全失败</li>
 </ul>
 <p>采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容，在拷贝的集合上进行遍历。所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会抛出ConcurrentModificationException 异常。缺点是迭代器遍历的是开始遍历那一刻拿到的集合拷贝，在遍历期间原集合发生了修改，迭代器是无法访问到修改后的内容。java.util.concurrent 包下的容器都是安全失败，可以在多线程下并发使用。</p>
+<ol>
+<li>fail-fast直接在容器上进行，在遍历过程中，一旦发现容器中的数据被修改，就会立刻抛出<br>ConcurrentModificationException异常从而导致遍历失败。常见的使用fail-fast方式的容器有<br>HashMap和ArrayList等。</li>
+<li>fail-safe这种遍历基于容器的一个克隆。因此对容器中的内容修改不影响遍历。常见的使用fail-safe<br>方式遍历的容器有ConcurrentHashMap和CopyOnWriteArrayList。</li>
+</ol>
 <h3 id="如何边遍历边移除-Collection-中的元素？"><a href="#如何边遍历边移除-Collection-中的元素？" class="headerlink" title="如何边遍历边移除 Collection 中的元素？"></a>如何边遍历边移除 Collection 中的元素？</h3><p>从上文“快速失败机制”可知在遍历集合时如果直接调用remove() 方法会抛出<code>ConcurrentModificationException</code> 异常，所以使用迭代器中调用remove() 方法。</p>
 <h3 id="遍历一个-List-有哪些不同的方式？"><a href="#遍历一个-List-有哪些不同的方式？" class="headerlink" title="遍历一个 List 有哪些不同的方式？"></a>遍历一个 List 有哪些不同的方式？</h3><ol>
 <li><p>for 循环遍历：遍历者自己在集合外部维护一个计数器，依次读取每一个位置的元素。</p>
@@ -1221,14 +1239,18 @@
 <p>  注意将容器中每个元素取出来赋值给新定义的变量，然后操作这个变量，容器本身并未发生改变</p>
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span>&#123;<br>    String[] arr = &#123;<span class="hljs-string">&quot;SS&quot;</span>, <span class="hljs-string">&quot;KK&quot;</span>, <span class="hljs-string">&quot;RR&quot;</span>&#125;;<br><br>    <span class="hljs-comment">//方式一：普通for赋值，确实改变了数组本身的值</span><br>    <span class="hljs-comment">//        for(int i = 0;i &lt; arr.length;i++)&#123;</span><br>    <span class="hljs-comment">//            arr[i] = &quot;HH&quot;;</span><br>    <span class="hljs-comment">//        &#125;</span><br><br>    <span class="hljs-comment">//方式二：for each循环赋值，并未改变数组值，因为它是将arr里每个值取出来赋给了s，改s并没有改变数组本身</span><br>    <span class="hljs-keyword">for</span>(String s : arr)&#123;<br>        s = <span class="hljs-string">&quot;HH&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; arr.length; i++) <br>        System.out.println(arr[i]);  <span class="hljs-comment">// SS KK RR</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="comparable-和-comparator的区别？"><a href="#comparable-和-comparator的区别？" class="headerlink" title="comparable 和 comparator的区别？"></a>comparable 和 comparator的区别？</h3><p>comparable 接口出自java.lang 包，可以理解为一个内比较器，因为实现了Comparable 接口的类可以和自己比较，要和其他实现了Comparable 接口类比较，可以使用compareTo(Objectobj) 方法。compareTo 方法的返回值是int ，有三种情况：</p>
-<ol>
-<li>返回正整数（比较者大于被比较者）</li>
-<li>返回0（比较者等于被比较者）</li>
-<li>返回负整数（比较者小于被比较者）</li>
-</ol>
+<h3 id="comparable-和-comparator的区别？"><a href="#comparable-和-comparator的区别？" class="headerlink" title="comparable 和 comparator的区别？"></a>comparable 和 comparator的区别？</h3><p>comparable 接口出自java.lang 包，可以理解为一个内比较器（用于对象内部的比较方式），因为实现了Comparable 接口的类可以和自己比较，要和其他实现了Comparable 接口类比较，可以使用compareTo(Objectobj) 方法。compareTo 方法的返回值是int ，有三种情况：返回正整数（比较者大于被比较者）、返回0（比较者等于被比较者）、返回负整数（比较者小于被比较者）。comparable接口需要实现的方法是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Comparable</span>&lt;T&gt; &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compareTo</span><span class="hljs-params">(T o)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>comparator 接口出自java.util 包，它有一个compare(Object obj1, Object obj2) 方法用来排序，返回值同样是int ，有三种情况，和compareTo 类似。</p>
-<p>它们之间的区别：很多包装类都实现了comparable 接口，像Integer 、String 等，所以直接调用Collections.sort() 直接可以使用。如果对类里面自带的自然排序不满意，而又不能修改其源代码的情况下，使用Comparator 就比较合适。此外使用Comparator 可以避免添加额外的代码与我们的目标类耦合，同时可以定义多种排序规则，这一点是Comparable 接口没法做到的，从灵活性和扩展性讲Comparator更优，故在面对自定义排序的需求时，可以优先考虑使用Comparator 接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Comparator</span>&lt;T&gt; &#123;<br>	<span class="hljs-type">int</span> <span class="hljs-title function_">compare</span><span class="hljs-params">(T o1, T o2)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它们之间的区别：</p>
+<ul>
+<li>很多包装类都实现了comparable 接口，像Integer 、String 等，所以直接调用Collections.sort() 直接可以使用。</li>
+<li><font color=red>如果对类里面自带的自然排序不满意，而又不能修改其源代码的情况下，使用Comparator 就比较合适</font></li>
+<li>此外使用Comparator 可以避免添加额外的代码与我们的目标类耦合，同时可以定义多种排序规则，这一点是Comparable 接口没法做到的，从灵活性和扩展性讲Comparator更优，故在面对自定义排序的需求时，可以优先考虑使用Comparator 接口</li>
+</ul>
 <h3 id="Collection-和-Collections-有什么区别？"><a href="#Collection-和-Collections-有什么区别？" class="headerlink" title="Collection 和 Collections 有什么区别？"></a>Collection 和 Collections 有什么区别？</h3><ul>
 <li><pre><code class="hljs">  Collection是集合类的上级接口，继承于他的接口主要有Set 、List和queue.
 </code></pre>
@@ -1272,6 +1294,11 @@
 <li>从速度的角度：ArrayDeque 基于数组实现双端队列，而 LinkedList 基于双向链表实现双端队列，数组采用连续的内存地址空间，通过下标索引访问，<strong>链表是非连续的内存地址空间</strong>，通过指针访问，不能充分利用cpu cache，所以在寻址方面数组的效率高于链表。</li>
 <li>从内存的角度：虽然 LinkedList 没有扩容的问题，但<strong>每次插入和删除都涉及到一个节点对象的创建和弃用</strong>，非常低效和浪费空间，而动态数组几乎是0花费的(数组充满时重新拷贝除外)</li>
 </ul>
+<h3 id="遍历一个-List-有哪些不同的方式？-1"><a href="#遍历一个-List-有哪些不同的方式？-1" class="headerlink" title="遍历一个 List 有哪些不同的方式？"></a>遍历一个 List 有哪些不同的方式？</h3><ol>
+<li>for 循环遍历：遍历者自己在集合外部维护一个计数器，依次读取每一个位置的元素。</li>
+<li>Iterator 遍历：基于顺序存储集合的Iterator 可以直接按位置访问数据。基于链式存储集合的Iterator ，需要保存当前遍历的位置，然后根据当前位置来向前或者向后移动指针。</li>
+<li>foreach 遍历： foreach 内部也是采用了Iterator 的方式实现，但使用时不需要显示地声明Iterator 。</li>
+</ol>
 <h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="说一下-HashSet-的实现原理？"><a href="#说一下-HashSet-的实现原理？" class="headerlink" title="说一下 HashSet 的实现原理？"></a>说一下 HashSet 的实现原理？</h3><p>HashSet 的底层是HashMap ，默认构造函数是构建一个初始容量为16，负载因子为0.75 的HashMap 。HashSet 的值存放于HashMap 的key 上， HashMap 的value 统一为PRESENT 。present？</p>
 <h3 id="HashSet如何检查重复？（HashSet是如何保证数据不可重复的？）"><a href="#HashSet如何检查重复？（HashSet是如何保证数据不可重复的？）" class="headerlink" title="HashSet如何检查重复？（HashSet是如何保证数据不可重复的？）"></a>HashSet如何检查重复？（HashSet是如何保证数据不可重复的？）</h3><p>HashSet 的特点是存储元素时无序且唯一，在向HashSet 中添加对象时，首先会计算对象的HashCode值来确定对象的存储位置，如果该位置没有其他对象，直接将该对象添加到该位置；如果该存储位置有存储其他对象（新添加的对象和该存储位置的对象的HashCode 值相同），调用equals 方法判断两个对象是否相同，如果相同，则添加对象失败，如果不相同，则会将该对象重新散列到其他位置。</p>
 <p>这里面涉及到了HasCode() 和equals() 两个方法。</p>
@@ -1321,7 +1348,9 @@
 <li>容量：HashMap的初始容量为16，Hashtable初始容量为11，两者的填充因子默认都是0.75。HashMap扩容时是当前容量翻倍即capacity × 2，Hashtable扩容时是容量翻倍+1即：capacity×2+1</li>
 </ul>
 <p>HashSet不是key value结构，仅仅是存储不重复的元素，底层基于HashMap实现，只是包含HashMap中的key而已，也是非线程安全的</p>
-<h3 id="HashMap为什么非线程安全？"><a href="#HashMap为什么非线程安全？" class="headerlink" title="HashMap为什么非线程安全？"></a>HashMap为什么非线程安全？</h3><p>HashMap在多线程情况下，在put的时候，插入的元素超过了容量（由负载因子决定）的范围就会触发扩容操作，就是rehash，这个会重新将原数组的内容<strong>重新hash到新的扩容数组</strong>中，在多线程的环境下，同时存在其他的元素也在进行put操作，如果hash值相同，可能出现同时在同一数组下用链表表示，造成<strong>闭环</strong>，导致在get时会出现<strong>死循环</strong>，所以HashMap是线程不安全的</p>
+<h3 id="HashMap为什么非线程安全？"><a href="#HashMap为什么非线程安全？" class="headerlink" title="HashMap为什么非线程安全？"></a>HashMap为什么非线程安全？</h3><p>在JDK1.7中，HashMap采用头插法插入元素，因此并发情况下会导致环形链表，产生死循环。</p>
+<p>虽然JDK1.8采用了尾插法解决了这个问题，但是并发下的put操作也会使前一个key被后一个key覆盖。</p>
+<p>由于HashMap有扩容机制存在，也存在A线程进行扩容后，会重新将原数组的内容<strong>重新hash到新的扩容数组</strong>中，B线程执行get方法出现失误的情况。</p>
 <h3 id="HashMap在JDK1-7和JDK1-8中有哪些不同？HashMap的底层实现？"><a href="#HashMap在JDK1-7和JDK1-8中有哪些不同？HashMap的底层实现？" class="headerlink" title="HashMap在JDK1.7和JDK1.8中有哪些不同？HashMap的底层实现？"></a>HashMap在JDK1.7和JDK1.8中有哪些不同？HashMap的底层实现？</h3><table>
 <thead>
 <tr>
@@ -1466,6 +1495,9 @@
 </tr>
 </tbody></table>
 <h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>ConcurrentHashMap 底层是基于 <code>数组 + 链表</code> 组成的，不过在 jdk1.7 和 1.8 中具体实现稍有不同。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35190492/article/details/103589011">https://blog.csdn.net/qq_35190492/article/details/103589011</a></p>
+<h3 id="简述java的TreeMap"><a href="#简述java的TreeMap" class="headerlink" title="简述java的TreeMap"></a>简述java的TreeMap</h3><p>TreeMap是底层利用红黑树实现的Map结构，底层实现是一棵平衡的排序二叉树，由于红黑树的插入、删除、遍历时间复杂度都为O(logN)，所以性能上低于哈希表。但是哈希表无法提供键值对的有序输出，红黑树可以按照键的值的大小有序输出。</p>
+<h3 id="如何决定使用HashMap还是TreeMap"><a href="#如何决定使用HashMap还是TreeMap" class="headerlink" title="如何决定使用HashMap还是TreeMap?"></a>如何决定使用HashMap还是TreeMap?</h3><p>如果对Map进行插入、删除或定位一个元素的操作更频繁，HashMap是更好的选择。</p>
+<p>如果需要对key集合进行有序的遍历，TreeMap是更好的选择。</p>
 
               
             </div>

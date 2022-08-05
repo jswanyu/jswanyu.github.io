@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T01:12:22.000Z">
-<meta property="article:modified_time" content="2022-08-01T08:46:13.891Z">
+<meta property="article:modified_time" content="2022-08-01T12:45:45.787Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          30k 字
+          33k 字
         
       </span>
     
@@ -380,10 +380,29 @@
 <p>通过synchronized 关键字（重量级锁，性能低）和 volatile 关键字就可以解决（volatile 变量都是<strong>直接操作主存</strong>）。</p>
 <h3 id="x3D-x3D-讲讲JMM（java内存模型）-x3D-x3D"><a href="#x3D-x3D-讲讲JMM（java内存模型）-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;讲讲JMM（java内存模型）&#x3D;&#x3D;"></a>&#x3D;&#x3D;讲讲JMM（java内存模型）&#x3D;&#x3D;</h3><p>不要把java内存模型和jvm内存模型混为一谈</p>
 <p>掘金搜JMM整理下</p>
-<h2 id="线程的创建、调度和状态"><a href="#线程的创建、调度和状态" class="headerlink" title="线程的创建、调度和状态"></a>线程的创建、调度和状态</h2><h3 id="创建线程一共有哪几种方法？"><a href="#创建线程一共有哪几种方法？" class="headerlink" title="创建线程一共有哪几种方法？"></a>创建线程一共有哪几种方法？</h3><p>继承 Thread 类创建线程</p>
-<p>实现 Runnable 接口创建线程</p>
-<p>使用Callable 和FutureTask 创建线程</p>
-<p>使用线程池例如用Executor 框架</p>
+<h3 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h3><p>一、概念</p>
+<p>乐观锁：所谓的乐观锁（不上锁，也能同步资源；实际上是一种无锁的同步机制），指的是在操作数据的时候非常乐观，乐观地<strong>认为别人不会同时修改数据</strong>，因此乐观锁不会上锁，只有在<strong>执行更新的时候才会去判断在此期间别人是否修改了数据</strong>，如果别人修改了数据则放弃操作，否则执行操作。</p>
+<p>悲观锁：所谓的悲观锁，指的是在操作数据的时候比较悲观，悲观地<strong>认为别人一定会同时修改数据</strong>，因此悲观锁在操作数据时是<strong>直接把数据上锁</strong>，直到操作完成之后才会释放锁，在<strong>上锁期间其他人不能操作数据</strong>。（简单说就是操作系统悲观的认为如果不严格同步线程调用，就一定会出现异常！！所以互斥锁将资源锁定，只让一个线程进行操作！然而在一些情况下大部分调用可能就是读操作，悲观锁每次调用都锁定资源就很浪费资源）</p>
+<p>二、实现方式</p>
+<p>乐观锁：</p>
+<p>1、CAS：比较并交换，如果等于预期值则更新，否则不进行操作。许多CAS操作都是自旋的，意思就是，如果操作不成功，就会一直重试，直到操作成功为止。 </p>
+<blockquote>
+<p>CAS的缺点？</p>
+<p>1）ABA问题：其他线程将数据从A修改到B再改回A，由于数据与开始时一致，当前线程并不知道数据被修改过。</p>
+<p>2）高竞争下的开销问题：CAS如果失败会一致重试，造成CPU开销大，可以引入退出机制，重试次数超过阈值就强制失败退出。</p>
+<p>3）自身功能受限：只能保证单个变量操作的原子性。</p>
+</blockquote>
+<p>2、版本号机制：版本号机制的基本思路，是在数据中增加一个<strong>version字段用来表示该数据的版本号</strong>，每当<strong>数据被修改版本号就会加1</strong>。当某个线程查询数据的时候，会将该数据的版本号一起读取出来，之后在该线程需要更新该数据的时候，就将<strong>之前读取的版本号与当前版本号进行比较</strong>，如果一致，则执行操作，如果不一致，则放弃操作。</p>
+<p>悲观锁：悲观锁的实现方式也就是加锁，加锁既可以在代码层面（比如Java中的<code>synchronized</code>关键字），也可以在数据库层面（比如MySQL中的排他锁）。</p>
+<p>三、适用场景</p>
+<p>在竞争不激烈（出现并发冲突的概率比较小）的场景中，乐观锁更有优势。因为悲观锁会锁住代码块或数据，其他的线程无法同时访问，必须等待上一个线程释放锁才能进入操作，会影响并发的响应速度。另外，加锁和释放锁都需要消耗额外的系统资源，也会影响并发的处理速度。</p>
+<p>在竞争激烈（出现并发冲突的概率较大）的场景中，悲观锁则更有优势。因为乐观锁在执行更新的时候，可能会因为数据被反复修改而更新失败，进而不断重试，造成CPU资源的浪费。</p>
+<h2 id="线程的创建、调度和状态"><a href="#线程的创建、调度和状态" class="headerlink" title="线程的创建、调度和状态"></a>线程的创建、调度和状态</h2><h3 id="创建线程一共有哪几种方法？"><a href="#创建线程一共有哪几种方法？" class="headerlink" title="创建线程一共有哪几种方法？"></a>创建线程一共有哪几种方法？</h3><ul>
+<li>继承 Thread 类创建线程，重写run()方法，使用start()开启多线程</li>
+<li>实现 Runnable 接口创建线程（Runnable 没有返回值、效率比Callable 相对较低）</li>
+<li>使用Callable 和FutureTask 创建线程（有返回值）</li>
+<li>使用线程池例如用Executor 框架</li>
+</ul>
 <p>方法一：继承Thread 类创建线程，重写run方法，主函数里调用实例的start方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadDemo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Thread</span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>        log.debug(<span class="hljs-string">&quot;running...&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">ThreadDemo</span> <span class="hljs-variable">threadDemo</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadDemo</span>();<br>        threadDemo.start();<br>        log.debug(<span class="hljs-string">&quot;running...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -458,13 +477,13 @@
 <h3 id="sleep-方法和wait-方法的区别？"><a href="#sleep-方法和wait-方法的区别？" class="headerlink" title="sleep()方法和wait()方法的区别？"></a>sleep()方法和wait()方法的区别？</h3><p>相同点：</p>
 <ul>
 <li>wait() 方法和sleep() 方法都可以使得线程进入到阻塞状态。</li>
-<li>wait() 和sleep() 方法都是可中断方法，被中断后都会收到中断异常。</li>
+<li>wait() 和 sleep() 方法都是可中断方法，被中断后都会收到中断异常。</li>
 </ul>
 <p>不同点：</p>
 <ul>
 <li>wait() 是Object的方法， sleep() 是Thread的方法。</li>
-<li>wait() 必须在同步方法中进行（即加了锁的对象），sleep() 方法不需要。</li>
-<li>线程在同步方法中执行sleep() 方法，不会释放monitor的锁，而wait() 方法会释放monitor的锁。</li>
+<li>wait() 必须在同步代码块中（即加了锁的对象），sleep() 方法不需要。</li>
+<li>关于锁的释放：sleep() 方法让线程睡觉了，但它是抱着锁睡觉，不会释放monitor的锁！而wait() 方法会释放monitor的锁</li>
 <li>sleep() 方法在短暂的休眠之后会主动退出阻塞，而wait() 方法在没有指定wait时间的情况下需要被其他线程中断才可以退出阻塞。</li>
 </ul>
 <h3 id="为什么wait-、notify-、notifyAll-被定义在Object类中而不是在Thread类中？"><a href="#为什么wait-、notify-、notifyAll-被定义在Object类中而不是在Thread类中？" class="headerlink" title="为什么wait()、notify()、notifyAll()被定义在Object类中而不是在Thread类中？"></a>为什么wait()、notify()、notifyAll()被定义在Object类中而不是在Thread类中？</h3><p>因为这些方法在操作同步线程时，都必须要标识他们操作线程的锁，只有同一个锁上的被等待线程，可以被同一个锁上的notify() 或notifyAll() 唤醒，不可以对不同锁中的线程进行唤醒，也就是说等待和唤醒必须是同一锁。而锁可以是任意对象，所以可以被任意对象调用的方法是定义在Object 类中。</p>
@@ -484,6 +503,9 @@
 <li><p>使用volatile boolean 标志位停止线程：在线程中设置一个 boolean 标志位，同时用volatile修饰保证可见性，在线程里不断地读取这个值，其他地方可以修改这个boolean 值。</p>
 </li>
 </ul>
+<h3 id="Thread中interrupt-interrupted-和isInterrupted-的区别"><a href="#Thread中interrupt-interrupted-和isInterrupted-的区别" class="headerlink" title="Thread中interrupt()interrupted()和isInterrupted()的区别"></a>Thread中interrupt()interrupted()和isInterrupted()的区别</h3><p>1、interrupt()：非静态方法，作用范围<strong>线程实例</strong>，由线程实例对象调用，其作用是<strong>中断此线程实例</strong>(注：不一定是当前线程)，但实际上只是给线程设置一个中断标志，线程仍会继续运行。</p>
+<p>2、interrupted()：静态方法，作用范围<strong>当前线程</strong>，作用是测试<strong>当前线程是否被中断</strong>（检查中断标志），返回一个boolean并清除中断状态，第二次再调用时中断状态已经被清除，将返回一个false(换句话说，复位线程状态，如果已经复位，再次复位则返回false)。</p>
+<p>3、isInterrupted()：非静态方法，作用范围<strong>线程实例</strong>，由线程实例对象调用，其作用是只测试此线程是否被中断 ，不清除中断状态。</p>
 <h3 id="如何唤醒一个阻塞的线程？"><a href="#如何唤醒一个阻塞的线程？" class="headerlink" title="如何唤醒一个阻塞的线程？"></a>如何唤醒一个阻塞的线程？</h3><p>如果线程是由于wait() 、sleep() 、join() 、yield() 等方法进入阻塞状态的，是可以进行唤醒的。如果线程是IO阻塞是无法进行唤醒的，因为IO是操作系统层面的，Java代码无法直接接触操作系统。</p>
 <ul>
 <li><p>join()：与sleep() 方法一样，是一个可中断的方法，在一个线程中调用另一个线程的join()方法，会使得当前的线程挂起，直到执行join() 方法的线程结束。例如在B线程中调用A线程的join() 方法，B线程进入阻塞状态，直到A线程结束或者到达指定的时间（ join(）的参数）</p>
@@ -572,31 +594,8 @@
 <p>可见性：当一个线程对共享变量进行修改后，其他线程可以立刻看到。执行synchronized时，会对应执行 lock 、unlock原子操作，保证可见性。</p>
 <p>有序性：程序的执行顺序会按照代码的先后顺序执行。</p>
 <h3 id="对象锁"><a href="#对象锁" class="headerlink" title="对象锁"></a>对象锁</h3><p>（1）对象头</p>
-<p>在HotSpot虚拟机中，Java对象在内存中的布局大致可以分为三部分：对象头、实例数据和填充对齐。因为synchronized用的锁是存在对象头里的，这里我们需要重点了解对象头。如果对象头是数组类型，则对象头由Mark Word、Class MetadataAddress和Array length组成，如果对象头非数组类型，对象头则由Mark Word和Class MetadataAddress组成。在32位虚拟机中，数组类型的Java对象头的组成如下表：</p>
-<table>
-<thead>
-<tr>
-<th>内容</th>
-<th>说明</th>
-<th>长度</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Mark Word</td>
-<td>存储对象的hashCode、分代年龄和锁标记位</td>
-<td>32bit</td>
-</tr>
-<tr>
-<td>Class MetadataAddress</td>
-<td>存储到对象类型数据的指针</td>
-<td>32bit</td>
-</tr>
-<tr>
-<td>Array length</td>
-<td>数组的长度</td>
-<td>32bit</td>
-</tr>
-</tbody></table>
+<p>在HotSpot虚拟机中，Java对象在内存中的布局大致可以分为三部分：对象头、实例数据和填充对齐。（<strong>实例数据</strong>存放类的属性数据信息，包括父类的属性信息，如果是数组的实例部分还包括数组的长度，这部分内存按4字节对齐；<strong>填充对齐</strong>不是必须部分，由于虚拟机要求对象起始地址必须是8字节的整数倍，对齐填充仅仅是为了使字节对齐。）</p>
+<p>因为synchronized用的锁是存在对象头里的，这里我们需要重点了解对象头。对象头主要由<code>Mark Word</code> 和 <code>Class Metadata Address（也叫class point）</code>组成，如果对象是数组类型，还额外包含一个<code>Array length</code>部分。其中<code>Mark Word</code><strong>存储对象的hashCode、锁信息、分代年龄等信息</strong>，<code>Class Metadata Address</code>存储到对象类型数据的指针。</p>
 <p>这里我们需要重点掌握的是Mark Word，在运行期间，Mark Word中存储的数据会随着锁标志位的变化而变化，在32位虚拟机中，不同锁状态下的组成如下：</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/JUC/%E4%B8%8D%E5%90%8C%E9%94%81%E7%8A%B6%E6%80%81%E7%9A%84MarkWord.png" srcset="/img/loading.gif" lazyload alt="image-20220518154904184"></p>
 <p>锁的状态由Java对象头的Mark Word最后两位决定，有无锁、偏向锁、轻量级锁、重量级锁等</p>
@@ -628,7 +627,11 @@
 <p>轻量级锁在没有竞争时（就自己这个线程），每次重入仍然执行CAS替换操作，这样是会使性能降低的。</p>
 <p>Java6 引入了<strong>偏向锁</strong>对性能进行优化：在<strong>第一次</strong>cas时会将<strong>线程的ID</strong>写入对象的Mark Word中。此后发现这个线程ID就是自己的，就表示没有竞争，就不需要再次cas，以后只要不发生竞争，这个对象就归该线程所有。即<strong>偏向锁用于优化轻量级锁重入</strong></p>
 <p>当有其他线程也使用偏向锁对象时，便会将偏向锁升级为轻量级锁（前提是两个线程没有锁竞争，即一个线程执行完了，另一个线程还没执行，否则就升级为重量级锁）</p>
-<h3 id="synchroized关键字的底层原理"><a href="#synchroized关键字的底层原理" class="headerlink" title="synchroized关键字的底层原理"></a>synchroized关键字的底层原理</h3><p>Java虚拟机是通过进入和退出Monitor对象来实现代码块同步和方法同步的，代码块同步使用的是monitorenter 和 monitorexit 指令实现的，而方法同步是通过Access flags后面的标识来确定该方法是否为同步方法。</p>
+<h3 id="synchroized关键字的底层原理"><a href="#synchroized关键字的底层原理" class="headerlink" title="synchroized关键字的底层原理"></a>synchroized关键字的底层原理</h3><p>（要和上面的对象锁结合起来回答）</p>
+<p>Java<strong>对象头</strong>是synchronized实现锁的基础，因为synchronized申请锁、上锁、释放锁都与对象头有关。对象头主要结构是由<code>Mark Word</code> 和 <code>Class Metadata Address（也叫class point）</code>组成，<strong>其中</strong><code>Mark Word</code><strong>存储对象的hashCode、锁信息、GC分代年龄信息</strong>，<code>Class Metadata Address</code>存储到对象类型数据的指针。</p>
+<p>JDK6后锁有四种状态，<strong>无锁状态（<code>0</code>01）、偏向锁（<code>1</code>01）、轻量级锁（00）、重量级锁（10）</strong>，其中无锁就是一种状态了。锁的类型和状态在对象头<code>Mark Word</code>中都有记录，在申请锁、锁升级等过程中JVM都需要读取对象的<code>Mark Word</code>数据。</p>
+<p>Java虚拟机是通过进入和退出Monitor对象来实现代码块同步和方法同步的，代码块同步是通过synchronized实现的，&#x3D;&#x3D;synchronized被编译之后是monitorenter和monitorexit两个字节码指令&#x3D;&#x3D;，monitor是依赖操作系统实现的。而方法同步是通过Access flags后面的标识来确定该方法是否为同步方法。</p>
+<p><strong>每一个锁都对应一个monitor对象，在HotSpot虚拟机中它是由ObjectMonitor实现的（C++实现），当一个monitor被某个线程持有后，它便处于锁定状态。</strong></p>
 <h3 id="Jdk1-6为什么要对-synchronized-进行优化？"><a href="#Jdk1-6为什么要对-synchronized-进行优化？" class="headerlink" title="Jdk1.6为什么要对 synchronized 进行优化？"></a>Jdk1.6为什么要对 synchronized 进行优化？</h3><p>因为Java虚拟机是通过进入和退出Monitor对象来实现代码块同步和方法同步的，而Monitor是依靠底层操作系统的Mutex Lock来实现的，操作系统实现线程之间的切换需要从用户态转换到内核态，这个切换成本比较高，对性能影响较大</p>
 <h3 id="jDK1-6对-synchronized-做了哪些优化？"><a href="#jDK1-6对-synchronized-做了哪些优化？" class="headerlink" title="jDK1.6对 synchronized 做了哪些优化？"></a>jDK1.6对 synchronized 做了哪些优化？</h3><p>在JDK1.6中，为了减少获得锁和释放锁带来的性能消耗，引入了偏向锁和轻量级锁，锁的状态变成了四种，无锁状态，偏向锁状态、轻量级锁状态和重量级锁状态。锁的状态会随着竞争激烈逐渐升级，但通常情况下，锁的状态只能升级不能降级</p>
 <p>synchronized锁原来只有重量级锁(Monitor)，但这玩意儿是操作系统层的，比较浪费性能。因此从Jdk1.6开始使用偏向锁和轻量级锁优化性能，在不同场景使用不同的锁。锁只有升级，没有降级</p>
@@ -637,9 +640,20 @@
 <li>多个线程交替（没有竞争）进入临界区 –&gt; 轻量级锁（用CAS将对象头原本的Mark Word拷贝到线程栈帧的Lock Record中，在对象头放锁记录的地址和锁状态）</li>
 <li>多个线程同时（有竞争）进入临界区 –&gt; 重量级锁（每个对象绑定唯一的Monitor，其他线程竞争时会有<strong>锁自旋优化</strong>，自旋失败则进入Monitor中的Entrylist放置等待）</li>
 </ul>
-<h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2><h3 id="volatile的作用是什么？"><a href="#volatile的作用是什么？" class="headerlink" title="volatile的作用是什么？"></a>volatile的作用是什么？</h3><p>volatile 是一个轻量级的synchronized ，一般作用于变量，在多处理器开发的过程中保证了内存的可见性。相比于synchronized 关键字， volatile 关键字的执行成本更低，效率更高。</p>
-<h3 id="volatile的特性有哪些？"><a href="#volatile的特性有哪些？" class="headerlink" title="volatile的特性有哪些？"></a>volatile的特性有哪些？</h3><p>并发编程的三大特性为可见性、有序性和原子性。volatile 只可以保证可见性和有序性。</p>
-<p>可见性： volatile 可以保证不同线程对共享变量进行操作时的可见性。即当一个线程修改了共享变量时，另一个线程可以读取到共享变量被修改后的值。</p>
+<h3 id="Synchronized-和-Lock-区别"><a href="#Synchronized-和-Lock-区别" class="headerlink" title="Synchronized 和 Lock 区别"></a>Synchronized 和 Lock 区别</h3><p>1、Synchronized 内置的Java关键字， Lock 是一个Java类</p>
+<p>2、Synchronized 无法判断获取锁的状态，Lock 可以判断是否获取到了锁</p>
+<p>3、Synchronized 会自动释放锁，lock 必须要手动释放锁！如果不释放锁，死锁</p>
+<p>4、Synchronized 线程 1（获得锁，阻塞）、线程2（等待，傻傻的等）；Lock锁就不一定会等待下去；</p>
+<p>5、Synchronized 可重入锁，不可以中断的，非公平；Lock ，可重入锁，可以 判断锁，非公平（可以自己设置）；</p>
+<p>6、Synchronized 适合锁少量的代码同步问题，Lock 适合锁大量的同步代码！</p>
+<h2 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h2><h3 id="volatile的作用是什么？"><a href="#volatile的作用是什么？" class="headerlink" title="volatile的作用是什么？"></a>volatile的作用是什么？</h3><p>volatile一般作用于变量，多线程环境中保证了内存的可见性、有序性即避免指令重排（内存屏障的存在），但<strong>不保证原子性</strong>。</p>
+<p>相比于synchronized 关键字， volatile 关键字的执行成本更低，效率更高。</p>
+<h3 id="volatile的特性有哪些？"><a href="#volatile的特性有哪些？" class="headerlink" title="volatile的特性有哪些？"></a>volatile的特性有哪些？</h3><p>并发编程的三大特性为可见性、有序性和原子性。volatile 只可以保证可见性和有序性</p>
+<p>可见性： volatile 可以保证不同线程对共享变量进行操作时的可见性。</p>
+<ul>
+<li>当写一个volatile变量时，JMM会把该线程对应的<strong>本地内存中的共享变量值立刻刷新到主内存中</strong>。</li>
+<li>当读一个volatile变量时，JMM会把该线程对应的本地内存设置为无效，<strong>直接从主内存读取共享变量</strong></li>
+</ul>
 <p>有序性： volatile 会通过禁止指令重排序进而保证有序性。</p>
 <p>原子性：对于单个的volatile 修饰的变量的读写是可以保证原子性的，但对于i++ 这种复合操作并不能保证原子性。这句话的意思基本上就是说volatile 不具备原子性了。</p>
 <h3 id="为什么代码会重排序？会引发什么问题？"><a href="#为什么代码会重排序？会引发什么问题？" class="headerlink" title="为什么代码会重排序？会引发什么问题？"></a>为什么代码会重排序？会引发什么问题？</h3><p>指令重排在单线程下可以提高代码的性能，但在多线程下重排序会破坏多线程程序的语义。</p>
@@ -670,6 +684,7 @@
 <li><p>volatile 不会造成线程的阻塞， synchronized 会造成线程的阻塞。</p>
 </li>
 </ul>
+<h3 id="volatile是线程安全的吗？"><a href="#volatile是线程安全的吗？" class="headerlink" title="volatile是线程安全的吗？"></a>volatile是线程安全的吗？</h3><p><strong>volatile不是线程安全的，</strong>volatile是一种弱的同步机制，保护的是变量安全，想要强线程安全需要用synchronized或lock锁。</p>
 <h2 id="CAS-与-Atomic-原子类"><a href="#CAS-与-Atomic-原子类" class="headerlink" title="CAS 与 Atomic 原子类"></a>CAS 与 Atomic 原子类</h2><h3 id="什么是CAS"><a href="#什么是CAS" class="headerlink" title="什么是CAS?"></a>什么是CAS?</h3><p>CAS即CompareAndSwap，翻译成中文即比较并替换。Java中可以通过CAS操作来保证原子性，原子性就是不可被中断的一些列操作或者一个操作，简单来说就是一系列操作，要么全部完成，要么失败，不能被中断。</p>
 <p>CAS主要包含三个参数（V，A，E）, V 表示要更新的变量（内存值）、E 表示预期值（旧值）、N 表示新值。算法流程是首先比较A和E的值，如果相等，将N值赋值给A，如果不相等说明有其他线程对该变量做了更新。这个参数有的地方也会用（V，A，B）表示，其中A表示预期值，B表示新值。</p>
 <p>当多个线程同时操作一个共享变量时，只有一个线程可以对变量进行成功更新，其他线程均会失败，但是失败并不会被挂起，进行再次尝试，也就是自旋。Java中的自旋锁就是利用CAS来实现的。</p>
@@ -711,14 +726,14 @@
 </li>
 <li>原子更新字段类</li>
 </ul>
-<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h3 id="什么是ThreadLocal？有哪些应用场景？"><a href="#什么是ThreadLocal？有哪些应用场景？" class="headerlink" title="什么是ThreadLocal？有哪些应用场景？"></a>什么是ThreadLocal？有哪些应用场景？</h3><p>ThreadLocal 是 JDK java.lang 包下的一个类， ThreadLocal 为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量，并且不会和其他线程的局部变量冲突，实现了线程间的数据隔离。同时实现了线程内的资源共享</p>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><h3 id="什么是ThreadLocal？有哪些应用场景？"><a href="#什么是ThreadLocal？有哪些应用场景？" class="headerlink" title="什么是ThreadLocal？有哪些应用场景？"></a>什么是ThreadLocal？有哪些应用场景？</h3><p>ThreadLocal 是 JDK java.lang 包下的一个类， ThreadLocal 为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量，并且不会和其他线程的局部变量冲突，<strong>实现了线程之间的数据隔离，同时实现了线程自身内部的资源共享</strong></p>
 <p>ThreadLocal 的应用场景主要有以下几个方面：</p>
 <ul>
 <li>保存线程上下文信息，在需要的地方可以获取</li>
 <li>线程间数据隔离</li>
 <li>数据库连接</li>
 </ul>
-<h3 id="ThreadLocal原理？"><a href="#ThreadLocal原理？" class="headerlink" title="ThreadLocal原理？"></a>ThreadLocal原理？</h3><p>每个线程内有一个 ThreadLocalMap 类型的成员变量，用来存储资源对象，  ThreadLocalMap 中保存着所有的 ThreadLocal ，而ThreadLocal 本身只是一个引用本身并不保存值，值都是保存在ThreadLocalMap中的，其中ThreadLocal 为ThreadLocalMap 中的key 。</p>
+<h3 id="ThreadLocal原理？"><a href="#ThreadLocal原理？" class="headerlink" title="ThreadLocal原理？"></a>ThreadLocal原理？</h3><p>ThreadLocal在每个线程中都创建了一个<strong>静态的ThreadLocalMap对象</strong>（key是当前线程的ThreadLocal 自身，value是需要保持的值），每个线程可以访问自己内部ThreadLocalMap对象内的value。 ThreadLocalMap 中保存着所有的 ThreadLocal ，而ThreadLocal 本身只是一个引用本身并不保存值，值都是保存在ThreadLocalMap中的，其中ThreadLocal 为ThreadLocalMap 中的key 。</p>
 <p>ThreadLocalMap 的一些特点</p>
 <ul>
 <li>key 的 hash 值统一分配</li>
@@ -748,10 +763,11 @@
 </ul>
 </li>
 </ul>
-<h3 id="为什么ThreadLocal会发生内存泄漏呢？"><a href="#为什么ThreadLocal会发生内存泄漏呢？" class="headerlink" title="为什么ThreadLocal会发生内存泄漏呢？"></a>为什么ThreadLocal会发生内存泄漏呢？</h3><p>因为ThreadLocal 中的key 是弱引用，而value 是强引用。当ThreadLocal 没有被强引用时，在进行垃圾回收时， key 会被清理掉，而value 不会被清理掉，这时如果不做任何处理， value 将永远不会被回收，产生内存泄漏。</p>
+<h3 id="为什么ThreadLocal会发生内存泄漏呢？"><a href="#为什么ThreadLocal会发生内存泄漏呢？" class="headerlink" title="为什么ThreadLocal会发生内存泄漏呢？"></a>为什么ThreadLocal会发生内存泄漏呢？</h3><p>ThreadLocal的缺点就是会发生内存泄漏</p>
+<p>原因是ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除（remove()方法）对应key就会导致内存泄露。因为ThreadLocal 中的key 是弱引用，而value 是强引用。当ThreadLocal 没有被强引用时，在进行垃圾回收时， key 会被清理掉，而value 不会被清理掉，这时如果不做任何处理， value 将永远不会被回收，产生内存泄漏。</p>
 <h3 id="如何解决ThreadLocal的内存泄漏？"><a href="#如何解决ThreadLocal的内存泄漏？" class="headerlink" title="如何解决ThreadLocal的内存泄漏？"></a>如何解决ThreadLocal的内存泄漏？</h3><p>ThreadLocal 在设计的时候已经考虑到了这种情况，在调用set() 、get() 、remove() 等方法时就会清理掉key 为null 的记录，所以在使用完ThreadLocal 后最好手动调用remove() 方法。</p>
 <h3 id="为什么要将key设计成ThreadLocal的弱引用？"><a href="#为什么要将key设计成ThreadLocal的弱引用？" class="headerlink" title="为什么要将key设计成ThreadLocal的弱引用？"></a>为什么要将key设计成ThreadLocal的弱引用？</h3><p>Thread 可能需要长时间运行（如线程池中的线程），如果 key 不再使用，需要在内存不足（GC）时释放其占用的内存</p>
-<p>如果ThreadLocal 的key 是强引用，同样会发生内存泄漏的。如果ThreadLocal 的key 是强引用，引用的ThreadLocal 的对象被回收了，但是ThreadLocalMap 还持有ThreadLocal 的强引用，如果没有手动删除， ThreadLocal 不会被回收，发生内存泄漏。</p>
+<p>如果ThreadLocal 的key 是强引用，同样会发生内存泄漏的，引用的ThreadLocal 对象被回收了，但是ThreadLocalMap 还持有ThreadLocal 的强引用，如果没有手动删除， ThreadLocal 不会被回收，发生内存泄漏。</p>
 <p>如果是弱引用的话，引用的ThreadLocal 的对象被回收了，即使没有手动删除， ThreadLocal 也会被回收。value 也会在ThreadLocalMap 调用 set() 、get() 、remove() 的时候会被清除。所以两种方案比较下来，还是ThreadLoacl 的key 为弱引用好一些。</p>
 <h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="什么是线程池？为什么使用线程池？"><a href="#什么是线程池？为什么使用线程池？" class="headerlink" title="什么是线程池？为什么使用线程池？"></a>什么是线程池？为什么使用线程池？</h3><p>线程池是一种多线程处理形式，处理过程中将任务提交到线程池，任务的执行交给线程池来管理。</p>
 <p>为什么使用线程池？</p>
@@ -834,7 +850,12 @@
 <p>execute() 方法只能执行Runnable 类型的任务。submit() 方法可以执行Runnable 和Callable 类型的任务。</p>
 <p>submit() 方法可以返回持有计算结果的Future 对象，同时还可以抛出异常，而execute() 方法不可以。</p>
 <p>换句话说就是， execute() 方法用于提交不需要返回值的任务， submit() 方法用于需要提交返回值的任务。</p>
-<h2 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h2><p>AQS的全称是 AbstractQueuedSynchronizer ，是一个用来构建锁和同步器的框架，像ReentrantLock，Semaphore，FutureTask都是基于AQS实现的。</p>
+<h3 id="线程池的实现原理"><a href="#线程池的实现原理" class="headerlink" title="线程池的实现原理"></a>线程池的实现原理</h3><p>Java线程池的实现原理就是一个线程集合workerset和一个阻塞队列workqueue，当用户向线程池提交一个任务时，线程池会先将任务放入workqueue中，workerSet中的线程会不断的从workQueue中获取线程然后执行。当workQueue中没有任务的时候，worker就会阻塞直到队列中有任务了就取出来继续执行。</p>
+<h3 id="submit一个task以后进行什么操作？"><a href="#submit一个task以后进行什么操作？" class="headerlink" title="submit一个task以后进行什么操作？"></a>submit一个task以后进行什么操作？</h3><p>1、判断当前运行的worker数量是否超过corePoolSize，如果不超过corePoolSize就创建一个worker直接执行该任务（线程池最开始没有worker在运行）</p>
+<p>2、如果正在运行的worker数量大于等于corePoolSize，那么就将该任务加入到workQueue中去</p>
+<p>3、如果workQueue满了就检查当前运行的worker数量是否小于maximumPoolSize，如果小于就创建一个worker执行该任务</p>
+<p>4、如果当前运行的worker数量大于等于maximumPoolSize，那么就执行拒绝策略</p>
+<h2 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h2><p>AbstractQueuedSynchronizer(AQS –简称同步器)是<strong>用来构建锁及其他同步组件的基础框架</strong>（ReentrantLock，Semaphore，FutureTask都是基于AQS实现的），它的实现主要是依赖一个<strong>int状态变量</strong>以及通过一个<strong>FIFO队列</strong>共同构成<strong>同步队列</strong>（AQS 有一个 state 标记位，<strong>值为1 时表示有线程占用</strong>，其他线程需要进入到同步队列等待，同步队列是一个双向链表。）。当多个线程竞争共享资源时，一个线程竞争到共享资源后，其他请求资源的线程会被阻塞，进入同步队列，也就是说同步队列中存放的被阻塞的线程，这些线程等待cpu调度再次竞争共享资源。int状态的更新使用CAS，同步器既支持独占锁，也支持共享锁。AQS的设计使用模板方法设计模式，它将一些方法开放给子类进行重写。</p>
 <h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><h2 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h2><p>多线程中编程题经常考察</p>
 <h3 id="用Java实现死锁，并给出避免死锁的解决方案"><a href="#用Java实现死锁，并给出避免死锁的解决方案" class="headerlink" title="用Java实现死锁，并给出避免死锁的解决方案"></a>用Java实现死锁，并给出避免死锁的解决方案</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Slf4j(topic = &quot;info&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DeadLockTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">final</span> <span class="hljs-type">Object</span> <span class="hljs-variable">A</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>        <span class="hljs-keyword">final</span> <span class="hljs-type">Object</span> <span class="hljs-variable">B</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(()-&gt;&#123;<br>            <span class="hljs-keyword">synchronized</span> (A)&#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    Thread.sleep(<span class="hljs-number">2000</span>);<br>                &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>                log.debug(<span class="hljs-string">&quot;t1尝试获得锁B&quot;</span>);<br>                <span class="hljs-keyword">synchronized</span> (B)&#123;<br><br>                &#125;<br>            &#125;<br>        &#125;,<span class="hljs-string">&quot;t1&quot;</span>).start();<br><br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(()-&gt;&#123;<br>            <span class="hljs-keyword">synchronized</span> (B)&#123;  <span class="hljs-comment">// 避免死锁：synchronized (A)</span><br>                <span class="hljs-keyword">try</span> &#123;<br>                    Thread.sleep(<span class="hljs-number">1000</span>);<br>                &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>                log.debug(<span class="hljs-string">&quot;t2尝试获得锁A&quot;</span>);<br>                <span class="hljs-keyword">synchronized</span> (A)&#123;   <span class="hljs-comment">// 避免死锁：synchronized (B)</span><br><br>                &#125;<br>            &#125;<br>        &#125;,<span class="hljs-string">&quot;t2&quot;</span>).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
