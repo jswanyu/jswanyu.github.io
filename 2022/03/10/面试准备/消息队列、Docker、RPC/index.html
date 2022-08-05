@@ -18,19 +18,21 @@
   
     <meta name="description" content="消息队列RabbitMQ为什么选用RabbitMQ?1、基于AMQP协议2、高并发3、高性能4、高可用5、支持多语言 Rabbit的相关概念及工作流程？一、工作流程 生产者和消费者收发消息都需要与RabbitMQ建立一条长连接，所有的收发消息都在连接中开辟信道进行收发，消息有消息头和消息体，消息头是一些参数设置，消息体是真正的消息内容，最重要的一个消息头是路由键，决定了消息要发给谁。消息首先来到消">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/08/01/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E3%80%81Docker%E3%80%81RPC/index.html">
+<meta property="og:title" content="面试准备：消息队列、Docker、RPC">
+<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E3%80%81Docker%E3%80%81RPC/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="消息队列RabbitMQ为什么选用RabbitMQ?1、基于AMQP协议2、高并发3、高性能4、高可用5、支持多语言 Rabbit的相关概念及工作流程？一、工作流程 生产者和消费者收发消息都需要与RabbitMQ建立一条长连接，所有的收发消息都在连接中开辟信道进行收发，消息有消息头和消息体，消息头是一些参数设置，消息体是真正的消息内容，最重要的一个消息头是路由键，决定了消息要发给谁。消息首先来到消">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-01T12:46:32.184Z">
-<meta property="article:modified_time" content="2022-08-01T12:50:16.272Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
+<meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
+<meta property="article:modified_time" content="2022-08-05T09:06:53.292Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>面试准备：消息队列、Docker、RPC - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -168,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E6%96%87%E7%AB%A0%E9%A1%B5%E9%A1%B6%E9%83%A8%E5%9B%BE.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="面试准备：消息队列、Docker、RPC"></span>
           
         </div>
 
@@ -185,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-01 20:46" pubdate>
-          2022年8月1日 晚上
+        <time datetime="2022-03-10 23:32" pubdate>
+          2022年3月10日 晚上
         </time>
       </span>
     
@@ -237,7 +239,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">面试准备：消息队列、Docker、RPC</h1>
             
             <div class="markdown-body">
               
@@ -331,6 +333,17 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+</span>
+
+    </div>
+  
   
 </div>
 
@@ -340,8 +353,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/08/01/面试准备/消息队列、Docker、RPC/</div>
+      <div>面试准备：消息队列、Docker、RPC</div>
+      <div>http://jswanyu.github.io/2022/03/10/面试准备/消息队列、Docker、RPC/</div>
     </div>
     <div class="license-meta">
       
@@ -353,7 +366,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月1日</div>
+          <div>2022年3月10日</div>
         </div>
       
       
@@ -378,29 +391,6 @@
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2022/08/01/MySQL/MySQL%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%85%B6%E4%BB%96/" title="">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2022/07/23/Spring/04-SpringCloud/" title="SpringCloud">
-                        <span class="hidden-mobile">SpringCloud</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
