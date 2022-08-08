@@ -19,13 +19,13 @@
     <meta name="description" content="1 MySQLSQL语句基础知识SQL关键字执行顺序关键字语法顺序： 1SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT...  SELECT 语句的执行顺序: 1FROM -&gt; WHERE -&gt; GROUP BY -&gt; HAVING -&gt; SELECT 的字段 -&gt; DI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试准备：MySQL">
-<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81MySQL/index.html">
+<meta property="og:url" content="http://jswanyu.github.io/2022/03/10/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/6-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81MySQL/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
 <meta property="og:description" content="1 MySQLSQL语句基础知识SQL关键字执行顺序关键字语法顺序： 1SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT...  SELECT 语句的执行顺序: 1FROM -&gt; WHERE -&gt; GROUP BY -&gt; HAVING -&gt; SELECT 的字段 -&gt; DI">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
 <meta property="article:published_time" content="2022-03-10T15:32:04.000Z">
-<meta property="article:modified_time" content="2022-08-01T14:10:04.047Z">
+<meta property="article:modified_time" content="2022-08-06T13:26:09.479Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E9%9D%A2%E8%AF%95-%E9%A6%96%E9%A1%B5%E5%B0%81%E9%9D%A2%E5%9B%BE.jpeg">
@@ -252,6 +252,7 @@
 
 
 
+<h3 id="什么是sql注入？"><a href="#什么是sql注入？" class="headerlink" title="什么是sql注入？"></a>什么是sql注入？</h3><p>在实现定义好的查询语句的结尾添加额外的sql语句，欺骗数据库服务器进行非授权的任意查询，盗取数据库数据。</p>
 <h2 id="数据库基础知识"><a href="#数据库基础知识" class="headerlink" title="数据库基础知识"></a>数据库基础知识</h2><h3 id="MySQL常用的存储引擎有什么？它们有什么区别？"><a href="#MySQL常用的存储引擎有什么？它们有什么区别？" class="headerlink" title="MySQL常用的存储引擎有什么？它们有什么区别？"></a>MySQL常用的存储引擎有什么？它们有什么区别？</h3><p>InnoDB是MySQL的默认存储引擎，支持事务、行锁和外键等操作。MyISAM是MySQL5.1版本前的默认存储引擎，MyISAM的并发性比较差，不支持事务和外键等操作，默认的锁的粒度为表级锁。</p>
 <table>
 <thead>
@@ -550,7 +551,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>面试准备：MySQL</div>
-      <div>http://jswanyu.github.io/2022/03/10/面试准备/数据库、MySQL/</div>
+      <div>http://jswanyu.github.io/2022/03/10/面试准备/6-数据库、MySQL/</div>
     </div>
     <div class="license-meta">
       
