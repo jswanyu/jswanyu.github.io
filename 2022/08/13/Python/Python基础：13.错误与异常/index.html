@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="错误与异常一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A13.%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="错误与异常一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49RTpQ.png">
+<meta property="article:published_time" content="2022-08-13T13:20:21.087Z">
+<meta property="article:modified_time" content="2021-09-16T07:44:27.155Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49RTpQ.png">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-13 21:20" pubdate>
+          2022年8月13日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.9k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h1><h2 id="一、错误"><a href="#一、错误" class="headerlink" title="一、错误"></a>一、错误</h2><p>不符合python语言标准的错误：SyntaxError</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span> <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  File “<ipython-input-1-d3123ece03ef>“, line 1<br>    while True print(‘hello’)<br>               ^<br>SyntaxError: invalid syntax</p>
+</blockquote>
+<h2 id="二、异常"><a href="#二、异常" class="headerlink" title="二、异常"></a>二、异常</h2><h3 id="1-异常的定义"><a href="#1-异常的定义" class="headerlink" title="1.异常的定义"></a>1.异常的定义</h3><p>即便 Python 程序的语法是正确的，在运行它的时候，也有可能发生错误。运行期检测到的错误被称为异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1</span>/<span class="hljs-number">0</span> <span class="hljs-comment"># 0 不能作为除数，触发异常</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>ZeroDivisionError: division by zero</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">a*<span class="hljs-number">3</span> <span class="hljs-comment"># a 未定义，触发异常</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>NameError: name ‘a’ is not defined</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">2</span>+<span class="hljs-string">&#x27;2&#x27;</span> <span class="hljs-comment"># 类型不同，触发异常</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>TypeError: unsupported operand type(s) for +: ‘int’ and ‘str’</p>
+</blockquote>
+<h3 id="2-异常处理"><a href="#2-异常处理" class="headerlink" title="2.异常处理"></a>2.异常处理</h3><h3 id="2-1-try…except语句"><a href="#2-1-try…except语句" class="headerlink" title="2.1 try…except语句"></a>2.1 try…except语句</h3><p>try 语句按照如下方式工作：  </p>
+<ul>
+<li>首先，执行 try 子句（在关键字 try 和关键字 except 之间的语句）。</li>
+<li>如果没有异常发生，忽略 except 子句，try 子句执行后结束。</li>
+<li>如果在执行 try 子句的过程中发生了异常，那么 try 子句余下的部分将被忽略。如果异常的类型和 except 之后的名称相符，那么对应的 except 子句将被执行。</li>
+<li>如果一个异常没有与任何的 except 匹配，那么这个异常将会传递给上层的 try 中。</li>
+<li>一个 try 语句可能包含多个except子句，分别来处理不同的特定的异常。<strong>最多只有一个分支会被执行</strong>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    a = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>    <span class="hljs-keyword">if</span> a==<span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">break</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你输入的数字为：%d&#x27;</span> % a)  <span class="hljs-comment"># 程序可以执行，但碰到int函数转化不了的就会报错</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：4<br>你输入的数字为：4<br>请输入一个数字：a</p>
+</blockquote>
+<blockquote>
+<p>ValueError: invalid literal for int() with base 10: ‘a’</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你输入的数字为：%d&#x27;</span> % a)<br>    <span class="hljs-keyword">except</span> ValueError:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;请输入数字！&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：4<br>你输入的数字为：4<br>请输入一个数字：a<br>请输入数字！<br>请输入一个数字：1</p>
+</blockquote>
+<p>也可以忽略异常的名称，只写<code>except:/except Exception:</code>，用于出现其它的未知异常，<code>Exception</code>是python的异常库，如下一段程序最后一个except</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result)<br>    <span class="hljs-keyword">except</span> ValueError:         <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字！&#x27;</span>)<br>    <span class="hljs-keyword">except</span> ZeroDivisionError:  <span class="hljs-comment"># 数值为0带来的异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;log(value) must != 0&#x27;</span>)<br>    <span class="hljs-keyword">except</span>:                    <span class="hljs-comment"># 其它异常 </span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;unknow error&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：4<br>运算之后结果为：0.721348<br>请输入一个数字：a<br>ValueError: 输入需要为大于0的数字！<br>请输入一个数字：1<br>log(value) must !&#x3D; 0<br>请输入一个数字：7</p>
+</blockquote>
+<p>一个except子句可以同时处理多个异常，这些异常将被<strong>放在一个括号里成为一个元组</strong>，括号必不可少</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result)<br>    <span class="hljs-keyword">except</span> (ValueError,ZeroDivisionError):  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：a<br>ValueError: 输入需要为大于0的数字且不等于1！<br>请输入一个数字：1<br>ValueError: 输入需要为大于0的数字且不等于1！<br>请输入一个数字：4<br>运算之后结果为：0.721348<br>请输入一个数字：7</p>
+</blockquote>
+<p>异常处理并不仅仅处理那些直接发生在 try 子句中的异常，而且还能处理<strong>子句中调用的函数（甚至间接调用的函数）里抛出的异常</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>():<br>    <span class="hljs-number">1</span>/<span class="hljs-number">0</span><br><span class="hljs-keyword">try</span>:<br>    f()<br><span class="hljs-keyword">except</span> ZeroDivisionError:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;0不能作为分母&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>0不能作为分母</p>
+</blockquote>
+<h3 id="2-2-try-except-else语句"><a href="#2-2-try-except-else语句" class="headerlink" title="2.2 try-except-else语句"></a>2.2 try-except-else语句</h3><p>try…except 语句还有一个可选的 else 子句，如果使用这个子句，那么必须放在<strong>所有的 except 子句</strong>之后  </p>
+<p>else 子句将在 <strong>try 子句没有发生任何异常</strong>的时候执行  </p>
+<p>使用 else 子句比把所有的语句都放在 try 子句里面要好，这样可以避免一些意想不到，而 except 又无法捕获的异常</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:    <span class="hljs-comment"># 辅助停止程序</span><br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>    <span class="hljs-keyword">except</span> (ValueError,ZeroDivisionError):  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result) <span class="hljs-comment"># 没有异常再打印最终结果</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：1<br>ValueError: 输入需要为大于0的数字且不等于1！<br>请输入一个数字：4<br>运算之后结果为：0.721348<br>请输入一个数字：7</p>
+</blockquote>
+<h3 id="2-3-try-finally-语句"><a href="#2-3-try-finally-语句" class="headerlink" title="2.3 try-finally 语句"></a>2.3 try-finally 语句</h3><p><code>try-finally</code> 语句无论是否发生异常都将执行最后的代码  </p>
+<p>完整结构可以为：try-except-else-finally </p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49RTpQ"><img src="https://z3.ax1x.com/2021/09/12/49RTpQ.png" srcset="/img/loading.gif" lazyload alt="exception.png"></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>    <span class="hljs-keyword">except</span> (ValueError,ZeroDivisionError):  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result) <span class="hljs-comment"># 没有异常再打印最终结果</span><br>    <span class="hljs-keyword">finally</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;不管怎么样，这句话都执行&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：4<br>运算之后结果为：0.721348<br>不管怎么样，这句话都执行<br>请输入一个数字：1<br>ValueError: 输入需要为大于0的数字且不等于1！<br>不管怎么样，这句话都执行<br>请输入一个数字：7<br>不管怎么样，这句话都执行</p>
+</blockquote>
+<p>如果一个异常在 try 子句里（或者在 except 和 else 子句里）被抛出，而又没有任何的 except 把它截住，那么这个异常会<strong>在 finally 子句执行后被抛出</strong></p>
+<p>下面的例子中故意不截住ZeroDivisionError，当输入为1时，是先执行finally语句，再抛出错误，有这样一个顺序 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>    <span class="hljs-keyword">except</span> ValueError:      <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result) <span class="hljs-comment"># 没有异常再打印最终结果</span><br>    <span class="hljs-keyword">finally</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;不管怎么样，这句话都执行&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：1<br>不管怎么样，这句话都执行</p>
+</blockquote>
+<blockquote>
+<p>ZeroDivisionError: float division by zero</p>
+</blockquote>
+<h3 id="2-4-raise抛出异常"><a href="#2-4-raise抛出异常" class="headerlink" title="2.4 raise抛出异常"></a>2.4 raise抛出异常</h3><p>raise是python处理异常的内置语句，用于把指定的异常抛出，所谓抛出即让解释器提示错误<br>raise语法格式：<code>raise [Exception [, args [, traceback]]]</code><br>raise 唯一的一个参数指定了要被抛出的异常。它必须是一个异常的实例或者是异常的类（也就是 Exception 的子类，Exception是python定义好的类）  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = <span class="hljs-number">10</span><br><span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span>:<br>    <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&#x27;x 不能大于 5&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Exception: x 不能大于 5</p>
+</blockquote>
+<p>如果只想知道这是否抛出了一个异常，并不想去处理它，那么一个简单的 raise 语句就可以再次把它抛出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result)<br>    <span class="hljs-keyword">except</span> ValueError:  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字！&#x27;</span>)<br>    <span class="hljs-keyword">except</span>:             <span class="hljs-comment"># 其它异常 </span><br>        <span class="hljs-keyword">raise</span>           <span class="hljs-comment"># 让解释器把其它错误抛出</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请输入一个数字：1</p>
+</blockquote>
+<blockquote>
+<p>ZeroDivisionError: float division by zero</p>
+</blockquote>
+<h3 id="2-5-带有值的异常"><a href="#2-5-带有值的异常" class="headerlink" title="2.5 带有值的异常"></a>2.5 带有值的异常</h3><p>异常是一种定义的类，在类中往往会定义一些属性的私有值。抛出异常有时候会需要其在返回时带上的值。<br>此时我们一般使用<code>except ... as ...</code>的结构，用来拿出值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">temp_convert</span>(<span class="hljs-params">var</span>):<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(var)<br>    <span class="hljs-keyword">except</span> ValueError <span class="hljs-keyword">as</span> Argument:<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;这个参数没有包含数字：&quot;</span>, Argument)<br><br><span class="hljs-comment"># 调用函数</span><br>temp_convert(<span class="hljs-string">&quot;xyz&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个参数没有包含数字： invalid literal for int() with base 10: ‘xyz’</p>
+</blockquote>
+<p>再例如生成器的StopIteration，生成器的return返回值会在StopIteration的value中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params"><span class="hljs-built_in">max</span></span>):   <span class="hljs-comment"># 斐波那契数列</span><br>    n, a, b = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> n &lt; <span class="hljs-built_in">max</span>:<br>        <span class="hljs-keyword">yield</span> b           <span class="hljs-comment"># 遇到yield语句函数返回</span><br>        a, b = b, a + b   <span class="hljs-comment"># 再次执行的时候从此执行</span><br>        n = n + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;done&#x27;</span><br>g = fib(<span class="hljs-number">6</span>)<br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">next</span>(g))<br>    <span class="hljs-keyword">except</span> StopIteration <span class="hljs-keyword">as</span> e:   <span class="hljs-comment"># 捕获StopIteration错误</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Generator return value:&#x27;</span>, e.value) <span class="hljs-comment"># 返回值在异常的value中</span><br>        <span class="hljs-keyword">break</span>  <span class="hljs-comment"># 不加break，便会一直打印返回值</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1<br>1<br>2<br>3<br>5<br>8<br>Generator return value: done</p>
+</blockquote>
+<h2 id="预定义的清理行为"><a href="#预定义的清理行为" class="headerlink" title="预定义的清理行为"></a>预定义的清理行为</h2><p>一些对象定义了标准的清理行为，无论系统是否成功的使用了它，一旦不需要它了，那么这个标准的清理行为就会执行<br>如关键词 with 语句就可以保证诸如文件之类的对象在使用完之后一定会正确的执行他的清理方法  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello5.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> txt1:        <br>    <span class="hljs-built_in">print</span> (txt1.read())<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>0<br>1<br>2<br>3<br>4</p>
+</blockquote>
+<p>​    </p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：13.错误与异常/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月13日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A14.%E7%B1%BB/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A12.%E6%A8%A1%E5%9D%97/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

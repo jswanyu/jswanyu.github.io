@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="python常用内置函数下图是python的内置函数：  在此只列举常用的，不常见的可以参考菜鸟教程  all()函数all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是否都为 TRUE，如果是返回 True，否则返回 False 空元组、空列表返回值为True，这里要特别注意 any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 Fal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A21.%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="python常用内置函数下图是python的内置函数：  在此只列举常用的，不常见的可以参考菜鸟教程  all()函数all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是否都为 TRUE，如果是返回 True，否则返回 False 空元组、空列表返回值为True，这里要特别注意 any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 Fal">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49WCc9.png">
+<meta property="article:published_time" content="2022-08-13T13:20:21.138Z">
+<meta property="article:modified_time" content="2021-10-17T13:48:48.984Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49WCc9.png">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-13 21:20" pubdate>
+          2022年8月13日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="python常用内置函数"><a href="#python常用内置函数" class="headerlink" title="python常用内置函数"></a>python常用内置函数</h1><p>下图是python的内置函数：</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49WCc9"><img src="https://z3.ax1x.com/2021/09/12/49WCc9.png" srcset="/img/loading.gif" lazyload alt="python-functions.png"></a></p>
+<p>在此只列举常用的，不常见的可以参考菜鸟教程</p>
+<hr>
+<h2 id="all-函数"><a href="#all-函数" class="headerlink" title="all()函数"></a>all()函数</h2><p>all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是否都为 TRUE，如果是返回 True，否则返回 False</p>
+<p><strong>空元组、空列表返回值为True，这里要特别注意</strong></p>
+<p>any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>]))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>]))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>((<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>)))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>((<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>([]))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">all</span>(()))<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">True
+False
+False
+False
+True
+True
+</code></pre>
+<hr>
+<h2 id="enumerate-函数"><a href="#enumerate-函数" class="headerlink" title="enumerate() 函数"></a>enumerate() 函数</h2><p><code>enumerate(sequence, [start=0])</code>,其中sequence为序列、迭代器或其他支持迭代对象，start是下标起始位置，默认为0<br>返回值：返回 enumerate(枚举) 对象，即同时列出数据和数据下标。这个返回值是一个<strong>迭代器</strong>，可以用list()转为列表  </p>
+<p>enumerate() 函数一般用在 for 循环当中，将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections.abc <span class="hljs-keyword">import</span> Iterator<br>seasons = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">enumerate</span>(seasons))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(<span class="hljs-built_in">enumerate</span>(seasons), Iterator))  <span class="hljs-comment"># 判断是否为迭代器</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">enumerate</span>(seasons)))                  <span class="hljs-comment"># list()将迭代器转为列表</span><br><span class="hljs-keyword">for</span> i, element <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(seasons,start=<span class="hljs-number">1</span>):    <span class="hljs-comment"># 这是常用的用法，下标自己定义</span><br>    <span class="hljs-built_in">print</span>(i, element)<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">&lt;enumerate object at 0x00000225102F22D0&gt;
+True
+[(0, &#39;Spring&#39;), (1, &#39;Summer&#39;), (2, &#39;Fall&#39;), (3, &#39;Winter&#39;)]
+
+1 Spring
+2 Summer
+3 Fall
+4 Winter
+</code></pre>
+<hr>
+<h2 id="help-函数"><a href="#help-函数" class="headerlink" title="help()函数"></a>help()函数</h2><p>help() 函数可以打印输出一个函数的说明文档</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">help</span>(<span class="hljs-built_in">print</span>)<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">Help on built-in function print in module builtins:
+
+print(...)
+    print(value, ..., sep=&#39; &#39;, end=&#39;\n&#39;, file=sys.stdout, flush=False)
+    
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file:  a file-like object (stream); defaults to the current sys.stdout.
+    sep:   string inserted between values, default a space.
+    end:   string appended after the last value, default a newline.
+    flush: whether to forcibly flush the stream.
+</code></pre>
+<p>​    </p>
+<hr>
+<h2 id="isinstance-函数："><a href="#isinstance-函数：" class="headerlink" title="isinstance()函数："></a>isinstance()函数：</h2><p><code>isinstance(object, classinfo)</code> 其中object – 实例对象，classinfo – 可以是直接或间接类名、基本类型或者由它们组成的元组<br>返回值：如果对象的类型与参数二的类型（classinfo）相同则返回 True，否则返回 False  </p>
+<p><strong>isinstance() 与 type() 区别：</strong><br>type() 不会认为子类是一种父类类型，不考虑继承关系。type用于求一个未知数据类型对象。<br>isinstance() 会认为子类是一种父类类型，考虑继承关系。isinstance用于判断一个对象是否是已知数据类型。  </p>
+<p><strong>python基本数据类型：</strong><br>int，float，bool，complex，<strong>str</strong>(字符串)，list，<strong>dict</strong>(字典)，set，tuple</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">2</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span> (a,<span class="hljs-built_in">int</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span> (a,(<span class="hljs-built_in">str</span>,<span class="hljs-built_in">int</span>,<span class="hljs-built_in">list</span>))) <span class="hljs-comment"># 是元组中的一个也返回 True</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">True
+True
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>:<br>    <span class="hljs-keyword">pass</span><br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span>(<span class="hljs-title class_ inherited__">A</span>): <span class="hljs-comment"># A是B的父类</span><br>    <span class="hljs-keyword">pass</span><br>  <br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(A(), A))    <span class="hljs-comment"># 实例A是否是A类的类型</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(A()))             <span class="hljs-comment"># 实例A的类型是什么</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(B(), A))    <span class="hljs-comment"># 实例B是否是A类的类型</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(B()) == A)        <span class="hljs-comment"># type不考虑继承</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">True
+&lt;class &#39;__main__.A&#39;&gt;
+True
+False
+</code></pre>
+<hr>
+<h2 id="reversed-函数"><a href="#reversed-函数" class="headerlink" title="reversed()函数"></a>reversed()函数</h2><p><code>reversed(seq)</code>,seq – 要转换的序列，可以是 tuple, string, list 或 range。返回一个反转的<strong>迭代器</strong>  </p>
+<p><strong>如果没有实例化(即未使用list函数或for循环)，它并不会产生一个倒序的序列</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 字符串</span><br>seqString = <span class="hljs-string">&#x27;Runoob&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">reversed</span>(seqString)))<br> <br><span class="hljs-comment"># 元组</span><br>seqTuple = (<span class="hljs-string">&#x27;R&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">reversed</span>(seqTuple)))<br> <br><span class="hljs-comment"># range</span><br>seqRange = <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>, <span class="hljs-number">9</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">reversed</span>(seqRange)))<br> <br><span class="hljs-comment"># 列表</span><br>seqList = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">reversed</span>(seqList)))<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">[&#39;b&#39;, &#39;o&#39;, &#39;o&#39;, &#39;n&#39;, &#39;u&#39;, &#39;R&#39;]
+[&#39;b&#39;, &#39;o&#39;, &#39;o&#39;, &#39;n&#39;, &#39;u&#39;, &#39;R&#39;]
+[8, 7, 6, 5]
+[5, 3, 4, 2, 1]
+</code></pre>
+<hr>
+<h2 id="sorted-函数"><a href="#sorted-函数" class="headerlink" title="sorted()函数"></a>sorted()函数</h2><p><code>sorted(iterable, key=None, reverse=False)</code>，其中iterable–<strong>可迭代对象</strong>，reverse–排序规则，reverse &#x3D; True 降序，reverse &#x3D; False 升序（默认）  </p>
+<p><strong>key指定的函数将作用于list的每一个元素上，并根据key函数返回的结果进行排序</strong>。返回值为重新排序的列表</p>
+<ul>
+<li>sort 与 sorted 区别：sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。list 的 sort 方法返回的是对已经存在的列表进行操作，无返回值，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-number">36</span>, <span class="hljs-number">5</span>, -<span class="hljs-number">12</span>, <span class="hljs-number">9</span>, -<span class="hljs-number">21</span>]))  <span class="hljs-comment"># 默认按照数值大小升序排列</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-number">36</span>, <span class="hljs-number">5</span>, -<span class="hljs-number">12</span>, <span class="hljs-number">9</span>, -<span class="hljs-number">21</span>], key=<span class="hljs-built_in">abs</span>))  <span class="hljs-comment"># 按照指定的abs值进行升序排列</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-number">36</span>, <span class="hljs-number">5</span>, -<span class="hljs-number">12</span>, <span class="hljs-number">9</span>, -<span class="hljs-number">21</span>], key=<span class="hljs-built_in">abs</span>,reverse = <span class="hljs-literal">True</span>)) <span class="hljs-comment"># 按照指定的abs值进行降序排列</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-number">36</span>, <span class="hljs-number">5</span>, -<span class="hljs-number">12</span>, <span class="hljs-number">9</span>, -<span class="hljs-number">21</span>], key=<span class="hljs-keyword">lambda</span> x:x*(-<span class="hljs-number">1</span>)))  <span class="hljs-comment"># 按照指定的函数进行升序排列</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">[-21, -12, 5, 9, 36]
+[5, 9, -12, -21, 36]
+[36, -21, -12, 9, 5]
+[36, 9, 5, -12, -21]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;about&#x27;</span>, <span class="hljs-string">&#x27;Zoo&#x27;</span>, <span class="hljs-string">&#x27;Credit&#x27;</span>])) <span class="hljs-comment"># 字符串默认按照ASCLL大大小升序排列，&#x27;Z&#x27;&lt;&#x27;a&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;about&#x27;</span>, <span class="hljs-string">&#x27;Zoo&#x27;</span>, <span class="hljs-string">&#x27;Credit&#x27;</span>],key=<span class="hljs-built_in">str</span>.lower))  <span class="hljs-comment"># 按照指定的函数，即字符串小写字母ASCLL升序排列</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>([<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;about&#x27;</span>, <span class="hljs-string">&#x27;Zoo&#x27;</span>, <span class="hljs-string">&#x27;Credit&#x27;</span>],key=<span class="hljs-built_in">len</span>))  <span class="hljs-comment"># 按照字符串长度升序排列</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">[&#39;Credit&#39;, &#39;Zoo&#39;, &#39;about&#39;, &#39;bob&#39;]
+[&#39;about&#39;, &#39;bob&#39;, &#39;Credit&#39;, &#39;Zoo&#39;]
+[&#39;bob&#39;, &#39;Zoo&#39;, &#39;about&#39;, &#39;Credit&#39;]
+</code></pre>
+<p>字典排序一般指定按照哪个键来排序，也会涉及到多列排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">array = [&#123;<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">20</span>,<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;a&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">25</span>,<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;b&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-number">10</span>,<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;c&quot;</span>&#125;]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">sorted</span>(array,key=<span class="hljs-keyword">lambda</span> x:x[<span class="hljs-string">&quot;age&quot;</span>]))   <span class="hljs-comment"># 按照字典中的&#x27;age&#x27;升序排列</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">[&#123;&#39;age&#39;: 10, &#39;name&#39;: &#39;c&#39;&#125;, &#123;&#39;age&#39;: 20, &#39;name&#39;: &#39;a&#39;&#125;, &#123;&#39;age&#39;: 25, &#39;name&#39;: &#39;b&#39;&#125;]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">d1 = [&#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;alice&#x27;</span>, <span class="hljs-string">&#x27;score&#x27;</span>:<span class="hljs-number">38</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;score&#x27;</span>:<span class="hljs-number">18</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;darl&#x27;</span>, <span class="hljs-string">&#x27;score&#x27;</span>:<span class="hljs-number">28</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;christ&#x27;</span>, <span class="hljs-string">&#x27;score&#x27;</span>:<span class="hljs-number">28</span>&#125;]<br>l = <span class="hljs-built_in">sorted</span>(d1, key=<span class="hljs-keyword">lambda</span> x:(-x[<span class="hljs-string">&#x27;score&#x27;</span>], x[<span class="hljs-string">&#x27;name&#x27;</span>]))  <span class="hljs-comment"># 先按照成绩降序排序，相同成绩的按照名字升序排序：</span><br><span class="hljs-built_in">print</span>(l)<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">[&#123;&#39;name&#39;: &#39;alice&#39;, &#39;score&#39;: 38&#125;, &#123;&#39;name&#39;: &#39;christ&#39;, &#39;score&#39;: 28&#125;, &#123;&#39;name&#39;: &#39;darl&#39;, &#39;score&#39;: 28&#125;, &#123;&#39;name&#39;: &#39;bob&#39;, &#39;score&#39;: 18&#125;]
+</code></pre>
+<h2 id="reduce函数"><a href="#reduce函数" class="headerlink" title="reduce函数"></a>reduce函数</h2><ul>
+<li>reduce()函数接收两个参数，一个是函数，一个是Iterable，reduce将传入的函数依次对序列的元素做<strong>累积计算</strong></li>
+<li>注意体会map和reduce的区别</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> reduce<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">x, y</span>):<br>     <span class="hljs-keyword">return</span> x + y  <br>reduce(add, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>])  <span class="hljs-comment"># 1+3+5+7+9</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">25
+</code></pre>
+<hr>
+<h2 id="map-函数"><a href="#map-函数" class="headerlink" title="map()函数"></a>map()函数</h2><ul>
+<li>map()函数根据提供的函数对指定序列做映射，其接收两个参数，一个是函数，一个是Iterable，map将传入的函数依次作用到序列的<strong>每个元素</strong>，并把结果作为新的Iterator返回</li>
+<li>map函数能够清楚的看出程序需要对可迭代对象做出怎样的函数操作</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections.abc <span class="hljs-keyword">import</span> Iterable,Iterator<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x*x<br>a = <span class="hljs-built_in">map</span>(f,[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>])  <span class="hljs-comment"># 第一个参数是函数，另一个是可迭代的列表，返回的是一个迭代器</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(a,Iterator))<br><span class="hljs-built_in">list</span>(a)   <span class="hljs-comment"># map返回的是一个惰性序列，要用list将其都计算出来</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">True
+
+
+
+
+
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>]))   <span class="hljs-comment"># 将数字转为字符</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;]
+</code></pre>
+<hr>
+<h2 id="filter-函数"><a href="#filter-函数" class="headerlink" title="filter()函数"></a>filter()函数</h2><ul>
+<li>Python内建的filter()函数用于过滤序列</li>
+<li>filter()函数接收两个参数，一个是函数，一个是Iterable，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
+<li>filter()函数返回的是一个Iterator，也就是一个惰性序列，所以要强迫filter()完成计算结果，需要用list()函数获得所有结果并返回list</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_odd</span>(<span class="hljs-params">x</span>):  <span class="hljs-comment"># 保留奇数</span><br>    <span class="hljs-keyword">return</span> x%<span class="hljs-number">2</span> == <span class="hljs-number">1</span><br><span class="hljs-built_in">list</span>(<span class="hljs-built_in">filter</span>(is_odd,[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>]))<br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">[1, 5, 9, 15]
+</code></pre>
+<hr>
+<h2 id="zip-函数"><a href="#zip-函数" class="headerlink" title="zip()函数"></a>zip()函数</h2><p><code>zip([iterable, ...])</code>,其中iterabl为一个或多个可迭代对象。返回一个迭代器  </p>
+<p>zip() 函数用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的对象，这样做的好处是节约了不少的内存  </p>
+<p>如果各个可迭代对象的元素个数不一致，则返回列表长度与最短的对象相同  </p>
+<p>利用<code>*</code>号操作符，可以将元组解压为列表，注意符号是放置在括号内的  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections.abc <span class="hljs-keyword">import</span> Iterable,Iterator<br><br>a = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>b = [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br>c = [<span class="hljs-number">7</span>,<span class="hljs-number">8</span>]<br>zipped = <span class="hljs-built_in">zip</span>(a,b)<br><span class="hljs-built_in">print</span>(zipped)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">isinstance</span>(zipped, Iterator)) <br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(zipped))     <br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">zip</span>(a,c)))  <span class="hljs-comment"># 元素个数与最短的列表一致</span><br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">&lt;zip object at 0x00000146B7F8CD88&gt;
+True
+[(1, 4), (2, 5), (3, 6)]
+[(1, 7), (2, 8)]
+</code></pre>
+<p><strong>zip()函数常用的场景是同时遍历多个序列</strong>，有时也可以和enumerate()函数一起使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>b = [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br><span class="hljs-keyword">for</span> x,y <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(a,b):  <span class="hljs-comment"># 同时遍历a,b序列</span><br>    <span class="hljs-built_in">print</span>(x,y)<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">1 4
+2 5
+3 6
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">list1 = [<span class="hljs-string">&#x27;Spring&#x27;</span>, <span class="hljs-string">&#x27;Summer&#x27;</span>, <span class="hljs-string">&#x27;Fall&#x27;</span>, <span class="hljs-string">&#x27;Winter&#x27;</span>]<br>list2 = [<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;about&#x27;</span>, <span class="hljs-string">&#x27;Zoo&#x27;</span>, <span class="hljs-string">&#x27;Credit&#x27;</span>]<br><span class="hljs-keyword">for</span> i,(x,y) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(<span class="hljs-built_in">zip</span>(list1,list2)):   <span class="hljs-comment"># 和enumerate()函数一起使用</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;%d:%s,%s&#x27;</span> % (i,x,y))<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">0:Spring,bob
+1:Summer,about
+2:Fall,Zoo
+3:Winter,Credit
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">a,b = <span class="hljs-built_in">zip</span>(*[(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>), (<span class="hljs-number">2</span>, <span class="hljs-number">5</span>), (<span class="hljs-number">3</span>, <span class="hljs-number">6</span>)]) <span class="hljs-comment"># 与 zip 相反，zip(*) 可理解为解压，返回二维矩阵式</span><br>a,b  <span class="hljs-comment"># 有一种将行列颠倒的感觉</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">((1, 2, 3), (4, 5, 6))
+</code></pre>
+<p>通过zip函数配对两个序列生成字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">key_list = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>value_list = [<span class="hljs-string">&#x27;bob&#x27;</span>, <span class="hljs-string">&#x27;about&#x27;</span>, <span class="hljs-string">&#x27;Zoo&#x27;</span>, <span class="hljs-string">&#x27;Credit&#x27;</span>,<span class="hljs-string">&#x27;Alex&#x27;</span>]<br>dict1 = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(key_list,value_list))<br>dict1<br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">&#123;1: &#39;bob&#39;, 2: &#39;about&#39;, 3: &#39;Zoo&#39;, 4: &#39;Credit&#39;, 5: &#39;Alex&#39;&#125;
+</code></pre>
+<hr>
+<h2 id="str-函数与repr-函数"><a href="#str-函数与repr-函数" class="headerlink" title="str()函数与repr()函数"></a>str()函数与repr()函数</h2><p>str() 函数将对象转化为适于人阅读的形式<br>repr() 函数将对象转化为供解释器读取的形式<br>二者均是将任意的值转化为字符串，但函数str( )将其转化成为适于人阅读的前端样式文本，而repr(object)就是原本未处理的用于编译器阅读的后台底层代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-string">&#x27;hello, world!\n&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(a))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">repr</span>(a))<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">hello, world!
+
+&#39;hello, world!\n&#39;
+</code></pre>
+<hr>
+<h2 id="range-函数"><a href="#range-函数" class="headerlink" title="range()函数"></a>range()函数</h2><p>range() 函数返回的是一个可迭代对象（类型是对象），而不是列表类型，转为列表需要用list函数  </p>
+<p>语法：<code>range(stop)</code>或<code>range(start, stop[, step])</code></p>
+<ul>
+<li>start: 计数从 start 开始。默认是从 0 开始</li>
+<li>stop: 计数到 stop 结束，但<strong>不包括 stop</strong></li>
+<li>step：步长，默认为1</li>
+</ul>
+<p><strong>加了step，就得有start，否则不生成数据</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>))<br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">[0, 1, 2, 3, 4]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">30</span>, <span class="hljs-number">5</span>))<br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">[0, 5, 10, 15, 20, 25]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>, <span class="hljs-number">2</span>))  <span class="hljs-comment"># 得不到想要的列表</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+<pre><code class="hljs">[]
+</code></pre>
+<hr>
+<h2 id="slice函数"><a href="#slice函数" class="headerlink" title="slice函数"></a>slice函数</h2><p>slice() 函数实现切片对象，主要用在切片操作函数里的参数传递  </p>
+<pre><code class="hljs">class slice(stop)
+class slice(start, stop[, step])
+</code></pre>
+<ul>
+<li>start – 起始位置</li>
+<li>stop – 结束位置</li>
+<li>step – 间距</li>
+</ul>
+<p>返回一个切片对象，返回序列中对应位置的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">myslice1 = <span class="hljs-built_in">slice</span>(<span class="hljs-number">5</span>)    <span class="hljs-comment"># 设置截取5个元素的切片</span><br><span class="hljs-built_in">print</span>(myslice1)<br>arr = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>))<br><span class="hljs-built_in">print</span>(arr)<br><span class="hljs-built_in">print</span>(arr[myslice1])<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">slice(None, 5, None)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[0, 1, 2, 3, 4]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">myslice2 = <span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>,<span class="hljs-number">2</span>)    <span class="hljs-comment"># 设置截取5个元素的切片</span><br><span class="hljs-built_in">print</span>(myslice2)<br>arr = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>,<span class="hljs-number">40</span>))<br><span class="hljs-built_in">print</span>(arr[myslice2])<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">slice(1, 20, 2)
+[21, 23, 25, 27, 29, 31, 33, 35, 37, 39]
+</code></pre>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：21.常用内置函数/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月13日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A05.%E5%93%88%E5%B8%8C%E8%A1%A8%E3%80%81%E9%9B%86%E5%90%88%E3%80%81%E6%98%A0%E5%B0%84/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A20.%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

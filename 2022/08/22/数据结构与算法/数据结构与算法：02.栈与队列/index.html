@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、栈栈（Stack）是一种线性结构，相比数组，栈对应的操作是数组的子集，只能从一段添加元素，也只能从同一端取出元素，这一端被称为栈顶。 栈是一种后进先出（Last In First Out, LIFO）的数据结构。  栈的应用：(举例)  Undo操作，撤销 程序调用的系统栈  1. Java标准库的栈Java官方的集合继承关系如图所示：  栈准确的说是一种逻辑上的数据结构，可以用不同的方法实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2022/08/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%9A02.%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="一、栈栈（Stack）是一种线性结构，相比数组，栈对应的操作是数组的子集，只能从一段添加元素，也只能从同一端取出元素，这一端被称为栈顶。 栈是一种后进先出（Last In First Out, LIFO）的数据结构。  栈的应用：(举例)  Undo操作，撤销 程序调用的系统栈  1. Java标准库的栈Java官方的集合继承关系如图所示：  栈准确的说是一种逻辑上的数据结构，可以用不同的方法实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E6%A0%88%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/Java%20SE/Java%E9%9B%86%E5%90%88-Collection%E7%BB%A7%E6%89%BF%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Queue%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/Java%20SE/Java%E9%9B%86%E5%90%88-Collection%E7%BB%A7%E6%89%BF%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/SinglyLinkedList_with%20Tail.png">
+<meta property="article:published_time" content="2022-08-22T07:26:27.506Z">
+<meta property="article:modified_time" content="2022-08-22T07:39:54.726Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E6%A0%88%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-22 15:26" pubdate>
+          2022年8月22日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、栈"><a href="#一、栈" class="headerlink" title="一、栈"></a>一、栈</h1><p>栈（Stack）是一种线性结构，相比数组，栈对应的操作是数组的子集，只能从一段添加元素，也只能从同一端取出元素，这一端被称为<strong>栈顶</strong>。</p>
+<p>栈是一种<strong>后进先出</strong>（Last In First Out, LIFO）的数据结构。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E6%A0%88%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="Stack"></p>
+<p>栈的应用：(举例)</p>
+<ul>
+<li>Undo操作，撤销</li>
+<li>程序调用的系统栈</li>
+</ul>
+<h2 id="1-Java标准库的栈"><a href="#1-Java标准库的栈" class="headerlink" title="1. Java标准库的栈"></a>1. Java标准库的栈</h2><p>Java官方的集合继承关系如图所示：</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/Java%20SE/Java%E9%9B%86%E5%90%88-Collection%E7%BB%A7%E6%89%BF%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="Java集合-Collection继承图"></p>
+<p>栈准确的说是一种逻辑上的数据结构，可以用不同的方法实现。从上图能够看出栈Stack是list接口下Vector类的子类，其需要记住的常用方法为：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Object push(Object element)</td>
+<td>把元素压入堆栈顶部</td>
+</tr>
+<tr>
+<td>Object pop( )</td>
+<td>移除堆栈顶部的对象，并作为此函数的值返回该对象</td>
+</tr>
+<tr>
+<td>Object peek( )</td>
+<td>查看堆栈顶部的对象，但不从堆栈中移除它</td>
+</tr>
+<tr>
+<td>boolean isEmpty()</td>
+<td>测试堆栈是否为空</td>
+</tr>
+</tbody></table>
+<p>用Vector实现Stack正如下文”自己实现栈“里的”基于动态数组实现的栈“，但因为 Java 的 Stack、Vector 这些都是设计过时的集合框架，一般不建议使用。</p>
+<p>Java有另外两个实现类分别是<code>LinkedList</code>、 <code>ArrayDeque</code><font color=red>（注意是ArrayDeque不是ArrayQueue）</font>。他们都可以作为栈的实现类，内部均有上面的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Java">LinkedList&lt;Integer&gt; stack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();<br><br></code></pre></td></tr></table></figure>
+
+<p>目前刷题来看，很多题解里使用<code>LinkedList</code>居多，但其实<code>ArrayDeque </code>是比 <code>LinkedList </code>快的</p>
+<p>从两个方面分析为什么 <code>ArrayDeque</code> 作为队列使用时可能比 <code>LinkedList</code> 快。</p>
+<ul>
+<li>从速度的角度：<code>ArrayDeque</code> 基于数组实现双端队列，而 <code>LinkedList</code> 基于双向链表实现双端队列，数组采用连续的内存地址空间，通过下标索引访问，链表是非连续的内存地址空间，通过指针访问，不能充分利用cpu cache，所以在寻址方面数组的效率高于链表。</li>
+<li>从内存的角度：虽然 <code>LinkedList</code> 没有扩容的问题，但每次插入和删除都涉及到一个节点对象的创建和弃用，非常低效和浪费空间，而动态数组几乎是0花费的(数组充满时重新拷贝除外)</li>
+</ul>
+<p><strong>所以无论是栈还是队列，JDK都是建议使用ArrayDeque而不是LinkedList实现，这个可以面试时候聊</strong></p>
+<h2 id="2-自己实现栈"><a href="#2-自己实现栈" class="headerlink" title="2. 自己实现栈"></a>2. 自己实现栈</h2><p>定义栈的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Stack</span>&lt;E&gt; &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(E e)</span>;<br>    E <span class="hljs-title function_">pop</span><span class="hljs-params">()</span>;<br>    E <span class="hljs-title function_">peek</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-1-基于动态数组实现栈"><a href="#2-1-基于动态数组实现栈" class="headerlink" title="2.1 基于动态数组实现栈"></a>2.1 基于动态数组实现栈</h3><p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ArrayStack</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Stack</span>&lt;E&gt; &#123;<br><br>    Array&lt;E&gt; array;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayStack</span><span class="hljs-params">(<span class="hljs-type">int</span> capacity)</span>&#123;<br>        array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>&lt;&gt;(capacity);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayStack</span><span class="hljs-params">()</span>&#123;<br>        array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>&lt;&gt;();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.getSize();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.isEmpty();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getCapacity</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.getCapacity();<br>    &#125;<br><br>    <span class="hljs-comment">//可能会引起扩容</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(E e)</span>&#123;<br>        array.addLast(e);<br>    &#125;<br><br>    <span class="hljs-comment">//可能会引起缩容</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">pop</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.removeLast();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">peek</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.getLast();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        res.append(<span class="hljs-string">&quot;Stack:&quot;</span>);<br>        res.append(<span class="hljs-string">&quot;[&quot;</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; array.getSize(); i++) &#123;<br>            res.append(array.get(i));<br>            <span class="hljs-keyword">if</span> (i != array.getSize()-<span class="hljs-number">1</span>)<br>                res.append(<span class="hljs-string">&quot;,&quot;</span>);<br>        &#125;<br>        res.append(<span class="hljs-string">&quot;] top&quot;</span>);<br>        <span class="hljs-keyword">return</span> res.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-基于单向链表实现栈"><a href="#2-2-基于单向链表实现栈" class="headerlink" title="2.2 基于单向链表实现栈"></a>2.2 基于单向链表实现栈</h3><p>只对首元素增删查显然符合栈的应用场景，因此此处可以用构建的链表去实现一个栈，与之前用动态数组实现的栈可以对比。代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LinkedListStack</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Stack</span>&lt;E&gt;&#123;<br>    <span class="hljs-keyword">private</span> LinkedList&lt;E&gt; list;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LinkedListStack</span><span class="hljs-params">()</span> &#123;<br>        list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> list.getsize();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> list.isEmpty();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(E e)</span> &#123;<br>        list.addFirst(e);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">pop</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> list.removeFirst();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">peek</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> list.getFirst();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        res.append(<span class="hljs-string">&quot;Stack: top &quot;</span>);<br>        res.append(list);<br>        <span class="hljs-keyword">return</span> res.toString();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        LinkedListStack&lt;Integer&gt; stack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedListStack</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            stack.push(i);<br>            System.out.println(stack);<br>        &#125;<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> stack.pop();<br>        System.out.println(stack);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>基于动态数组和链表实现的栈对比：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-comment">// 测试使用stack运行opCount个push和pop操作所需要的时间，单位：秒s</span><br>    <span class="hljs-comment">// 由于测试时间和操作系统状态有关，因此更科学的是测试多次取平均值，这里只是简单测试一下</span><br>    <span class="hljs-comment">// 同时，不同的jvm版本对java有不同的优化效果</span><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">double</span> <span class="hljs-title function_">testStack</span><span class="hljs-params">(Stack&lt;Integer&gt; stack, <span class="hljs-type">int</span> opCount)</span>&#123;<br>        <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.nanoTime();<br><br>        <span class="hljs-type">Random</span> <span class="hljs-variable">random</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; opCount; i++)<br>            stack.push(random.nextInt(Integer.MAX_VALUE));<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; opCount; i++)<br>            stack.pop();<br><br>        <span class="hljs-type">long</span> <span class="hljs-variable">endTime</span> <span class="hljs-operator">=</span> System.nanoTime();<br>        <span class="hljs-keyword">return</span> (endTime - startTime) / <span class="hljs-number">1000000000.0</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">opCount</span> <span class="hljs-operator">=</span> <span class="hljs-number">100000</span>;<br><br>        ArrayStack&lt;Integer&gt; arrayStack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayStack</span>&lt;&gt;();<br>        <span class="hljs-type">double</span> <span class="hljs-variable">time1</span> <span class="hljs-operator">=</span> testStack(arrayStack,opCount);<br>        System.out.println(<span class="hljs-string">&quot;ArrayStack, time: &quot;</span>+ time1 + <span class="hljs-string">&quot; s&quot;</span>);<br><br>        LinkedListStack&lt;Integer&gt; linkedListStack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedListStack</span>&lt;&gt;();<br>        <span class="hljs-type">double</span> <span class="hljs-variable">time2</span> <span class="hljs-operator">=</span> testStack(linkedListStack,opCount);<br>        System.out.println(<span class="hljs-string">&quot;LinkedListStack, time: &quot;</span>+ time2 + <span class="hljs-string">&quot; s&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  ArrayStack, time: 0.009479 s<br>  LinkedListStack, time: 0.0099697 s</p>
+</blockquote>
+<p>能够看出由于栈只对栈顶操作，无论是基于动态数组还是链表实现，push和pop操作时间复杂度都是O(1)，因此时间差距不大</p>
+<h1 id="二、队列"><a href="#二、队列" class="headerlink" title="二、队列"></a>二、队列</h1><p>队列（Queue）也是一种线性结构，相比数组，队列对应的操作是数组的子集。它只能从一端<strong>（队尾）添加</strong>元素，只能从另一端<strong>（队首）取出</strong>元素</p>
+<p>队列是一种<strong>先进先出</strong>（First In First Out, FIFO）的数据结构</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Queue%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="Queue"></p>
+<h2 id="1-Java标准库的队列"><a href="#1-Java标准库的队列" class="headerlink" title="1. Java标准库的队列"></a>1. Java标准库的队列</h2><p>Java的Queue继承结构如图所示，Queue实现了Collection接口</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/Java%20SE/Java%E9%9B%86%E5%90%88-Collection%E7%BB%A7%E6%89%BF%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="Java集合-Collection继承图"></p>
+<p>常用的队列方法如下表所示，刷题时经常会用到。由于刷题更注重逻辑，不希望抛异常，所以主要记住第二列的方法</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>throw Exception</strong></th>
+<th><strong>返回false或null</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>添加元素到队尾</td>
+<td>add(E e)</td>
+<td>boolean offer(E e)</td>
+</tr>
+<tr>
+<td>取队首元素并删除</td>
+<td>E remove()</td>
+<td>E poll()</td>
+</tr>
+<tr>
+<td>取队首元素但不删除</td>
+<td>E element()</td>
+<td>E peek()</td>
+</tr>
+</tbody></table>
+<p>其他常用的还有实现自Collection的方法：</p>
+<ul>
+<li><code>int size()</code>：获取队列长度；</li>
+<li><code>boolean isEmpty()</code>：判读队列是否为空</li>
+</ul>
+<p>注意Queue没有removeFirst这种方法，它的removeFirst其实是poll()方法，自然也更没有removeLast，不是双端队列</p>
+<p>Java中关于队列的实现类，从继承图上能够看出，分别是<code>LinkedList</code>、 <code>ArrayDeque</code><font color=red>（注意是ArrayDeque不是ArrayQueue）</font>。他们都可以作为队列的实现类，内部均有上面的方法。目前刷题来看，使用<code>LinkedList</code>居多。他们两也可以实现栈</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">// 单向队列</span><br>Queue&lt;Integer&gt; queue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();<br>Queue&lt;Integer&gt; queue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayDeque</span>&lt;&gt;();<br><span class="hljs-comment">// 双端队列</span><br>Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;();<br>Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayDeque</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+
+
+
+<p>虽然使用<code>LinkedList</code>居多，但要知道ArrayDeque 是比 LinkedList 快的</p>
+<p>从两个方面分析为什么 <code>ArrayDeque</code> 作为队列使用时可能比 <code>LinkedList</code> 快。</p>
+<ul>
+<li>从速度的角度：<code>ArrayDeque</code> 基于数组实现双端队列，而 <code>LinkedList</code> 基于双向链表实现双端队列，数组采用连续的内存地址空间，通过下标索引访问，链表是非连续的内存地址空间，通过指针访问，不能充分利用cpu cache，所以在寻址方面数组的效率高于链表。</li>
+<li>从内存的角度：虽然 <code>LinkedList</code> 没有扩容的问题，但每次插入和删除都涉及到一个节点对象的创建和弃用，非常低效和浪费空间，而动态数组几乎是0花费的(数组充满时重新拷贝除外)</li>
+</ul>
+<p><strong>所以无论是栈还是队列，JDK都是建议使用ArrayDeque而不是LinkedList实现，这个可以面试时候聊</strong></p>
+<h2 id="2-自己实现队列"><a href="#2-自己实现队列" class="headerlink" title="2. 自己实现队列"></a>2. 自己实现队列</h2><p>可以定义队列的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Queue</span>&lt;E&gt; &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(E e)</span>;<br>    E <span class="hljs-title function_">dequeue</span><span class="hljs-params">()</span>;<br>    E <span class="hljs-title function_">getFront</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-1-基于数组实现单向队列"><a href="#2-1-基于数组实现单向队列" class="headerlink" title="2.1 基于数组实现单向队列"></a>2.1 基于数组实现单向队列</h3><p>基于动态数组的队列的具体实现，比较简单，不赘述</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ArrayQueue</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Queue</span>&lt;E&gt;&#123;<br>    <span class="hljs-keyword">private</span> Array&lt;E&gt; array; <span class="hljs-comment">// Array是之前自己实现的动态数组</span><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayQueue</span><span class="hljs-params">(<span class="hljs-type">int</span> capacity)</span>&#123;<br>        array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>&lt;&gt;(capacity);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ArrayQueue</span><span class="hljs-params">()</span>&#123;<br>        array = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>&lt;&gt;();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.getSize();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.isEmpty();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getCapacity</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.getCapacity();<br>    &#125;<br><br>    <span class="hljs-comment">//可能会引起扩容</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(E e)</span> &#123;<br>        array.addLast(e);<br>    &#125;<br><br>    <span class="hljs-comment">//可能会引起缩容</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">dequeue</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.removeFirst();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">getFront</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> array.removeFirst();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        res.append(<span class="hljs-string">&quot;Queue: &quot;</span>);<br>        res.append(<span class="hljs-string">&quot;front [&quot;</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; array.getSize(); i++) &#123;<br>            res.append(array.get(i));<br>            <span class="hljs-keyword">if</span> (i != array.getSize()-<span class="hljs-number">1</span>)<br>                res.append(<span class="hljs-string">&quot;,&quot;</span>);<br>        &#125;<br>        res.append(<span class="hljs-string">&quot;] tail&quot;</span>);<br>        <span class="hljs-keyword">return</span> res.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-基于数组实现循环队列"><a href="#2-2-基于数组实现循环队列" class="headerlink" title="2.2 基于数组实现循环队列"></a>2.2 基于数组实现循环队列</h3><p>普通队列的出队时间复杂度为O(n)，出队时需要将后面的元素依次向前移动，需要改进。</p>
+<p>下图是循环队列的原理，front指向队首，tail指向队尾元素的<strong>下一个位置</strong>。在刚开始队列为空时，front和tail相等，将此作为判断队列是否为空的条件。往里添加新元素时，向后移动tail，元素出队时，<strong>向后移动front，而不用移动元素</strong>。当后面的空间已经被占满，则需要将新元素添加到队首，不能浪费出队元素的空间，此时，tail就变为（tail+1）%  length，即如下图中，添加元素g后，tail是7，添加元素h后，tail是0，7–&gt;0 这个操作就是因为 （7+1 ）% 8 &#x3D; 0，添加元素 i 后，tail变为1，此时不能再添加新元素了，否则，tail就变成2，又和front相等了，但front&#x3D;&#x3D;tail是判断队列是否为空的条件，所以此时有意识的浪费一个空间，让tail不能再次指向front，所以判断队列满的条件是tail+1&#x3D;front，即 [(tail+1)% length] +1 &#x3D; front （下图中队列满条件中的%c不太合适，应该改为%length，因为这里的capacity其实是length-1）</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" srcset="/img/loading.gif" lazyload alt="LoopQueue"></p>
+<p>循环队列的时间复杂度：</p>
+<ul>
+<li>int getSize();                    O(1) </li>
+<li>E getFront();                   O(1) </li>
+<li>boolean isEmpty();        O(1)        </li>
+<li>void enqueue(E e);        O(1)  均摊</li>
+<li>E dequeue();                  <strong>O(1)</strong>  均摊</li>
+</ul>
+<p>按照上述原理，基于<strong>静态数组</strong>及其扩容，实现循环队列的代码为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoopQueue</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Queue</span>&lt;E&gt;&#123;<br>    <span class="hljs-keyword">private</span> E[] data;<br>    <span class="hljs-comment">//front指向队首，tail指向队尾元素的下一个位置</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> front,tail;<br>    <span class="hljs-comment">//不写size也可以，用front/tail来表示也是可以的，</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> size;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LoopQueue</span><span class="hljs-params">(<span class="hljs-type">int</span> capacity)</span>&#123;<br>        <span class="hljs-comment">//有意识的浪费一个空间</span><br>        data =(E[]) <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[capacity+<span class="hljs-number">1</span>];<br>        front = <span class="hljs-number">0</span>;<br>        tail = <span class="hljs-number">0</span>;<br>        size = <span class="hljs-number">0</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LoopQueue</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-built_in">this</span>(<span class="hljs-number">10</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getCapacity</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">//浪费了一个空间,注意capacity和length的区别</span><br>        <span class="hljs-keyword">return</span> data.length-<span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">//用front==tail来判断是否为空，具体原理可以见笔记</span><br>        <span class="hljs-keyword">return</span> front==tail;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> size;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(E e)</span>&#123;<br>        <span class="hljs-keyword">if</span>((tail+<span class="hljs-number">1</span>)%data.length==front)<span class="hljs-comment">//扩容</span><br>            resize(getCapacity()*<span class="hljs-number">2</span>);<br><br>        data[tail] = e;<br>        <span class="hljs-comment">//tail +1 写为下面这个，循环起来</span><br>        tail = (tail+<span class="hljs-number">1</span>)%data.length;<br>        size++;<br>    &#125;<br><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">dequeue</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">if</span>(isEmpty())<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;Cannot dequeue from an empty queue.&quot;</span>);<br><br>        <span class="hljs-type">E</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> data[front];<br>        data[front] = <span class="hljs-literal">null</span>;<br>        <span class="hljs-comment">//front+1也写为循环形式</span><br>        front = (front+<span class="hljs-number">1</span>)% data.length;<br>        size--;<br>        <span class="hljs-comment">//缩容</span><br>        <span class="hljs-keyword">if</span> (size == getCapacity()/<span class="hljs-number">4</span> &amp;&amp; getCapacity()/<span class="hljs-number">2</span>!=<span class="hljs-number">0</span>)<br>            resize(getCapacity()/<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br><br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">getFront</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">if</span>(isEmpty())<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;Queue is empty.&quot;</span>);<br>        <span class="hljs-keyword">return</span>  data[front];<br>    &#125;<br><br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">resize</span><span class="hljs-params">(<span class="hljs-type">int</span> newCapacity)</span>&#123;<br>        <span class="hljs-comment">//创建一个新数组，继续有意识地浪费一个空间</span><br>        E[] newData = (E [])<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[newCapacity+<span class="hljs-number">1</span>];<br>        <span class="hljs-comment">//将原来数组的元素放在新数组0~size-1的位置，注意新旧数组的偏移量是(i+front)%data.length</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; size; i++) &#123;<br>            newData[i] = data[(i+front)%data.length];<br>        &#125;<br><br>        data = newData;<br>        front =<span class="hljs-number">0</span>;<br>        tail = size;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        res.append(String.format(<span class="hljs-string">&quot;Queue:size = %d, capacity = %d\n&quot;</span>,size,getCapacity()));<br>        res.append(<span class="hljs-string">&quot;front [&quot;</span>);<br>        <span class="hljs-comment">//注意循环队列的循环条件及写法</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> front; i != tail; i = (i+<span class="hljs-number">1</span>)% data.length) &#123;<br>            res.append(data[i]);<br>            <span class="hljs-keyword">if</span> ((i+<span class="hljs-number">1</span>)% data.length != tail) &#123;<br>                res.append(<span class="hljs-string">&quot;,&quot;</span>);<br>            &#125;<br>        &#125;<br><br>        res.append(<span class="hljs-string">&quot;] tail&quot;</span>);<br>        <span class="hljs-keyword">return</span> res.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-基于改进链表实现单向队列"><a href="#2-3-基于改进链表实现单向队列" class="headerlink" title="2.3 基于改进链表实现单向队列"></a>2.3 基于改进链表实现单向队列</h3><p>当用单向链表实现队列时，不可避免地要从一端添加元素，另一端删除元素，这就可能会让二者之一的时间复杂度变成O(n)，因为只有对链表头操作复杂度才是O(1)。这自然是要避免的，因此需要对链表进行改进。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/SinglyLinkedList_with%20Tail.png" srcset="/img/loading.gif" lazyload alt="SinglyLinkedList_with Tail"></p>
+<p>如上图所示，由于不可避免的要从链表的另一端操作，所以需要对链表添加尾节点tail。可以想到的是，<strong>从尾节点添加元素很容易</strong>，将尾节点的next指针指向新节点即可，但想要<strong>从尾节点删除元素很困难</strong>，因为仍然需要从头节点遍历到尾节点前一个位置，时间复杂度仍然是O(n)。此时又会想到之前的分析，从链表头无论是添加元素还是删除元素都很容易，均为O(1)，因此我们可以作出如下改进：<font color=red>在tail端添加元素，在head端删除元素</font>。由于队列的操作只要操作头尾，不涉及到中间元素，因此就不设计dummyHead虚拟头节点了，但也要小心当head和tail都为空时，都指向NULL，即链表为空的情况。</p>
+<p>此队列的各个操作时间复杂度同样为O(1)，和改进后的循环队列相同</p>
+<p>基于以上思想，重新设计链表并实现队列，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LinkedListQueue</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Queue</span>&lt;E&gt; &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span>&#123;<br>		<span class="hljs-comment">//同上，此处省略</span><br>    &#125;<br><br>    <span class="hljs-keyword">private</span> Node head,tail;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> size;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LinkedListQueue</span><span class="hljs-params">()</span>&#123;<br>        head = <span class="hljs-literal">null</span>;<br>        tail = <span class="hljs-literal">null</span>;<br>        size = <span class="hljs-number">0</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getSize</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> size;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEmpty</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> size==<span class="hljs-number">0</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">enqueue</span><span class="hljs-params">(E e)</span> &#123;<br>        <span class="hljs-comment">//如果tail为空，则表明链表为空</span><br>        <span class="hljs-keyword">if</span> (tail ==<span class="hljs-literal">null</span>)&#123;<br>            tail = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(e);<br>            head = tail;<br>        &#125;<br>        <span class="hljs-comment">//否则，新建尾节点并更新tail，head不动</span><br>        <span class="hljs-keyword">else</span>&#123;<br>            tail.next = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>(e);<br>            tail = tail.next;<br>        &#125;<br>        size++;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">dequeue</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span>(isEmpty())<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;Cannot dequeue from an empty queue.&quot;</span>);<br>        <span class="hljs-comment">//如果不为空，出队的就是头节点</span><br>        <span class="hljs-type">Node</span> <span class="hljs-variable">retNode</span> <span class="hljs-operator">=</span> head;<br>        head = head.next; <span class="hljs-comment">//更新头节点</span><br>        retNode.next = <span class="hljs-literal">null</span>; <span class="hljs-comment">//出队的节点的next要指向null，即将其从链表中断开</span><br><br>        <span class="hljs-comment">//如果链表里只有一个节点，头节点出队后head就指向了null，此时需要将tail也指向null，否则tail还在指向原来那个节点</span><br>        <span class="hljs-keyword">if</span> (head == <span class="hljs-literal">null</span>)<br>            tail = <span class="hljs-literal">null</span>;<br>        size--;<br>        <span class="hljs-keyword">return</span> retNode.e;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> E <span class="hljs-title function_">getFront</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">if</span>(isEmpty())<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>(<span class="hljs-string">&quot;Cannot dequeue from an empty queue.&quot;</span>);<br>        <span class="hljs-keyword">return</span> head.e;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">res</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        res.append(<span class="hljs-string">&quot;Queue: front &quot;</span>);<br>        <span class="hljs-type">Node</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> head;<br>        <span class="hljs-keyword">while</span> (cur != <span class="hljs-literal">null</span>)&#123;<br>            res.append(cur + <span class="hljs-string">&quot;-&gt;&quot;</span>);<br>            cur = cur.next;<br>        &#125;<br>        res.append(<span class="hljs-string">&quot;NULL tail&quot;</span>);<br>        <span class="hljs-keyword">return</span> res.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此队列的各个操作时间复杂度同样为O(1)，和改进后的循环队列相同</p>
+<h3 id="2-4-普通队列、循环队列、单向链表队列对比"><a href="#2-4-普通队列、循环队列、单向链表队列对比" class="headerlink" title="2.4 普通队列、循环队列、单向链表队列对比"></a>2.4 普通队列、循环队列、单向链表队列对比</h3><p>设计函数对比普通队列和循环队列的操作耗费时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">main</span> &#123;<br>    <span class="hljs-comment">// 测试使用q运行opCount个enqueue和dequeue操作所需要的时间，单位：秒s</span><br>    <span class="hljs-comment">// 由于测试时间和操作系统状态有关，因此更科学的是测试多次取平均值，这里只是简单测试一下</span><br>    <span class="hljs-comment">// 同时，不同的jvm版本对java有不同的优化效果</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">double</span> <span class="hljs-title function_">testQueue</span><span class="hljs-params">(Queue&lt;Integer&gt; q, <span class="hljs-type">int</span> opCount)</span>&#123;<br>        <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.nanoTime();<br><br>        <span class="hljs-type">Random</span> <span class="hljs-variable">random</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; opCount; i++)<br>            q.enqueue(random.nextInt(Integer.MAX_VALUE));<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; opCount; i++)<br>            q.dequeue();<br><br>        <span class="hljs-type">long</span> <span class="hljs-variable">endTime</span> <span class="hljs-operator">=</span> System.nanoTime();<br>        <span class="hljs-keyword">return</span> (endTime - startTime) / <span class="hljs-number">1000000000.0</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">opCount</span> <span class="hljs-operator">=</span> <span class="hljs-number">100000</span>;<br><br>        ArrayQueue&lt;Integer&gt; arrayQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayQueue</span>&lt;&gt;();<br>        <span class="hljs-type">double</span> <span class="hljs-variable">time1</span> <span class="hljs-operator">=</span> testQueue(arrayQueue,opCount);<br>        System.out.println(<span class="hljs-string">&quot;ArrayQueue, time: &quot;</span>+ time1 + <span class="hljs-string">&quot; s&quot;</span>);<br>        <br>        LoopQueue&lt;Integer&gt; loopQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoopQueue</span>&lt;&gt;();<br>        <span class="hljs-type">double</span> <span class="hljs-variable">time2</span> <span class="hljs-operator">=</span> testQueue(loopQueue,opCount);<br>        System.out.println(<span class="hljs-string">&quot;LoopQueue, time: &quot;</span>+ time2 + <span class="hljs-string">&quot; s&quot;</span>);<br>        <br>        LinkedListQueue&lt;Integer&gt; linkedListQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedListQueue</span>&lt;&gt;();<br>        <span class="hljs-type">double</span> <span class="hljs-variable">time3</span> <span class="hljs-operator">=</span> testQueue(linkedListQueue,opCount);<br>        System.out.println(<span class="hljs-string">&quot;LinkedListQueue, time: &quot;</span>+ time3 + <span class="hljs-string">&quot; s&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  ArrayQueue, time: 13.1242448 s<br>  LoopQueue, time: 0.0085864 s<br>  LinkedListQueue, time: 0.0047383 s</p>
+</blockquote>
+<p>能够看出普通队列耗费时间的是循环队列和单向链表队列的1000倍左右，这是O(n)和O(1)在时间复杂度上的巨大差距表现</p>
+<h3 id="2-5-双端队列"><a href="#2-5-双端队列" class="headerlink" title="2.5 双端队列"></a>2.5 双端队列</h3><h3 id="2-6-用栈实现队列"><a href="#2-6-用栈实现队列" class="headerlink" title="2.6 用栈实现队列"></a>2.6 用栈实现队列</h3><h3 id="2-7-用队列实现栈"><a href="#2-7-用队列实现栈" class="headerlink" title="2.7 用队列实现栈"></a>2.7 用队列实现栈</h3><h1 id="三、优先队列"><a href="#三、优先队列" class="headerlink" title="三、优先队列"></a>三、优先队列</h1><p>普通队列：先进先出，后进后出</p>
+<p>优先队列：出队顺序和入队顺序无关，和优先级相关</p>
+<p>优先队列也实现队列的接口，其内部实现方式最大堆&#x2F;最小堆</p>
+<p>优先队列实现方式及其时间复杂度：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>入队</th>
+<th>出队（取最大元素）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通线性结构</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>顺序线性结构</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>O(logn)</td>
+<td>O(logn)</td>
+</tr>
+</tbody></table>
+<p>Java 自身的优先队列使用动态数组实现，是基于最小堆来实现的，其继承了了AbstractQueue类，队列常用的方法它也同样可以使用</p>
+<ul>
+<li><code>int size()</code>：获取队列长度；</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>throw Exception</strong></th>
+<th><strong>返回false或null</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>添加元素到队尾</td>
+<td>add(E e)</td>
+<td>boolean offer(E e)</td>
+</tr>
+<tr>
+<td>取队首元素并删除</td>
+<td>E remove()</td>
+<td>E poll()</td>
+</tr>
+<tr>
+<td>取队首元素但不删除</td>
+<td>E element()</td>
+<td>E peek()</td>
+</tr>
+</tbody></table>
+<p>提到优先队列，就不得不提到经典的Top K或Select K问题：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/">力扣 215. 数组中的第K个最大元素</a>、<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/">剑指 Offer 40. 最小的k个数</a></p>
+<p>此类型题目均有两种解法：快排和优先队列，此处对比一下它们的优缺点</p>
+<p>优先队列：时间复杂度：O(NlogK)，空间复杂度：O(K) </p>
+<p>优先队列的优势：</p>
+<ul>
+<li>不需要一次性知道所有数据，适用数据是以数据流的形式产生</li>
+<li>或者数据规模极大的情况，并不能将数据直接一次性读到内存中，优先队列更合适</li>
+</ul>
+<p>快排: 时间复杂度：O(n) ，空间复杂度：O(1) </p>
+<p>面试时可以根据不同的场景去解答，或者主动提到优先队列相对于快排的优势</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2022/08/22/数据结构与算法/数据结构与算法：02.栈与队列/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月22日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

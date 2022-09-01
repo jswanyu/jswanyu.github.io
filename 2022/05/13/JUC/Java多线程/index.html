@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/JUC%E5%9B%BE%E6%A0%87.jpeg">
 <meta property="article:published_time" content="2022-05-13T12:32:56.000Z">
-<meta property="article:modified_time" content="2022-08-01T12:30:09.499Z">
+<meta property="article:modified_time" content="2022-08-09T10:21:57.182Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/JUC%E5%9B%BE%E6%A0%87.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          107k 字
+          109k 字
         
       </span>
     
@@ -1847,63 +1847,58 @@ t1 -&gt;&gt; table : put(&quot;key&quot;, value1)
 
 
 
-<h2 id="3-ThreadLocal"><a href="#3-ThreadLocal" class="headerlink" title="3. ThreadLocal"></a>3. ThreadLocal</h2><p>并发编程是一项非常重要的技术，它让我们的程序变得更加高效。</p>
-<p>但在并发的场景中，如果有多个线程同时修改公共变量，可能会出现线程安全问题，即该变量最终结果可能出现异常。</p>
-<p>为了解决线程安全问题，<code>JDK</code>出现了很多技术手段，比如：使用<code>synchronized</code>或<code>Lock</code>，给访问公共资源的代码上锁，保证了代码的<code>原子性</code>。</p>
-<p>但在高并发的场景中，如果多个线程同时竞争一把锁，这时会存在大量的锁等待，可能会浪费很多时间，让系统的响应时间一下子变慢。</p>
-<p>因此，<code>JDK</code>还提供了另外一种用空间换时间的新思路：<code>ThreadLocal</code>。</p>
-<p>它的核心思想是：共享变量在每个<code>线程</code>都有一个<code>副本</code>，每个线程操作的都是自己的副本，对另外的线程没有影响。</p>
-<p><strong><code>ThreadLocal</code>作用</strong></p>
-<p>ThreadLocal 可以实现【资源对象】的线程隔离，让每个线程各用各的【资源对象】，避免争用引发的线程安全问题。ThreadLocal 同时实现了线程内的资源共享</p>
-<p><code>ThreadLocal</code>的内部有一个静态的内部类叫：<code>ThreadLocalMap</code>。<code>ThreadLocal</code>的<code>get</code>方法、<code>set</code>方法和<code>setInitialValue</code>方法，其实最终操作的都是<code>ThreadLocalMap</code>类中的数据。</p>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><p>以下内容参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7097754858593189901#heading-1">ThreadLocal夺命11连问 - 掘金 (juejin.cn)</a></p>
+<h2 id="1-ThreadLocal介绍"><a href="#1-ThreadLocal介绍" class="headerlink" title="1. ThreadLocal介绍"></a>1. ThreadLocal介绍</h2><p>并发编程是一项非常重要的技术，它让我们的程序变得更加高效。但在并发的场景中，如果有多个线程同时修改公共变量，可能会出现线程安全问题，即该变量最终结果可能出现异常。</p>
+<p>为了解决线程安全问题，<code>JDK</code>出现了很多技术手段，比如：使用<code>synchronized</code>或<code>Lock</code>，给访问公共资源的代码上锁，保证了代码的<code>原子性</code>。但在高并发的场景中，如果多个线程同时竞争一把锁，这时会存在大量的锁等待，可能会浪费很多时间，让系统的响应时间一下子变慢。</p>
+<p>因此，JDK还提供了另外一种用空间换时间的新思路：<code>ThreadLocal</code>。它的核心思想是：共享变量在每个<code>线程</code>都有一个<code>副本</code>，每个线程操作的都是自己的副本，对另外的线程没有影响。</p>
+<p>ThreadLocal作用：ThreadLocal 可以实现【资源对象】的线程隔离，让每个线程各用各的【资源对象】，避免争用引发的线程安全问题。ThreadLocal 同时实现了线程内的资源共享</p>
+<h2 id="2-ThreadLocal原理"><a href="#2-ThreadLocal原理" class="headerlink" title="2. ThreadLocal原理"></a>2. ThreadLocal原理</h2><p><code>ThreadLocal</code>的内部有一个静态的内部类叫：<code>ThreadLocalMap</code>。<font color=red>注意，每个线程只能有一个ThreadLocalMap。</font></p>
 <p><code>ThreadLocalMap</code>里面包含一个静态的内部类<code>Entry</code>，该类继承于<code>WeakReference</code>类，说明<code>Entry</code>是一个弱引用。</p>
 <p><code>ThreadLocalMap</code>内部还包含了一个<code>Entry</code>数组，其中：<code>Entry</code> &#x3D; <code>ThreadLocal</code> + <code>value</code>。</p>
 <p>而<code>ThreadLocalMap</code>被定义成了<code>Thread</code>类的成员变量。</p>
+<p>下面用一张图从宏观上，认识一下ThreadLocal的整体结构：</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eab84b4f8b6e44d9950063d18e2b07c8~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Java/JUC/ThreadLocal%E5%8E%9F%E7%90%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220809175536284"></p>
 <p>从上图中看出，在每个<code>Thread</code>类中，都有一个<code>ThreadLocalMap</code>的成员变量，该变量包含了一个<code>Entry数组</code>，该数组真正保存了ThreadLocal类set的数据。</p>
-<p><code>Entry</code>是由threadLocal和value组成，其中threadLocal对象是弱引用，在<code>GC</code>的时候，会被自动回收。而value就是ThreadLocal类set的数据。</p>
+<p><code>Entry</code>是由threadLocal和value组成，其中threadLocal对象是弱引用，在<code>GC</code>的时候，会被自动回收。而value就是ThreadLocal类set的数据。下面用一张图总结一下引用关系：</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f3aa72af4fe2433a9a6c411f3fc99731~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
-<blockquote>
-<p>图源：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7097754858593189901#heading-1">ThreadLocal夺命11连问 - 掘金 (juejin.cn)</a></p>
-</blockquote>
 <p>上图中除了Entry的key对ThreadLocal对象是<code>弱引用</code>，其他的引用都是<code>强引用</code>。</p>
 <p>需要特别说明的是，上图中ThreadLocal对象我画到了堆上，其实在实际的业务场景中不一定在堆上。因为如果ThreadLocal被定义成了static的，ThreadLocal的对象是类共用的，可能出现在方法区。</p>
-<p>* </p>
-<p><strong>原理</strong></p>
-<p>每个线程内有一个 ThreadLocalMap 类型的成员变量，用来存储资源对象</p>
-<ul>
-<li>调用 set 方法，就是以 ThreadLocal 自己作为 key，资源对象作为 value，放入当前线程的 ThreadLocalMap 集合中</li>
-<li>调用 get 方法，就是以 ThreadLocal 自己作为 key，到当前线程中查找关联的资源值</li>
-<li>调用 remove 方法，就是以 ThreadLocal 自己作为 key，移除当前线程关联的资源值</li>
-</ul>
-<p>ThreadLocalMap 的一些特点</p>
-<ul>
-<li>key 的 hash 值统一分配</li>
-<li>初始容量 16，扩容因子 2&#x2F;3，扩容容量翻倍</li>
-<li>key 索引冲突后用开放寻址法解决冲突</li>
-</ul>
-<p><strong>弱引用 key</strong></p>
-<p>ThreadLocalMap 中的 key 被设计为弱引用，原因如下</p>
-<ul>
-<li>Thread 可能需要长时间运行（如线程池中的线程），如果 key 不再使用，需要在内存不足（GC）时释放其占用的内存</li>
-</ul>
-<p><strong>内存释放时机</strong></p>
-<ul>
-<li>被动 GC 释放 key<ul>
-<li>仅是让 key 的内存释放，关联 value 的内存并不会释放</li>
-</ul>
-</li>
-<li>懒惰被动释放 value<ul>
-<li>get key 时，发现是 null key，则释放其 value 内存</li>
-<li>set key 时，会使用启发式扫描，清除临近的 null key 的 value 内存，启发次数与元素个数，是否发现 null key 有关</li>
-</ul>
-</li>
-<li>主动 remove 释放 key，value<ul>
-<li>会同时释放 key，value 的内存，也会清除临近的 null key 的 value 内存</li>
-<li>推荐使用它，因为一般使用 ThreadLocal 时都把它作为静态变量（即强引用），因此无法被动依靠 GC 回收</li>
-</ul>
-</li>
-</ul>
+<h2 id="3-为什么用ThreadLocal做key？"><a href="#3-为什么用ThreadLocal做key？" class="headerlink" title="3. 为什么用ThreadLocal做key？"></a>3. 为什么用ThreadLocal做key？</h2><p><code>ThreadLocalMap</code>为什么要用<code>ThreadLocal</code>做key，而不是用<code>Thread</code>做key？</p>
+<p>如果在你的应用中，一个线程中只使用了一个<code>ThreadLocal</code>对象，那么使用<code>Thread</code>做key也未尝不可。</p>
+<p>但实际情况中，你的应用，一个线程中很有可能不只使用了一个ThreadLocal对象。如果是使用<code>Thread</code>做key，并不清楚是获取哪个对象，如下图所示的错误示范<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/847e8b7e67464c7aa58156d9132d8e74~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>因此，不能使用<code>Thread</code>做key，而应该改成用<code>ThreadLocal</code>对象做key，这样才能通过具体ThreadLocal对象的<code>get</code>方法，轻松获取到你想要的ThreadLocal对象。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a9e224aa187047c887aa3efd2e7a60d1~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="4-Entry的key为什么设计成弱引用？"><a href="#4-Entry的key为什么设计成弱引用？" class="headerlink" title="4. Entry的key为什么设计成弱引用？"></a>4. Entry的key为什么设计成弱引用？</h2><p>正常的是弱引用，如图所示</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f3aa72af4fe2433a9a6c411f3fc99731~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>假如key对ThreadLocal对象的弱引用，改为强引用。如下图所示</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3bc0a386467942b48263a7683b845c40~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>我们都知道ThreadLocal变量对ThreadLocal对象是有强引用存在的。即使ThreadLocal变量生命周期完了，设置成null了，但由于key对ThreadLocal还是强引用。此时，就会存在这样的<code>强引用链</code>：Thread变量 -&gt; Thread对象 -&gt; ThreadLocalMap -&gt; Entry -&gt; key -&gt; ThreadLocal对象。那么，ThreadLocal对象和ThreadLocalMap都将不会被<code>GC</code>回收，于是产生了<code>内存泄露</code>问题。</p>
+<p>为了解决这个问题，JDK的开发者们把Entry的key设计成了<code>弱引用</code>。如果key是弱引用，当ThreadLocal变量指向null之后，在GC做垃圾清理的时候，key会被自动回收，其值也被设置成null。</p>
+<blockquote>
+<p><code>弱引用</code>的对象，在GC做垃圾清理的时候，就会被自动回收了。</p>
+</blockquote>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8970caec891042fd8a0cb6f21418410a~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>接下来，最关键的地方来了。</strong></p>
+<p>由于当前的ThreadLocal变量已经被指向<code>null</code>了，但如果直接调用它的<code>get</code>、<code>set</code>或<code>remove</code>方法，很显然会出现<code>空指针异常</code>。因为它的生命已经结束了，再调用它的方法也没啥意义。</p>
+<p>此时，如果系统中还定义了<strong>另外一个ThreadLocal变量b</strong>，调用了它的<code>get</code>、<code>set</code>或<code>remove</code>，三个方法中的任何一个方法，都会自<strong>动触发清理机制，将key为null的value值清空</strong>。</p>
+<p>如果key和value都是null，那么Entry对象会被GC回收。如果所有的Entry对象都被回收了，ThreadLocalMap也会被回收了。</p>
+<p>这样就能最大程度的解决<code>内存泄露</code>问题。</p>
+<p>需要特别注意的地方是：</p>
+<ol>
+<li>key为null的条件是，<strong>ThreadLocal变量指向<code>null</code>，并且key是弱引用</strong>。如果ThreadLocal变量没有断开对ThreadLocal的强引用，即ThreadLocal变量没有指向null，GC就贸然的把弱引用的key回收了，不就会影响正常用户的使用</li>
+<li>如果当前ThreadLocal变量指向<code>null</code>了，并且key也为null了，但如果没有其他ThreadLocal变量触发<code>get</code>、<code>set</code>或<code>remove</code>方法，也会造成内存泄露。</li>
+</ol>
+<h2 id="5-Entry的value为什么不设计成弱引用？"><a href="#5-Entry的value为什么不设计成弱引用？" class="headerlink" title="5. Entry的value为什么不设计成弱引用？"></a>5. Entry的value为什么不设计成弱引用？</h2><p>Entry的value如果只是被Entry引用，有可能被业务系统中的其他地方引用。如果将value改成了弱引用，被GC贸然回收了（数据突然没了），可能会导致业务系统出现异常。</p>
+<p>而相比之下，Entry的key，管理的地方就非常明确了。</p>
+<p>这就是Entry的key被设计成弱引用，而value没被设计成弱引用的原因。</p>
+<h2 id="6-Entry对象中的key设置成弱引用就一定不会导致内存泄露？"><a href="#6-Entry对象中的key设置成弱引用就一定不会导致内存泄露？" class="headerlink" title="6. Entry对象中的key设置成弱引用就一定不会导致内存泄露？"></a>6. Entry对象中的key设置成弱引用就一定不会导致内存泄露？</h2><p>通过上面的Entry对象中的key设置成弱引用，并且使用<code>get</code>、<code>set</code>或<code>remove</code>方法清理key为null的value值，就能彻底解决内存泄露问题？答案是否定的。如下图所示：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0bed9b2cdf3d45a18ce8c3726433a3dd~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>假如ThreadLocalMap中存在很多key为null的Entry，但后面的程序，一直都没有调用过有效的ThreadLocal的<code>get</code>、<code>set</code>或<code>remove</code>方法。那么，Entry的value值一直都没被清空。所以会存在这样一条<code>强引用链</code>：Thread变量 -&gt; Thread对象 -&gt; ThreadLocalMap -&gt; Entry -&gt; value -&gt; Object。</p>
+<p>其结果就是：Entry和ThreadLocalMap将会长期存在下去，会导致<code>内存泄露</code>。</p>
+<h2 id="7-如何解决内存泄露问题？"><a href="#7-如何解决内存泄露问题？" class="headerlink" title="7. 如何解决内存泄露问题？"></a>7. 如何解决内存泄露问题？</h2><p>在使用完ThreadLocal对象之后调用ThreadLocal对象的<code>remove</code>方法。</p>
+<p>要在<code>finally</code>代码块中，调用<code>remove</code>方法清理没用的数据。如果业务代码出现异常，也能及时清理没用的数据。</p>
+<p><code>remove</code>方法中会把Entry中的key和value都设置成null，这样就能被GC及时回收，无需触发额外的清理机制，所以它能解决内存泄露问题。</p>
 
               
             </div>

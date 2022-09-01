@@ -1,0 +1,944 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、IPythonIPython是一个python的交互式shell，支持变量自动补全，自动缩进，支持bash shell命令，内置了许多很有用的功能和函数,是利用Python进行科学计算和交互可视化的一个最佳的平台。 1. 运行IPython可以在命令提示符中输入ipython直接进入ipython  2. 各种命令和工具2.1 Tab补全ipython 支持使用 &lt;tab&gt; 键自动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础：01.IPython、输入输出、注释">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/03/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A01.IPython%E3%80%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E3%80%81%E6%B3%A8%E9%87%8A/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="一、IPythonIPython是一个python的交互式shell，支持变量自动补全，自动缩进，支持bash shell命令，内置了许多很有用的功能和函数,是利用Python进行科学计算和交互可视化的一个最佳的平台。 1. 运行IPython可以在命令提示符中输入ipython直接进入ipython  2. 各种命令和工具2.1 Tab补全ipython 支持使用 &lt;tab&gt; 键自动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-03T04:56:02.000Z">
+<meta property="article:modified_time" content="2022-08-13T14:10:16.228Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+  
+  
+  
+  <title>Python基础：01.IPython、输入输出、注释 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python基础：01.IPython、输入输出、注释"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-09-03 12:56" pubdate>
+          2021年9月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.8k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python基础：01.IPython、输入输出、注释</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、IPython"><a href="#一、IPython" class="headerlink" title="一、IPython"></a>一、IPython</h1><p>IPython是一个python的交互式shell，支持变量自动补全，自动缩进，支持bash shell命令，内置了许多很有用的功能和函数,是利用Python进行科学计算和交互可视化的一个最佳的平台。</p>
+<h2 id="1-运行IPython"><a href="#1-运行IPython" class="headerlink" title="1. 运行IPython"></a>1. 运行IPython</h2><p>可以在命令提示符中输入<code>ipython</code>直接进入ipython</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/run-ipython.png" srcset="/img/loading.gif" lazyload alt="run-ipython.png"></p>
+<h2 id="2-各种命令和工具"><a href="#2-各种命令和工具" class="headerlink" title="2. 各种命令和工具"></a>2. 各种命令和工具</h2><h3 id="2-1-Tab补全"><a href="#2-1-Tab补全" class="headerlink" title="2.1 Tab补全"></a>2.1 Tab补全</h3><p>ipython 支持使用 <code>&lt;tab&gt;</code> 键自动补全命令。包括搜索命名空间、补全方法、属性、模块、函数、参数的名称</p>
+<p>IPython默认隐藏私有方法和属性，必须要先输入下划线才能看到</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/tab-ipython-1.png" srcset="/img/loading.gif" lazyload alt="tab-ipython-1.png"></p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/tab-ipython-2.png" srcset="/img/loading.gif" lazyload alt="tab-ipython-2.png"></p>
+<h3 id="2-2-自省"><a href="#2-2-自省" class="headerlink" title="2.2 自省"></a>2.2 自省</h3><ul>
+<li><p>python使用<code>?</code>显示关于对象的概要信息和函数的帮助文档</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/introspection-1.png" srcset="/img/loading.gif" lazyload alt="introspection-1.png"></p>
+</li>
+<li><p>python使用<code>??</code>显示函数的源代码</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/introspection-2.png" srcset="/img/loading.gif" lazyload alt="introspection-2.png"></p>
+</li>
+<li><p>？还可以作用于：把一些字符和通配符(* )结合在一起，会显示所有匹配通配符表达式的命名，暂时了解即可</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/introspection-3.png" srcset="/img/loading.gif" lazyload alt="introspection-3.png"></p>
+</li>
+</ul>
+<h3 id="2-3-上个cell的结果"><a href="#2-3-上个cell的结果" class="headerlink" title="2.3 上个cell的结果"></a>2.3 上个cell的结果</h3><p>使用 <code>_</code> 使用上个cell的输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">12</span><br>a<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>12</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">_ + <span class="hljs-number">13</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>25</p>
+</blockquote>
+<h3 id="2-4-部分系统命令"><a href="#2-4-部分系统命令" class="headerlink" title="2.4 部分系统命令"></a>2.4 部分系统命令</h3><p>可以使用 <code>!</code> 来执行一些系统命令，后续再补充</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">!ping baidu.com<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>正在 Ping baidu.com [220.181.38.251] 具有 32 字节的数据:<br>来自 220.181.38.251 的回复: 字节&#x3D;32 时间&#x3D;6ms TTL&#x3D;43<br>来自 220.181.38.251 的回复: 字节&#x3D;32 时间&#x3D;6ms TTL&#x3D;43<br>来自 220.181.38.251 的回复: 字节&#x3D;32 时间&#x3D;6ms TTL&#x3D;43<br>来自 220.181.38.251 的回复: 字节&#x3D;32 时间&#x3D;6ms TTL&#x3D;43</p>
+<p>220.181.38.251 的 Ping 统计信息:<br>    数据包: 已发送 &#x3D; 4，已接收 &#x3D; 4，丢失 &#x3D; 0 (0% 丢失)，<br>往返行程的估计时间(以毫秒为单位):<br>    最短 &#x3D; 6ms，最长 &#x3D; 6ms，平均 &#x3D; 6ms</p>
+</blockquote>
+<h3 id="2-5-出错位置和原因"><a href="#2-5-出错位置和原因" class="headerlink" title="2.5 出错位置和原因"></a>2.5 出错位置和原因</h3><p>当输入出现错误时，<strong>ipython</strong>会指出出错的位置和原因</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1</span> + <span class="hljs-string">&quot;hello&quot;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>TypeError                                 Traceback (most recent call last)</p>
+<p><ipython-input-4-92709354cfb6> in <module><br>—-&gt; 1 1 + “hello”</p>
+<p>TypeError: unsupported operand type(s) for +: ‘int’ and ‘str’</p>
+</blockquote>
+<h3 id="2-6-ipython-magic命令"><a href="#2-6-ipython-magic命令" class="headerlink" title="2.6 ipython magic命令"></a>2.6 ipython magic命令</h3><p>ipython解释器提供了很多以百分号<code>%</code>开头的<code>magic</code>命令，这些命令很像linux系统下的命令行命令（事实上有些是一样的）。</p>
+<p>可以用命令<code>%lsmagic</code>查看所有的<code>magic</code>命令：</p>
+<p>其中，</p>
+<p><code>Available line magic</code> 以一个百分号开头，作用与一行；</p>
+<p><code>Available cell magic</code> 以两个百分号开头，作用于整个cell。</p>
+<p>最后一行，</p>
+<p><code>Automagic is ON, % prefix IS NOT needed for line magics.</code>说明在此时即使不加上<code>%</code>也可以使用作用于一行的命令。  </p>
+<p><code>Automagic</code>是一种特性，是指这些作用于一行的magic命令不加%也可以使用，只要没有变量被定义为与magic命令相同的名字。  </p>
+<p>通过<code>%automagic</code>进行启用&#x2F;禁用，<strong>作用于整个cell的命令还是需要加上%%</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%lsmagic<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Available line magics:<br>%alias  %alias_magic  %autoawait  %autocall  %automagic  %autosave  %bookmark  %cd  %clear  %cls  %colors  %conda  %config  %connect_info  %copy  %ddir  %debug  %dhist  %dirs  %doctest_mode  %echo  %ed  %edit  %env  %gui  %hist  %history  %killbgscripts  %ldir  %less  %load  %load_ext  %loadpy  %logoff  %logon  %logstart  %logstate  %logstop  %ls  %lsmagic  %macro  %magic  %matplotlib  %mkdir  %more  %notebook  %page  %pastebin  %pdb  %pdef  %pdoc  %pfile  %pinfo  %pinfo2  %pip  %popd  %pprint  %precision  %prun  %psearch  %psource  %pushd  %pwd  %pycat  %pylab  %qtconsole  %quickref  %recall  %rehashx  %reload_ext  %ren  %rep  %rerun  %reset  %reset_selective  %rmdir  %run  %save  %sc  %set_env  %store  %sx  %system  %tb  %time  %timeit  %unalias  %unload_ext  %who  %who_ls  %whos  %xdel  %xmode</p>
+<p>Available cell magics:<br>%%!  %%HTML  %%SVG  %%bash  %%capture  %%cmd  %%debug  %%file  %%html  %%javascript  %%js  %%latex  %%markdown  %%perl  %%prun  %%pypy  %%python  %%python2  %%python3  %%ruby  %%script  %%sh  %%svg  %%sx  %%system  %%time  %%timeit  %%writefile</p>
+<p>Automagic is ON, % prefix IS NOT needed for line magics.</p>
+</blockquote>
+<p>常用到的magic命令：</p>
+<ul>
+<li>使用 <code>%pwd</code> 查看当前工作文件夹：<code>print working directory</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%pwd<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>‘D:\codework\python\Jupyter Notebook\Python’</p>
+</blockquote>
+<ul>
+<li>一些magic命令也像python函数一样，输出可以赋给一个变量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">dir1 = %pwd<br>dir1<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>‘D:\codework\python\Jupyter Notebook\Python’</p>
+</blockquote>
+<ul>
+<li>使用 <code>%mkdir</code> 产生新文件夹：<code>make directory</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%mkdir demo_test <br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用 <code>%cd</code> 改变目录：<code>change directory</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%cd demo_test/<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>D:\codework\python\Jupyter Notebook\Python\demo_test</p>
+</blockquote>
+<ul>
+<li>使用 <code>%%writefile</code> 将cell中的内容写入文件：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">%%writefile hello_world.py<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello world !&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Writing hello_world.py</p>
+</blockquote>
+<ul>
+<li>使用 <code>%run</code> 命令来运行脚本文件：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%run hello_world.py<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hello world !</p>
+</blockquote>
+<ul>
+<li>使用 <code>%load</code> 命令导入脚本文件，导入之后，程序语句会自动导入到cell中，%load语句会自动注释</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%load hello_world.py<br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># %load hello_world.py</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello world !&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用 <code>%ls</code> (list files）查看当前工作文件夹的文件：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%ls<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 驱动器 D 中的卷是 软件<br> 卷的序列号是 3689-CB9D</p>
+<p> D:\codework\python\Jupyter Notebook\Python\demo_test 的目录</p>
+<p>2021&#x2F;08&#x2F;30  15:25    <DIR>          .<br>2021&#x2F;08&#x2F;30  15:25    <DIR>          ..<br>2021&#x2F;08&#x2F;30  15:25                24 hello_world.py<br>               1 个文件             24 字节<br>               2 个目录 369,339,363,328 可用字节</p>
+</blockquote>
+<ul>
+<li>python中删除某个文件：导入os模块，调用os.remove()函数<br><strong>注意函数的参数是字符串</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br>os.remove(<span class="hljs-string">&#x27;hello_world.py&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>查看当前文件夹，<code>hello_world.py</code> 已被删除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%ls<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 驱动器 D 中的卷是 软件<br> 卷的序列号是 3689-CB9D</p>
+<p> D:\codework\python\Jupyter Notebook\Python\demo_test 的目录</p>
+<p>2021&#x2F;08&#x2F;30  15:28    <DIR>          .<br>2021&#x2F;08&#x2F;30  15:28    <DIR>          ..<br>               0 个文件              0 字节<br>               2 个目录 369,339,363,328 可用字节</p>
+</blockquote>
+<ul>
+<li><code>%cd ..</code>返回上一层文件夹：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%cd ..<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>D:\codework\python\Jupyter Notebook\Python</p>
+</blockquote>
+<ul>
+<li>使用 <code>%rmdir</code> 删除文件夹：<code>remove directory</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%rmdir demo_test<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用 <code>%hist</code> 查看历史命令：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%hist<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>a &#x3D; 12<br>a<br>_ + 13<br>!ping baidu.com<br>1 + “hello”<br>%lsmagic<br>%pwd<br>dir1 &#x3D; %pwd<br>dir1<br>%mkdir demo_test<br>%cd demo_test&#x2F;<br>%%writefile hello_world.py<br>print(‘hello world !’)<br>%run hello_world.py<br>%load hello_world.py<br>%ls<br>import os<br>os.remove(‘hello_world.py’)<br>%ls<br>%cd ..<br>%rmdir demo_test<br>%hist</p>
+</blockquote>
+<ul>
+<li>使用 <code>%whos</code> 查看当前的变量空间：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%whos<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Variable   Type      Data&#x2F;Info<br>a          int       12<br>dir1       str       D:\codework\python\Jupyter Notebook\Python<br>os         module    &lt;module ‘os’ from ‘D:\Anaconda3\lib\os.py’&gt;</p>
+</blockquote>
+<ul>
+<li>使用 <code>%reset</code> 重置当前变量空间：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%reset<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Once deleted, variables cannot be recovered. Proceed (y&#x2F;[n])? y</p>
+</blockquote>
+<ul>
+<li>再查看当前变量空间：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">%whos<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Interactive namespace is empty.</p>
+</blockquote>
+<ul>
+<li><code>%timeit</code> 可以计算一段语句的执行时间</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>a = np.random.randn(<span class="hljs-number">100</span>,<span class="hljs-number">100</span>)<br>%timeit np.dot(a,a)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>24.7 µs ± 1 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)</p>
+</blockquote>
+<h2 id="3-Anaconda"><a href="#3-Anaconda" class="headerlink" title="3. Anaconda"></a>3. Anaconda</h2><ul>
+<li><p>Anaconda指的是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项，为了方便起见，我们一般选择直接安装Anaconda，而不是去安装python解释器，外网访问速度较慢时，可以使用国内镜像：<a target="_blank" rel="noopener" href="https://mirror.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirror.tuna.tsinghua.edu.cn/anaconda/archive/</a>   或者  <a target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/">https://repo.anaconda.com/archive/</a></p>
+</li>
+<li><p>Anaconda还有非常好用的一点就是可以<strong>搭建不同的python虚拟环境</strong>，以应对第三方库的不同版本问题</p>
+</li>
+<li><p>Jupyter notebook，安装anaconda时会附带Jupyter notebook，这是一种交互式的文档类型，可以用于代码、文本、数据可视化以及其他输出。内核使用ipython系统进行内部活动。也可以部署在服务器端，远程访问，非常好用。</p>
+</li>
+</ul>
+<p>第一次安装好 Anaconda 以后，可以在命令行输入以下命令使 Anaconda 保持最新：</p>
+<pre><code class="hljs">conda update conda
+conda update anaconda
+</code></pre>
+<p>可以使用它来安装，更新，卸载第三方的 <strong>python</strong> 工具包</p>
+<p>更新最好还是使用conda，pip更新会导致环境问题（源自《利用python进行数据分析》1.4.4）</p>
+<pre><code class="hljs">conda install &lt;some package&gt;
+conda update &lt;some package&gt;
+conda remove &lt;some package&gt;
+</code></pre>
+<p>在安装或更新时可以指定安装的版本号，例如需要使用 <code>numpy 1.8.1</code>：</p>
+<pre><code class="hljs">conda install numpy=1.8.1
+conda update numpy=1.8.1
+</code></pre>
+<p>可以使用 <code>conda info</code> 查看conda的信息</p>
+<p>可以用<code>conda list</code>查看库列表</p>
+<h1 id="二、输出"><a href="#二、输出" class="headerlink" title="二、输出"></a>二、输出</h1><p>print()为python的打印函数，括号中加上字符串，就可以向屏幕上输出指定的文字，也可以打印数字</p>
+<p>可以接受多个字符串，用逗号<code>,</code>隔开。print()会依次打印每个字符串，<strong>遇到逗号会输出一个空格</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello world&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello&#x27;</span>, <span class="hljs-string">&#x27;world&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-number">1</span>+<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>3</p>
+</blockquote>
+<p><strong>习惯于使用 <code>,</code> 不用 <code>+</code> 。</strong> 因为有时候传入的参数不一定是字符串类型，<code>+</code>仅适用于字符串拼接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">dict1=&#123;<span class="hljs-number">123</span>:<span class="hljs-number">1</span>,<br>       <span class="hljs-string">&#x27;secend&#x27;</span>:<span class="hljs-string">&#x27;hello&#x27;</span>,<br>       (<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>):&#123;<span class="hljs-string">&#x27;123&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;secend&#x27;</span>:<span class="hljs-string">&#x27;hello&#x27;</span>&#125;<br>      &#125;<br><span class="hljs-keyword">for</span> keys,values <span class="hljs-keyword">in</span> dict1.items():<br>    <span class="hljs-built_in">print</span>(keys + <span class="hljs-string">&#x27;:&#x27;</span> + values)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>TypeError                                 Traceback (most recent call last)</p>
+<p><ipython-input-4-b9108e6d8407> in <module><br>   4       }<br>   5 for keys,values in dict1.items():<br>—-&gt; 6     print(keys + ‘:’ + values)</p>
+<p>TypeError: unsupported operand type(s) for +: ‘int’ and ‘str’</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">dict1=&#123;<span class="hljs-number">123</span>:<span class="hljs-number">1</span>,<br>       <span class="hljs-string">&#x27;secend&#x27;</span>:<span class="hljs-string">&#x27;hello&#x27;</span>,<br>       (<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>):&#123;<span class="hljs-string">&#x27;123&#x27;</span>:<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;secend&#x27;</span>:<span class="hljs-string">&#x27;hello&#x27;</span>&#125;<br>      &#125;<br><span class="hljs-keyword">for</span> keys,values <span class="hljs-keyword">in</span> dict1.items():<br>    <span class="hljs-built_in">print</span>(keys,<span class="hljs-string">&#x27;:&#x27;</span>,values)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>123 : 1<br>secend : hello<br>(1, 2, 3) : {‘123’: 1, ‘secend’: ‘hello’}</p>
+</blockquote>
+<p>print 默认输出是换行的，如果要<strong>实现不换行需要在变量末尾加上 <code>end=&quot; &quot;</code></strong></p>
+<p>同理，希望打印出的内容间隔不是换行或者空格，还可以指定其他符号</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>( <span class="hljs-string">&#x27;a&#x27;</span>, end=<span class="hljs-string">&quot; &quot;</span> )<br><span class="hljs-built_in">print</span>( <span class="hljs-string">&#x27;b&#x27;</span>)<br><span class="hljs-built_in">print</span>( <span class="hljs-string">&#x27;c&#x27;</span>, end=<span class="hljs-string">&quot;@&quot;</span> )<br><span class="hljs-built_in">print</span>( <span class="hljs-string">&#x27;d&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>a b<br>c@d</p>
+</blockquote>
+<h1 id="三、输入"><a href="#三、输入" class="headerlink" title="三、输入"></a>三、输入</h1><p>python用<code>input()</code>函数捕获用户的输入，括号内可以加上你想让用户看见的字符串。通常将用户输入的内容赋值给一个变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">name = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;what is your name ?&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;your name is:&#x27;</span>,name)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>what is your name ?<br>your name is: </p>
+</blockquote>
+<p>input()返回的<strong>数据类型是str</strong>，所以进行其他形式的运算时，需要转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">s = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;birth: &#x27;</span>))<br>birth = <span class="hljs-built_in">int</span>(s)<br><span class="hljs-keyword">if</span> birth &lt; <span class="hljs-number">2000</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;00前&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;00后&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>birth: 10</p>
+<p>00前</p>
+</blockquote>
+<h1 id="四、注释"><a href="#四、注释" class="headerlink" title="四、注释"></a>四、注释</h1><p>Python单行注释用#</p>
+<p>Python多行注释用<code>&#39;&#39;&#39; &#39;&#39;&#39;</code>  或者 <code>&quot;&quot;&quot; &quot;&quot;&quot;</code>，常用于在函数首部对函数进行说明</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello world&#x27;</span>)<br><span class="hljs-comment"># 这是一个注释</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">多行注释</span><br><span class="hljs-string">print(&#x27;hello world&#x27;)</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;python&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>python</p>
+</blockquote>
+<h1 id="五、续行符"><a href="#五、续行符" class="headerlink" title="五、续行符"></a>五、续行符</h1><p>python中用\来另起一行，\后必须要换行写内容，写了\但<strong>不换行会报错</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">item_one = <span class="hljs-number">1</span><br>item_two = <span class="hljs-number">2</span><br>item_three = <span class="hljs-number">3</span><br>total = item_one    \<br>        + item_two  \<br>        + item_three<br>total<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>6</p>
+</blockquote>
+<p>在 <code>[ ]</code>, <code>&#123; &#125;</code>, 或 <code>( )</code> 中的多行语句，不需要使用反斜杠()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;ab&#x27;</span><br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>ab</p>
+</blockquote>
+<p>Python可以在同一行中使用多条语句，语句之间使用分号<code>;</code>分割，但不建议这样使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys; x = <span class="hljs-string">&#x27;runoob&#x27;</span>; sys.stdout.write(x + <span class="hljs-string">&#x27;\n&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>runoob</p>
+</blockquote>
+<p>python语句后直接加分号也可以，但没人用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;hello world&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hello world</p>
+</blockquote>
+<h1 id="六、其它"><a href="#六、其它" class="headerlink" title="六、其它"></a>六、其它</h1><p>以下代码在一些博客上经常见到</p>
+<p>第一行注释是为了告诉Linux&#x2F;OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；</p>
+<p>第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>python之禅</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> this<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The Zen of Python, by Tim Peters</p>
+<p>Beautiful is better than ugly.<br>Explicit is better than implicit.<br>Simple is better than complex.<br>Complex is better than complicated.<br>Flat is better than nested.<br>Sparse is better than dense.<br>Readability counts.<br>Special cases aren’t special enough to break the rules.<br>Although practicality beats purity.<br>Errors should never pass silently.<br>Unless explicitly silenced.<br>In the face of ambiguity, refuse the temptation to guess.<br>There should be one– and preferably only one –obvious way to do it.<br>Although that way may not be obvious at first unless you’re Dutch.<br>Now is better than never.<br>Although never is often better than <em>right</em> now.<br>If the implementation is hard to explain, it’s a bad idea.<br>If the implementation is easy to explain, it may be a good idea.<br>Namespaces are one honking great idea – let’s do more of those!</p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python基础：01.IPython、输入输出、注释</div>
+      <div>http://jswanyu.github.io/2021/09/03/Python/Python基础：01.IPython、输入输出、注释/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年9月3日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/02/Cpp/00.%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E7%82%B9/" title="C++：00.一些注意点">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C++：00.一些注意点</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/03/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A02.%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%8F%98%E9%87%8F/" title="Python基础：02.数据类型与变量">
+                        <span class="hidden-mobile">Python基础：02.数据类型与变量</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

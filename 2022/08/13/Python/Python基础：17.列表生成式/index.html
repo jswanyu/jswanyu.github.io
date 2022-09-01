@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、列表生成式Python内置的非常简单却强大的可以用来创建list的生成式，即在可迭代对象中将满足条件的元素生成为一个列表，条件可以省略 其结构为：[x表达式 for x in 可迭代对象 if 判断语句]    与下面的for循环是等价的  1234result &#x3D; []for val in collection:    if condition:        result.append(e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A17.%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="一、列表生成式Python内置的非常简单却强大的可以用来创建list的生成式，即在可迭代对象中将满足条件的元素生成为一个列表，条件可以省略 其结构为：[x表达式 for x in 可迭代对象 if 判断语句]    与下面的for循环是等价的  1234result &#x3D; []for val in collection:    if condition:        result.append(e">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-13T13:20:21.113Z">
+<meta property="article:modified_time" content="2021-09-18T09:57:14.503Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-13 21:20" pubdate>
+          2022年8月13日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一、列表生成式"><a href="#一、列表生成式" class="headerlink" title="一、列表生成式"></a>一、列表生成式</h1><p>Python内置的非常简单却强大的可以用来创建list的生成式，即在可迭代对象中将满足条件的元素生成为一个列表，条件可以省略</p>
+<p>其结构为：<code>[x表达式 for x in 可迭代对象 if 判断语句] </code>  </p>
+<p>与下面的for循环是等价的 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">result = []<br><span class="hljs-keyword">for</span> val <span class="hljs-keyword">in</span> collection:<br>    <span class="hljs-keyword">if</span> condition:<br>        result.append(expr)<br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[x * x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">11</span>)]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</p>
+</blockquote>
+<h3 id="1-表达式还可以调用方法"><a href="#1-表达式还可以调用方法" class="headerlink" title="1.表达式还可以调用方法"></a>1.表达式还可以调用方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">L = [<span class="hljs-string">&#x27;Hello&#x27;</span>, <span class="hljs-string">&#x27;World&#x27;</span>, <span class="hljs-string">&#x27;IBM&#x27;</span>, <span class="hljs-string">&#x27;Apple&#x27;</span>]  <br>[x.lower() <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> L <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(x)&gt;<span class="hljs-number">3</span>]  <span class="hljs-comment"># 字符串变成小写,且筛选长度大于3的字符串</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[‘hello’, ‘world’, ‘apple’]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 练习</span><br>L = [<span class="hljs-string">&#x27;Hello&#x27;</span>, <span class="hljs-string">&#x27;World&#x27;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;Apple&#x27;</span>, <span class="hljs-literal">None</span>]  <span class="hljs-comment"># 把列表中字符串提取出来生成新列表，并小写</span><br>[x.lower() <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> L <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(x, <span class="hljs-built_in">str</span>) == <span class="hljs-number">1</span>]  <span class="hljs-comment"># isinstance函数可以判断一个变量是不是对应的类型</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[‘hello’, ‘world’, ‘apple’]</p>
+</blockquote>
+<h3 id="2-使用三元表达式"><a href="#2-使用三元表达式" class="headerlink" title="2.使用三元表达式"></a>2.使用三元表达式</h3><p>x表达式可以使用三元表达式进一步确定x的值，但一定要注意<strong>需要明确计算出x才行</strong></p>
+<p><strong>务必注意：</strong><br>如果涉及到if-else，要注意for语句前后位置的区别，for语句前面是一个表达式，它必须根据元素计算出一个结果，后面是一个筛选条件。因此需要将三元表达式放在for的前面，for后面只能有if，不能有else，否则不能达到筛选的效果  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 现在要实现一个列表生成式，将1-10偶数不动，奇数赋0</span><br>[x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>) <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>]  <span class="hljs-comment"># 筛选条件中不能放else，否则不能达到筛选的效果</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>SyntaxError: invalid syntax</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[x <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>)]  <span class="hljs-comment"># 前面的这个表达式必须要能根据x算出结果，但此时少else，表达模糊，计算不出结果，并不是正确的三元表达式</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>SyntaxError: invalid syntax</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[x <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>)]  <span class="hljs-comment"># x if x % 2 == 0 else 0 能够根据x算出精确的结果</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[0, 2, 0, 4, 0, 6, 0, 8, 0, 10]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>) <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ] <span class="hljs-comment"># 如果只是想筛选2的整数倍，把if条件放在后面</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[2, 4, 6, 8, 10]</p>
+</blockquote>
+<h3 id="3-列表生成式的for循环可以使用两个甚至多个变量"><a href="#3-列表生成式的for循环可以使用两个甚至多个变量" class="headerlink" title="3.列表生成式的for循环可以使用两个甚至多个变量"></a>3.列表生成式的for循环可以使用两个甚至多个变量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">d = &#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-string">&#x27;C&#x27;</span> &#125;<br>[a + <span class="hljs-string">&#x27;=&#x27;</span> + b <span class="hljs-keyword">for</span> a,b <span class="hljs-keyword">in</span> d.items()]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[‘x&#x3D;A’, ‘y&#x3D;B’, ‘z&#x3D;C’]</p>
+</blockquote>
+<h3 id="4-嵌套列表生成式"><a href="#4-嵌套列表生成式" class="headerlink" title="4.嵌套列表生成式"></a>4.嵌套列表生成式</h3><p>当在<strong>表达式中出现两个对象</strong>，或者是<strong>嵌套的列表</strong>等情况就可以使用两层循环,<strong>嵌套列表生成式执行的顺序一定是和写成for循环的顺序相同</strong>，一般也就是先执行第一个for循环。三层及以上的用的不多，可读性较差</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[m * n <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[2, 3, 4, 6, 6, 9, 8, 12]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">[m + n <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;ABC&#x27;</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;XY&#x27;</span>]  <span class="hljs-comment"># 先A 再XY  先B 再XY 先C 再XY</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[‘AX’, ‘AY’, ‘BX’, ‘BY’, ‘CX’, ‘CY’]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">list1 = [(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>),(<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>),(<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>)]  <span class="hljs-comment"># 想将次嵌套式的列表扁平化为一个一维的列表</span><br><span class="hljs-comment"># 如果采用普通for循环</span><br>list_demo = []<br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> list1:<br>    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> x:<br>        list_demo.append(y)<br>list_demo<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[1, 2, 3, 4, 5, 6, 7, 8, 9]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">list1 = [(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>),(<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>),(<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>)]  <span class="hljs-comment"># 想将次嵌套式的列表扁平化为一个一维的列表</span><br><span class="hljs-comment"># 如果采用嵌套列表生成式,更简洁</span><br>list_demo = [y <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> list1 <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> x]  <span class="hljs-comment"># 谨记嵌套列表生成式执行的顺序一定是和写成for循环的顺序相同</span><br>list_demo<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[1, 2, 3, 4, 5, 6, 7, 8, 9]</p>
+</blockquote>
+<p>还有一个情况是<strong>列表生成式中的列表生成式</strong>，他与嵌套列表生成式是不同的，它是<strong>先执行后面的for语句，即把后面的for循环放在最外层循环</strong><br>他是在列表中生成列表，注意区分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">list1 = [(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>),(<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>),(<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>)]<br>list_demo1 = [[y <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> x ]<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> list1]<br><span class="hljs-built_in">print</span>(list_demo1)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">matrix = [           <br>    [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],<br>    [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>],<br>    [<span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]<br>]<br>[[row[i] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> matrix] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>)]   <span class="hljs-comment"># 将3X4的矩阵列表转换为4X3列表</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">list</span>(<span class="hljs-built_in">zip</span>(*matrix)) <span class="hljs-comment"># 也可以通过zip函数解包</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[(1, 5, 9), (2, 6, 10), (3, 7, 11), (4, 8, 12)]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">transposed = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>):<br>    transposed.append([row[i] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> matrix])<br>transposed<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]</p>
+</blockquote>
+<h1 id="二、集合生成式"><a href="#二、集合生成式" class="headerlink" title="二、集合生成式"></a>二、集合生成式</h1><p>把列表生成式的<code>[]</code>换为{}就成为集合生成式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">strings = [<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;as&#x27;</span>,<span class="hljs-string">&#x27;bat&#x27;</span>,<span class="hljs-string">&#x27;car&#x27;</span>,<span class="hljs-string">&#x27;dove&#x27;</span>,<span class="hljs-string">&#x27;python&#x27;</span>]<br>unique_strings = &#123;<span class="hljs-built_in">len</span>(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> strings&#125;  <span class="hljs-comment"># 将列表中字符串的长度转为集合</span><br>unique_strings<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>{1, 2, 3, 4, 6}</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 也可以用map函数到达同样的效果</span><br><span class="hljs-built_in">set</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">len</span>,strings))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>{1, 2, 3, 4, 6}</p>
+</blockquote>
+<h1 id="三、字典生成式"><a href="#三、字典生成式" class="headerlink" title="三、字典生成式"></a>三、字典生成式</h1><p>除了把列表生成式的<code>[]</code>换为{}，在最开始的表达式中需要写成键值对的形式，这样就成为了字典生成式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">strings = [<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;as&#x27;</span>,<span class="hljs-string">&#x27;bat&#x27;</span>,<span class="hljs-string">&#x27;car&#x27;</span>,<span class="hljs-string">&#x27;dove&#x27;</span>,<span class="hljs-string">&#x27;python&#x27;</span>]<br>dict_strings = &#123;key:value <span class="hljs-keyword">for</span> key,value <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(strings)&#125;  <span class="hljs-comment"># 使用enumerate函数创造索引值</span><br>dict_strings<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>{0: ‘a’, 1: ‘as’, 2: ‘bat’, 3: ‘car’, 4: ‘dove’, 5: ‘python’}</p>
+</blockquote>
+<p><strong>使用小括号包裹生成式会变成生成器对象，而不是元组</strong></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：17.列表生成式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月13日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A18.%E8%BF%AD%E4%BB%A3%E3%80%81%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E%E7%94%9F%E6%88%90%E5%99%A8/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A16.%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

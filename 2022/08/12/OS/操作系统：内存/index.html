@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="之前看了几篇关于操作系统内存的博客，觉得写的非常好，整理一下。 参考：虚拟内存是个啥 | 一分钟系列 - 掘金 (juejin.cn) 内存内存是计算机的重要组成部分，对应到物理上，就是我们熟知的内存条。对应在软件里，内存对于用户来说就是一个字节数组，我们可以根据地址来访问到某个字节或者某些字节。 以前的内存 &amp;&amp; 物理地址很久很久之前，一台机器上只放置一个程序，操作系统仅仅作为一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2022/08/12/OS/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%86%85%E5%AD%98/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="之前看了几篇关于操作系统内存的博客，觉得写的非常好，整理一下。 参考：虚拟内存是个啥 | 一分钟系列 - 掘金 (juejin.cn) 内存内存是计算机的重要组成部分，对应到物理上，就是我们熟知的内存条。对应在软件里，内存对于用户来说就是一个字节数组，我们可以根据地址来访问到某个字节或者某些字节。 以前的内存 &amp;&amp; 物理地址很久很久之前，一台机器上只放置一个程序，操作系统仅仅作为一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e6a064f5~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2ecb825f7~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2eadc4359~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e8e09c70~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e59f7f59~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+<meta property="article:published_time" content="2022-08-12T09:29:06.725Z">
+<meta property="article:modified_time" content="2022-08-13T14:59:00.712Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e6a064f5~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-12 17:29" pubdate>
+          2022年8月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <p>之前看了几篇关于操作系统内存的博客，觉得写的非常好，整理一下。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903939683385352">虚拟内存是个啥 | 一分钟系列 - 掘金 (juejin.cn)</a></p>
+<h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><p>内存是计算机的重要组成部分，对应到物理上，就是我们熟知的内存条。对应在软件里，内存对于用户来说就是一个字节数组，我们可以根据地址来访问到某个字节或者某些字节。</p>
+<h2 id="以前的内存-amp-amp-物理地址"><a href="#以前的内存-amp-amp-物理地址" class="headerlink" title="以前的内存 &amp;&amp; 物理地址"></a>以前的内存 &amp;&amp; 物理地址</h2><p>很久很久之前，一台机器上只放置一个程序，操作系统仅仅作为一个函数库存在。对于内存来说，除去操作系统的代码和数据占用的一些空间外，其余空间全部分配给正在运行的那个程序（进程），画个图就是这样：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e6a064f5~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="image_1dkcucmbomuv1atf1vn516ge14kim.png-29.3kB"></p>
+<p><strong>物理地址</strong>：内存中真正的地址，对应于系统中物理内存的M 个字节，每字节都有一个唯一的物理地址。</p>
+<p>比如说，图中第一个字节的物理地址是 0，接下来的字节地址是 1，再下一个是 2，以此类推，一直到n-1。给定这种简单的结构，CPU 访问内存的最自然的方式就是使用这样的物理地址。我们把这种方式称为<strong>物理寻址</strong>。物理寻址这种方式，<strong>每一个程序都直接访问物理内存</strong>，存在重大缺陷：</p>
+<ul>
+<li>用户程序可以寻址内存的任意一个字节，它们就可以<strong>很容易地破坏操作系统</strong>，从而使系统慢慢地停止运行。</li>
+<li><strong>这种寻址方式使得操作系统中同时运行两个或以上的程序几乎是不可能的</strong>。</li>
+</ul>
+<blockquote>
+<p>摘自《现代操作系统 - 第 3 版》：</p>
+<p>一个程序给物理内存地址 1000 赋值也就是存入了一些数据后，另一个程序也同样给这个地址赋值，那么第二个程序的赋值会覆盖掉第一个程序所赋的值，这会造成两个程序同时崩溃。</p>
+</blockquote>
+<h2 id="同时运行多个程序的内存-amp-amp-虚拟地址"><a href="#同时运行多个程序的内存-amp-amp-虚拟地址" class="headerlink" title="同时运行多个程序的内存  &amp;&amp; 虚拟地址"></a>同时运行多个程序的内存  &amp;&amp; 虚拟地址</h2><p>后来人们觉得同时在一台计算机上只运行一个程序太亏了，就设计了一个可以同时运行多个程序的机制。不过内存条只有一个，所以这些用户程序只能共享同一个内存条，只能把内存的不同部分划分给不同的用户程序，画个图就像是这样：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2ecb825f7~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="image_1dkcukdebh3m1qo21o0u1vp1g5713.png-27.4kB"></p>
+<p>这种同时运行多个程序的机制就要求把多个进程对应的内存一直留在物理内存中，并且还得是属于自己的单独内存，其他进程不会访问，这样既能同时运行多个进程，也能让上下文切换时比较方便。如上图中所示，有 3 个进程，每个进程拥有物理内存中切出来给它们的一小部分内存，可以理解为这 3 个进程共享物理内存。</p>
+<p>但显然，这种方式是存在一定安全隐患的。毕竟如果各个进程之间可以随意读取、写入内容的话那就乱套了。</p>
+<p>所以要对每个进程使用的地址进行<strong>保护</strong>，让别的进程不能随意读写。这样的话继续使用物理内存模型肯定是不行了，因此操作系统创造了一个新的内存抽象，引入了一个新的内存模型，那就是<strong>虚拟地址空间</strong>，很多书中都会直接称呼为 “地址空间（Address Space）”。</p>
+<p>虚拟地址空间是一个进程可用于寻址内存的一套地址集合。每个进程都有一个自己的地址空间，并且这个地址空间独立于其他进程的地址空间（除了在一些特殊情况下进程需要共享它们的地址空间外）</p>
+<p><strong>虚拟地址</strong>：操作系统给每个进程分配的独立的虚拟地址空间，每个进程包含的栈、堆、代码段这些都会从这个地址空间中被分配一个地址，这个地址就被称为<strong>虚拟地址</strong>。</p>
+<p>有了虚拟地址空间后，CPU 就可以通过生成一个虚拟地址来访问主存，这个虚拟地址在被送到内存之前会先被转换成合适的物理地址，这个虚拟地址到物理地址的转换过程称为 <strong>地址翻译&#x2F;地址转换</strong></p>
+<p>仅仅对每个进程使用的地址进行<strong>保护</strong>，让别的进程不能随意读写，这样就够了吗？其实还存在这些问题：</p>
+<ul>
+<li><p>不同用户程序只能使用给他们规定好的那部分内存，也就是程序员在敲代码的时候就应该小心翼翼的计算自己使用的内存有没有占到别人家的地儿</p>
+</li>
+<li><p>能使用的内存空间都给规定好了，诸多进程只能共享一块物理内存，也太少了</p>
+</li>
+</ul>
+<h2 id="虚拟内存是什么"><a href="#虚拟内存是什么" class="headerlink" title="虚拟内存是什么"></a>虚拟内存是什么</h2><p>操作系统是个老好人，使命就是解决所有用户感到麻烦的事情。设计操作系统的大叔觉得，如果让用户直接去操作内存的话，用户也不知道其他人到底使用了内存的哪些字节，自己可以使用哪些字节，如果要做到这一点的话人们在开发程序的时候还要聚到一起开个会，把每个人该用哪块内存都规定好，即使规定好了用户还得小心翼翼的避免使用了不属于自己的那部分内存。</p>
+<p>干脆，干脆就不让用户直接操作内存了，让用户在编程序的时候直接把内存想象成一个非常非常大的字节数组就好了，自己在这个字节数组上可以随便折腾，他们把这个非常大的字节数组称之为<strong>虚拟内存</strong>，由操作系统完成从虚拟内存的虚拟地址到真实内存的真实地址之间的映射工作。画个图就像这样：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2eadc4359~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="image_1dkd0mfcifvl19ruvdr176s1c8v1t.png-91.1kB"></p>
+<p>这样还有问题，用户越来越多，即使每个用户都使用非常少的内存空间，那加起来占用的内存空间都可能超过了真实内存的大小，更何况某些丧心病狂的程序员写的程序里本身就使用了超过真正内存大小的空间，这可怎么办。这难不倒设计操作系统的大叔们，他们机智的把<strong>硬盘</strong>也拉了进来。（内存不足还有一种扩展方式：交换技术）</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e8e09c70~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="image_1dkd1c1gq1edotve5ea1eean9n4a.png-125.5kB"></p>
+<p>操作系统完成由<strong>虚拟内存地址到真实内存地址或者磁盘地址之间的映射</strong>工作，这样子给用户提供的虚拟内存的地址空间就可以非常非常大（硬盘相对内存来说可太大了），用户程序中那些很久都用不到的内存空间可以被操作系统给搞到磁盘上边存储，什么时候需要用了，又从磁盘中加载到真实内存中，重要的是这个过程全部是操作系统自动完成的，对于我们这些码农来说，编写程序就像是在一个炒鸡大的字节数组上将某个地方的数据搬到另一个地方，或者将某个地方的数据经过CPU的某种加工之后再放到某个字节数组的某个地方，整个过程so easy，完全不用担心有没有读取&#x2F;覆盖掉别人正在使用的内存空间。</p>
+<blockquote>
+<p>小贴士：</p>
+<p> windows系统中，虚拟内存是个文件：pagefile.sys ，存在系统盘即c盘上，当你的C盘剩余空间很少时就会虚拟内存不足，就会导致很卡～</p>
+<p>linux&#x2F;Unix的虚拟内存是个磁盘上的一个分区：&#x2F;swap分区</p>
+</blockquote>
+<h2 id="虚拟内存结构"><a href="#虚拟内存结构" class="headerlink" title="虚拟内存结构"></a>虚拟内存结构</h2><p>对于敲代码的来说，<code>虚拟内存</code>就是一个超级大的字节数组，不过这个字节数组也是被划分为多个部分的，并不是每个地方用户都可以访问，一般的虚拟内存结构长这样：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/10/16d1a2b2e59f7f59~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp" srcset="/img/loading.gif" lazyload alt="image_1dkd28hgakg41obad4a13ag19mj5k.png-66.2kB"></p>
+<p>用户需要调用函数的时候，一般都会生成一个称之为<code>栈帧</code>的结构，从而导致虚拟内存中的<code>栈空间</code>增长。</p>
+<p>用户需要单独申请内存空间时，就会从堆空间分配，从而导致虚拟内存中的<code>堆空间</code>增长。</p>
+<p>这里需要强调的一点是，我们平时所说的操作系统<code>内核</code>不是一个进程，而是指操作系统的代码。</p>
+<h2 id="虚拟内存的实现方式"><a href="#虚拟内存的实现方式" class="headerlink" title="虚拟内存的实现方式"></a>虚拟内存的实现方式</h2><p>虚拟内存中，允许将一个作业分多次调入内存。釆用连续分配方式时，会使相当一部分内存空间都处于暂时或永久的空闲状态，造成内存资源的严重浪费，而且也无法从逻辑上扩大内存容量。因此，虚拟内存的实需要建立在<strong>离散</strong>分配的内存管理方式的基础上。</p>
+<p>虚拟内存的实现有以下三种方式：请求分页存储管理；请求分段存储管理；请求段页式存储管理。</p>
+<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h3><h3 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h3><h3 id="段页式"><a href="#段页式" class="headerlink" title="段页式"></a>段页式</h3>
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2022/08/12/OS/操作系统：内存/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月12日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
