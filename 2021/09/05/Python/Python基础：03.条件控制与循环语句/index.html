@@ -16,23 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Python的条件控制一、基本语法： if语句执行有个特点，它是从上往下判断，如果在某个判断上是True，把该判断对应的语句执行后，就忽略掉剩下的elif和else 。因此若有的if条件写的不严谨导致，同时符合多个条件，只会执行第一个符合条件的语句块 python需要严格遵循缩进规则 1234567age &#x3D; 20if age &gt;&#x3D; 6:    print(&amp;#x27;teenager&amp;#x">
+    <meta name="description" content="条件控制1. 基本语法123456if condition_1:    statement_block_1elif condition_2:    statement_block_2else:    statement_block_3   如果 “condition_1” 为 True 将执行 “statement_block_1” 块语句 如果 “condition_1” 为False，将判断">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A09.%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:title" content="Python基础：03.条件控制与循环语句">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/05/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A03.%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="Python的条件控制一、基本语法： if语句执行有个特点，它是从上往下判断，如果在某个判断上是True，把该判断对应的语句执行后，就忽略掉剩下的elif和else 。因此若有的if条件写的不严谨导致，同时符合多个条件，只会执行第一个符合条件的语句块 python需要严格遵循缩进规则 1234567age &#x3D; 20if age &gt;&#x3D; 6:    print(&amp;#x27;teenager&amp;#x">
+<meta property="og:description" content="条件控制1. 基本语法123456if condition_1:    statement_block_1elif condition_2:    statement_block_2else:    statement_block_3   如果 “condition_1” 为 True 将执行 “statement_block_1” 块语句 如果 “condition_1” 为False，将判断">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49RfTf.png">
-<meta property="article:published_time" content="2022-08-13T13:20:21.059Z">
-<meta property="article:modified_time" content="2022-09-01T02:37:11.809Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-05T08:23:09.000Z">
+<meta property="article:modified_time" content="2022-09-03T02:07:34.752Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49RfTf.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>Python基础：03.条件控制与循环语句 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -170,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="Python基础：03.条件控制与循环语句"></span>
           
         </div>
 
@@ -187,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-13 21:20" pubdate>
-          2022年8月13日 晚上
+        <time datetime="2021-09-05 16:23" pubdate>
+          2021年9月5日 下午
         </time>
       </span>
     
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          3.5k 字
         
       </span>
     
@@ -239,11 +239,19 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Python基础：03.条件控制与循环语句</h1>
             
             <div class="markdown-body">
               
-              <h1 id="Python的条件控制"><a href="#Python的条件控制" class="headerlink" title="Python的条件控制"></a>Python的条件控制</h1><h2 id="一、基本语法："><a href="#一、基本语法：" class="headerlink" title="一、基本语法："></a>一、基本语法：</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49RfTf"><img src="https://z3.ax1x.com/2021/09/12/49RfTf.png" srcset="/img/loading.gif" lazyload alt="condition-control.png"></a></p>
+              <h1 id="条件控制"><a href="#条件控制" class="headerlink" title="条件控制"></a>条件控制</h1><h2 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> condition_1:<br>    statement_block_1<br><span class="hljs-keyword">elif</span> condition_2:<br>    statement_block_2<br><span class="hljs-keyword">else</span>:<br>    statement_block_3<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>如果 “condition_1” 为 True 将执行 “statement_block_1” 块语句</li>
+<li>如果 “condition_1” 为False，将判断 “condition_2”</li>
+<li>如果”condition_2” 为 True 将执行 “statement_block_2” 块语句</li>
+<li>如果 “condition_2” 为False，将执行”statement_block_3”块语句</li>
+</ul>
+<p>Python 中用 <strong>elif</strong> 代替了 <strong>else if</strong>，所以if语句的关键字为：<strong>if – elif – else</strong>。</p>
 <p>if语句执行有个特点，它是从上往下判断，如果在某个判断上是True，把<strong>该判断对应的语句执行后，就忽略掉剩下的elif和else</strong> 。因此若有的if条件写的不严谨导致，同时符合多个条件，只会执行第一个符合条件的语句块</p>
 <p>python需要严格<strong>遵循缩进规则</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">age = <span class="hljs-number">20</span><br><span class="hljs-keyword">if</span> age &gt;= <span class="hljs-number">6</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;teenager&#x27;</span>)<br><span class="hljs-keyword">elif</span> age &gt;= <span class="hljs-number">18</span>:       <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;adult&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;kid&#x27;</span>)<br></code></pre></td></tr></table></figure>
@@ -263,27 +271,27 @@
 <blockquote>
 <p>True</p>
 </blockquote>
-<h2 id="二、三元表达式"><a href="#二、三元表达式" class="headerlink" title="二、三元表达式"></a>二、三元表达式</h2><p>python中三元表达式允许讲一个if-else代码块联合起来，在一行代码或一个语句中生成数据  </p>
+<h2 id="2-三元表达式"><a href="#2-三元表达式" class="headerlink" title="2. 三元表达式"></a>2. 三元表达式</h2><p>python中三元表达式允许将一个if-else代码块联合起来，在一行代码或一个语句中生成数据  </p>
 <p>其格式为：<code>执行表达式1 if 判断表达式 else 执行表达式2 </code> ，意思为，如果if判断表达式为True，则执行表达式1，否则执行表达式2  </p>
-<p><strong>三元表达式中的else语句不能去掉！</strong></p>
-<p>如果条件以及真假表达式非常复杂，不建议使用三元表达式，会牺牲可读性</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">10</span><br>value = <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> a&gt;<span class="hljs-number">5</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>   <span class="hljs-comment"># </span><br>value<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>1</p>
 </blockquote>
+<p><strong>三元表达式中的else语句不能去掉！</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">10</span><br>value = <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> a&gt;<span class="hljs-number">5</span><br>value<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p> File “<ipython-input-3-d5a66a229922>“, line 2<br> value &#x3D; 1 if a&gt;5<br>                 ^<br> SyntaxError: invalid syntax</p>
 </blockquote>
-<h2 id="三、if的嵌套"><a href="#三、if的嵌套" class="headerlink" title="三、if的嵌套"></a>三、if的嵌套</h2><p>if-elif-else可以嵌套在if结构中，同样使用缩进</p>
+<p>如果条件以及真假表达式非常复杂，不建议使用三元表达式，会牺牲可读性</p>
+<h2 id="3-if的嵌套"><a href="#3-if的嵌套" class="headerlink" title="3. if的嵌套"></a>3. if的嵌套</h2><p>if-elif-else可以嵌套在if结构中，同样使用缩进</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;数字猜谜游戏&#x27;</span>)<br>real_number = <span class="hljs-number">7</span><br>guess = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> guess!=real_number:<br>    guess = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;输入你猜的数字&#x27;</span>))<br>    <span class="hljs-keyword">if</span> guess==real_number:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你猜对了&#x27;</span>)<br>    <span class="hljs-keyword">elif</span> guess&lt;real_number:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你猜小了&#x27;</span>)<br>    <span class="hljs-keyword">elif</span> guess&gt;real_number:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你猜大了&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>数字猜谜游戏<br>输入你猜的数字3<br>你猜小了<br>输入你猜的数字8<br>你猜大了<br>输入你猜的数字7<br>你猜对了</p>
 </blockquote>
-<h3 id="四、其他注意点"><a href="#四、其他注意点" class="headerlink" title="四、其他注意点"></a>四、其他注意点</h3><p>if必须严格遵循语法的形式，<strong>不能加大括号什么的，容易与集合混淆</strong></p>
+<h2 id="4-其他注意点"><a href="#4-其他注意点" class="headerlink" title="4. 其他注意点"></a>4. 其他注意点</h2><p>if必须严格遵循语法的形式，<strong>不能加大括号什么的，容易与集合混淆</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">name =<span class="hljs-string">&quot;pag&quot;</span><br><span class="hljs-keyword">if</span> name == <span class="hljs-string">&quot;pag&quot;</span>:&#123;<br>  <span class="hljs-built_in">print</span>(name == <span class="hljs-string">&quot;pag&quot;</span>)  <span class="hljs-comment"># 这里的是构建了一个集合</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -304,12 +312,92 @@
 <blockquote>
 <p>True<br>line 2 of if condition</p>
 </blockquote>
+<h1 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h1><h2 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1. while循环"></a>1. while循环</h2><h3 id="1-1-一般格式"><a href="#1-1-一般格式" class="headerlink" title="1.1 一般格式"></a>1.1 一般格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> 判断条件(condition):<br>	执行语句(statements)......<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意冒号与缩进</strong>，严格遵循循环格式。Python中没有do-while语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 计算1到10的和</span><br>a=<span class="hljs-number">1</span><br>b=<span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> a&lt;=<span class="hljs-number">10</span>:<br>    b+=a<br>    a+=<span class="hljs-number">1</span><br><span class="hljs-built_in">print</span>(b)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>55</p>
+</blockquote>
+<p>如果while循环体中只有一条语句，可以将该语句与while写在同一行中，虽然不建议这样做</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">a=&#123;<span class="hljs-string">&#x27;wan&#x27;</span>,<span class="hljs-string">&#x27;yu&#x27;</span>&#125;<br><span class="hljs-keyword">while</span> a:<span class="hljs-built_in">print</span>(a.pop())   <span class="hljs-comment">#while a: 其中a也是一种条件判断，类似a中只要有元素，就符合条件语句</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>wan<br>yu</p>
+</blockquote>
+<h3 id="1-2-无限循环"><a href="#1-2-无限循环" class="headerlink" title="1.2 无限循环"></a>1.2 无限循环</h3><p>一直满足循环条件，一直执行循环语句。在有些场景比较有用（例如：服务器上的实时请求）</p>
+<p>可以使用 CTRL+C 来退出当前的无限循环。但是在notebook中不管用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-number">1</span>:<br>    a=<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个字母&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;你输入的字母是：&#x27;</span>,a)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-while-else语句"><a href="#1-3-while-else语句" class="headerlink" title="1.3 while-else语句"></a>1.3 while-else语句</h3><p>循环+条件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">count = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> count &lt; <span class="hljs-number">5</span>:<br>   <span class="hljs-built_in">print</span> (count, <span class="hljs-string">&quot; 小于 5&quot;</span>)<br>   count = count + <span class="hljs-number">1</span><br><span class="hljs-keyword">else</span>:<br>   <span class="hljs-built_in">print</span> (count, <span class="hljs-string">&quot; 大于或等于 5&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>0  小于 5<br>1  小于 5<br>2  小于 5<br>3  小于 5<br>4  小于 5<br>5  大于或等于 5</p>
+</blockquote>
+<h2 id="2-for循环"><a href="#2-for循环" class="headerlink" title="2. for循环"></a>2. for循环</h2><p>Python for 循环可以遍历任何可迭代对象，如一个列表或者一个字符串。for循环的一般格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> &lt;variable&gt; <span class="hljs-keyword">in</span> &lt;sequence&gt;:<br>    &lt;statements&gt;<br><span class="hljs-keyword">else</span>:<br>    &lt;statements&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如果序列中没有元素，则执行else</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">a=[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:<br>     <span class="hljs-built_in">print</span>(i)<br><span class="hljs-keyword">else</span>:<br>   <span class="hljs-built_in">print</span>(a)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1<br>2<br>3<br>4<br>5<br>[1, 2, 3, 4, 5]</p>
+</blockquote>
+<p>for循环可以通过解包遍历两个序列数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> [(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">2</span>, <span class="hljs-number">4</span>), (<span class="hljs-number">3</span>, <span class="hljs-number">9</span>)]:<br>     <span class="hljs-built_in">print</span>(x, y)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1 1<br>2 4<br>3 9</p>
+</blockquote>
+<h2 id="3-break和continue"><a href="#3-break和continue" class="headerlink" title="3. break和continue"></a>3. break和continue</h2><h3 id="3-1-break"><a href="#3-1-break" class="headerlink" title="3.1 break"></a>3.1 break</h3><p>break 语句可以<strong>跳出整个 for 和 while 的循环体</strong>。如果你从 for 或 while 循环中终止，任何对应的循环 else 块将不执行。  </p>
+<p><strong>同时注意break语句只跳出<code>当前这一层</code>的for或while，若外面还有循环结构，则继续循环</strong></p>
+<h3 id="3-2-continue"><a href="#3-2-continue" class="headerlink" title="3.2 continue"></a>3.2 continue</h3><p>continue 语句被用来告诉 Python <strong>跳过当前循环轮中的剩余语句，进行下一轮循环</strong>。</p>
+<p>这两个语句通常都必须配合if语句使用  </p>
+<p><strong>不要滥用break和continue语句。break和continue会造成代码执行逻辑分叉过多，容易出错。大多数循环并不需要用到break和continue语句，都可以通过改写循环条件或者修改循环逻辑</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">a = [<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:<br>    <span class="hljs-keyword">if</span> i%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span> (i)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">break</span><br><span class="hljs-built_in">print</span> (i)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>10<br>11</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">a = [<span class="hljs-number">10</span>,<span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a:<br>    <span class="hljs-keyword">if</span> i%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span> (i)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">continue</span><br><span class="hljs-built_in">print</span> (i)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>10<br>12<br>14<br>15</p>
+</blockquote>
+<h2 id="4-pass语句"><a href="#4-pass语句" class="headerlink" title="4. pass语句"></a>4. pass语句</h2><p>Python中pass是空语句，是为了保持程序结构的完整性，因为有时不加语句会报错。pass 不做任何事情，一般用做占位语句。在代码段中或定义函数的时候，如果没有内容，或者先不做任何处理，直接跳过，就可以使用pass</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]:<br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
 
               
             </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -320,8 +408,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：09.条件控制/</div>
+      <div>Python基础：03.条件控制与循环语句</div>
+      <div>http://jswanyu.github.io/2021/09/05/Python/Python基础：03.条件控制与循环语句/</div>
     </div>
     <div class="license-meta">
       
@@ -333,7 +421,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月13日</div>
+          <div>2021年9月5日</div>
         </div>
       
       
@@ -358,6 +446,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/02/Cpp/00.%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E7%82%B9/" title="C++：00.一些注意点">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C++：00.一些注意点</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/05/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A04.%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A8%A1%E5%9D%97/" title="Python基础：04.函数与模块">
+                        <span class="hidden-mobile">Python基础：04.函数与模块</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
