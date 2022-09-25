@@ -16,24 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="文件操作一、文件的打开open()函数open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数file_name &#x3D; open(file, mode&#x3D;&#39;r&#39;)函数常用形式是接收两个参数：文件名(file)和模式(mode),默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作常见的模式如下：   使用 open() 方法一定">
+    <meta name="description" content="文件操作1. 文件的打开open()函数open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数file_name &#x3D; open(file, mode&#x3D;&#39;r&#39;) 函数常用形式是接收两个参数：文件名(file)和模式(mode)，默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作  常见的模式如下：红框为常用的模式   使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A15.%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="Python基础：07.文件、时间与日期">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/10/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A07.%E6%96%87%E4%BB%B6%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="文件操作一、文件的打开open()函数open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数file_name &#x3D; open(file, mode&#x3D;&#39;r&#39;)函数常用形式是接收两个参数：文件名(file)和模式(mode),默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作常见的模式如下：   使用 open() 方法一定">
+<meta property="og:description" content="文件操作1. 文件的打开open()函数open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数file_name &#x3D; open(file, mode&#x3D;&#39;r&#39;) 函数常用形式是接收两个参数：文件名(file)和模式(mode)，默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作  常见的模式如下：红框为常用的模式   使用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49RH6s.png">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49R7lj.png">
-<meta property="article:published_time" content="2022-08-13T13:20:21.100Z">
-<meta property="article:modified_time" content="2022-09-01T02:37:47.983Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-10T04:23:32.000Z">
+<meta property="article:modified_time" content="2022-09-24T15:44:04.299Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49RH6s.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>Python基础：07.文件、时间与日期 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -171,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="Python基础：07.文件、时间与日期"></span>
           
         </div>
 
@@ -188,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-13 21:20" pubdate>
-          2022年8月13日 晚上
+        <time datetime="2021-09-10 12:23" pubdate>
+          2021年9月10日 中午
         </time>
       </span>
     
@@ -200,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          4.5k 字
         
       </span>
     
@@ -240,16 +239,17 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Python基础：07.文件、时间与日期</h1>
             
             <div class="markdown-body">
               
-              <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><h2 id="一、文件的打开"><a href="#一、文件的打开" class="headerlink" title="一、文件的打开"></a>一、文件的打开</h2><h3 id="open-函数"><a href="#open-函数" class="headerlink" title="open()函数"></a>open()函数</h3><p>open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数<br><code>file_name = open(file, mode=&#39;r&#39;)</code>函数常用形式是接收两个参数：文件名(file)和模式(mode),默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作<br>常见的模式如下：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49RH6s"><img src="https://z3.ax1x.com/2021/09/12/49RH6s.png" srcset="/img/loading.gif" lazyload alt="file-mode.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49R7lj"><img src="https://z3.ax1x.com/2021/09/12/49R7lj.png" srcset="/img/loading.gif" lazyload alt="file-mode1.png"></a></p>
+              <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><h2 id="1-文件的打开"><a href="#1-文件的打开" class="headerlink" title="1. 文件的打开"></a>1. 文件的打开</h2><h3 id="open-函数"><a href="#open-函数" class="headerlink" title="open()函数"></a>open()函数</h3><p>open() 函数用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数<br><code>file_name = open(file, mode=&#39;r&#39;)</code></p>
+<p>函数常用形式是接收两个参数：文件名(file)和模式(mode)，默认是只读模式，打开后返回给file_name这个对象，用于后续的文件操作 </p>
+<p>常见的模式如下：红框为常用的模式</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/file-mode.png" srcset="/img/loading.gif" lazyload alt="file-mode"></p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/file-mode1.png" srcset="/img/loading.gif" lazyload alt="file-mode1"></p>
 <p><strong>使用 open() 方法一定要保证关闭文件对象，即调用 close() 方法</strong>  </p>
-<hr>
-<h2 id="二、读文件"><a href="#二、读文件" class="headerlink" title="二、读文件"></a>二、读文件</h2><p><strong>读文件的方法都会随着读取进度而推进文件指针！！！</strong>  </p>
+<h2 id="2-读文件"><a href="#2-读文件" class="headerlink" title="2. 读文件"></a>2. 读文件</h2><p><strong>读文件的方法都会随着读取进度而推进文件指针！！！</strong>  </p>
 <h3 id="2-1-file-read-size"><a href="#2-1-file-read-size" class="headerlink" title="2.1 file.read(size)"></a>2.1 file.read(size)</h3><p>从文件读取指定的字节数。<strong>如果未给定或为负则读取所有</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">fo = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./hello.txt&#x27;</span>)<br>word = fo.read(<span class="hljs-number">10</span>)<br><span class="hljs-built_in">print</span>(word)<br>fo.close()<br></code></pre></td></tr></table></figure>
 
@@ -275,7 +275,7 @@
 <blockquote>
 <p>[‘hello world!\n’, ‘hello python!\n’, ‘hello wanyu!’]<br>hello world!<br>hello python!<br>hello wanyu!</p>
 </blockquote>
-<h2 id="三、写文件"><a href="#三、写文件" class="headerlink" title="三、写文件"></a>三、写文件</h2><h3 id="3-1-file-write"><a href="#3-1-file-write" class="headerlink" title="3.1 file.write()"></a>3.1 file.write()</h3><p>用于向文件中写入指定<strong>字符串</strong>。<strong>要注意文件打开方式</strong></p>
+<h2 id="3-写文件"><a href="#3-写文件" class="headerlink" title="3. 写文件"></a>3. 写文件</h2><h3 id="3-1-file-write"><a href="#3-1-file-write" class="headerlink" title="3.1 file.write()"></a>3.1 file.write()</h3><p>用于向文件中写入指定<strong>字符串</strong>。<strong>要注意文件打开方式</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">fo = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./hello1.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)  <span class="hljs-comment"># 先写一个新文件</span><br>fo.write(<span class="hljs-string">&#x27;hello file\n&#x27;</span>)<br>fo.write(<span class="hljs-string">&#x27;hello java&#x27;</span>)<br>fo.close()<br></code></pre></td></tr></table></figure>
 
 
@@ -290,7 +290,7 @@
 <blockquote>
 <p>123<br>456<br>hello file<br>hello java</p>
 </blockquote>
-<h3 id="3-2-file-writelines-str"><a href="#3-2-file-writelines-str" class="headerlink" title="3.2 file.writelines( [ str ] )"></a>3.2 file.writelines( [ str ] )</h3><p>方法用于向文件中写入一序列的字符串。这一序列字符串可以是由迭代对象产生的，如一个字符串列表。换行需要制定换行符<code>\n</code>. </p>
+<h3 id="3-2-file-writelines-str"><a href="#3-2-file-writelines-str" class="headerlink" title="3.2 file.writelines( [ str ] )"></a>3.2 file.writelines( [ str ] )</h3><p>方法用于向文件中写入一序列的字符串。这一序列字符串可以是由迭代对象产生的，如一个字符串列表。换行需要制定换行符<code>\n</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">fo = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;hello2.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>)<br>seq = [<span class="hljs-string">&quot;菜鸟教程 1\n&quot;</span>, <span class="hljs-string">&quot;菜鸟教程 2&quot;</span>]<br>fo.writelines( seq )<br>fo.close()<br></code></pre></td></tr></table></figure>
 
 
@@ -318,24 +318,24 @@
 <p>读取的内容是： 菜鸟教程 1</p>
 <p>12<br>0</p>
 </blockquote>
-<h2 id="四、关闭文件"><a href="#四、关闭文件" class="headerlink" title="四、关闭文件"></a>四、关闭文件</h2><p>文件未关闭容易导致很多错误</p>
+<h2 id="4-关闭文件"><a href="#4-关闭文件" class="headerlink" title="4. 关闭文件"></a>4. 关闭文件</h2><p>文件未关闭容易导致很多错误</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">txt = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello3.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    txt.write(<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\n&#x27;</span>)<br><span class="hljs-comment"># txt.close()  </span><br>txt2 = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello3.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>)<br><span class="hljs-built_in">print</span> (txt2.read())  <span class="hljs-comment"># 程序运行之后文件中并没有写入东西，因为没关闭</span><br></code></pre></td></tr></table></figure>
 
 
-<p>​    </p>
+<p> 正确的应该先关闭</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">txt = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello3.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    txt.write(<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>txt.close()  <span class="hljs-comment"># 关闭</span><br>txt2 = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello3.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>)<br><span class="hljs-built_in">print</span> (txt2.read())  <br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>0<br>1<br>2<br>3<br>4</p>
 </blockquote>
-<p>​    </p>
-<p>在写入的时候有可能一些中间过程出问题，导致程序无法正常运行，也就无法运行close语句，这时候可以用处理异常的方法,通过finally语句，把文件关闭</p>
+<p> 在写入的时候有可能一些中间过程出问题，导致程序无法正常运行，也就无法运行close语句，这时候可以用处理异常的方法,通过finally语句，把文件关闭</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">txt = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello4.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br><span class="hljs-keyword">try</span>:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>        a=<span class="hljs-number">10</span>/(i-<span class="hljs-number">5</span>)<br>        txt.write(<span class="hljs-built_in">str</span>(a)+<span class="hljs-string">&#x27;\n&#x27;</span>)<br><span class="hljs-keyword">except</span> Exception:<br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;error:&#x27;</span>,i)<br><span class="hljs-keyword">finally</span>:<br>    txt.close()<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>error: 5</p>
 </blockquote>
-<h2 id="with-open-as-name"><a href="#with-open-as-name" class="headerlink" title="with open() as name:"></a>with open() as name:</h2><p>这种结构可以自动关闭文件，不用担心出问题，同时也命名了新文件。但要处理异常还是要用try结构</p>
+<p><strong>一般更推荐使用的是</strong>：<code>with open() as name:</code></p>
+<p>这种结构可以自动关闭文件，不用担心出问题，同时也命名了新文件。<strong>但要处理异常还是要用try结构</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello5.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> txt:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>        txt.write(<span class="hljs-built_in">str</span>(i)+<span class="hljs-string">&#x27;\n&#x27;</span>)<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello5.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> txt1:        <br>    <span class="hljs-built_in">print</span> (txt1.read())<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -348,12 +348,76 @@
 <blockquote>
 <p>True</p>
 </blockquote>
+<h1 id="时间与日期"><a href="#时间与日期" class="headerlink" title="时间与日期"></a>时间与日期</h1><p>这部分建议用到啥查啥，Python 提供了一个 time 和 calendar 模块可以用于格式化日期和时间</p>
+<h2 id="time-time"><a href="#time-time" class="headerlink" title="time.time()"></a>time.time()</h2><ul>
+<li>函数 time.time() 用于获取当前时间戳</li>
+<li>时间间隔是以秒为单位的浮点小数，每个时间戳都以自从 1970 年 1 月 1 日午夜（历元）经过了多长时间来表示</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-built_in">print</span>(time.time())<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1583160214.5189838</p>
+</blockquote>
+<h2 id="time-localtime"><a href="#time-localtime" class="headerlink" title="time.localtime()"></a>time.localtime()</h2><ul>
+<li>函数time.localtime()用于将返回浮点数的时间戳方式向时间元组转换</li>
+<li>可以将时间戳作为参数输入，也可以不输入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">localtime = time.localtime(time.time())<br><span class="hljs-built_in">print</span>(localtime)<br><span class="hljs-built_in">print</span>(time.localtime())<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>time.struct_time(tm_year&#x3D;2020, tm_mon&#x3D;3, tm_mday&#x3D;2, tm_hour&#x3D;22, tm_min&#x3D;48, tm_sec&#x3D;23, tm_wday&#x3D;0, tm_yday&#x3D;62, tm_isdst&#x3D;0)<br>time.struct_time(tm_year&#x3D;2020, tm_mon&#x3D;3, tm_mday&#x3D;2, tm_hour&#x3D;22, tm_min&#x3D;48, tm_sec&#x3D;23, tm_wday&#x3D;0, tm_yday&#x3D;62, tm_isdst&#x3D;0)</p>
+</blockquote>
+<p>时间元组是用一个元组装起来的9组数字处理时间</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/time-tuple.png" srcset="/img/loading.gif" lazyload alt="time-tuple"></p>
+<h2 id="time-strftime"><a href="#time-strftime" class="headerlink" title="time.strftime()"></a>time.strftime()</h2><p>time.strftime()用于格式化日期</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/time-format.png" srcset="/img/loading.gif" lazyload alt="time-format"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 格式化成2020-03-02 22:47:23形式</span><br><span class="hljs-built_in">print</span> (time.strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime()))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>2020-03-02 22:47:23</p>
+</blockquote>
+<h2 id="calendar模块"><a href="#calendar模块" class="headerlink" title="calendar模块"></a>calendar模块</h2><ul>
+<li>Calendar模块有很广泛的方法用来处理年历和月历</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> calendar<br><br><span class="hljs-built_in">print</span>(calendar.month(<span class="hljs-number">2020</span>,<span class="hljs-number">3</span>))<br></code></pre></td></tr></table></figure>
+
+<pre><code class="hljs">     March 2020
+Mo Tu We Th Fr Sa Su
+                   1
+ 2  3  4  5  6  7  8
+ 9 10 11 12 13 14 15
+16 17 18 19 20 21 22
+23 24 25 26 27 28 29
+30 31
+</code></pre>
+<p>​    </p>
 
               
             </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -364,8 +428,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：15.文件/</div>
+      <div>Python基础：07.文件、时间与日期</div>
+      <div>http://jswanyu.github.io/2021/09/10/Python/Python基础：07.文件、时间与日期/</div>
     </div>
     <div class="license-meta">
       
@@ -377,7 +441,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月13日</div>
+          <div>2021年9月10日</div>
         </div>
       
       
@@ -402,6 +466,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/12/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A08.%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E%E7%94%9F%E6%88%90%E5%99%A8/" title="Python基础：08.迭代器与生成器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python基础：08.迭代器与生成器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/08/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A06.%E7%B1%BB%E3%80%81%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="Python基础：06.类、命名空间和作用域">
+                        <span class="hidden-mobile">Python基础：06.类、命名空间和作用域</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

@@ -16,25 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="类：面向对象编程  一、类的创建与使用通过class name:来创建类，obj &#x3D; classname()来实例化类，obj.name来调用属性   类定义的各个方法与普通的函数只有一个特别的区别：它们必须有一个额外的第一个参数名称,，按照惯例它的名称是 self ，换成其他的也可以 self经常忘写 self 代表的是类的实例，代表当前对象的地址，理解为C++的this指针 123456789">
+    <meta name="description" content="类：面向对象编程 类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。 类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。 数据成员：类变量或者实例变量, 用于处理类及其实例对象的相关的数据。 方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A14.%E7%B1%BB/index.html">
+<meta property="og:title" content="Python基础：06.类、命名空间和作用域">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/08/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A06.%E7%B1%BB%E3%80%81%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="类：面向对象编程  一、类的创建与使用通过class name:来创建类，obj &#x3D; classname()来实例化类，obj.name来调用属性   类定义的各个方法与普通的函数只有一个特别的区别：它们必须有一个额外的第一个参数名称,，按照惯例它的名称是 self ，换成其他的也可以 self经常忘写 self 代表的是类的实例，代表当前对象的地址，理解为C++的this指针 123456789">
+<meta property="og:description" content="类：面向对象编程 类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。 类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。 数据成员：类变量或者实例变量, 用于处理类及其实例对象的相关的数据。 方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49Wpp4.png">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49WPXR.png">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49RgOI.png">
-<meta property="article:published_time" content="2022-08-13T13:20:21.094Z">
-<meta property="article:modified_time" content="2022-09-03T02:34:43.516Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-08T01:55:12.000Z">
+<meta property="article:modified_time" content="2022-09-20T03:56:07.670Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49Wpp4.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>Python基础：06.类、命名空间和作用域 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -172,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="Python基础：06.类、命名空间和作用域"></span>
           
         </div>
 
@@ -189,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-13 21:20" pubdate>
-          2022年8月13日 晚上
+        <time datetime="2021-09-08 09:55" pubdate>
+          2021年9月8日 上午
         </time>
       </span>
     
@@ -201,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.4k 字
+          11k 字
         
       </span>
     
@@ -241,22 +239,31 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Python基础：06.类、命名空间和作用域</h1>
             
             <div class="markdown-body">
               
-              <h1 id="类：面向对象编程"><a href="#类：面向对象编程" class="headerlink" title="类：面向对象编程"></a>类：面向对象编程</h1><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49Wpp4"><img src="https://z3.ax1x.com/2021/09/12/49Wpp4.png" srcset="/img/loading.gif" lazyload alt="oop.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49WPXR"><img src="https://z3.ax1x.com/2021/09/12/49WPXR.png" srcset="/img/loading.gif" lazyload alt="oop1.png"></a></p>
+              <h1 id="类：面向对象编程"><a href="#类：面向对象编程" class="headerlink" title="类：面向对象编程"></a>类：面向对象编程</h1><ul>
+<li><strong>类(Class):</strong> 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。</li>
+<li><strong>类变量：</strong>类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。</li>
+<li><strong>数据成员：</strong>类变量或者实例变量, 用于处理类及其实例对象的相关的数据。</li>
+<li><strong>方法重写：</strong>如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。</li>
+<li><strong>局部变量：</strong>定义在方法中的变量，只作用于当前实例的类。</li>
+<li><strong>实例变量：</strong>在类的声明中，属性是用变量来表示的。这种变量就称为实例变量，是在类声明的内部但是在类的其他成员方法之外声明的。</li>
+<li><strong>继承：</strong>即一个派生类（derived class）继承基类（base class）的字段和方法。继承也允许把一个派生类的对象作为一个基类对象对待。例如，有这样一个设计：一个Dog类型的对象派生自Animal类，这是模拟”是一个（is-a）”关系（例图，Dog是一个Animal）。</li>
+<li><strong>实例化：</strong>创建一个类的实例，类的具体对象。</li>
+<li><strong>方法：</strong>类中定义的函数。</li>
+<li><strong>对象：</strong>通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。</li>
+</ul>
 <h2 id="一、类的创建与使用"><a href="#一、类的创建与使用" class="headerlink" title="一、类的创建与使用"></a>一、类的创建与使用</h2><p>通过<code>class name:</code>来创建类，<code>obj = classname()</code>来实例化类，<code>obj.name</code>来调用属性  </p>
 <p>类定义的各个方法与普通的函数只有一个特别的区别：它们必须有一个额外的第一个参数名称,，按照惯例它的名称是 self ，换成其他的也可以</p>
-<p><strong>self经常忘写</strong></p>
-<p><strong>self 代表的是类的实例，代表当前对象的地址，理解为C++的this指针</strong></p>
+<p><strong>self经常忘写，self 代表的是类的实例，代表当前对象的地址，理解为C++的this指针</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>:<br>    name = <span class="hljs-string">&#x27;python&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">myname</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is&#x27;</span>,self.name)<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">prt</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(self)<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">prt1</span>(<span class="hljs-params">other</span>):<br>        <span class="hljs-built_in">print</span>(other)<br>a = people()<br><span class="hljs-built_in">print</span>(a.name)<br>b = people()<br>a.myname()<br>a.prt()<br>a.prt1()<br>b.prt()   <span class="hljs-comment"># 能够看出a/b的地址是不同的</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>python<br>my name is python<br>&lt;__main__.people object at 0x00000211984A00B8&gt;<br>&lt;__main__.people object at 0x00000211984A00B8&gt;<br>&lt;__main__.people object at 0x00000211984A0390&gt;</p>
 </blockquote>
-<p>类有一个名为 <code>__init__()</code> 的特殊方法（构造方法），该方法在类实例化时会自动调用，理解为C++的构造函数</p>
+<p>类有一个名为 <code>__init__()</code> 的特殊方法（构造方法），该方法在类<strong>实例化时会自动调用</strong>，理解为C++的<strong>构造函数</strong></p>
 <p><code>__init()__</code>方法可以有参数，类在实例化时，直接使用<code>obj = class(arg1,arg2,arg3...)</code>赋予实例化对象这些参数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">myclass</span>():<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,name,height,weight</span>):<br>        self.n = name<br>        self.h = height<br>        self.w = weight<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg&#x27;</span> % (self.n,self.h,self.w))<br>a = myclass(<span class="hljs-string">&#x27;wanyu&#x27;</span>,<span class="hljs-number">175</span>,<span class="hljs-number">70</span>)       <br>a.speak()<br></code></pre></td></tr></table></figure>
 
@@ -266,21 +273,21 @@
 <h2 id="二、继承"><a href="#二、继承" class="headerlink" title="二、继承"></a>二、继承</h2><p>语法：<code>class DerivedClassName(modname.BaseClassName):</code>  </p>
 <p>继承本文件中的类，则模块名可省略，子类继承父类，父类也叫基类</p>
 <p>有关父类中<code>__init__</code>的继承与否，又会分为三种形式：</p>
-<h3 id="1-子类需要自动调用父类的方法："><a href="#1-子类需要自动调用父类的方法：" class="headerlink" title="1.子类需要自动调用父类的方法："></a>1.子类需要自动调用父类的方法：</h3><p>子类不重写<code>__init__()</code>方法，实例化子类后，会自动调用父类的<code>__init__()</code>的方法  </p>
+<h3 id="1-子类需要自动调用父类的方法"><a href="#1-子类需要自动调用父类的方法" class="headerlink" title="1.子类需要自动调用父类的方法"></a>1.子类需要自动调用父类的方法</h3><p>子类不重写<code>__init__()</code>方法，实例化子类后，会自动调用父类的<code>__init__()</code>的方法  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>():<br>    name = <span class="hljs-string">&#x27;&#x27;</span>    <span class="hljs-comment">#规范</span><br>    height = <span class="hljs-number">0</span><br>    weight = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w</span>):<br>        self.name = n  <span class="hljs-comment"># 对比上一段函数，详细的命名放在前面在调用时候更清晰的知道意思,上一段代码写的时候没考虑</span><br>        self.height = h<br>        self.weight = w<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg&#x27;</span> % (self.name,self.height,self.weight)) <br>    <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">student</span>(<span class="hljs-title class_ inherited__">people</span>):<br>        <span class="hljs-keyword">pass</span>  <span class="hljs-comment">#调用父类的构造函数</span><br>a = student(<span class="hljs-string">&#x27;wanyu&#x27;</span>,<span class="hljs-number">175</span>,<span class="hljs-number">70</span>)<br>a.speak()<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>my name is wanyu, my height is 175 cm, my weight is 70.0kg</p>
 </blockquote>
-<h3 id="2-子类不需要自动调用父类的方法："><a href="#2-子类不需要自动调用父类的方法：" class="headerlink" title="2.子类不需要自动调用父类的方法："></a>2.子类不需要自动调用父类的方法：</h3><p>子类重写<code>__init__()</code>方法，实例化子类后，将不会自动调用父类的__init__()的方法</p>
+<h3 id="2-子类不需要自动调用父类的方法"><a href="#2-子类不需要自动调用父类的方法" class="headerlink" title="2.子类不需要自动调用父类的方法"></a>2.子类不需要自动调用父类的方法</h3><p>子类重写<code>__init__()</code>方法，实例化子类后，将不会自动调用父类的__init__()的方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>():<br>    name = <span class="hljs-string">&#x27;&#x27;</span>    <span class="hljs-comment">#规范</span><br>    height = <span class="hljs-number">0</span><br>    weight = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w</span>):<br>        self.name = n  <br>        self.height = h<br>        self.weight = w<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg&#x27;</span> % (self.name,self.height,self.weight)) <br>    <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">student</span>(<span class="hljs-title class_ inherited__">people</span>):<br>    grade = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,g</span>):<br>        self.grade = g<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak_grade</span>(<span class="hljs-params">self</span>):           <span class="hljs-comment"># 定义新函数</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;i am in %d grade&#x27;</span> % self.grade)<br>        <br>a = student(<span class="hljs-number">9</span>)<br>a.speak_grade()<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>i am in 9 grade</p>
 </blockquote>
-<h3 id="3-子类重写-init-方法又需要调用父类的方法："><a href="#3-子类重写-init-方法又需要调用父类的方法：" class="headerlink" title="3.子类重写__init__()方法又需要调用父类的方法："></a>3.子类重写<code>__init__()</code>方法又需要调用父类的方法：</h3><ul>
-<li>使用<code>super</code>关键词：在子类定义<code>__init__</code>中加入： <code>super(student,self).__init__(arg1,arg2,...)</code>  </li>
-<li>使用另一种方法：在子类定义<code>__init__</code>中加入：<code>父类名称.__init__(self,arg1,arg2,...)</code></li>
+<h3 id="3-子类重写init-方法又需要调用父类的方法"><a href="#3-子类重写init-方法又需要调用父类的方法" class="headerlink" title="3.子类重写init()方法又需要调用父类的方法"></a>3.子类重写init()方法又需要调用父类的方法</h3><ul>
+<li>在子类定义<code>__init__</code>中加入：<code>父类名称.__init__(self,arg1,arg2,...)</code> </li>
+<li>使用<code>super</code>关键词，在子类定义<code>__init__</code>中加入： <code>super(student,self).__init__(arg1,arg2,...)</code></li>
 </ul>
 <p><strong>继承只能继承所有的父类init参数，不能继承部分</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>():<br>    name = <span class="hljs-string">&#x27;&#x27;</span>    <span class="hljs-comment">#规范</span><br>    height = <span class="hljs-number">0</span><br>    weight = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w</span>):<br>        self.name = n  <br>        self.height = h<br>        self.weight = w<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg&#x27;</span> % (self.name,self.height,self.weight)) <br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">student</span>(<span class="hljs-title class_ inherited__">people</span>):<br>    grade = <span class="hljs-string">&#x27;&#x27;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w,g</span>):<br>        <span class="hljs-comment"># super(student,self).__init__(n,h,w)</span><br>        people.__init__(self,n,h,w)  <span class="hljs-comment"># 调用父类的init函数  这里必须传入people类的所有init参数</span><br>        self.grade = g<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak_grade</span>(<span class="hljs-params">self</span>):           <span class="hljs-comment"># 定义新函数</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;i am in %d grade&#x27;</span> % self.grade)<br><br>a = student(<span class="hljs-string">&#x27;wanyu&#x27;</span>,<span class="hljs-number">175</span>,<span class="hljs-number">70</span>,<span class="hljs-number">9</span>)<br>a.speak()<br>a.speak_grade()<br></code></pre></td></tr></table></figure>
@@ -294,14 +301,14 @@
 <blockquote>
 <p>TypeError: <strong>init</strong>() missing 1 required positional argument: ‘w’</p>
 </blockquote>
-<h3 id="4-方法重写"><a href="#4-方法重写" class="headerlink" title="4.方法重写"></a>4.方法重写</h3><p>如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写&#x2F;重载</p>
+<h3 id="4-方法重写"><a href="#4-方法重写" class="headerlink" title="4.方法重写"></a>4.方法重写</h3><p>如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>():<br>    name = <span class="hljs-string">&#x27;&#x27;</span>    <span class="hljs-comment">#规范</span><br>    height = <span class="hljs-number">0</span><br>    weight = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w</span>):<br>        self.name = n<br>        self.height = h<br>        self.weight = w<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg&#x27;</span> % (self.name,self.height,self.weight)) <br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">student</span>(<span class="hljs-title class_ inherited__">people</span>):<br>    grade = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,h,w,g</span>):<br>        people.__init__(self,n,h,w)  <span class="hljs-comment"># 调用父类的init函数</span><br>        self.grade = g<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 方法重写</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;my name is %s, my height is %d cm, my weight is %.1fkg. And i am in %d grade&#x27;</span> % (self.name,self.height,self.weight,self.grade))<br><br>a = student(<span class="hljs-string">&#x27;wanyu&#x27;</span>,<span class="hljs-number">175</span>,<span class="hljs-number">70</span>,<span class="hljs-number">9</span>)<br>a.speak()<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>my name is wanyu, my height is 175 cm, my weight is 70.0kg. And i am in 9 grade</p>
 </blockquote>
 <h3 id="5-多继承"><a href="#5-多继承" class="headerlink" title="5.多继承"></a>5.多继承</h3><p>子类可以继承多个父类，语法为<code>class DerivedClassName(Base1, Base2, Base3):</code>  </p>
-<p>需要<strong>注意圆括号中父类的顺序</strong>，若是父类中有相同的方法名，而在子类使用时未指定，python从左至右搜索 即方法在子类中未找到时，从左到右查找父类中是否包含方法</p>
+<p>需要<strong>注意圆括号中父类的顺序</strong>，若是父类中有相同的方法名，而在子类使用时未指定，python<strong>从左至右</strong>搜索 即方法在子类中未找到时，从左到右查找父类中是否包含方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">people</span>:<br>    <span class="hljs-comment">#定义基本属性</span><br>    name = <span class="hljs-string">&#x27;&#x27;</span><br>    age = <span class="hljs-number">0</span><br>    <span class="hljs-comment">#定义私有属性,私有属性在类外部无法直接进行访问</span><br>    __weight = <span class="hljs-number">0</span><br>    <span class="hljs-comment">#定义构造方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,a,w</span>):<br>        self.name = n<br>        self.age = a<br>        self.__weight = w<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;%s 说: 我 %d 岁。&quot;</span> %(self.name,self.age))<br>               <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">speaker</span>():  <span class="hljs-comment"># 另一个类，多重继承之前的准备</span><br>    topic = <span class="hljs-string">&#x27;&#x27;</span><br>    name = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,t</span>):<br>        self.name = n<br>        self.topic = t<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;我叫 %s，我是一个演说家，我演讲的主题是 %s&quot;</span>%(self.name,self.topic))<br>        <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">sample</span>(speaker,people): <span class="hljs-comment">#多重继承</span><br>    a =<span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,n,a,w,t</span>):<br>        people.__init__(self,n,a,w)<br>        speaker.__init__(self,n,t)<br> <br>test = sample(<span class="hljs-string">&quot;Tim&quot;</span>,<span class="hljs-number">25</span>,<span class="hljs-number">80</span>,<span class="hljs-string">&quot;Python&quot;</span>)<br>test.speak()   <span class="hljs-comment">#方法名同，默认调用的是在括号中排前地父类的方法</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -321,8 +328,14 @@
 <p>name  :  菜鸟教程<br>url :  <a target="_blank" rel="noopener" href="http://www.runoob.com/">www.runoob.com</a><br>这是公共方法<br>这是私有方法<br>AttributeError：类的外部不能调用类的私有方法</p>
 </blockquote>
 <h2 id="四、类的专有方法"><a href="#四、类的专有方法" class="headerlink" title="四、类的专有方法"></a>四、类的专有方法</h2><p>类一般有如下专有方法：</p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49RgOI"><img src="https://z3.ax1x.com/2021/09/12/49RgOI.png" srcset="/img/loading.gif" lazyload alt="class own method.png"></a></p>
-<p>所有专有方法中，<code>__init__()</code>要求无返回值，或者返回 None。而其他方法，如<code>__str__()</code>、<code>__add__()</code>等，一般都是要返回值的。见运算符重载部分  </p>
+<ul>
+<li><code>__init__ ( self [,args...] )</code>  构造函数</li>
+<li><code>__del__( self )</code>  析构方法， 删除一个对象，简单的调用方法 : <em>del obj</em></li>
+<li><code>__repr__( self )</code>  转化为供解释器读取的形式  简单的调用方法 : <em>repr(obj)</em></li>
+<li><code>__str__( self )</code>  用于将值转化为适于人阅读的形式  简单的调用方法 : <em>str(obj)</em></li>
+<li><code>__cmp__ ( self, x )</code>   对象比较   简单的调用方法 : <em>cmp(obj, x)</em></li>
+</ul>
+<p>所有专有方法中，<code>__init__()</code>要求无返回值，或者返回 None。而其他方法，如<code>__str__()</code>等，一般都是要返回值的。见运算符重载部分  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">myclass</span>():<br>    <span class="hljs-string">&#x27;这是帮助信息&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.name = <span class="hljs-string">&#x27;wanyu&#x27;</span><br><br><span class="hljs-built_in">print</span>(myclass.__doc__)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -340,7 +353,7 @@
 <blockquote>
 <p>Vector (2, 10)<br>Vector (10, 2)</p>
 </blockquote>
-<p>更详细的说明举例：<br>当解释器碰到 a+b 时，会做以下事情：<br>从 a 类中找<code>__add__</code>若返回值不是 NotImplemented, 则调用<code> a.__add__(b)</code>。<br>那么在下面的例子中，解释器碰到v1+v2，先去v1类中查找<code>__add__</code>，找到了之后，按照它的语句去执行。+这个运算执行完了，还得去优先级最高的<code>__str__</code>中找最终的返回形式</p>
+<p>更详细的说明举例：当解释器碰到 a+b 时，会做以下事情：<br>从 a 类中找<code>__add__</code>若返回值不是 NotImplemented, 则调用<code> a.__add__(b)</code><br>那么在下面的例子中，解释器碰到v1+v2，先去v1类中查找<code>__add__</code>，找到了之后，按照它的语句去执行。+这个运算执行完了，还得去优先级最高的<code>__str__</code>中找最终的返回形式</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Vector</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, a, b</span>):<br>        self.a = a<br>        self.b = b<br> <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 重新定义str属性</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;想加这两个数：%d, %d&#x27;</span> % (self.a, self.b)   <br>   <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__add__</span>(<span class="hljs-params">self,other</span>): <span class="hljs-comment"># 重新定义加运算</span><br>        <span class="hljs-keyword">return</span> Vector(self.a + other.a, self.b + other.b)<br><br>v1 = Vector(<span class="hljs-number">2</span>,<span class="hljs-number">10</span>)<br>v2 = Vector(<span class="hljs-number">5</span>,-<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(v1)<br><span class="hljs-built_in">print</span>(v2)<br><span class="hljs-built_in">print</span> (v1 + v2)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -354,12 +367,92 @@
 <blockquote>
 <p>想加这两组字符：（x+a）（y+b）</p>
 </blockquote>
+<h1 id="命名空间和作用域"><a href="#命名空间和作用域" class="headerlink" title="命名空间和作用域"></a>命名空间和作用域</h1><h2 id="一、命名空间"><a href="#一、命名空间" class="headerlink" title="一、命名空间"></a>一、命名空间</h2><p>命名空间提供了在项目中避免名字冲突的一种方法。各个命名空间是独立的，没有任何关系的，所以<strong>一个命名空间中不能有重名</strong>，但不同的命名空间是可以重名而没有任何影响。  </p>
+<p>一般有三种命名空间：  </p>
+<ul>
+<li><p>内置名称（built-in names）， Python 语言内置的名称，比如函数名 abs、char 和异常名称 BaseException、Exception 等等。</p>
+</li>
+<li><p>全局名称（global names），模块中定义的名称，记录了模块的变量，包括函数、类、其它导入的模块、模块级的变量和常量。</p>
+</li>
+<li><p>局部名称（local names），函数中定义的名称，记录了函数的变量，包括函数的参数和局部定义的变量。（类中定义的也是）</p>
+<p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/namespace.png" srcset="/img/loading.gif" lazyload alt="namespace.png"></p>
+</li>
+</ul>
+<p> Python 的命名空间查找顺序为：局部的命名空间去 -&gt; 全局命名空间 -&gt; 内置命名空间</p>
+<h2 id="二、作用域"><a href="#二、作用域" class="headerlink" title="二、作用域"></a>二、作用域</h2><p>在一个 python 程序中，直接访问一个变量，会从内到外依次访问所有的作用域直到找到，否则会报未定义的错误  </p>
+<p>变量的作用域决定了在哪一部分程序可以访问哪个特定的变量名称。  </p>
+<p>Python的作用域一共有4种：  </p>
+<ul>
+<li>L（Local）：最内层，包含局部变量，比如一个函数&#x2F;方法内部。  </li>
+<li>E（Enclosing）：包含了非局部(non-local)也非全局(non-global)的变量。比如两个嵌套函数，一个函数（或类） A 里面又包含了一个函数 B ，那么对于 B 中的名称来说 A 中的作用域就为 nonlocal。</li>
+<li>G（Global）：当前脚本的最外层，比如当前模块的全局变量。</li>
+<li>B（Built-in）： 包含了内建的变量&#x2F;关键字等。，最后被搜索</li>
+</ul>
+<p>在局部找不到，便会去局部外的局部找（例如闭包），再找不到就会去全局找，再者去内置中找</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/action-scope.png" srcset="/img/loading.gif" lazyload alt="action-scope.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">g_count = <span class="hljs-number">0</span>  <span class="hljs-comment"># 全局作用域</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">outer</span>():<br>    o_count = <span class="hljs-number">1</span>  <span class="hljs-comment"># 闭包函数外的函数中</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inner</span>():<br>        i_count = <span class="hljs-number">2</span>  <span class="hljs-comment"># 局部作用域</span><br></code></pre></td></tr></table></figure>
+
+<p>内置作用域是通过一个名为<code>builtin</code>的标准模块来实现的，但是这个变量名自身并没有放入内置作用域内，所以必须导入这个文件才能够使用它。在Python3.0中，可以使用以下的代码来查看到底预定义了哪些变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> builtins<br><span class="hljs-built_in">dir</span>(builtins)<br></code></pre></td></tr></table></figure>
+
+<p>Python 中只有<strong>模块（module），类（class）以及函数（def、lambda）</strong>才会引入新的作用域，其它的代码块（如 if&#x2F;elif&#x2F;else&#x2F;、try&#x2F;except、for&#x2F;while等）是不会引入新的作用域的，也就是说这些语句内定义的变量，外部也可以访问</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> <span class="hljs-literal">True</span>:<br>    msg = <span class="hljs-string">&#x27;I am from Runoob&#x27;</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>():<br>    msg_inner = <span class="hljs-string">&#x27;I am from Runoob&#x27;</span><br><span class="hljs-built_in">print</span>(msg) <span class="hljs-comment"># 外部能访问</span><br><span class="hljs-built_in">print</span>(msg_inner) <span class="hljs-comment"># 外部不能访问</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>I am from Runoob</p>
+<p>NameError: name ‘msg_inner’ is not defined</p>
+</blockquote>
+<h3 id="1-全局变量和局部变量"><a href="#1-全局变量和局部变量" class="headerlink" title="1. 全局变量和局部变量"></a>1. 全局变量和局部变量</h3><p>定义在函数内部的变量拥有一个局部作用域，定义在函数外的拥有全局作用域。  </p>
+<p>局部变量只能在其被声明的函数内部访问，而全局变量可以在整个程序范围内访问。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">total = <span class="hljs-number">0</span> <span class="hljs-comment"># 这是一个全局变量</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params"> arg1, arg2 </span>):<br>    <span class="hljs-comment">#返回2个参数的和</span><br>    total = arg1 + arg2 <span class="hljs-comment"># total在这里是局部变量.</span><br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;函数内是局部变量 : &quot;</span>, total)<br>    <span class="hljs-keyword">return</span> total<br> <br><span class="hljs-comment">#调用sum函数</span><br><span class="hljs-built_in">sum</span>( <span class="hljs-number">10</span>, <span class="hljs-number">20</span> )<br><span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;函数外是全局变量 : &quot;</span>, total)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>函数内是局部变量 :  30<br>函数外是全局变量 :  0</p>
+</blockquote>
+<h3 id="2-global-和-nonlocal-关键字"><a href="#2-global-和-nonlocal-关键字" class="headerlink" title="2. global 和 nonlocal 关键字"></a>2. global 和 nonlocal 关键字</h3><p>global 可声明该变量为全局变量 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">total = <span class="hljs-number">0</span> <span class="hljs-comment"># 这是一个全局变量</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params"> arg1, arg2 </span>):<br>    <span class="hljs-keyword">global</span> total  <span class="hljs-comment"># 声明全局变量</span><br>    total = arg1 + arg2 <br>    <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;全局变量函数内部运算后为 : &quot;</span>, total)<br>    <span class="hljs-keyword">return</span> total<br> <br><span class="hljs-comment">#调用sum函数</span><br><span class="hljs-built_in">sum</span>( <span class="hljs-number">10</span>, <span class="hljs-number">20</span> )<br><span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;函数外全局变量也随之改变 : &quot;</span>, total)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>全局变量函数内部运算后为 :  30<br>函数外全局变量也随之改变 :  30</p>
+</blockquote>
+<p>nonlocal声明该变量非局部变量（局部作用域），而是外层非全局作用域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">num = <span class="hljs-number">1</span>     <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">outer</span>():<br>    num = <span class="hljs-number">10</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inner</span>(): <br>        num = <span class="hljs-number">100</span>      <br>        <span class="hljs-built_in">print</span>(num)      <span class="hljs-comment"># 打印100</span><br>    inner()<br>    <span class="hljs-built_in">print</span>(num)          <span class="hljs-comment"># 外层非全局的变量不会被修改</span><br>outer()<br><span class="hljs-built_in">print</span>(num) <span class="hljs-comment"># 全局变量不会被修改</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>100<br>10<br>1</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">num = <span class="hljs-number">1</span>     <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">outer</span>():<br>    num = <span class="hljs-number">10</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inner</span>():<br>        <span class="hljs-keyword">nonlocal</span> num   <span class="hljs-comment"># nonlocal关键字，声明这个num是外层非全局的变量，从这里看就是指这个num是上面的10，现在要把你赋值为100</span><br>        num = <span class="hljs-number">100</span>       <br>        <span class="hljs-built_in">print</span>(num)      <br>    inner()<br>    <span class="hljs-built_in">print</span>(num)          <span class="hljs-comment"># 外层非全局的num会被修改</span><br>outer()<br><span class="hljs-built_in">print</span>(num) <span class="hljs-comment"># 全局变量不会被修改</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>100<br>100<br>1</p>
+</blockquote>
 
               
             </div>
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
@@ -370,8 +463,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：14.类/</div>
+      <div>Python基础：06.类、命名空间和作用域</div>
+      <div>http://jswanyu.github.io/2021/09/08/Python/Python基础：06.类、命名空间和作用域/</div>
     </div>
     <div class="license-meta">
       
@@ -383,7 +476,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月13日</div>
+          <div>2021年9月8日</div>
         </div>
       
       
@@ -408,6 +501,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/10/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A07.%E6%96%87%E4%BB%B6%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%A5%E6%9C%9F/" title="Python基础：07.文件、时间与日期">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python基础：07.文件、时间与日期</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/07/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A05.%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8/" title="Python基础：05.错误与异常">
+                        <span class="hidden-mobile">Python基础：05.错误与异常</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 

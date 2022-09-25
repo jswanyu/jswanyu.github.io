@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
 <meta property="article:published_time" content="2022-06-13T06:39:22.000Z">
-<meta property="article:modified_time" content="2022-07-10T05:52:54.516Z">
+<meta property="article:modified_time" content="2022-09-07T13:05:00.668Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Redis%E5%9B%BE%E6%A0%87.png">
@@ -326,14 +326,14 @@
 <li>分布式系统，利用TCC等分布式事务方案</li>
 </ul>
 </li>
-<li><p>先操作缓存还是先操作数据库？</p>
+<li><p>先删除缓存还是先更新数据库？</p>
 <p>  有两种办法如下，这两种办法都不能保证数据一致性，但前者问题更大一些</p>
 <ul>
-<li><p>先删除缓存，再操作数据。正常来讲也没问题，但容易出现下面这种情况：</p>
+<li><p>先删除缓存，再更新数据库。正常来讲也没问题，但容易出现下面这种情况：</p>
 <p>  线程1先把cache中的A数据删除 -&gt; 线程2从DB中读取数据并写入缓存（读取和写入都是旧值）-&gt;线程1再把DB中的A数据更新。<strong>这种情况发生概率较大，因为前面这几步的删除缓存都很快，更新数据库是较慢的操作，其他线程很容易“趁虚而入”，进行查询和写入缓存的操作</strong></p>
 <p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E4%B8%BB%E5%8A%A8%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5-%E5%85%88%E5%88%A0%E9%99%A4cache%E5%86%8D%E6%9B%B4%E6%96%B0DB.png" srcset="/img/loading.gif" lazyload alt="image-20220621180009762"></p>
 </li>
-<li><p>先操作数据库，再删除缓存。也可能会出现数据不一致的情况：</p>
+<li><p>先更新数据库，再删除缓存。也可能会出现数据不一致的情况：</p>
 <p>  线程1从DB读数据A，正准备写入cache -&gt; 此时线程2写更新数据 A 到数据库并删除cache中的A数据 -&gt; 线程1将最开始的数据A写入cache。<strong>不过概率非常小，因为缓存的查询和写入速度非常快，数据库的更新速度比较慢，不太可能是在查询和写入缓存之间插入一个完整的更新数据库操作。如果真的发生了，我们前面提到过超时剔除的策略，用来保底</strong></p>
 <p>  <img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E4%B8%BB%E5%8A%A8%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5-%E5%85%88%E6%9B%B4%E6%96%B0DB%E5%86%8D%E5%88%A0%E9%99%A4cache.png" srcset="/img/loading.gif" lazyload alt="image-20220621182617096"></p>
 </li>
@@ -383,10 +383,10 @@
 <li>根据id修改店铺时，先修改数据库，再删除缓存</li>
 </ul>
 <p>第一个需求改动很少，相比之前，只需要在代码里多设置一个超时时间，ShopServiceImpl.java</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-comment">// 6.存在，写入redis，并设置超时时间</span><br>    stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES); <span class="hljs-comment">// 超时时间：30分钟</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">queryById</span><span class="hljs-params">(Long id)</span> &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// 6.存在，写入redis，并设置超时时间</span><br>    stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), CACHE_SHOP_TTL, TimeUnit.MINUTES); <span class="hljs-comment">// 超时时间：30分钟</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>第二个需求需要在 ShopServiceImpl.java 创建新方法 update</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-meta">@Transactional</span> <span class="hljs-comment">// 声明式事务</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">update</span><span class="hljs-params">(Shop shop)</span> &#123;<br>    <span class="hljs-type">Long</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> shop.getId();<br>    <span class="hljs-keyword">if</span> (id == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺id不能为空&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 1.更新数据库</span><br>    updateById(shop);<br>    <span class="hljs-comment">// 2.删除缓存</span><br>    stringRedisTemplate.delete(CACHE_SHOP_KEY + id);<br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@Override</span><br><span class="hljs-meta">@Transactional</span> <span class="hljs-comment">// 声明式事务</span><br><span class="hljs-keyword">public</span> Result <span class="hljs-title function_">update</span><span class="hljs-params">(Shop shop)</span> &#123;<br>    <span class="hljs-type">Long</span> <span class="hljs-variable">id</span> <span class="hljs-operator">=</span> shop.getId();<br>    <span class="hljs-keyword">if</span> (id == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> Result.fail(<span class="hljs-string">&quot;店铺id不能为空&quot;</span>);<br>    &#125;<br>    <span class="hljs-comment">// 1.更新数据库，mybatis</span><br>    updateById(shop);<br>    <span class="hljs-comment">// 2.删除缓存</span><br>    stringRedisTemplate.delete(CACHE_SHOP_KEY + id);<br>    <span class="hljs-keyword">return</span> Result.ok();<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
@@ -465,9 +465,10 @@
 <p>因为这个方法性能不太好，只是了解即可，这里就不用这个方法了，知道原理逻辑即可</p>
 <h3 id="2-2-逻辑过期"><a href="#2-2-逻辑过期" class="headerlink" title="2.2 逻辑过期"></a>2.2 逻辑过期</h3><p>不设置真正的过期时间（TTL），让key永久生效。但我们又怎么知道到底什么时候缓存会失效呢，这里可以把时效的时间（当前时间+有效期）写到value里，让他只是逻辑上的过期时间。但其实这个key是没有TTL的，再搭配上合适的内存淘汰策略，理论上来讲是可以永远能查到的，不会存在未命中的情况。当然了，实际上我们总要判断一下key再逻辑上是否过期了，去value里取值就可以了，如果逻辑时间已过期，说明要更新一下数据。</p>
 <p>我们把过期时间设置在 redis 的 value 中，注意：这个过期时间并不会直接作用于redis，而是我们后续通过逻辑去处理。假设线程1去查询缓存，然后从value中判断出来当前的数据已经过期了，此时线程1去获得互斥锁，那么其他线程会进行阻塞，获得了锁的线程他会开启一个 线程去进行 以前的重构数据的逻辑，直到新开的线程完成这个逻辑后，才释放锁， 而线程1直接进行返回，假设现在线程3过来访问，由于线程线程2持有着锁，所以线程3无法获得锁，线程3也直接返回数据，只有等到新开的线程2把重建数据构建完后，其他线程才能走返回正确的数据。</p>
+<p>注意：虽然本方案也用到了互斥锁，但并不是方法一中让其他线程全部阻塞，而是开启一个异步线程。其他线程获取锁失败就失败，返回旧值即可，不影响运行。这里使用的互斥锁也是redis的setnx指令</p>
 <p>这种方案巧妙在于，异步的构建缓存，缺点在于在构建完缓存之前，其他线程查询缓存返回的都是旧数据。等缓存重建完，再来的线程，就是返回新值了</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F.png" srcset="/img/loading.gif" lazyload alt="image-20220622094823087"></p>
-<p>优点：线程无需等待，性能较好</p>
+<p>优点：线程无需等待，性能较好。相比于互斥锁方案，此方案的其他线程不会阻塞住，只会在异步线程重建缓存之前返回旧缓存而已</p>
 <p>缺点：不保证一致性、有额外内存消耗、实现复杂</p>
 <p>思路分析：当用户开始查询redis时，判断是否命中，如果没有命中则直接返回空数据，不查询数据库，而一旦命中后，将value取出，判断value中的过期时间是否满足，如果没有过期，则直接返回redis中的数据。如果过期，则判断获取锁（同样使用setnx）是否成功，成功则开启独立线程去重构缓存，自己本线程直接返回旧值，如果获取锁没成功，则表示现在锁被别人获取了，还是直接返回旧值。独立线程重构缓存完成后释放互斥锁。</p>
 <p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Redis/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84%E9%A1%B9%E7%9B%AE/%E5%95%86%E6%88%B7%E7%BC%93%E5%AD%98-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF-%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F%E8%A7%A3%E5%86%B3.png" srcset="/img/loading.gif" lazyload alt="image-20220709115209330"></p>

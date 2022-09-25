@@ -16,23 +16,23 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="错误与异常一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在">
+    <meta name="description" content="一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在运行它的时">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Wynn&#39;s blog">
-<meta property="og:url" content="http://jswanyu.github.io/2022/08/13/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A13.%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8/index.html">
+<meta property="og:title" content="Python基础：05.错误与异常">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/07/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A05.%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="错误与异常一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在">
+<meta property="og:description" content="一、错误不符合python语言标准的错误：SyntaxError 1while True print(&amp;#x27;hello&amp;#x27;)     File ““, line 1    while True print(‘hello’)               ^SyntaxError: invalid syntax  二、异常1.异常的定义即便 Python 程序的语法是正确的，在运行它的时">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/09/12/49RTpQ.png">
-<meta property="article:published_time" content="2022-08-13T13:20:21.087Z">
-<meta property="article:modified_time" content="2022-09-01T02:37:36.865Z">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-07T04:31:46.000Z">
+<meta property="article:modified_time" content="2022-09-18T13:41:26.673Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/09/12/49RTpQ.png">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
   
   
   
-  <title>Wynn&#39;s blog</title>
+  <title>Python基础：05.错误与异常 - Wynn&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -170,13 +170,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="Python基础：05.错误与异常"></span>
           
         </div>
 
@@ -187,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-13 21:20" pubdate>
-          2022年8月13日 晚上
+        <time datetime="2021-09-07 12:31" pubdate>
+          2021年9月7日 下午
         </time>
       </span>
     
@@ -239,17 +239,17 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Python基础：05.错误与异常</h1>
             
             <div class="markdown-body">
               
-              <h1 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h1><h2 id="一、错误"><a href="#一、错误" class="headerlink" title="一、错误"></a>一、错误</h2><p>不符合python语言标准的错误：SyntaxError</p>
+              <h1 id="一、错误"><a href="#一、错误" class="headerlink" title="一、错误"></a>一、错误</h1><p>不符合python语言标准的错误：SyntaxError</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span> <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hello&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>  File “<ipython-input-1-d3123ece03ef>“, line 1<br>    while True print(‘hello’)<br>               ^<br>SyntaxError: invalid syntax</p>
 </blockquote>
-<h2 id="二、异常"><a href="#二、异常" class="headerlink" title="二、异常"></a>二、异常</h2><h3 id="1-异常的定义"><a href="#1-异常的定义" class="headerlink" title="1.异常的定义"></a>1.异常的定义</h3><p>即便 Python 程序的语法是正确的，在运行它的时候，也有可能发生错误。运行期检测到的错误被称为异常</p>
+<h1 id="二、异常"><a href="#二、异常" class="headerlink" title="二、异常"></a>二、异常</h1><h2 id="1-异常的定义"><a href="#1-异常的定义" class="headerlink" title="1.异常的定义"></a>1.异常的定义</h2><p>即便 Python 程序的语法是正确的，在运行它的时候，也有可能发生错误。运行期检测到的错误被称为异常</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1</span>/<span class="hljs-number">0</span> <span class="hljs-comment"># 0 不能作为除数，触发异常</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -265,11 +265,11 @@
 <blockquote>
 <p>TypeError: unsupported operand type(s) for +: ‘int’ and ‘str’</p>
 </blockquote>
-<h3 id="2-异常处理"><a href="#2-异常处理" class="headerlink" title="2.异常处理"></a>2.异常处理</h3><h3 id="2-1-try…except语句"><a href="#2-1-try…except语句" class="headerlink" title="2.1 try…except语句"></a>2.1 try…except语句</h3><p>try 语句按照如下方式工作：  </p>
+<h2 id="2-异常处理"><a href="#2-异常处理" class="headerlink" title="2.异常处理"></a>2.异常处理</h2><h3 id="2-1-try…except语句"><a href="#2-1-try…except语句" class="headerlink" title="2.1 try…except语句"></a>2.1 try…except语句</h3><p>try 语句按照如下方式工作：  </p>
 <ul>
 <li>首先，执行 try 子句（在关键字 try 和关键字 except 之间的语句）。</li>
 <li>如果没有异常发生，忽略 except 子句，try 子句执行后结束。</li>
-<li>如果在执行 try 子句的过程中发生了异常，那么 try 子句余下的部分将被忽略。如果异常的类型和 except 之后的名称相符，那么对应的 except 子句将被执行。</li>
+<li>如果在执行 try 子句的过程中发生了异常，那么 try 子句<strong>余下的部分将被忽略</strong>。如果异常的类型和 except 之后的名称相符，那么对应的 except 子句将被执行。</li>
 <li>如果一个异常没有与任何的 except 匹配，那么这个异常将会传递给上层的 try 中。</li>
 <li>一个 try 语句可能包含多个except子句，分别来处理不同的特定的异常。<strong>最多只有一个分支会被执行</strong>。</li>
 </ul>
@@ -304,7 +304,7 @@
 <blockquote>
 <p>0不能作为分母</p>
 </blockquote>
-<h3 id="2-2-try-except-else语句"><a href="#2-2-try-except-else语句" class="headerlink" title="2.2 try-except-else语句"></a>2.2 try-except-else语句</h3><p>try…except 语句还有一个可选的 else 子句，如果使用这个子句，那么必须放在<strong>所有的 except 子句</strong>之后  </p>
+<h3 id="2-2-try-except-else语句"><a href="#2-2-try-except-else语句" class="headerlink" title="2.2 try-except-else语句"></a>2.2 try-except-else语句</h3><p>try…except 语句还有一个可选的 else 子句，如果使用这个子句，那么**必须放在所有的 except 子句之后  **</p>
 <p>else 子句将在 <strong>try 子句没有发生任何异常</strong>的时候执行  </p>
 <p>使用 else 子句比把所有的语句都放在 try 子句里面要好，这样可以避免一些意想不到，而 except 又无法捕获的异常</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:    <span class="hljs-comment"># 辅助停止程序</span><br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>    <span class="hljs-keyword">except</span> (ValueError,ZeroDivisionError):  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result) <span class="hljs-comment"># 没有异常再打印最终结果</span><br></code></pre></td></tr></table></figure>
@@ -314,7 +314,7 @@
 </blockquote>
 <h3 id="2-3-try-finally-语句"><a href="#2-3-try-finally-语句" class="headerlink" title="2.3 try-finally 语句"></a>2.3 try-finally 语句</h3><p><code>try-finally</code> 语句无论是否发生异常都将执行最后的代码  </p>
 <p>完整结构可以为：try-except-else-finally </p>
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/49RTpQ"><img src="https://z3.ax1x.com/2021/09/12/49RTpQ.png" srcset="/img/loading.gif" lazyload alt="exception.png"></a></p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/Python/exception.png" srcset="/img/loading.gif" lazyload alt="exception.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">try</span>:<br>        a=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入一个数字：&#x27;</span>))<br>        <span class="hljs-keyword">if</span> a==<span class="hljs-number">7</span>:<br>            <span class="hljs-keyword">break</span><br>        result=<span class="hljs-number">1</span>/math.log(a)<br>    <span class="hljs-keyword">except</span> (ValueError,ZeroDivisionError):  <span class="hljs-comment"># 数值异常</span><br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;ValueError: 输入需要为大于0的数字且不等于1！&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;运算之后结果为：%f&#x27;</span> % result) <span class="hljs-comment"># 没有异常再打印最终结果</span><br>    <span class="hljs-keyword">finally</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;不管怎么样，这句话都执行&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -341,8 +341,6 @@
 
 <blockquote>
 <p>请输入一个数字：1</p>
-</blockquote>
-<blockquote>
 <p>ZeroDivisionError: float division by zero</p>
 </blockquote>
 <h3 id="2-5-带有值的异常"><a href="#2-5-带有值的异常" class="headerlink" title="2.5 带有值的异常"></a>2.5 带有值的异常</h3><p>异常是一种定义的类，在类中往往会定义一些属性的私有值。抛出异常有时候会需要其在返回时带上的值。<br>此时我们一般使用<code>except ... as ...</code>的结构，用来拿出值</p>
@@ -357,7 +355,7 @@
 <blockquote>
 <p>1<br>1<br>2<br>3<br>5<br>8<br>Generator return value: done</p>
 </blockquote>
-<h2 id="预定义的清理行为"><a href="#预定义的清理行为" class="headerlink" title="预定义的清理行为"></a>预定义的清理行为</h2><p>一些对象定义了标准的清理行为，无论系统是否成功的使用了它，一旦不需要它了，那么这个标准的清理行为就会执行<br>如关键词 with 语句就可以保证诸如文件之类的对象在使用完之后一定会正确的执行他的清理方法  </p>
+<h2 id="3-预定义的清理行为"><a href="#3-预定义的清理行为" class="headerlink" title="3. 预定义的清理行为"></a>3. 预定义的清理行为</h2><p>一些对象定义了标准的清理行为，无论系统是否成功的使用了它，一旦不需要它了，那么这个标准的清理行为就会执行<br>如关键词 with 语句就可以保证诸如文件之类的对象在使用完之后一定会正确的执行他的清理方法  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;hello5.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> txt1:        <br>    <span class="hljs-built_in">print</span> (txt1.read())<br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -371,6 +369,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
 </div>
 
@@ -380,8 +399,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://jswanyu.github.io/2022/08/13/Python/Python基础：13.错误与异常/</div>
+      <div>Python基础：05.错误与异常</div>
+      <div>http://jswanyu.github.io/2021/09/07/Python/Python基础：05.错误与异常/</div>
     </div>
     <div class="license-meta">
       
@@ -393,7 +412,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月13日</div>
+          <div>2021年9月7日</div>
         </div>
       
       
@@ -418,6 +437,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/08/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A06.%E7%B1%BB%E3%80%81%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F/" title="Python基础：06.类、命名空间和作用域">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python基础：06.类、命名空间和作用域</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/05/Python/Python%E5%9F%BA%E7%A1%80%EF%BC%9A04.%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A8%A1%E5%9D%97/" title="Python基础：04.函数与模块">
+                        <span class="hidden-mobile">Python基础：04.函数与模块</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
