@@ -1,0 +1,1087 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL数据库基础知识数据库的三大范式第一范式：确保每列保持原子性，数据表中的所有字段值都是不可分解的原子值。 第二范式：确保表中的每列都和主键相关，即所有非主属性都完全依赖于主键。注意，符合第二范式的关系模型可能还存在数据冗余、更新异常等问题。关系模型（学号，姓名，专业编号，专业名称）中，如果学号-&gt;姓名，而专业编号-&gt;专业名称，则不满足数据库第二范式 第三范式：确保每列都和主键列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2023/05/16/%E9%9D%A2%E7%BB%8F/6-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81MySQL/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="MySQL数据库基础知识数据库的三大范式第一范式：确保每列保持原子性，数据表中的所有字段值都是不可分解的原子值。 第二范式：确保表中的每列都和主键相关，即所有非主属性都完全依赖于主键。注意，符合第二范式的关系模型可能还存在数据冗余、更新异常等问题。关系模型（学号，姓名，专业编号，专业名称）中，如果学号-&gt;姓名，而专业编号-&gt;专业名称，则不满足数据库第二范式 第三范式：确保每列都和主键列">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-B%E5%8A%A0%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-MySQL%E6%94%B9%E8%BF%9B%E7%9A%84B%E5%8A%A0%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-B%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="e:/%E5%9B%BE%E7%89%87/%E7%AC%94%E8%AE%B0/6-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81MySQL.assets/Mysql-update%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png">
+<meta property="article:published_time" content="2023-05-15T16:34:33.290Z">
+<meta property="article:modified_time" content="2023-05-15T16:36:10.185Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-16 00:34" pubdate>
+          2023年5月16日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="数据库基础知识"><a href="#数据库基础知识" class="headerlink" title="数据库基础知识"></a>数据库基础知识</h2><h3 id="数据库的三大范式"><a href="#数据库的三大范式" class="headerlink" title="数据库的三大范式"></a>数据库的三大范式</h3><p>第一范式：确保每列保持原子性，数据表中的所有字段值都是不可分解的原子值。</p>
+<p>第二范式：确保表中的每列都和主键相关，即所有非主属性都完全依赖于主键。注意，符合第二范式的关系模型可能还存在数据冗余、更新异常等问题。关系模型（学号，姓名，专业编号，专业名称）中，如果学号-&gt;姓名，而专业编号-&gt;专业名称，则不满足数据库第二范式</p>
+<p>第三范式：确保每列都和主键列直接相关而不是间接相关，即不能有传递关系。接着以学生表举例，对于关系模型（学号，姓名，年龄，性别，所在院校，院校地址，院校电话）院校地址，院校电话和学号不存在直接关系，因此不满足第三范式。</p>
+<h2 id="MySQL基础"><a href="#MySQL基础" class="headerlink" title="MySQL基础"></a>MySQL基础</h2><h3 id="简述MySQL的架构"><a href="#简述MySQL的架构" class="headerlink" title="简述MySQL的架构"></a>简述MySQL的架构</h3><p>MySQL可以分为应用层，逻辑层，数据库引擎层，物理层。</p>
+<ul>
+<li>应用层：负责响应客户端请求，建立连接，返回数据。</li>
+<li>逻辑层：包括SQK接口，解析器，优化器，Cache与buffer</li>
+<li>数据库引擎层：有常见的MyISAM，InnoDB等等。</li>
+<li>物理层：负责文件存储，日志等等。</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif" lazyload alt="image-20220824105354879"></p>
+<p>另一种说法：MySQL可以分为Server层和存储引擎层两部分。Server层包括连接器、查询缓存、分析器、优化器、执行器等。查询语句执行过程也是按照此顺序。存储引擎层负责数据的存储和提取。</p>
+<img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220210141407871" style="zoom:67%;" />
+
+
+
+<h3 id="一条SQL查询语句是如何执行的"><a href="#一条SQL查询语句是如何执行的" class="headerlink" title="一条SQL查询语句是如何执行的"></a>一条SQL查询语句是如何执行的</h3><p>MySQL的Server层包括连接器、查询缓存、分析器、优化器、执行器等，查询语句执行过程也是按照此顺序。具体来说：</p>
+<ol>
+<li>客户端首先通过连接器进行身份认证和权限相关</li>
+<li>如果是执行查询语句的时候，会先查询缓存，命中则直接返回结果，但MySQL 8.0 版本后该步骤移除。</li>
+<li>没有命中缓存的话，SQL 语句就会经过解析器，分析语句，包括语法检查等等。</li>
+<li>通过优化器，将用户的SQL语句按照 MySQL 认为最优的方案去执行。</li>
+<li>执行语句，并从存储引擎返回数据。</li>
+</ol>
+<h3 id="MySQL常用的存储引擎有什么？它们有什么区别？"><a href="#MySQL常用的存储引擎有什么？它们有什么区别？" class="headerlink" title="MySQL常用的存储引擎有什么？它们有什么区别？"></a>MySQL常用的存储引擎有什么？它们有什么区别？</h3><p>常用的有 InnoDB 和 MyISAM</p>
+<p>InnoDB 是 MySQL 的默认事务型引擎，支持事务，表是基于聚簇索引建立的。支持表级锁和行级锁，支持外键，适合数据增删改查都频繁的情况。InnoDB 采用 MVCC 来支持高并发，并且实现了四个标准的隔离级别。其默认级别是 REPEATABLE READ，并通过间隙锁策略防止幻读，间隙锁使 InnoDB 不仅仅锁定查询涉及的行，还会对索引中的间隙进行锁定防止幻行的插入。</p>
+<p>MySQL5.1及之前，MyISAM 是默认存储引擎。MyISAM不支持事务，Myisam支持表级锁（默认锁粒度），但不支持行级锁，而且不支持外键，并发性比较差。该存储引擎存有表的行数，count运算会更快。适合查询频繁，不适合对于增删改要求高的情况</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>InnoDB</th>
+<th>MyISAM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外键</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>事务</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>锁</td>
+<td>支持表锁和行锁</td>
+<td>支持表锁</td>
+</tr>
+<tr>
+<td>可恢复性</td>
+<td>根据事务日志进行恢复</td>
+<td>无事务日志</td>
+</tr>
+<tr>
+<td>表结构</td>
+<td>数据和索引是集中存储的，.ibd和.frm</td>
+<td>数据和索引是分开存储的，数据.MYD ，索引.MYI</td>
+</tr>
+<tr>
+<td>查询性能</td>
+<td>一般情况较差</td>
+<td>相对好一点</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>聚簇索引</td>
+<td>非聚簇索引</td>
+</tr>
+</tbody></table>
+<h3 id="简述Memory存储引擎"><a href="#简述Memory存储引擎" class="headerlink" title="简述Memory存储引擎"></a>简述Memory存储引擎</h3><p>Memory存储引擎将所有数据都保存在内存，不需要磁盘 IO。支持哈希索引，因此查找速度极快。</p>
+<p>Memory 表使用表级锁，因此并发写入的性能较低。</p>
+<h3 id="x3D-x3D-什么场景用MYISAM和Innodb-x3D-x3D"><a href="#x3D-x3D-什么场景用MYISAM和Innodb-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;什么场景用MYISAM和Innodb&#x3D;&#x3D;"></a>&#x3D;&#x3D;什么场景用MYISAM和Innodb&#x3D;&#x3D;</h3><p>MyISAM适合：(1)做很多count 的计算；(2)对数据进行增删改的频率不高,查询非常频繁；(3)没有事务。</p>
+<p>InnoDB适合：(1)可靠性要求比较高，或者要求事务；(2)表更新和查询都相当的频繁，并且行锁定的机会比较大的情况。</p>
+<h3 id="MySQL的数据类型有哪些"><a href="#MySQL的数据类型有哪些" class="headerlink" title="MySQL的数据类型有哪些"></a>MySQL的数据类型有哪些</h3><ul>
+<li>整数：TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT分别占用8、16、24、32、64位存储空间</li>
+<li>浮点数：FLOAT、DOUBLE及DECIMAL为浮点数类型</li>
+<li>字符串：字符串常用的主要有CHAR和VARCHAR，VARCHAR主要用于存储可变长字符串，相比于定长的<br>  CHAR更节省空间。</li>
+<li>日期：比较常用的有year、time、date、datetime、timestamp等</li>
+</ul>
+<h3 id="一条SQL更新语句是如何执行的（redo-log和-binlog）"><a href="#一条SQL更新语句是如何执行的（redo-log和-binlog）" class="headerlink" title="一条SQL更新语句是如何执行的（redo log和 binlog）"></a>一条SQL更新语句是如何执行的（redo log和 binlog）</h3><p>读取行 –&gt;  执行计算 –&gt;  更新数据并写入 redo log (prepare) –&gt;  生成binlog并写入磁盘 –&gt;  提交事务并将redo log 改为commit</p>
+<h3 id="SQL关键字执行顺序"><a href="#SQL关键字执行顺序" class="headerlink" title="SQL关键字执行顺序"></a>SQL关键字执行顺序</h3><p>关键字语法顺序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT...<br></code></pre></td></tr></table></figure>
+
+<p>SELECT 语句的执行顺序:</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">FROM</span> -&gt; <span class="hljs-keyword">WHERE</span> -&gt; <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> -&gt; <span class="hljs-keyword">HAVING</span> -&gt; <span class="hljs-keyword">SELECT</span> 的字段 -&gt; <span class="hljs-keyword">DISTINCT</span> -&gt; <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> -&gt; <span class="hljs-keyword">LIMIT</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="什么是sql注入？"><a href="#什么是sql注入？" class="headerlink" title="什么是sql注入？"></a>什么是sql注入？</h3><p>在实现定义好的查询语句的结尾添加额外的sql语句，欺骗数据库服务器进行非授权的任意查询，盗取数据库数据。</p>
+<h3 id="为什么建表时，加-not-null-default-‘’-或-default-0"><a href="#为什么建表时，加-not-null-default-‘’-或-default-0" class="headerlink" title="为什么建表时，加 not null default ‘’ 或 default 0"></a>为什么建表时，加 not null default ‘’ 或 default 0</h3><p>答：不想让表中出现null值。</p>
+<h3 id="为什么不想要-null-的值"><a href="#为什么不想要-null-的值" class="headerlink" title="为什么不想要 null 的值"></a>为什么不想要 null 的值</h3><p>答:（1）不好比较。null是一种特殊值，比较时只能用专门的is null 和 is not null来比较。碰到运算符，通常返回null。</p>
+<p>​     （2）效率不高。影响提高索引效果。因此，我们往往在建表时 not null default ‘’ 或 default 0</p>
+<p><strong>带AUTO_INCREMENT约束的字段值是从1开始的吗？</strong><br>在MySQL中，默认AUTO_INCREMENT的初始值是1，每新增一条记录，字段值自动加1。设置自增属性（AUTO_INCREMENT）的时候，还可以指定第一条插入记录的自增字段的值，这样新插入的记录的自增字段值从初始值开始递增，如在表中插入第一条记录，同时指定id值为5，则以后插入的记录的id值就会从6开始往上增加。添加主键约束时，往往需要设置字段自动增加属性。</p>
+<p><strong>并不是每个表都可以任意选择存储引擎？</strong><br>外键约束（FOREIGN KEY）不能跨引擎使用。</p>
+<p>MySQL支持多种存储引擎，每一个表都可以指定一个不同的存储引擎，需要注意的是：外键约束是用来保证数据的参照完整性的，如果表之间需要关联外键，却指定了不同的存储引擎，那么这些表之间是不能创建外键约束的。所以说，存储引擎的选择也不完全是随意的。</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="什么是索引？"><a href="#什么是索引？" class="headerlink" title="什么是索引？"></a>什么是索引？</h3><p>索引是对数据库表的一列或者多列的值进行排序一种结构，用于快速找到记录，使用索引可以快速访问数据表中的特定信息。</p>
+<p>索引的作用就相当于目录的作用。打个比方: 我们在查字典的时候，如果没有目录，那我们就只能一页一页的去找我们需要查的那个字，速度很慢。如果有目录了，我们只需要先去目录里查找字的位置，然后直接翻到那一页就行了。</p>
+<h3 id="为什么引入索引？"><a href="#为什么引入索引？" class="headerlink" title="为什么引入索引？"></a>为什么引入索引？</h3><p>为了提高数据查询的效率。索引对数据库查询良好的性能非常关键，当表中数据量越来越大，索引对性能的影响越重要。</p>
+<h3 id="Mysql有哪些常见索引类型？"><a href="#Mysql有哪些常见索引类型？" class="headerlink" title="Mysql有哪些常见索引类型？"></a>Mysql有哪些常见索引类型？</h3><p>数据结构角度：</p>
+<ul>
+<li>B+Tree索引：最常见的索引类型，大部分引擎都支持 B+ 树索引</li>
+<li>哈希索引：底层数据结构是用哈希表实现的, 只能进行等值查询, 不支持范围查询</li>
+<li>R-Tree索引（空间索引）：空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型，通常使用较少</li>
+<li>全文索引：是一种通过建立倒排索引,快速匹配文档的方式。</li>
+</ul>
+<p>物理存储角度：</p>
+<ul>
+<li>主键索引（聚簇索引）：叶子节点存的是整行的数据</li>
+<li>非主键索引（二级索引）：叶子节点存的主键的值，一般是id，经常用于回表查询</li>
+</ul>
+<h3 id="索引的优缺点？"><a href="#索引的优缺点？" class="headerlink" title="索引的优缺点？"></a>索引的优缺点？</h3><p>优点：</p>
+<ul>
+<li>大大加快数据检索的速度。</li>
+<li>将随机I&#x2F;O变成顺序I&#x2F;O（因为B+树的叶子节点是连接在一起的）</li>
+<li>加速表与表之间的连接</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>从空间角度考虑，建立索引需要占用物理空间</li>
+<li>从时间角度考虑，创建和维护索引都需要花费时间，例如对数据进行增删改的时候都需要维护索引。</li>
+</ul>
+<h3 id="使用索引一定能提高查询性能吗"><a href="#使用索引一定能提高查询性能吗" class="headerlink" title="使用索引一定能提高查询性能吗?"></a>使用索引一定能提高查询性能吗?</h3><p>大多数情况下，索引查询都是比全表扫描要快的。但是如果数据库的数据量不大，那么使用索引也不一定能够带来很大提升。</p>
+<h3 id="B-树索引和哈希索引的底层数据结构及其区别？"><a href="#B-树索引和哈希索引的底层数据结构及其区别？" class="headerlink" title="B+树索引和哈希索引的底层数据结构及其区别？"></a>B+树索引和哈希索引的底层数据结构及其区别？</h3><p>索引的数据结构主要有B+树和哈希表，对应的索引分别为B+树索引和哈希索引。InnoDB引擎的索引类型有B+树索引和哈希索引，<strong>默认的索引类型为B+树索引</strong>。</p>
+<p><strong>B+树索引：</strong>在B+树中，所有的记录节点都是按照键值大小的顺序放在叶子节点上，如下图。绿色框框起来的部分，是索引部分，仅仅起到索引数据的作用，不存储数据。红色框框起来的部分，是数据存储部分，在其叶子节点中要存储具体的数据，这样非叶子节点能存放更多指针，使得树层高更小。另外所有叶子节点增加了一个链指针，方便进行范围查询。提高区间访问的性能，利于排序。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-B%E5%8A%A0%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220824103526042"></p>
+<p>并且MySQL索引数据结构对经典的B+Tree进行了优化。在原B+Tree的基础上，增加一个指向相邻叶子节点的链表指针，就形成了带有顺序指针的B+Tree</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-MySQL%E6%94%B9%E8%BF%9B%E7%9A%84B%E5%8A%A0%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220824112017825"></p>
+<p><strong>哈希索引：</strong>对于每一行数据，存储引擎会对索引列通过哈希算法进行哈希计算得到哈希码，并且哈希算法要尽量保证不同的列值计算出的哈希码值是不同的，将哈希码的值作为哈希表的key值，将指向数据行的指针作为哈希表的value值。这样查找一个数据的时间复杂度就是O(1)，一般多用于精确查找。</p>
+<p>区别：</p>
+<ul>
+<li><p>Hash索引适合精确的<strong>等值查询</strong>，B+索引则多用于除了精确的等值查找外的其他查找。在大多数情况下，会选择使用B+树索引。</p>
+</li>
+<li><p>哈希索引不支持范围查找和排序查询（因为哈希表是无序的），这是哈希表最大的问题。</p>
+</li>
+<li><p>哈希索引也不支持模糊查询及多列索引的最左前缀匹配</p>
+</li>
+<li><p>如果有<strong>大量重复键值</strong>的情况下，哈希索引的效率会很低，因为存在<strong>哈希碰撞</strong>问题，而B+树索引的性能是相对稳定的，因为每次查询都是从根节点到叶子节点。</p>
+</li>
+</ul>
+<h3 id="简述自适应Hash索引"><a href="#简述自适应Hash索引" class="headerlink" title="简述自适应Hash索引"></a>简述自适应Hash索引</h3><p>InnoDB对于频繁使用的某些索引值，会在内存中基于 B-Tree 索引之上再创键一个哈希索引，这也被称为自适应Hash索引。</p>
+<h3 id="B树和B-树的区别？"><a href="#B树和B-树的区别？" class="headerlink" title="B树和B+树的区别？"></a>B树和B+树的区别？</h3><p>B-Tree 是一种自平衡的多叉树，按照类似二分搜索树的顺序大小排列。每个节点都存储key和value，查询效率比B+树高。但B树则需要进行每一层的递归遍历。相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</p>
+<p>B+树也是是一种自平衡的多叉树。其基本定义与B树相同，不同点在于数据只出现在叶子节点，所有叶子节点增加了一个链指针，方便进行范围查询。B+树中间节点不存放数据，所以同样大小的磁盘页上可以容纳更多节点元素，使得树更矮，所以IO操作次数更少，访问叶子节点上关联的数据也具有更好的缓存命中率。另外数据顺序排列并且相连，所以便于区间查找和搜索。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-B%E6%A0%91%E7%BB%93%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE.png" srcset="/img/loading.gif" lazyload alt="image-20220824112416371"></p>
+<h3 id="为什么数据库不用红黑树用B-树"><a href="#为什么数据库不用红黑树用B-树" class="headerlink" title="为什么数据库不用红黑树用B+树"></a>为什么数据库不用红黑树用B+树</h3><p>红黑树的出度为 2，而 B Tree 的出度一般都非常大。红黑树的树高 h 很明显比 B Tree 大非常多，IO次数很多，导致会比较慢，因此检索的次数也就更多。</p>
+<p>B+Tree 相比于 B-Tree 更适合外存索引，拥有更大的出度，IO次数较少，检索效率会更高。</p>
+<h3 id="InnoDB主键索引的B-tree高度为多高呢"><a href="#InnoDB主键索引的B-tree高度为多高呢" class="headerlink" title="InnoDB主键索引的B+tree高度为多高呢?"></a>InnoDB主键索引的B+tree高度为多高呢?</h3><p>已知每一页中可以存储16kb，InnoDB的指针占用6个字节的空间，主键即使为bigint，占用字节数为8。</p>
+<p>假设：一行数据大小为1k，那么每一页中能存储16行数据。也就是 16 *1024个字节</p>
+<p>先假设每个节点能存放n个指针，n × 8  +（n+1）× 6 &#x3D; 16*1024 ，能算出n大概为 1170</p>
+<p>1171*16 &#x3D; 18736，也就是说，如果树的高度为2，则可以存储 18000 多条记录。</p>
+<p>高度为3：1171 * 1171 * 16 &#x3D; 21939856，也就是说，如果树的高度为3，则可以存储 2200w 左右的记录。</p>
+<h3 id="索引有哪些种类？"><a href="#索引有哪些种类？" class="headerlink" title="索引有哪些种类？"></a>索引有哪些种类？</h3><p>索引的种类（这里只罗列出InnoDB支持的索引）</p>
+<ul>
+<li>主键索引(PRIMARY)</li>
+<li>普通索引(INDEX)</li>
+<li>唯一索引(UNIQUE)</li>
+<li>联合索引</li>
+</ul>
+<p>总体划分为两类，聚簇索引和非聚簇索引：主键索引也被称为聚簇索引（clustered index），其余都称呼为非聚簇索引。</p>
+<h3 id="聚簇索引和非聚簇索引？"><a href="#聚簇索引和非聚簇索引？" class="headerlink" title="聚簇索引和非聚簇索引？"></a>聚簇索引和非聚簇索引？</h3><ul>
+<li>聚簇索引（又称为聚集索引、主键索引、主索引）按每张表的主键构建一棵B+树，它的叶子节点存储着完整的数据记录；</li>
+<li>非聚簇索引（又称为非聚集索引、非主键索引、二级索引、辅助索引）按表中指定的非主键的列构建一棵B+树，非聚簇索引的叶子节点存储着主键值。</li>
+</ul>
+<p>二者查询数据时的区别：</p>
+<p>聚簇索引查询会更快，因为叶子节点包含要查询的数据，而非主键索引的叶子节点是主键的值，还需要根据主键到聚簇索引中进行<strong>回表</strong>查询。</p>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/MySQL/%E7%B4%A2%E5%BC%95-%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95.png" srcset="/img/loading.gif" lazyload alt="image-20220824114304479"></p>
+<h3 id="简述覆盖索引"><a href="#简述覆盖索引" class="headerlink" title="简述覆盖索引"></a>简述覆盖索引</h3><p>覆盖索引指一个非聚簇索引包含或覆盖了所有需要查询的字段的值，不需要回表查询，即索引本身存了对应的值。</p>
+<h3 id="非聚簇索引一定会回表查询多次吗？"><a href="#非聚簇索引一定会回表查询多次吗？" class="headerlink" title="非聚簇索引一定会回表查询多次吗？"></a>非聚簇索引一定会回表查询多次吗？</h3><p>不是，通过<strong>覆盖索引</strong>也可以只查询一次。</p>
+<h3 id="以下两条SQL语句，那个执行效率高-为什么"><a href="#以下两条SQL语句，那个执行效率高-为什么" class="headerlink" title="以下两条SQL语句，那个执行效率高? 为什么?"></a>以下两条SQL语句，那个执行效率高? 为什么?</h3><p>A：select * from user where id &#x3D; 10 ;<br>B：select * from user where name &#x3D; ‘Arm’ ;  备注: id为主键，name字段创建的有索引；</p>
+<p>解答：A 语句的执行性能要高于B 语句。因为A语句直接走聚集索引，直接返回数据。 而B语句需要先查询name字段的二级索引，然后再查询聚集索引，也就是需要进行回表查询。</p>
+<h3 id="简述联合索引和最左前缀原则"><a href="#简述联合索引和最左前缀原则" class="headerlink" title="简述联合索引和最左前缀原则"></a>简述联合索引和最左前缀原则</h3><p>联合索引是指对表上的多个列的关键词进行索引。</p>
+<p>联合索引要遵守最左前缀法则。指的是查询从索引的最左列开始，并且不跳过索引中的列。如果跳过，索引将会部分失效（后面的字段索引失效）。另外最左列只要在查询语句中有即可，放在查询语句的前后顺序无所谓</p>
+<p>在创建联合索引时，根据业务需求，where子句中使用最频繁的一列放在最左边，因为MySQL索引查询会遵循最左前缀匹配原则，即最左优先，在检索数据时从联合索引的最左边开始匹配。创建一个联合索引（key1,key2,key3)相当于创建了(key1)、(key1,key2)、(key1,key2,key3)三个索引，能够减少开销。</p>
+<h3 id="索引失效的几种情况？"><a href="#索引失效的几种情况？" class="headerlink" title="索引失效的几种情况？"></a>索引失效的几种情况？</h3><ul>
+<li>复合索引未用左列字段，不符合最左前缀法则</li>
+<li>where中索引列有运算</li>
+<li>where中索引列使用了函数，如 where substring(phone,10,2) &#x3D; ‘15’</li>
+<li>头部模糊查询，即like语句以%开头，如果以%结尾不会失效</li>
+<li>需要类型转换，尤其是字符串类型字段使用时，不加引号，索引将失效。</li>
+<li>where条件中有or必须每个列都加上索引，有一个没索引，其他有索引也会失效</li>
+<li>数据分布影响，比如mysql觉得全表扫描更快时（数据少），再比如is null 与 is not null走索引快还是全表扫描快</li>
+</ul>
+<h3 id="MySql创建索引语法"><a href="#MySql创建索引语法" class="headerlink" title="MySql创建索引语法"></a>MySql创建索引语法</h3><p>创建<strong>单个索引</strong>的语法：<strong>create index 索引名 on 表名（字段名）</strong></p>
+<p>索引名一般是：<strong>表名_字段名</strong>，如给id创建索引：create index t1_id on t1(id);</p>
+<p>创建<strong>联合索引</strong>的语法：<strong>create index 索引名 on 表名（字段名1，字段名2）</strong></p>
+<p>如给username和password创建联合索引：create index t1_username_password on t1(username,password)</p>
+<h3 id="什么时候需要建索引？什么时候没必要建索引？"><a href="#什么时候需要建索引？什么时候没必要建索引？" class="headerlink" title="什么时候需要建索引？什么时候没必要建索引？"></a>什么时候需要建索引？什么时候没必要建索引？</h3><p>索引方便了查找的效率，但是会导致增删改的速率变慢（因为与主键绑定）。</p>
+<p>需要建立索引的情况：</p>
+<ul>
+<li>主键自动建立唯一索引</li>
+<li>频繁进行查询的字段应该创建索引</li>
+<li>与其他表进行联合查询的字段，外键关系建立索引</li>
+<li>排序或分组要用到的字段</li>
+</ul>
+<p>不需要创建索引的情况：</p>
+<ul>
+<li>表记录太少</li>
+<li>字段经常进行增删改的操作</li>
+<li>where条件用不到的字段</li>
+</ul>
+<h3 id="Mysql5-6对于索引的优化？"><a href="#Mysql5-6对于索引的优化？" class="headerlink" title="Mysql5.6对于索引的优化？"></a>Mysql5.6对于索引的优化？</h3><p>引入了<strong>索引下推优化</strong>，可以在有like条件查询的情况下，减少回表次数。</p>
+<h3 id="通过什么方法来判断有没有走索引查询？"><a href="#通过什么方法来判断有没有走索引查询？" class="headerlink" title="通过什么方法来判断有没有走索引查询？"></a>通过什么方法来判断有没有走索引查询？</h3><p>可以通过<strong>explain</strong>查看sql语句的执行计划，通过执行计划来分析索引使用情况。</p>
+<h3 id="简述MySQL使用EXPLAIN-的关键字段"><a href="#简述MySQL使用EXPLAIN-的关键字段" class="headerlink" title="简述MySQL使用EXPLAIN 的关键字段"></a>简述MySQL使用EXPLAIN 的关键字段</h3><p>explain关键字用于分析sql语句的执行情况，可以通过他进行sql语句的性能分析。explain语句的各项输出如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong><code>列名</code></strong></th>
+<th><strong><code>用途</code></strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>每一个SELECT关键字查询语句都对应一个唯一id</td>
+</tr>
+<tr>
+<td>select_type</td>
+<td>SELECT关键字对应的查询类型</td>
+</tr>
+<tr>
+<td>table</td>
+<td>表名</td>
+</tr>
+<tr>
+<td>partitions</td>
+<td>匹配的分区信息</td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>单表的访问方法</td>
+</tr>
+<tr>
+<td>possible_keys</td>
+<td>可能用到的索引</td>
+</tr>
+<tr>
+<td><strong>key</strong></td>
+<td>实际使用到的索引</td>
+</tr>
+<tr>
+<td>key_len</td>
+<td>实际使用到的索引长度</td>
+</tr>
+<tr>
+<td>ref</td>
+<td>当使用索引列等值查询时，与索引列进行等值匹配的对象信息</td>
+</tr>
+<tr>
+<td>rows</td>
+<td>预估需要读取的记录条数</td>
+</tr>
+<tr>
+<td>filtered</td>
+<td>某个表经过条件过滤后剩余的记录条数百分比</td>
+</tr>
+<tr>
+<td><strong>Extra</strong></td>
+<td>额外的一些信息</td>
+</tr>
+</tbody></table>
+<p>重点说一下<code>type</code>字段：</p>
+<p>最优到最差分别为：system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; ALL</p>
+<p>一般来说，得保证查询<strong>至少达到range级别</strong>，最好能达到ref。</p>
+<ul>
+<li><code>system、const</code>：MySQL 能对查询的某部分进行优化并将其转化成一个常量。<strong>用于主键或唯一二级索引列与常数比较时，所以表最多有一个匹配行</strong>，读取1次，速度比较快。<code>system</code>是 <code>const</code> 的特例，表里只有一条记录匹配时为 <code>system</code>。system：系统表，数据已经加载到内存里。比如 select ‘A’。const：常量连接，通过索引一次就找到。</li>
+<li><code>eq_ref</code>：在<strong>连接查询</strong>时，如果被驱动表是<strong>通过主键或者唯一二级索引列等值匹配的方式</strong>进行访问的，则对该被驱动表的访问方法就是 <code>eq_ref</code>。返回所有匹配某个单独值的行。</li>
+<li><code>ref</code>：相比 eq_ref，不使用唯一索引，而是<strong>使用普通索引或者唯一性索引的部分前缀</strong>，索引要和某个值相比较，可能会找到多个符合条件的行。</li>
+<li><code>range</code>：使用索引获取<strong>范围区间</strong>的记录，通常出现在 <code>in, between ,&gt; ,&lt;, &gt;=</code> 等操作中。</li>
+<li><code>index</code>：<strong>扫描全表索引上的全部数据。</strong>，这通常比ALL快一些。<strong>（<code>index</code>是从索引中读取的，而 <code>ALL</code> 是从硬盘中读取）</strong>。</li>
+<li><code>ALL</code>：即<strong>全表扫描</strong>，MySQL 需要从头到尾去查找表中所需要的行。通常情况下这需要增加索引来进行优化了。</li>
+</ul>
+<p>再来说一下<code>extra</code>字段：额外信息</p>
+<ul>
+<li><code>Using index</code>：表示相应的select操作中使用了<strong>覆盖索引</strong>，<strong>查询的列被索引覆盖</strong>，<strong>不需要回表查询</strong>。</li>
+<li><code>Using temporary</code>：MySQL 中需要创建一张内部临时表来处理查询，很慢需要优化。</li>
+<li><code>Using filesort</code>：无法使用索引来排序，MySQL使用外部的索引排序，很慢需要优化。</li>
+<li><code>Using where</code>：使用了where。</li>
+</ul>
+<p>当发现<code>Extra</code>提示为 <code>Using filesort</code>、<code>Using temporary</code> 时就需要格外注意了，考虑索引优化。</p>
+<h3 id="正向索引和倒排索引"><a href="#正向索引和倒排索引" class="headerlink" title="正向索引和倒排索引"></a>正向索引和倒排索引</h3><p>正向索引：基于文档id创建索引。查询词条时必须先找到文档，而后判断是否包含词条</p>
+<p>倒排索引：对文档内容分词，对词条创建索引，并记录词条所在文档的信息。查询时先根据词条查询到文档id，而后获取到文档</p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h3><p>事务是一个不可分割的数据库操作序列，也是数据库并发控制的基本单位，其执行的结果必须使数据库从一种一致性状态变到另一种一致性状态。事务是逻辑上的一组操作，要么都执行，要么都不执行。</p>
+<h3 id="事务的特征？"><a href="#事务的特征？" class="headerlink" title="事务的特征？"></a>事务的特征？</h3><p>ACID：</p>
+<ul>
+<li>原子性（Atomicity）：一个事务中的所有操作要么全部完成，要么全部不完成。</li>
+<li>一致性（Consistency）：事务执行前后数据库的状态保存一致。</li>
+<li>隔离性（Isolation）：多个并发事务对数据库进行操作，事务间互不干扰。</li>
+<li>持久性（Durability）：事务执行完毕，对数据的修改是永久的，即使系统故障也不会丢失</li>
+</ul>
+<h3 id="事务并发带来的问题？"><a href="#事务并发带来的问题？" class="headerlink" title="事务并发带来的问题？"></a>事务并发带来的问题？</h3><p>事务的并发问题是由于 多个事务同时操作同一个数据库的相同数据</p>
+<ul>
+<li>丢失修改</li>
+<li>脏读：一个事务读取了其他事务<strong>更新但没有提交</strong>的数据。比如：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据</li>
+<li>不可重复读：一个事务多次<strong>读取同一数据时，结果不一样</strong>。比如：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</li>
+<li>幻读：一个事务读取了其他事务<strong>插入或删除但没有提交</strong>的数据。事务A读到了3条数据，事务B又插入了一条，事务A读到了4条，然后B又回滚了，事务A读到3条</li>
+</ul>
+<h3 id="事务的隔离级别？"><a href="#事务的隔离级别？" class="headerlink" title="事务的隔离级别？"></a>事务的隔离级别？</h3><ul>
+<li>读未提交：允许事务读取未被其它事务提交的变更</li>
+<li>读已提交：只允许事务读取已经被其它事务提交的变更，只能避免<strong>脏读</strong>。Oracle默认隔离级别</li>
+<li>可重复读：确保事务多次从一个字段中读取相同的值，哪怕别人改数据的事务已经提交，在本事务中也不去读，可以避免<strong>脏读</strong>和<strong>不可重复读</strong>。<strong>mysql 默认隔离级别</strong></li>
+<li>串行化：事务持续期间，加锁禁止其他事务对该表执行插入、更新和删除操作，所有并发问题都可以避免，但性能低下</li>
+</ul>
+<p>一般选二三个，安全性高一点的选可重复读，性能要求高一点选读已提交</p>
+<h3 id="隔离级别是如何实现的？"><a href="#隔离级别是如何实现的？" class="headerlink" title="隔离级别是如何实现的？"></a>隔离级别是如何实现的？</h3><p>事务的隔离机制主要是依靠锁机制和MVCC（多版本并发控制）实现的，读已提交和可重复读可以通过MVCC实现，串行化可以通过锁机制实现。</p>
+<h3 id="当前读和快照读？"><a href="#当前读和快照读？" class="headerlink" title="当前读和快照读？"></a>当前读和快照读？</h3><p>当前读：读取的是数据库的最新版本，并且在读取时要保证其他事务不会修该当前记录，所以会对读取的记录加锁。</p>
+<p>对于我们日常的操作，如：select … lock in share mode(共享锁)，select …for update、update、insert、delete(排他锁)都是一种当前读。</p>
+<p>快照读：不加锁读取操作即为快照读，使用MVCC来读取快照中的数据，避免加锁带来的性能损耗。比如简单的select语句（不加锁）</p>
+<h3 id="什么是MVCC？"><a href="#什么是MVCC？" class="headerlink" title="什么是MVCC？"></a>什么是MVCC？</h3><p>MVCC(multiple version concurrent control)多版本并发控制即同一条记录在系统中存在多个版本。主要用来提高并发性能。对数据读写在不加读写锁的情况下实现数据库的隔离性，即只是用快照读，在事务隔离级别为<strong>读已提交和可重复读</strong>中使用到。MVCC的具体实现，还需要依赖于数据库记录中的三个隐式字段、undo log日志、readView读视图。</p>
+<p>InnoDB在建表的会自动的添加三个隐藏字段：</p>
+<ul>
+<li>DB_TRX_ID：最近修改事务ID，记录插入这条记录或最后一次修改该记录的事务ID。该ID是按申请顺序严格递增的</li>
+<li>DB_ROLL_PTR：回滚指针，可以找到历史数据版本的指针，用于配合undo log，指向上一个版本。</li>
+<li>DB_ROW_ID ：隐藏主键，如果表结构没有指定主键，将会生成该隐藏字段。如果有就不会添加</li>
+</ul>
+<p>undo log日志，即回滚日志，在insert、update、delete的时候产生的便于数据回滚的日志。当insert的时候，产生的undo log日志只在回滚时需要，在事务提交后，可被立即删除。而update、delete的时候，产生的undo log日志不仅在回滚时需要，在快照读时也需要，不会立即被删除。</p>
+<p>ReadView（读视图）是 快照读 SQL执行时MVCC提取数据的依据，记录并维护系统当前活跃的事务（未提交的）id。</p>
+<p>MVCC实现原理和过程：</p>
+<p>在InnoDB中，事务在开始前会向事务系统申请一个事务ID，该ID是按申请顺序严格递增的。数据在每次事务更新都会生成新的数据版本，版本里记录当前的事务ID即DB_TRX_ID和能指向上一个版本的回滚指针即DB_ROLL_PTR，不同事务或相同事务对同一条记录进行修改，会导致该记录的undolog生成一条版本链表，链表的头部是最新的旧记录，链表尾部是最早的旧记录。</p>
+<p>有了版本链，当有事务想去读取数据时，就会使用ReadView（读视图）来作为提取数据的依据，根据不同的隔离级别，生成ReadView的时机不同，如果是读已提交READ COMMITTED，在事务中每一次执行快照读时生成ReadView。如果是可重复读REPEATABLE READ，仅在事务中第一次执行快照读时生成ReadView，后续复用该ReadView。</p>
+<p>readview中规定了版本链数据的访问规则，他会根据版本链每个事务ID和当前未提交的事务ID集合进行比对，决定当前版本的数据是否应该被当前事务所见，找到正确的版本记录并返回，最终实现在不加锁的情况下保证数据的一致性。</p>
+<h3 id="读提交和可重复读都基于MVCC实现，有什么区别？"><a href="#读提交和可重复读都基于MVCC实现，有什么区别？" class="headerlink" title="读提交和可重复读都基于MVCC实现，有什么区别？"></a>读提交和可重复读都基于MVCC实现，有什么区别？</h3><p>如果是读已提交，在事务中每一次执行快照读时生成读视图ReadView。</p>
+<p>如果是可重复读，仅在事务中第一次执行快照读时生成读视图ReadView，后续复用该ReadView。这样能保证读视图是一样的，每次读取的数据都一致</p>
+<h3 id="InnoDB如何保证事务的原子性、持久性和一致性？"><a href="#InnoDB如何保证事务的原子性、持久性和一致性？" class="headerlink" title="InnoDB如何保证事务的原子性、持久性和一致性？"></a>InnoDB如何保证事务的原子性、持久性和一致性？</h3><p>利用redo log保证事务的持久性，该log关注于事务的恢复，在重启mysql服务的时候，根据redo log进行重做，从而使事务有持久性。</p>
+<p>利用undo log保障原子性。该log保存了事务发生之前的数据的一个版本，可以用于回滚，从而保证事务原子性。</p>
+<p>利用undo log + redo log保障一致性。事务中的执行需要redo log，如果执行失败，需要undo log 回滚。</p>
+<h2 id="日志和主从复制"><a href="#日志和主从复制" class="headerlink" title="日志和主从复制"></a>日志和主从复制</h2><h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h3><p>重做日志，记录的是事务提交时数据页的物理修改，是用来实现事务的持久性。该日志文件由两部分组成：重做日志缓冲（redo log buffer）以及重做日志文件（redo logfile），前者是在内存中，后者在磁盘中。当事务提交之后会把所有修改信息都存到该日志文件中，用于在刷新脏页到磁盘，发生错误时可以重启mysql服务，根据redo log进行重做，从而使事务有持久性。</p>
+<p>存储引擎级别的log，InnoDB有，MyISAM没有</p>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><p>回滚日志，用于记录数据被修改前的信息，作用包含两个 : 提供回滚（保证事务的原子性）和MVCC（多版本并发控制）。<br>undo log和redo log记录物理日志不一样，它是逻辑日志。可以认为当delete一条记录时，undolog中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录。当执行rollback时，就可以从undo log中的逻辑记录读取到相应的内容并进行回滚。</p>
+<p>是存储引擎级别的log（InnoDB有，MyISAM没有）</p>
+<h3 id="redo-log和undo-log的区别"><a href="#redo-log和undo-log的区别" class="headerlink" title="redo log和undo log的区别"></a>redo log和undo log的区别</h3><p>&#x3D;&#x3D;redo log关注事务的恢复&#x3D;&#x3D;，保证了事务的<strong>持久性</strong></p>
+<p>&#x3D;&#x3D;undo log主要用于事务的回滚&#x3D;&#x3D;，保证了事务的<strong>原子性</strong></p>
+<p>undo log + redo log 保障<strong>一致性</strong>。事务中的执行需要redo log，如果执行失败，需要undo log 回滚。</p>
+<h3 id="crash-safe能力是什么？"><a href="#crash-safe能力是什么？" class="headerlink" title="crash-safe能力是什么？"></a>crash-safe能力是什么？</h3><p>InnoDB通过redo log保证即使数据库发生异常重启，之前提交的记录都不会丢失，这个能力称为crashsafe</p>
+<h3 id="如果没有redolog，可能会存在什么问题的？"><a href="#如果没有redolog，可能会存在什么问题的？" class="headerlink" title="如果没有redolog，可能会存在什么问题的？"></a>如果没有redolog，可能会存在什么问题的？</h3><p>在InnoDB引擎中的内存结构中，主要的内存区域就是缓冲池，在缓冲池中缓存了很多的数据页。 当我们在一个事务中，执行多个增删改的操作时，InnoDB引擎会先操作缓冲池中的数据，如果缓冲区没有对应的数据，会通过后台线程将磁盘中的数据加载出来，存放在缓冲区中，然后将缓冲池中的数据修改，修改后的数据页我们称为脏页。 而脏页则会在一定的时机，通过后台线程刷新到磁盘中，从而保证缓冲区与磁盘的数据一致。 而缓冲区的脏页数据<strong>并不是实时刷新</strong>的，而是一段时间之后将缓冲区的数据刷新到磁盘中，假如刷新到磁盘的过程出错了，而提示给用户事务提交成功，而数据却没有持久化下来，这就出现问题了，没有保证事务的持久性。</p>
+<p>redolog可以解决这个问题，有了redolog之后，当对缓冲区的数据进行增删改之后，会首先将操作的数据页的变化，记录在redolog buffer中。在事务提交时，会<strong>立刻</strong>将redo log buffer中的数据刷新到redo log磁盘文件中。过一段时间之后，如果刷新缓冲区的脏页到磁盘时，发生错误，此时就可以借助于redo log进行数据恢复，这样就保证了事务的持久性。 而如果脏页成功刷新到磁盘 或 涉及到的数据已经落盘，此时redolog就没有作用了，就可以删除了，所以存在的两个redolog文件是循环写的。</p>
+<p>那为什么每一次提交事务，要刷新redo log 到磁盘中呢，而不是直接将buffer pool中的脏页刷新到磁盘呢 ?</p>
+<p>因为在业务操作中，我们操作数据一般都是随机读写磁盘的，而不是顺序读写磁盘。 而redo log在往磁盘文件中写入数据，由于是日志文件，所以都是顺序写的。顺序写的效率，要远大于随机写。 这种先写日志的方式，称之为 WAL（Write-Ahead Logging）。</p>
+<h3 id="WAL技术是什么？"><a href="#WAL技术是什么？" class="headerlink" title="WAL技术是什么？"></a>WAL技术是什么？</h3><p>WAL的全称是Write-Ahead Logging，它的关键点就是先写日志，再写磁盘。事务在提交写入磁盘前，会先写到redo log里面去。如果直接写入磁盘涉及磁盘的随机I&#x2F;O访问，是非常消耗时间的一个过程，相比之下先写入redo log，后面再找合适的时机批量刷盘能提升性能。</p>
+<h3 id="bin-log"><a href="#bin-log" class="headerlink" title="bin log"></a>bin log</h3><p>二进制日志（BINLOG）记录了所有的 DDL（数据定义语言）语句和 DML（数据操纵语言）语句，但不包括数据查询（SELECT、SHOW）语句。</p>
+<p>作用：1. 灾难时的数据恢复；2. MySQL的主从复制。在MySQL8版本中，默认二进制日志是开启着</p>
+<p>格式：</p>
+<ul>
+<li>STATEMENT：基于SQL语句的日志记录，记录的是SQL语句，对数据进行修改的SQL都会记录在日志文件中。</li>
+<li>ROW 基于行的日志记录，记录的是每一行的数据变更。（默认）</li>
+<li>MIXED 混合了STATEMENT和ROW两种格式，默认采用STATEMENT，在特殊情况会切换为ROW进行记录。</li>
+</ul>
+<p>bin log是数据库级别的log，关注恢复数据库的数据。</p>
+<h3 id="redo-log与binlog的区别？"><a href="#redo-log与binlog的区别？" class="headerlink" title="redo log与binlog的区别？"></a>redo log与binlog的区别？</h3><ul>
+<li><p>redo log是InnoDB引擎特有的；binlog是MySQL的Server层实现的，会记录所有引擎对数据库的修改。</p>
+</li>
+<li><p>redo log 是物理日志，记录的是<strong>把某数据更改成了什么</strong>；binlog 是逻辑日志，记录的是<strong>更新操作的逻辑</strong>。</p>
+</li>
+</ul>
+<p>​        比如 1 + 2 &#x3D; 3，redo log 记录的是这个数据之前是 1，更新后是 3；而 binlog 记录的是给数据 1 加上 2。</p>
+<ul>
+<li>redo log 可以理解成一个环，空间固定会用完，是循环写的。而 binlog 没有限制，是可以追加写入的，写满一个文件后，切换到下一个新的文件继续写，不会覆盖掉以前的日志。所以binlog是”完整“的日志</li>
+</ul>
+<h3 id="MySQL是如何保证主从一致的？"><a href="#MySQL是如何保证主从一致的？" class="headerlink" title="MySQL是如何保证主从一致的？"></a>MySQL是如何保证主从一致的？</h3><p>MySQL通过binlog（二进制日志）实现主备一致。binlog记录了所有修改了数据库或可能修改数据库的语句，而不会记录select、show这种不会修改数据库的语句。在备份的过程中，主库A会有一个专门的线程将主库A的binlog发送给备库B进行备份。</p>
+<h3 id="简述MySQL主从复制"><a href="#简述MySQL主从复制" class="headerlink" title="简述MySQL主从复制"></a>简述MySQL主从复制</h3><p>MySQL提供主从复制功能，可以方便的实现数据的多处自动备份，不仅能增加数据库的安全性，还能进行读写分离，提升数据库负载性能。</p>
+<p>读写分离：即只在MySQL主库上写，只在MySQL从库上读，以减少数据库压力，提高性能。</p>
+<p>主从复制流程：</p>
+<ol>
+<li>Master 主库在事务提交时，会把数据变更记录在二进制日志文件 Binlog 中。</li>
+<li>从库开辟一个I&#x2F;O线程读取主库的二进制日志文件 Binlog ，写入到从库的中继日志 Relay Log 。</li>
+<li>从库重做中继日志中的事件，将改变反映它自己的数据。</li>
+</ol>
+<h3 id="SQL语句更新的流程"><a href="#SQL语句更新的流程" class="headerlink" title="SQL语句更新的流程"></a>SQL语句更新的流程</h3><p>举例这样一条更新语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">update</span> T <span class="hljs-keyword">set</span> c<span class="hljs-operator">=</span>c<span class="hljs-operator">+</span><span class="hljs-number">1</span> <span class="hljs-keyword">where</span> ID<span class="hljs-operator">=</span><span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+<p>更新语句的流程是：（图中浅色框表示是在InnoDB内部执行的，深色框表示是在执行器中执行的）</p>
+<ul>
+<li>执行器先找引擎取 ID&#x3D;2 这一行。如果ID&#x3D;2这一行所在的数据页本来就在内存中，就直接返回给执行器；否则，需要先从磁盘读入内存，然后再返回。</li>
+<li>执行器拿到引擎给的行数据，把这个值加上1，比如原来是N，现在就是N+1，得到新的一行数据，再调用引擎接口写入这行新数据。</li>
+<li>引擎将这行新数据更新到内存中，同时将这个更新操作记录到redo log里面，此时redo log处于<strong>prepare</strong> （准备）状态。然后告知执行器执行完成了，随时可以提交事务。</li>
+<li>执行器（Server 层）生成这个操作的binlog，并把binlog写入磁盘。</li>
+<li>执行器调用引擎的提交事务接口，引擎把刚刚处于<strong>prepare</strong>状态的redo log改成 commit （提交）状态，更新完成。</li>
+</ul>
+<p>可以归纳为：</p>
+<p>读取行 –&gt;  执行计算 –&gt;  更新数据并写入 redo log (prepare) –&gt;  生成binlog并写入磁盘 –&gt;  提交事务并将redo log 改为commit</p>
+<p><img src="E:/%E5%9B%BE%E7%89%87/%E7%AC%94%E8%AE%B0/6-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81MySQL.assets/Mysql-update%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B.png" srcset="/img/loading.gif" lazyload alt="image-20220210233555363"></p>
+<p>这里将redo log的写入拆成了两个步骤：prepare和commit，这就是”<strong>两阶段提交</strong>“。</p>
+<h3 id="两阶段提交是什么？"><a href="#两阶段提交是什么？" class="headerlink" title="两阶段提交是什么？"></a>两阶段提交是什么？</h3><p>为了保证binlog和redo log两份日志的逻辑一致，最终保证恢复到主备数据库的数据是一致的，采用两阶段提交的机制。</p>
+<ol>
+<li>执行器调用存储引擎接口，存储引擎将修改更新到内存中后，将修改操作记录redo log中，此时redo log处于prepare状态。</li>
+<li>存储引擎告知执行器执行完毕，执行器生成这个操作对应的binlog，并把binlog写入磁盘。</li>
+<li>执行器调用引擎的提交事务接口，引擎把刚刚写入的redo log改成提交commit状态，更新完成。</li>
+</ol>
+<p><strong>为什么要使用两阶段提交？</strong></p>
+<p>这是为了通过 binlog 做数据库数据恢复，保证数据恢复的准确性。只要从 binlog 找到备份，从那个时间点根据 binlog 记录的逻辑，一步一步往后推，就能推到数据库崩溃的时间点，就能恢复崩溃时的数据状态了。</p>
+<p>比如2点时发现误删表，需要找回数据，如果刚好就是0点时有一份完整的备份，那么从0点到2点的所有操作逻辑都在binlog中，从0点依次向后推逻辑，就可以恢复数据。</p>
+<p><strong>如果不使用两阶段提交会发生什么？</strong></p>
+<p>反证法：假如原来c&#x3D;0，按理说更新完后为1</p>
+<ul>
+<li><strong>先写redo log后写binlog</strong>。假设在redo log写完（变为1了），binlog还没有写完的时候，MySQL进程异常重启。redo log把数据恢复回来了，恢复后这一行c的值是1。但是由于binlog没写完就crash了，这时候binlog里面就没有记录这个语句（没有记录+1）。如果需要用这个binlog来恢复临时库的话，就会少了这一次更新，恢复出来的这一行c的值就是0，与原库的值不同。</li>
+<li><strong>先写binlog后写redo log</strong>。如果在binlog写完之后crash，由于redo log还没写，崩溃恢复以后这个事务无效，所以这一行c的值是0。但是binlog里面已经记录了“+1”这个日志。所以，在之后用binlog来恢复的时候就多了一个事务出来，恢复出来的这一行c的值就是1，与原库的值不同。</li>
+</ul>
+<p><strong>两阶段提交的合理性：</strong></p>
+<p>1：redo log prepare   2：写binlog     3：redo log commit</p>
+<p>2之前崩溃，重启恢复：后发现没有commit，回滚。备份恢复：没有binlog 。一致</p>
+<p>3之前崩溃，重启恢复：虽没有commit，但满足prepare和binlog完整，所以重启后会自动commit。备份：有binlog. 一致</p>
+<p>简单说，redo log和binlog都可以用于表示事务的提交状态，而两阶段提交就是让这两个状态保持逻辑上的一致，保证了恢复数据的一致性</p>
+<p><strong>怎样让数据库恢复到半个月内任意一秒的状态？</strong></p>
+<p>binlog会记录所有的逻辑操作，并且是采用“追加写”的形式。如果你的DBA承诺说半个月内可以恢复，那么备份系统中一定会保存最近半个月的所有binlog，同时系统会定期做整库备份。这里的“定期”取决于系统的重要性，可以是一天一备，也可以是一周一备。</p>
+<p>一天一备好处是“最长恢复时间”更短。最坏情况下需要应用一天的binlog。比如，你每天0点做一次全量备份，而要恢复出一个到昨天晚上23点的备份。需要用昨天0点的备份和23个小时内的binlog来恢复</p>
+<p>一周一备最坏情况就要应用一周的binlog了。</p>
+<h3 id="只靠binlog可以支持数据库崩溃恢复吗？"><a href="#只靠binlog可以支持数据库崩溃恢复吗？" class="headerlink" title="只靠binlog可以支持数据库崩溃恢复吗？"></a>只靠binlog可以支持数据库崩溃恢复吗？</h3><p>不可以。</p>
+<p>历史原因：InnoDB在作为MySQL的插件加入MySQL引擎家族之前，就已经是一个提供了崩溃恢复和事务支持的引擎了。InnoDB接入了MySQL后，发现既然binlog没有崩溃恢复的能力，那引入InnoDB原有的redo log来保证崩溃恢复能力。</p>
+<p>实现原因：</p>
+<ol>
+<li>binlog没有记录数据页修改的详细信息，不具备恢复数据页的能力。binlog记录着数据行的增删改，但是不记录事务对数据页的改动，这样细致的改动只记录在redo log中。当一个事务做增删改时，其实涉及到的数据页改动非常细致和复杂，包括行的字段改动以及行头部以及数据页头部的改动，甚至b+tree会因为插入一行而发生若干次页面分裂，那么事务也会把所有这些改动记录下来到redolog中。因为数据库系统进程crash时刻，磁盘上面页面镜像可以非常混乱，其中有些页面含有一些正在运行着的事务的改动，而一些已提交的事务的改动并没有刷上磁盘。事务恢复过程可以理解为是要把没有提交的事务的页面改动都去掉，并把已经提交的事务的页面改动都加上去这样一个过程。这些信息，都是binlog中没有记录的，只记录在了存储引擎的redo log中。</li>
+<li>操作写入binlog可细分为write和fsync两个过程，write指的就是指把日志写入到文件系统的pagecache，并没有把数据持久化到磁盘,fsync才是将数据持久化到磁盘的操作。通过参数设置sync_binlog为0的时候，表示每次提交事务都只write，不fsync。此时数据库崩溃可能导致部分提交的事务以及binlog日志由于没有持久化而丢失。</li>
+</ol>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="简述乐观锁和悲观锁"><a href="#简述乐观锁和悲观锁" class="headerlink" title="简述乐观锁和悲观锁"></a>简述乐观锁和悲观锁</h3><p>乐观锁：对于数据冲突保持一种乐观态度，操作数据时不会对操作的数据进行加锁，只有到数据提交的时候才通过一种机制来验证数据是否存在冲突。</p>
+<p>悲观锁：对于数据冲突保持一种悲观态度，在修改数据之前把数据锁住，然后再对数据进行读写，在它释放锁之前任何人都不能对其数据进行操作，直到前面一个人把锁释放后下一个人数据加锁才可对数据进行加锁，然后才可以对数据进行操作，<strong>一般数据库本身锁的机制都是基于悲观锁的机制实现的</strong>。</p>
+<h3 id="简述MySQL中的按粒度的锁分类"><a href="#简述MySQL中的按粒度的锁分类" class="headerlink" title="简述MySQL中的按粒度的锁分类"></a>简述MySQL中的按粒度的锁分类</h3><ul>
+<li>表级锁: 对当前操作的整张表加锁，实现简单，加锁快，但并发能力低。</li>
+<li>行锁: 锁住某一行，如果表存在索引，那么记录锁是锁在索引上的，如果表没有索引，那么 InnoDB 会创建一个隐藏的聚簇索引加锁。行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁的开销也最大，加锁慢，会出现死锁。</li>
+<li>Gap 锁：也称为间隙锁：锁定一个范围但不包括记录本身。其目的是为了防止同一事物的两次当前读出现幻读的情况。</li>
+<li>Next-key Lock： 行锁+gap锁。</li>
+</ul>
+<h3 id="Mysql的什么情况下行锁会变成表锁？"><a href="#Mysql的什么情况下行锁会变成表锁？" class="headerlink" title="Mysql的什么情况下行锁会变成表锁？"></a>Mysql的什么情况下行锁会变成表锁？</h3><p>InnoDB 行级锁是通过给索引上的索引项加锁来实现的，InnoDB<strong>行级锁只有通过索引条件检索数据，才使用行级锁</strong>;否则，InnoDB使用表锁。在不通过索引(主键)条件查询的时候，InnoDB是表锁而不是行锁。（<strong>没有索引或者索引失效时，InnoDB 的行锁变表锁</strong>）</p>
+<p>具体例子可见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sshuidajiao/article/details/83150017?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242">https://blog.csdn.net/sshuidajiao/article/details/83150017?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242</a></p>
+<p><strong>显示锁定</strong>：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">SELECT</span></span> ... LOCK In SHARE MODE;   <span class="hljs-comment">//共享锁</span><br><span class="hljs-function"><span class="hljs-title">SELECT</span></span> ... <span class="hljs-keyword">FOR</span> UPDATE;  <span class="hljs-comment">//独占锁</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="简述MySQL的共享锁、排它锁"><a href="#简述MySQL的共享锁、排它锁" class="headerlink" title="简述MySQL的共享锁、排它锁"></a>简述MySQL的共享锁、排它锁</h3><p>共享锁也称为读锁，相互不阻塞，多个客户在同一时刻可以同时读取同一个资源而不相互干扰。</p>
+<p>排他锁也称为写锁，会阻塞其他的写锁和读锁，确保在给定时间内只有一个用户能执行写入并防止其他用户读取正在写入的同一资源。</p>
+<h3 id="如何解决数据库死锁"><a href="#如何解决数据库死锁" class="headerlink" title="如何解决数据库死锁"></a>如何解决数据库死锁</h3><ol>
+<li>预先检测到死锁的循环依赖，并立即返回一个错误。</li>
+<li>当查询的时间达到锁等待超时的设定后放弃锁请求。</li>
+</ol>
+<h2 id="数据库优化"><a href="#数据库优化" class="headerlink" title="数据库优化"></a>数据库优化</h2><h3 id="简述MySQL优化流程"><a href="#简述MySQL优化流程" class="headerlink" title="简述MySQL优化流程"></a>简述MySQL优化流程</h3><ol>
+<li>通过慢日志定位执行较慢的SQL语句</li>
+<li>利用explain对这些关键字段进行分析</li>
+<li>根据分析结果进行优化</li>
+</ol>
+<h3 id="数据库的分库分表？"><a href="#数据库的分库分表？" class="headerlink" title="数据库的分库分表？"></a>数据库的分库分表？</h3><p>一、数据库瓶颈</p>
+<p>数据库到达瓶颈时会导致数据库的活跃连接数增加，逼近数据库可承载活跃连接数的阈值，业务层来看就是<strong>数据库连接少甚至无连接可用</strong>，会导致并发量、吞吐量、数据库崩溃等问题</p>
+<ul>
+<li><p>IO瓶颈</p>
+<ul>
+<li><p>磁盘读IO瓶颈：热点数据太多，数据库缓存放不下，每次查询时会产生大量的IO，降低查询速度</p>
+<p>  解决方法：分库和垂直分</p>
+</li>
+<li><p>网络IO瓶颈，请求的数据太多，网络带宽不够</p>
+<p>  解决方法：分库</p>
+</li>
+</ul>
+</li>
+<li><p>CPU瓶颈</p>
+<ul>
+<li><p>SQL问题：如SQL中包含join，group by，order by，非索引字段条件查询等，增加CPU运算的操作</p>
+<p>  解决方法：SQL优化，建立合适的索引</p>
+</li>
+<li><p>单表数据量太大，查询是扫描的行太多，SQL效率低，CPU率先出现瓶颈</p>
+<p>  解决方法：水平分表</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>二、分库分表</p>
+<p>1、水平分库：以字段为依据，按照一定策略（hash、range等），将一个库中的数据拆分到多个库中。</p>
+<p>结果：</p>
+<ul>
+<li>每个库的结构都一样；</li>
+<li>每个库的数据都不一样，没有交集；</li>
+<li>所有库的并集是全量数据；</li>
+</ul>
+<p>场景：<strong>系统绝对并发量上来了</strong>，分表难以根本上解决问题，并且还<strong>没有明显的业务归属来垂直分库</strong>。</p>
+<p>分析：库多了，io和cpu的压力自然可以成倍缓解。</p>
+<p>2、水平分表：以字段为依据，按照一定策略（hash、range等），将一个表中的数据拆分到多个表中。</p>
+<p>结果：</p>
+<ul>
+<li>每个表的结构都一样；</li>
+<li>每个表的数据都不一样，没有交集；</li>
+<li>所有表的并集是全量数据；</li>
+</ul>
+<p>场景：<strong>系统绝对并发量并没有上来</strong>，只是单表的数据量太多，影响了SQL效率，加重了CPU负担，以至于成为瓶颈。</p>
+<p>分析：表的数据量少了，单次SQL执行效率高，自然减轻了CPU的负担。</p>
+<p>3、垂直分库：以表为依据，按照业务归属不同，将不同的表拆分到不同的库中。</p>
+<p>结果：</p>
+<ul>
+<li>每个库的结构都不一样；</li>
+<li>每个库的数据也不一样，没有交集；</li>
+<li>所有库的并集是全量数据；</li>
+</ul>
+<p>场景：<strong>系统绝对并发量上来了</strong>，并且可以抽象出单独的业务模块。</p>
+<p>分析：将相关的表拆到单独的库中，可以服务化。</p>
+<p>4、垂直分表：以字段为依据，按照字段的活跃性，将表中字段拆到不同的表（主表和扩展表）中。</p>
+<p>结果：</p>
+<ul>
+<li>每个表的结构都不一样；</li>
+<li>每个表的数据也不一样，一般来说，每个表的字段至少有一列交集，一般是主键，用于关联数据；</li>
+<li>所有表的并集是全量数据；</li>
+</ul>
+<p>场景：<strong>系统绝对并发量并没有上来</strong>，表的记录并不多，但是字段多，并且热点数据和非热点数据在一起，单行数据所需的存储空间较大。以至于数据库缓存的数据行减少，查询时会去读磁盘数据产生大量的随机读IO，产生IO瓶颈。</p>
+<p>分析：垂直分表的拆分原则是将热点数据放在一起作为主表，非热点数据放在一起作为扩展表。这样更多的热点数据就能被缓存下来，进而减少了随机读IO。拆了之后，要想获得全部数据就需要关联两个表来取数据。但记住，<strong>千万别用join，因为join不仅会增加CPU负担并且会将两个表耦合在一起（必须在一个数据库实例上）</strong>。关联数据，应该在业务Service层做文章，分别获取主表和扩展表数据然后用关联字段关联得到全部数据。</p>
+<p>三、分库分表步骤</p>
+<p>根据容量（当前容量和增长量）评估分库或分表个数 -&gt; 选key（均匀）-&gt; 分表规则（hash或range等）-&gt; 执行（一般双写）-&gt; 扩容问题（尽量减少数据的移动）</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2023/05/16/面经/6-数据库、MySQL/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

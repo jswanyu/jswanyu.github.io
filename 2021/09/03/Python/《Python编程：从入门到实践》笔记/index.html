@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1、.title()  每个单词首字母大写     .upper()  所有字母大写     .lower()  所有字母小写2、 \t 空白   转义字符只能用在””内      \n 换行3、.rstrip() 删除末尾空白     .lstrip() 删除开头空白     .strip()  删除两端空白4、Python将带小数点的数都称为浮点数5、Python的字符串既可以用单引号也可以用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础：01.IPython、输入输出、注释">
+<meta property="og:url" content="http://jswanyu.github.io/2021/09/03/Python/%E3%80%8APython%E7%BC%96%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%E3%80%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="1、.title()  每个单词首字母大写     .upper()  所有字母大写     .lower()  所有字母小写2、 \t 空白   转义字符只能用在””内      \n 换行3、.rstrip() 删除末尾空白     .lstrip() 删除开头空白     .strip()  删除两端空白4、Python将带小数点的数都称为浮点数5、Python的字符串既可以用单引号也可以用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+<meta property="article:published_time" content="2021-09-03T04:56:02.000Z">
+<meta property="article:modified_time" content="2023-05-15T08:36:27.371Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E5%9B%BE%E6%A0%87.jpeg">
+  
+  
+  
+  <title>Python基础：01.IPython、输入输出、注释 - Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/Python%E6%A8%AA%E5%B9%85.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python基础：01.IPython、输入输出、注释"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-09-03 12:56" pubdate>
+          2021年9月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python基础：01.IPython、输入输出、注释</h1>
+            
+            <div class="markdown-body">
+              
+              <p>1、.title()  每个单词首字母大写<br>     .upper()  所有字母大写<br>     .lower()  所有字母小写<br>2、 \t 空白   转义字符只能用在””内<br>      \n 换行<br>3、.rstrip() 删除末尾空白<br>     .lstrip() 删除开头空白<br>     .strip()  删除两端空白<br>4、Python将带小数点的数都称为浮点数<br>5、Python的字符串既可以用单引号也可以用双引号  引号内部还有单引号时，只能用””<br>     str() 可以将非字符串值表示为字符串   &#x2F;&#x2F;将23转为’23’,而不能将abc转为’abc’<br>     Python 用+来合并字符串  “wanyu” + “ “ + “shuai”<br>     创建多行字符串可以用+&#x3D;运算符<br>prompt &#x3D; “\nTell me something, and I will repeat it back to you:”<br>prompt +&#x3D; “\nEnter ‘quit’ to end the program. “</p>
+<p>6、单行注释 #<br>     多行注释 “””   “””  或者  ‘’’ ‘’’<br>7、[ ] 表示列表  ,分隔其中元素<br>      访问元素   正数 [ ]里从0开始   print(bike[0])<br>                       倒数           -1          print(bike[-1])<br>      修改元素   指定列表名和元素索引并指定新值      bike[0]&#x3D;’abc’<br>      添加元素   .append()         在末尾添加元素(可创建空列表然后用一系列.append()语句来添加)      bike.append(‘bcd’)<br>                       .insert( , )         插入元素，需指定新元素的索引与值    bike.insert(0,’cde’)<br>      删除元素   del 列表名[]          删除已知位置的列表元素     del bike[0]<br>                       列表名.pop()         删除索引位置并且能够再次被调用  即弹出效果   bike.pop(2)<br>                                del和pop()使用后，列表里对应元素均被删除，但是pop()可以继续调用  根据删除后是否还需使用元素选取del和pop<br>                       列表名.remove()   删除已知元素值             bike.remove(‘abc’)<br>8、列表排序（注意有的方法，有的是函数）<br>   .sort()                                         永久性按字母顺序排序     bike.sort()<br>   .sort(reverse&#x3D;true)                    永久性按字母倒序排序     bike.sort(reverse&#x3D;true)<br>   sorted(列表名)                           临时性按字母顺序显示     print(sorted(bike))<br>   sorted(列表名,reverse&#x3D;True))   临时性按字母倒序显示     print(sorted(bike,reverse&#x3D;True))<br>   .reverse()                                   永久性按列表倒序排序     bike.reverse()<br>9、len(列表名)    获得列表长度<br>10、for 变量 in 列表：   for循环，且for循环后的每一句代码，没有缩进的只执行一次，缩进的重复执行   注意‘:’和缩进</p>
+<p>magicians &#x3D; [‘alice’, ‘david’, ‘carolina’]<br>for magician in magicians:<br>    print(magician.title() + “, that was a great trick!”)<br>    print(“I can’t wait to see your next trick, “ + magician.title() + “.\n”) </p>
+<p>print(“Thank you everyone, that was a great magic show!”)</p>
+<p>11、创建数值列表<br>       第一步：创建了从x到y-1的数，步长为z    range(x,y,z):                          range(1,5,1):<br>       第二步：创建了从x到y-1的列表，步长为z  列表名&#x3D;list(range(x,y,z))      message&#x3D;list(range(1,5,1))<br>       列表解析：将for循环和创建新元素的代码合并，并自动添加附加新元素        squares&#x3D;[value**2 for value in range(1,11)]</p>
+<p>12、+ - * &#x2F;    加减乘除<br>        %          求模            除2取余可以用来判断奇偶数<br>        **         表示乘方运算<br>13、min(列表名)  最小值<br>       max(列表名)  最大值<br>       sum(列表名)  求和<br>14、变量名只包含字母、数字、下划线，但不能以数字打头，不能包含空格、Python关键字和函数名<br>15、切片：列表名[x:y]   列表里第x+1到第y个元素<br>          x未写则表示从头开始，y未写则表示到尾结束<br>          x、y都未写则可用于列表的复制       friends_foods&#x3D;my_foods[:]     如果只是简单的把一个列表赋给一个变量，就不能得到两个列表<br>          x若为负数，则为返回列表的后x位<br>        遍历切片只需在切片里用for循环    for player in players[0:3]；<br>16、()表示元组    即不可变的列表，逗号隔开元素,访问元素与列表相同<br>                  遍历元组则用for循环        for bike in bikes:<br>                  元组的元素不可以被修改，但是整个元组可以被重新赋值       bikes&#x3D;(200,100)   bikes&#x3D;(50,100)<br>17、代码格式PEP8     <a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a><br>                     缩进每次用4个空格<br>                     利用空行让代码看上去整洁<br>                     &#x3D;&#x3D;、&gt;&#x3D;、&lt;&#x3D; 两边各添加一个空格<br>                     包含多个函数时，建议每个函数之间空2行<br>18、if条件语句    ①if + 条件:<br>                                else:<br>                            ②if + 条件:<br>                    　　     elif + 条件:<br>                    　　     else:<br>        注意（1）冒号：不能丢<br>               （2）if、else后面的语句换行写时要缩进<br>               （3）elif可以有多句，else可以没有<br>               （4）当需要执行多个代码块，也可以用多个if语句<br>requested_toppings &#x3D; [‘mushrooms’, ‘french fries’, ‘extra cheese’]<br>if ‘mushrooms’ in requested_toppings:<br>    print()     #省略没写<br>elif ‘french fries’ in requested_toppings:<br>    print()<br>elif ‘extra cheese’ in requested_toppings:<br>    print()<br>         第一个mushrooms检测通过了，程序将跳过下面的elif结构，不再检查其他内容，所以if-elif-else结构仅适用于只有一个条件满足的情况<br>         而想要检测多个条件满足的情况应该用多个if语句<br>requested_toppings &#x3D; [‘mushrooms’, ‘french fries’, ‘extra cheese’]<br>if ‘mushrooms’ in requested_toppings:<br>    print()     #省略没写<br>if ‘french fries’ in requested_toppings:<br>    print()<br>if ‘extra cheese’ in requested_toppings:<br>    print()</p>
+<p>19、&#x3D;  赋值<br>       &#x3D;&#x3D; 等于   检查字符是否相等时，会区分大小写，若要不区分的话，可使用.lower()<br>       !&#x3D; 不等于<br>       and 与<br>       or  或<br>       in  包含在列表中<br>       not in  未包含在列表中</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>bikes&#x3D;[‘a’,’b’,’c’]<br>‘a’ in bikes<br>True<br>if + 列表名：    如果列表不为空，则会返回True;如果列表为空，返回值为False</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>20、布尔表达式  True &#x2F; False</p>
+<p>21、字典是放在{}里的一系列键值对，键需要加’’而值不一定  键值之间用:隔开  键值对之间用,隔开<br>        字典名&#x3D;{‘键’:值}    alien_0&#x3D;{‘color’:’gerrn’,’points’:5}<br>        访问字典值  可依次指定字典名和放在[]的键   即  字典名[‘键’]     print(alien_0[‘color’])<br>        添加键值对  依次指定字典名、[]括起来的键和关联的值   即  字典名[‘键’]&#x3D;值<br>                Python不关心键值对的顺序，只关心键和值的对应关系<br>                alien_0[‘x_position’]&#x3D;0<br>                alien_0[‘y_position’]&#x3D;25<br>                很多时候是先建立一个空字典，再分别添加键值对       字典名&#x3D;{}<br>       修改字典值  指定字典名、[]括起来的键和关联的新值   即  字典名[‘键’]&#x3D;新值     alien_0[‘color’]&#x3D;’yellow’<br>       删除键值对  del 字典名[‘键’]       del alien_0[‘color’]<br>       较长的列表和字典，可以将键值对放在不同的行里，注意行前缩进<br>alien_0&#x3D;{<br>     ‘color’:’gerrn’,<br>     ‘points’:5,<br>     ‘head’:’big’,<br>     ‘phil’:’python’}</p>
+<pre><code class="hljs">   遍历字典中键值对   for  变量名1,变量名2 in 字典名.items()：   for循环将每个键值对存储到指定的变量中,变量1为键，变量2为值
+</code></pre>
+<p>for key,value in user_0.items():<br>    print(“\nKey: “ + key)<br>    print(“Value: “ + value)</p>
+<pre><code class="hljs"> 遍历字典中键       for  变量名 in 字典名.keys()       for name in user_0.keys():
+ .keys()方法实质上是返回一个列表，包含字典的所有键，因此其还可以用于判断某值是否在字典的键里
+</code></pre>
+<p>if ‘erin’ not in alien_0.keys():<br>    print()</p>
+<pre><code class="hljs"> 按顺序获取返回元素可在for里调用sorted()函数         for key in sorted(alien_0.keys()):
+ 遍历字典中值       for  变量名 in 字典名.values()        for name in user_0.values():
+ 如需去掉重复值，则在for里调用set函数                    for name in set(user_0.values()):
+ 关于键值重复的问题，键从逻辑上讲是不能重复的，但重复了不会报错，只会认为是对键重新赋值，值可以重复
+</code></pre>
+<p>22、print打印的内容较长时，也可以将内容分行写以获得整洁的代码界面</p>
+<p>23、在列表里存储字典    将多个字典放入列表中           aliens&#x3D;[alien_0,alien_1,alien_2]<br>       在字典里存储列表    即 键 对应的 值 可以为列表<br>pizza &#x3D; {<br>    ‘crust’: ‘thick’,<br>    ‘toppings’: [‘mushrooms’, ‘extra cheese’],<br>    }</p>
+<pre><code class="hljs">  在字典里存储字典    即键对应的值可以为字典
+</code></pre>
+<p>users &#x3D; {‘aeinstein’: {‘first’: ‘albert’,<br>                       ‘last’: ‘einstein’,<br>                       ‘location’: ‘princeton’},<br>         ‘mcurie’: {‘first’: ‘marie’,<br>                    ‘last’: ‘curie’,<br>                    ‘location’: ‘paris’},</p>
+<p>24、 input()函数用来等待用户输入，括号里可以为字符串变量也可以为字符串。其返回的值永远是用户输入的字符串<br>        input(“\nTell me something, and I will repeat it back to you: “)<br>        int()函数可以将input的字符串转为数值，以达到相应的要求<br>age&#x3D;input(“How old are you ?”)<br>year&#x3D;int(age)</p>
+<p>25、用好标志（True,False）可以简化判断、循环语句<br>26、while循环：while 语句 :<br>        break终止整个循环，continue退出当前循环，返回到循环开头<br>        注意避免无限循环，可以用ctrl+c退出<br>27、while 列表:   或   while 变量 in 列表:  对列表的循环<br>while unconfirmed_users:<br>    current_user &#x3D; unconfirmed_users.pop()<br>while ‘cat’ in pets:<br>    pets.remove(‘cat’)<br>28、def 函数名(参数):    函数的语句要缩进<br>def describe_pet(pet_name, animal_type&#x3D;’dog’):<br>    print(“\nI have a “ + animal_type + “.”)<br>    print(“My “ + animal_type + “‘s name is “ + pet_name.title() + “.”)</p>
+<pre><code class="hljs">传递实参分 位置实参 和 关键字实参
+位置实参       describe_pet(&#39;harry&#39;, &#39;hamster&#39;)
+关键字实参   describe_pet(animal_type=&#39;hamster&#39;, pet_name=&#39;harry&#39;)   关键字实参即指定实参的形参类型，所以就无需区分位置
+编写函数时，还可以给某一形参给定默认值，在调用函数时，就无需再指定此形参的实参，函数会使用默认值。
+注意：在编写函数时，形参列表中必须先列出没有默认值的形参，再列出有默认值的形参。
+      在指定默认值时，等号两边不要有空格，调用时也是如此，当然如果不适用默认值，那么就可以重新传递新的实参
+</code></pre>
+<p>def describe_pet(pet_name, animal_type&#x3D;’dog’):<br>    print(“\nI have a “ + animal_type + “.”)<br>    print(“My “ + animal_type + “‘s name is “ + pet_name.title() + “.”)<br>describe_pet(pet_name&#x3D;’willie’)     #使用默认值<br>describe_pet(‘harry’, ‘hamster’)    #不使用默认值，传递位置实参<br>describe_pet(pet_name&#x3D;’harry’, animal_type&#x3D;’hamster’)   #不使用默认值，传递关键字实参<br>describe_pet(animal_type&#x3D;’hamster’, pet_name&#x3D;’harry’)   #不使用默认值，传递关键字实参<br>    有时候需要将函数的实参变成可选的，因为函数的参数并不是所有情况下都需要，这时可以将那个不一定需要的形参设为空，即’’，再来个判断语句<br>def get_formatted_name(first_name,last_name,middle_name&#x3D;’’)<br>    if middle_name:<br>        print()<br>    else:<br>        print()        </p>
+<p>函数形参过多时，导致代码长度超出80，不符合PEP8，可将   形参都放到下一行，甚至下几行，要注意缩进(2个tab)<br>def fuction_name(<br>        a,b,c,<br>        d,e.f):<br>    fuction body…</p>
+<pre><code class="hljs">函数的返回值可以任何类型的值  结构为 return 返回内容
+返回简单值  return full_name.title()
+
+返回字典    
+</code></pre>
+<p>def build_person(first_name, last_name, age&#x3D;’’):<br>    person &#x3D; {‘first’: first_name, ‘last’: last_name}<br>    return person</p>
+<pre><code class="hljs">函数的参数也可以是一个列表，即传递列表
+</code></pre>
+<p>def greet_users(names):<br>    for name in names:<br>        msg &#x3D; “Hello, “ + name.title() + “!”<br>        print(msg)<br>usernames &#x3D; [‘hannah’, ‘ty’, ‘margot’]<br>greet_users(usernames)</p>
+<pre><code class="hljs">有时候需要禁止函数修改列表，则传递列表时可以利用切片传递列表的副本，即  function_name(list_name[:])   这样就可以保留原始列表的内容
+除非有充分理由使用副本，否则少使用，提高效率。函数使用现成列表可以避免浪费时间和内存创建副本，尤其处理大型列表时
+
+函数传递任意数量的实参，可将函数的形参设为 *名称         def pizza(*pizzas)：
+这样就创建了一个名为pizzas的空元组，函数能将所有收到的实参都放进这个元组里
+想让函数接受不同类型的实参时，必须将任意数量实参放到最后，Python将先匹配位置实参和关键字实参，余下的实参将收集到最后一个形参中去
+</code></pre>
+<p>def make_pizza(size,*toppings)<br>    print()<br>make_pizza(16,’mushrooms’,’cheese’)</p>
+<p>   使用任意数量的关键字实参，可传递给函数键值对，将形参设为**名称，再利用for循环<br>def build_profile(first, last, **user_info):<br>    profile &#x3D; {}<br>    profile[‘first_name’] &#x3D; first<br>    profile[‘last_name’] &#x3D; last<br>    for key, value in user_info.items():<br>        profile[key] &#x3D; value<br>    return profile</p>
+<p>29、导入模块，在当前.py的目录中再创建一个.py的文件，里面可以放函数，然后在当前py里导入这个模块,语句为import  所有的import语句放在开头<br>       再调用函数时，其前面还需要加上模块名，即   模块名.函数名<br>       比如  pizza.py文件里定义了一个函数   def do_pizza(size, <em>toppings):   （内容此处省略）<br>       则在pizza.py文件的目录里的另一个文件make_pizza里可以导入模块<br>import pizza<br>pizza.do_pizza()<br>      也可以导入指定模块的指定函数,格式为       from module_name import function_0,function_1<br>      使用</em>可以导入模块中的所有函数                 from module_name import *<br>      这样在调用模块中的函数时就无需写模块.函数，直接调用函数名，但一般不推荐使用，因为如果不是自己写的模块，可能会有很多函数重名<br>      as可以给指定模块和函数起别名，就可以用别名来调用函数和模块<br>      from module_name import function_name as fn<br>      import module_name as mn</p>
+<p>30、类<br>       创建类   class 名称():         class Dog():         注意：名称的首字母要大写<br>       类里可以定义不同的方法   def 方法名称():<br>       第一个定义的方法一般是_init_()   当我们使用类时，Python会自动运行它，注意其名称，且其形参第一个为self，之后为其他信息<br>       且用句点表示法获取值<br>def <strong>init</strong>(self, name, age):<br>    self.name &#x3D; name<br>    self.age &#x3D; age</p>
+<pre><code class="hljs">  之后可以定义其他的方法，如果不需要其他的信息，方法的形参只有一个self
+</code></pre>
+<p>def sit(self):<br>    print(self.name.title() + “ is now sitting.”)<br>def roll_over(self):<br>    print(self.name.title() + “ rolled over!”)</p>
+<pre><code class="hljs">根据类创建实例,Python将使用实参调用类中的方法_init_()创建表示特定的实例，并自动返回给一个变量，这个变量可以自己设置
+my_dog = Dog(&#39;willie&#39;, 6)
+创建完之后，可以访问实例的属性，其为句点表示法 变量.属性
+</code></pre>
+<p>print(“My dog’s name is “ + my_dog.name.title() + “.”)<br>print(“My dog is “ + str(my_dog.age) + “ years old.”)</p>
+<pre><code class="hljs">还可以调用类中定义的方法，仍然为句点表示法
+</code></pre>
+<p>my_dog &#x3D; Dog(‘willie’, 6)<br>my_dog.sit()</p>
+<pre><code class="hljs">当需要给某个属性添加默认值时，就无需包含为它提供初始值的形参
+</code></pre>
+<p>class Car():<br>    def <strong>init</strong>(self, manufacturer, model, year):<br>        self.manufacturer &#x3D; manufacturer<br>        self.model &#x3D; model<br>        self.year &#x3D; year<br>        self.odometer_reading &#x3D; 0    #此值设为默认值，所以在设置形参时没有设置这个量</p>
+<pre><code class="hljs">有时候需要修改属性的值，有三种方法
+（1）直接修改属性的值，通过实例直接访问（基于上面定义过的方法举例）
+</code></pre>
+<p>my_new_car&#x3D;Car(‘audi’,’24’,2016)<br>my_new_car.odometer_reading&#x3D;23      #这样就直接修改了默认值0</p>
+<pre><code class="hljs">（2）通过方法修改属性的值  即定义一个修改属性的方法
+</code></pre>
+<p>def update_odometer(self,mileage):<br>    self.odometer_reading &#x3D; mileage<br>my_new_car.update_odometer(23)      #也修改了默认值0</p>
+<pre><code class="hljs">（3）通过方法对属性的值进行递增/递减
+</code></pre>
+<p>def increment_odometer(self,miles)<br>    self.odometer_reading +&#x3D; miles<br>my_new_car.increment_odometer(100)  #通过+&#x3D;改变了属性值</p>
+<pre><code class="hljs"> 继承
+ 编写一个类的时候可以继承另一个类，原先的类称为父类，新的类称为子类。子类可以自动获得父类的全部属性和方法，同时还可以定义自己的属性和方法
+ 创建子类时，父类必须在此文件中，且必须在子类的前面   格式为   class 子类名(父类名):
+</code></pre>
+<p>class Car():    #省略了父类的内容<br>class ElectricCar(Car)：</p>
+<pre><code class="hljs">子类需要写继承父类属性的语句（举例接着上面的内容）   即调用super()函数
+</code></pre>
+<p>class Car():    #省略了父类的内容<br>class ElectricCar(Car)：<br>    def <strong>init</strong>(self, manufacturer, model, year):      #初始化父类的属性<br>    super().<strong>init</strong>(manufacturer, model, year)     #此行代码调用父类的方法_init_()</p>
+<pre><code class="hljs">super()函数调用之后，可添加新属性和新方法
+</code></pre>
+<p>class Car():    #省略了父类的内容<br>class ElectricCar(Car)：<br>    def <strong>init</strong>(self, manufacturer, model, year):      #初始化父类的属性<br>        super().<strong>init</strong>(manufacturer, model, year)     #此行代码调用父类的方法_init_()<br>        self.battery_size &#x3D; 70                         #添加了子类的新属性<br>    def describe_battery(self):                         #添加了新方法<br>        print()</p>
+<pre><code class="hljs">父类的方法没有任何用处时，你可以重写它。语句就是普通的定义
+</code></pre>
+<p>class ElectricCar(Car)：<br>    def fill_gas_tank():                               #重新定义父类的方法<br>        print()</p>
+<pre><code class="hljs">可以定义一个新的类，作为另一个类的一个属性
+</code></pre>
+<p>class Battery():<br>    def <strong>init</strong>(self, battery_size&#x3D;60):<br>        self.battery_size &#x3D; battery_size<br>    def describe_battery(self):<br>        print(“This car has a “ + str(self.battery_size) + “-kWh battery.”)<br>class ElectricCar(Car):<br>    def <strong>init</strong>(self, manufacturer, model, year):<br>        super().<strong>init</strong>(manufacturer, model, year)<br>        self.battery &#x3D; Battery()                      #属性是一个类<br>my_tesla &#x3D; ElectricCar(‘tesla’,’model s’,2016)<br>my_tesla.battery.describe_battery()                   #调用实例的battery属性里的方法<br>    导入类，将一个类写在一个.py文件里，在另一个.py文件里导入这个类  格式为  from 模块名 import 类名<br>    举例   Car类在car.py里，则在my_car.py里导入Car可写为  from car import Car<br>    可以导入一个模块的多个类    from 模块名 import 类名1,类名2     在调用类时，直接建立实例就可以，不需要其他格式<br>    当然也可以导入整个模块，格式为  import 模块名<br>    但是在建立实例时，就需要用点号表达式   my_beetle &#x3D; car.Car()<br>    编写类时，应该写好注释<br>    类中，用一个空行分隔方法<br>    模块中，用两个空行分隔类<br>    导入模块时，先写导入标准库的语句，再写导入自己编写的模块的语句<br>31、文件<br>       读取文件 with open(‘路径’) as 变量:<br>with open(‘pi_digits.txt’) as file_object:    #关键字with在不再需要访问文件后将文件关闭<br>    contents &#x3D; file_object.read()             #方法.read()读取文件的全部内容<br>    print(contents)</p>
+<pre><code class="hljs">上例open()函数里只有文件名，是因为其和.py文件在相同目录。()里也可以放文件的绝对路径
+但绝对路径在windows系统里，是用\隔开，例如D:\code_work\Python\pi_digits.txt
+过长的路径影响美观，所以可以将其放在一个变量里
+</code></pre>
+<p>file_path &#x3D; ‘D:\code_work\Python\pi_digits.txt’    #注意一定是字符串<br>with open(file_path) as file_project:</p>
+<pre><code class="hljs">逐行读取文件只需使用for循环将每一行的内容放到变量中即可
+for line in file_object:           #每一行的内容就放到了line中
+使用关键字with时，open()返回的文件对象只能在with代码块中使用，要想在代码块外访问文件内容，可将文件的各行存储在一个列表里，并在代码块外使用该列表
+</code></pre>
+<p>with open(‘pi_digits.txt’) as file_object:<br>    lines &#x3D; file_object.readlines()           #用方法readlines()将每一行的内容放到了lines列表中<br>for line in lines:<br>    print()</p>
+<pre><code class="hljs">读取文本文件时，Python 将其中所有内容都解读为字符串，如果要作为数值使用，就必须用int()或者float()转换
+写入文件格式为  with open(文件,‘w’) as 变量:               &#39;r&#39; 读取模式 &#39;w&#39;写入模式 &#39;a&#39;附加模式  &#39;r+&#39; 读取和写入模式   若省略模式参数，则默认为读取模式
+如果写入的文件不存在，Python将自动创建它。如果写入的文件存在，那么将在返回对象前清空文件
+写入的语句用放方法.write()
+</code></pre>
+<p>file_path &#x3D; ‘D:\code_work\Python\pi_digits.txt’<br>with open(file_path,’w’) as file_object:<br>    file_object.write(‘I lOVE YOU’)                   #如果要写入多行语句，则需要添加换行符号</p>
+<p>   ‘w’写入模式将原文件内容清空，写入新的语句，如果不想清空原文件，则可以使用’a’附加模式，写入的内容将会被添加到文件末尾<br>with open(‘programming.txt’, ‘a’) as file_object:<br>    file_object.write(“I also love finding meaning in large datasets.\n”)</p>
+<p>32、异常<br>    当发生错误时，如果编写了处理问题的代码，程序将继续运行，如果没有，程序将会停止，且会返回一个traceback<br>    处理问题的代码块为  try-except<br>    print(5&#x2F;0)  将会返回一个traceback，里面的ZeroDivisionError则是一个异常对象，那么就要对异常进行处理<br>try:<br>    print(5&#x2F;0)<br>except ZeroDivisionError:<br>    print(“you can’t divide by zero !”)</p>
+<pre><code class="hljs">找不到文件的异常对象为FileNotFoundError
+</code></pre>
+<p>filename &#x3D; ‘alice.txt’try:<br>    with open(filename) as f_obj:<br>        contents &#x3D; f_obj.read()<br>except FileNotFoundError as e:<br>    msg &#x3D; “Sorry, the file “ + filename + “ does not exist.”<br>    print(msg)</p>
+<pre><code class="hljs">try-except-else 代码块，适用于包含正常情况发生的代码
+</code></pre>
+<p>while True:<br>    first_number &#x3D; input(“\nFirst number: “)<br>    if first_number &#x3D;&#x3D; ‘q’:<br>        break<br>    second_number &#x3D; input(“Second number: “)<br>    try:<br>        answer &#x3D; int(first_number) &#x2F; int(second_number)<br>    except ZeroDivisionError:<br>        print(“You can’t divide by 0!”)<br>    else:<br>        print(answer)</p>
+<pre><code class="hljs">可以将try-except-else结构写为函数，多处使用
+如果希望程序在碰到异常对象时一声不吭，则可以在except的语句里写pass，当这种错误发生的时候，既没有traceback，也没有任何输出
+</code></pre>
+<p>while True:<br>    first_number &#x3D; input(“\nFirst number: “)<br>    if first_number &#x3D;&#x3D; ‘q’:<br>       break<br>    second_number &#x3D; input(“Second number: “)<br>    try:<br>       answer &#x3D; int(first_number) &#x2F; int(second_number)<br>    except ZeroDivisionError:<br>        pass<br>    else:<br>        print(answer)</p>
+<p>33、方法split()以空格为分隔符将字符串分拆为多个部分，并将这些部分都存储到一个列表中<br>34、模块json能将简单的Python数据结构转储到文件中，并在程序再次运行时加载文件中的数据<br>        json模块里有json.dump()函数，接受两个实参，要存储的数据和可用于存储数据的文件对象   dump：转储<br>import json                                   #导入json模块<br>numbers &#x3D; [2, 3, 5, 7, 11, 13]                #创建一个数字列表<br>filename &#x3D; ‘numbers.json’                     #指定所存储的文件名称<br>with open(filename, ‘w’) as file_object:      #以写入模式打开文件，让json能够将数据写入其中<br>    json.dump(numbers, file_object)           #使用json.dump()函数将数字列表存储到文件中</p>
+<pre><code class="hljs">json模块里有json.load()函数，能够加载文件中的数据
+</code></pre>
+<p>import json                                   #导入模块<br>filename &#x3D; ‘numbers.json’                     #之前写入的文件<br>with open(filename) as file_object:           #读取模式打开文件<br>    numbers &#x3D; json.load(file_object)          #使用ison.load()加载存储在文件里的信息，并将其存储到变量numbers中<br>print(numbers)</p>
+<pre><code class="hljs">使用json保存用户的数据很方便，便于储存和记忆
+</code></pre>
+<p>import json</p>
+<p>def get_stored_username():<br>    “””Get stored username if available.”””<br>    filename &#x3D; ‘username.json’<br>    try:<br>        with open(filename) as f_obj:<br>            username &#x3D; json.load(f_obj)<br>    except FileNotFoundError:<br>        return None<br>    else:<br>        return username</p>
+<p>def get_new_username():<br>    “””Prompt for a new username.”””<br>    username &#x3D; input(“What is your name? “)<br>    filename &#x3D; ‘username.json’<br>    with open(filename, ‘w’) as f_obj:<br>        json.dump(username, f_obj)<br>    return username</p>
+<p>def greet_user():<br>    “””Greet the user by name.”””<br>    username &#x3D; get_stored_username()<br>    if username:<br>        print(“Welcome back, “ + username + “!”)<br>    else:<br>        username &#x3D; get_new_username()<br>        print(“We’ll remember you when you come back, “ + username + “!”)</p>
+<p>greet_user()<br>35、重构：将代码分为一系列完成具体工作的函数，使得代码更清晰、更易于理解、更容易扩展<br>36、测试代码</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python基础：01.IPython、输入输出、注释</div>
+      <div>http://jswanyu.github.io/2021/09/03/Python/《Python编程：从入门到实践》笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年9月3日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

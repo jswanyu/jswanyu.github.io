@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="万宇">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="嵌入式缓存和寄存器哪个比较快CPU  &gt; 寄存器 &gt; 缓存 &gt;内存 波特率单位，比特率单位波特率单位为波特（Baud），1波特即指每秒传输1个码元符号（通过不同的调制方式，可以在一个码元符号上负载多个bit位信息） 比特率单位为比特（bit），1比特每秒是指每秒传输1比特。   用实际使用中，最常用的串口通讯协议举例，注意前置条件为：1 个起始位，8 个数据位，0 个校验位，1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wynn&#39;s blog">
+<meta property="og:url" content="http://jswanyu.github.io/2023/05/16/%E9%9D%A2%E7%BB%8F/%E5%B5%8C%E5%85%A5%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Wynn&#39;s blog">
+<meta property="og:description" content="嵌入式缓存和寄存器哪个比较快CPU  &gt; 寄存器 &gt; 缓存 &gt;内存 波特率单位，比特率单位波特率单位为波特（Baud），1波特即指每秒传输1个码元符号（通过不同的调制方式，可以在一个码元符号上负载多个bit位信息） 比特率单位为比特（bit），1比特每秒是指每秒传输1比特。   用实际使用中，最常用的串口通讯协议举例，注意前置条件为：1 个起始位，8 个数据位，0 个校验位，1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%BC%82%E5%B8%B8%E5%90%91%E9%87%8F%E8%A1%A8.png">
+<meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%95%B0%E7%BB%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95%E9%80%89%E6%8B%A9%E9%A2%98.png">
+<meta property="article:published_time" content="2023-05-15T16:34:33.275Z">
+<meta property="article:modified_time" content="2023-05-15T16:36:54.943Z">
+<meta property="article:author" content="万宇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%BC%82%E5%B8%B8%E5%90%91%E9%87%8F%E8%A1%A8.png">
+  
+  
+  
+  <title>Wynn&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jswanyu.github.io","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":false},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wynn&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                时间线
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-16 00:34" pubdate>
+          2023年5月16日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k 字
+        
+      </span>
+    
+
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="嵌入式"><a href="#嵌入式" class="headerlink" title="嵌入式"></a>嵌入式</h1><h3 id="缓存和寄存器哪个比较快"><a href="#缓存和寄存器哪个比较快" class="headerlink" title="缓存和寄存器哪个比较快"></a>缓存和寄存器哪个比较快</h3><p>CPU  &gt; 寄存器 &gt; 缓存 &gt;内存</p>
+<h3 id="波特率单位，比特率单位"><a href="#波特率单位，比特率单位" class="headerlink" title="波特率单位，比特率单位"></a>波特率单位，比特率单位</h3><p>波特率单位为波特（Baud），1波特即指每秒传输1个码元符号（通过不同的调制方式，可以在一个码元符号上负载多个bit位信息）</p>
+<p>比特率单位为比特（bit），1比特每秒是指每秒传输1比特。</p>
+<blockquote>
+<p> 用实际使用中，最常用的串口通讯协议举例，注意前置条件为：1 个起始位，8 个数据位，0 个校验位，1 个停止位，也就是我们常说的：8，N，1；8 个数据位，一个停止位，无校验位。这个条件分析一下就是，如果我要传输一个字节（8 位）的数据，则我应该在总线上产生 10 个电平变换，也就是串行总线上，需要 10 位，才能发送 1 个字节数据。1 秒可以发送 9600 位，那么用 9600&#x2F;10 ，就是1秒可以发送 960 个字节数据，则每发送一个字节需要的时间就是：1&#x2F;960 ~&#x3D; 0.00104166…s ~&#x3D; 1.0416667 ms。</p>
+<p>此时就可以得出一个结论，在 9600 波特率下，大概 1ms 发送 1 个字节的数据。</p>
+</blockquote>
+<h3 id="ARM处理器异常"><a href="#ARM处理器异常" class="headerlink" title="ARM处理器异常"></a>ARM处理器异常</h3><ul>
+<li>异常在当前指令执行完成之后才被响应</li>
+<li>多个异常可以在同一时间产生</li>
+<li>异常指定了优先级和固定的服务顺序：复位异常、数据异常、FIQ （快速中断）、IRQ （中断）、预取指令异常、软件中断异常、未定义指令异常</li>
+</ul>
+<p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%BC%82%E5%B8%B8%E5%90%91%E9%87%8F%E8%A1%A8.png" srcset="/img/loading.gif" lazyload alt="image-20220814112722703"></p>
+<p>异常向量表占32个字节，其中有一个预留的(Ox14)，ARM异常向量表地址默认在地址0，有些处理器可以设置为OxFFFF0000地址处，具体要看CPU手册。由于每个异常入口在向量表中只有4个字节，所以在异常向量表中每种异常都只放一条ARM跳转指令（发生异常后，处理器自动切换到ARM状体），跳转到对应的异常处理程序处继续执行。</p>
+<p>当一个异常出现以后，ARM 执行以下几个步骤：</p>
+<ol>
+<li>把下一条指令的地址放到连接寄存器 LR( 通常是 R14) ，这样就能够在处理异常返回时从正确的位置继续执行</li>
+<li>将相应的 CPSR( 当前程序状态寄存器 复制到 SPSR （备份的程序状态寄存器）中。从异常退出的时候，就可以由 SPSR 来恢复 CPSR 。</li>
+<li>根据异常类型，强制设置 CPSR 的运行模式位。</li>
+<li>强制 PC （程序计数器）从相关异常向量地址取出下一条指令执行，从而跳转到相应的异常处理程序中。</li>
+</ol>
+<h3 id="中断调用过程"><a href="#中断调用过程" class="headerlink" title="中断调用过程"></a>中断调用过程</h3><p>请求中断→中断响应→保护现场→中断服务→恢复现场→中断返回。</p>
+<p>请求中断：当某一中断源需要CPU 为其进行中断服务时，就输出中断请求信号，使中断控制系统的中断请求触发器置位，向 CPU 请求中断。系统要求中断请求信号一直保持到 CPU 对其进行中断响应为止；</p>
+<p>中断响应：CPU 对系统内部中断源提出的中断请求必须响应，而且自动取得中断服务子程序的入口地址，执行中断服务子程序。对于外部中断， CPU 在执行当前指令的最后一个时钟周期去查询 INTR 引脚，若查询到中断请求信号有效，同时在系统开中断（即 IF&#x3D;1 ）的情况下 CPU 向发出中断请求的外设回送一个低电平有效的中断应答信号，作为对中断请求 INTR 的应答，系统自动进入中断响应周期；</p>
+<p>保护现场：主程序和中断服务子程序都要使用CPU 内部寄存器等资源，为使中断处理程序不破坏主程序中寄存器的内容，应先将断点处各寄存器的内容（主要是当前 IP （将要执行的下一条地址）和 CS 值（代码段地址））压入堆栈保护起来，再进入的中断处理。现场保护是由用户使用 PUSH 指令来实现的；</p>
+<p>中断服务：中断服务是执行中断的主体部分，不同的中断请求，有各自不同的中断服务内容，需要根据中断源所要完成的功能，事先编写相应的中断服务子程序存入内存，等待中断请求响应后调用执行；</p>
+<p>恢复现场：当中断处理完毕后，用户通过 POP 指令 将保存在堆栈中的各个寄存器的内容弹出，即恢复主程序断点处寄存器的原值。</p>
+<p>中断返回：在中断服务子程序的最后要安排一条中断返回指令IRET interruptreturn ），执行该指令，系统自动将堆栈内保存的 IP （将要执行的下一条地址和 CS 值（代码段地址）弹出，从而恢复主程序断点处的地址值，同时还自动恢复标志寄存器 FR 或 EFR 的内容，使 CPU 转到被中断的程序中继续执行。</p>
+<p>中断嵌套是指中断系统正在执行一个中断服务时，有另一个优先级更高的中断提出中断请求，这时会暂时终止当前正在执行的级别较低的中断源的服务 程序，去处理级别更高的中断源，待处理完毕，再返回到被中断了的中断服务程序继续执行，这个过程就是中断嵌套。</p>
+<h3 id="Arm工作模式"><a href="#Arm工作模式" class="headerlink" title="Arm工作模式"></a>Arm工作模式</h3><p>Arm微处理器支持 7 种工作模式，分别为：</p>
+<ol>
+<li>用户模式 （Usr）：用于正常执行程序</li>
+<li>快速中断模式（FIQ）： 用于高速数据传输</li>
+<li>外部中断模式（IRQ ）：用于通常的中断处理</li>
+<li>管理模式（SVC）：操作系统使用的保护模式（高权限） 复位和软件中断进入</li>
+<li>数据访问终止模式（abt）：当数据或指令预取终止时进入该模式，可用于虚拟内存及存储保护</li>
+<li>系统模式（sys）：运行均有特权的操作系统任务</li>
+<li>未定义指令终止模式（und）：用于支持硬件协处理器的软件仿真（浮点、微量运算）</li>
+</ol>
+<p>其中除了用户模式以外，其余所有6 种模式称之为非用户模式（特权模式，权限比用户模式高）</p>
+<p>其中除去用户模式和系统模式外的5 种模式称之为异常模式（在用户模式和系统模式看来这些都属于异常），常用于处理中断或异常，以及需要访问受保护的系统资源等情况。</p>
+<h3 id="寄存器组，模式，指针"><a href="#寄存器组，模式，指针" class="headerlink" title="寄存器组，模式，指针"></a>寄存器组，模式，指针</h3><h3 id="LDR-x2F-STR-IO口阻塞-i"><a href="#LDR-x2F-STR-IO口阻塞-i" class="headerlink" title="LDR&#x2F;STR IO口阻塞 i"></a>LDR&#x2F;STR IO口阻塞 i</h3><p>（1）LDR 内存 –&gt; 寄存器     </p>
+<p>LDR r0,&#x3D;label 用于加载立即数或一个地址值到指定寄存器中</p>
+<ul>
+<li>如果 label 是立即数 <ul>
+<li>LDR  r0, &#x3D;0x12345678     把 0x12345678 这个地址中的值写到 r0 中</li>
+</ul>
+</li>
+<li>如果 name 是个标符：<ul>
+<li>LDR r0,&#x3D;label_1   将 label_1 所指向的地址值存入r0 中</li>
+<li>LDR r0 ,[r1]            将 R1 中的值存到 r0 中</li>
+<li>LDR r1,[r2,#16]     将 (r2+16) 地址中的内容存到 r1 中</li>
+<li>LDR r1,[r2],#4       将 r2 地址中的内容存到 r1 中 同时 r2&#x3D;r2+4</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>ldr 是一条伪指令，表示把一个地址写到某寄存器中，和 mov 是比较相似的。只不过 mov 指令限制了立即数的长度为 8位，也就是不能超过 512 。而 ldr 伪指令没有这个限制。如果使用 ldr 伪指令时，后面跟的立即数没有超过 8 位，那么在实际汇编的时候该 ldr 伪指令是被转换为 mov 指令的。</p>
+</blockquote>
+<p> （2）STR 寄存器 —-&gt; 内存</p>
+<ul>
+<li>STR r1,[r2]            将 r1 中的值存到 r2 所指定的地址中</li>
+<li>STR r1,[r2,#4]       将 r1 中的值存到 r2+4 所指定的地址中</li>
+<li>STR r1,[r2],#4       将 r1 中的值存到 r2 所指定的 地址中 , 同时 r2&#x3D;r2+4</li>
+</ul>
+<h3 id="ARM状态和Thumb状态切换程序"><a href="#ARM状态和Thumb状态切换程序" class="headerlink" title="ARM状态和Thumb状态切换程序"></a>ARM状态和Thumb状态切换程序</h3><p>从ARM到Thumb:</p>
+<ul>
+<li>LDR R0,&#x3D;lable+1 BX R0（状态将寄存器的最低位设置为1，BX指令、R0指令将进入thumb状态）；</li>
+</ul>
+<p>从ARM到Thumb: </p>
+<ul>
+<li>LDR R0,&#x3D;lable BX R0（寄存器最低位设置为0，BX指令、R0指令将进入arm状态）。</li>
+</ul>
+<p>当处理器进行异常处理时，则从异常向量地址开始执行，将自动进入ARM状态。</p>
+<h3 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h3><p>对于典型的嵌入式系统而言，大部分时间在处理 IO，少部分时间在做运算，只有那些具备本地语音识别、图形识别等Al功能的系统可能是CPU密集型的，如果只是录音或录像上传到云端识别的，仍然算是 IO 密集型的系统。既然是 IO 密集型的软件，大部分时间在处理 IO，那么 IO模型就很重要了。IO模型包括</p>
+<ul>
+<li>同步阻塞</li>
+<li>同步非阻塞</li>
+<li>异步阻塞</li>
+<li>异步非阻塞</li>
+</ul>
+<p>选择怎样的 IO 模型决定了 IO 密集型软件的复杂度和性能。并没有完美解决方案，每种 IO 模型都有它的优缺点，根据应用需求选择吧。</p>
+<h3 id="实时-x2F-非实时操作系统"><a href="#实时-x2F-非实时操作系统" class="headerlink" title="实时&#x2F;非实时操作系统"></a>实时&#x2F;非实时操作系统</h3><p>实时操作系统： uCOS&#x2F;VxWorks&#x2F;RTLinux<br>非实时操作系统：Linux&#x2F;Windows&#x2F;OSX</p>
+<p>实时操作系统是保证在一定时间限制内完成特定功能的操作系统。实时操作系统有硬实时和软实时之分，硬实时要求在规定的时间内必须完成操作，这是在操作系统设计时保证的；软实时则只要按照任务的优先级，尽可能快地完成操作即可。</p>
+<table>
+<thead>
+<tr>
+<th>比较项目</th>
+<th>非实时系统</th>
+<th>实时系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>交互能力</td>
+<td>较强</td>
+<td>较弱</td>
+</tr>
+<tr>
+<td>响应时间</td>
+<td>秒集</td>
+<td>毫秒、微秒级</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td>—般</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>进程完成的截止期限</td>
+<td>没有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>进程切换的要求</td>
+<td>—般</td>
+<td>快</td>
+</tr>
+<tr>
+<td>内核</td>
+<td>非可剥夺（体现公平)</td>
+<td>可剥夺（体现优先级别)</td>
+</tr>
+</tbody></table>
+<h3 id="ARM-V8支持64位？"><a href="#ARM-V8支持64位？" class="headerlink" title="ARM_V8支持64位？"></a>ARM_V8支持64位？</h3><p>大致来说，ARMv8架构跟AMD和Intel的做法一样，采取64位兼容32位的方式。应用程序可以以32位模式执行，也可以以64位模式执行。</p>
+<h3 id="cpp-inline-内联"><a href="#cpp-inline-内联" class="headerlink" title="cpp inline 内联"></a>cpp inline 内联</h3><p>在 c&#x2F;c++ 中，为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题，特别的引入了 inline 修饰符，表示为内联函数。栈空间就是指放置程序的局部数据（也就是函数内数据）的内存空间。</p>
+<h3 id="几种总线接口对比"><a href="#几种总线接口对比" class="headerlink" title="几种总线接口对比"></a>几种总线接口对比</h3><table>
+<thead>
+<tr>
+<th>总线接口</th>
+<th>UART</th>
+<th>I2C</th>
+<th>SPI</th>
+<th>USB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>串&#x2F;并</td>
+<td>串</td>
+<td>串</td>
+<td>串</td>
+<td>串</td>
+</tr>
+<tr>
+<td>同步&#x2F;异步</td>
+<td>异步</td>
+<td>同步</td>
+<td>同步</td>
+<td>同步</td>
+</tr>
+<tr>
+<td>速率</td>
+<td>慢（波特率可设置）</td>
+<td>慢</td>
+<td>快</td>
+<td>快</td>
+</tr>
+<tr>
+<td>工作方式</td>
+<td>全双工</td>
+<td>半双工</td>
+<td>全双工</td>
+<td>半双工</td>
+</tr>
+<tr>
+<td>用线</td>
+<td>2线：Rx、Tx</td>
+<td>2线：SDA、SCL</td>
+<td>3线或4线：SCLK、SIMO、SOMI、SS(片选)</td>
+<td>4线：Vbus(5V)、GND、D+、D-(3.3V)</td>
+</tr>
+<tr>
+<td>总线拓扑结构</td>
+<td>RS485支持总线式、星形、树形</td>
+<td>总线型（特殊树型）</td>
+<td>环形</td>
+<td>星形</td>
+</tr>
+<tr>
+<td>通信距离</td>
+<td>远，最远1200m</td>
+<td>近</td>
+<td>远</td>
+<td>近</td>
+</tr>
+</tbody></table>
+<h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>SPI 是一种高速的、全双工、同步通信总线，</p>
+<p>SSEL：从设备片选使能信号。如果从设备是低电平使能的话，当拉低这个引脚后从设备就会被选中，主机和这个被选中的从机进行通信。</p>
+<p>SCLK：时钟信号 由主机产生，和 I2C 通信的 SCL 有点类似。</p>
+<p>MOSI：主机给从机发送指令或者数据的通道。</p>
+<p>MISO：主机读取从机的状态或者数据的通道。</p>
+<p>SPI总线有四种工作方式(SPI0, SPI1, SPI2, SPI3)，其中使用的最为广泛的是SPI0和SPI3方式。</p>
+<h3 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h3><p>I2C 仅需两根线就可以支持一主多从或者多主连接</p>
+<p>SDA:串行数据线 SCL:串行时钟线</p>
+<p>起始条件：SCL 线是高电平时， SDA 线从高电平向低电平切换。</p>
+<p>停止条件：SCL 线是高电平时， SDA 线从低电平向高电平切换。</p>
+<h3 id="I2S音频"><a href="#I2S音频" class="headerlink" title="I2S音频"></a>I2S音频</h3><p>支持全双工和半双工通信 支持主从模式</p>
+<p>I2S总 线拥有三条数据信号线：</p>
+<ul>
+<li>SCK: (continuous serial clock) 串行时钟：对应数字音频的每一位数据，SCK 都有 1 个脉冲。 SCK 的频率 &#x3D;2× 采样频率 × 采样位数。</li>
+<li>WS: (word select) 字段（声道）选择：用于切换左右声道的数据。WS 的频率＝采样频率。<br>  WS为 1 表示正在传输的是左声道的数据。WS为 0 表示正在传输的是右声道的数据。<br>  WS可以在串行时钟的上升沿或者下降沿发生改变，并且 WS 信号不需要一定是对称的。在从属装置端， WS 在时钟信号的上升沿发生改变。 WS 总是 在最高位传输前的一个时钟周期发生改变，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</li>
+<li>SD: (serial data) 串行数据</li>
+</ul>
+<h2 id="C语言"><a href="#C语言" class="headerlink" title="C语言"></a>C语言</h2><h3 id="数据类型大小"><a href="#数据类型大小" class="headerlink" title="数据类型大小"></a>数据类型大小</h3><p>只有64 位的 long、 32 位 longlong 和 32 位double 是 8 个字节</p>
+<h3 id="数组表示方法"><a href="#数组表示方法" class="headerlink" title="数组表示方法"></a>数组表示方法</h3><p><img src="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/picgo/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E6%95%B0%E7%BB%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95%E9%80%89%E6%8B%A9%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="image-20220814155317687"></p>
+<p>解答：</p>
+<ul>
+<li>在二维数组中a[1]表示的是a[1] [0]的地址，数组在内存中连续存储，所以a[1]+1表示的是a[1] [1]的地址，所以D可以取得正确的值</li>
+<li>指针操作 *(a+1) 与a[1]等价，所以B也可以取得正确的值</li>
+<li>二维数组在内存中是行优先存储的，所以A中a[0] [0]的地址加5可以取得正确值</li>
+<li>C选项错误，应改为*(&amp;a[1] [0]+1)，因为a[1]就表示a[1] [0]的地址。</li>
+</ul>
+<h3 id="const-与指针"><a href="#const-与指针" class="headerlink" title="const 与指针"></a>const 与指针</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">const</span> <span class="hljs-type">int</span> a;<br><span class="hljs-type">int</span> <span class="hljs-type">const</span> a;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> *a;<br><span class="hljs-type">int</span> *<span class="hljs-type">const</span> a;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> * <span class="hljs-type">const</span> a;<br><span class="hljs-type">int</span> <span class="hljs-type">const</span> * <span class="hljs-type">const</span> a;<br></code></pre></td></tr></table></figure>
+
+<p>前两个的作用是一样，a 是一个常整型数；</p>
+<p>第三个意味着 a 是一个指向常整型数的指针（也就是，整型数是不可修改的，但指针可以）；</p>
+<p>第四个意思 a 是一个指向整型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）；</p>
+<p>最后两个意味着a 是一个指向常整型数的常指针（也就是说，指针指向的整型数是不可修改的，同时指针也是不可修改的）。</p>
+<h3 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a>static 关键字</h3><p>函数体内的static 变量的作用范围为该函数体，不同于 auto 变量，该 变量的内存只被分配一次，为其值在下次调用时仍维持上次的值（该变量存放在静态变量区）；</p>
+<p>在模块内static 全局变量可以被模块内所有函数访问，但不能被模块外其他函数访问。（注意，只有在定义了变量后才能使用。如果变量定义在使用之后，要用extern 声明。所以，一般全部变量都会在文件的最开始处定义）</p>
+<p>在模块内的static 函数只可被这一模块内的其他函数调用，这个函数的使用范围被限制在声明它的模块内。</p>
+<h3 id="volatile-的作用"><a href="#volatile-的作用" class="headerlink" title="volatile 的作用"></a>volatile 的作用</h3><p>volatile的作用 是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。 volatile 可以保证对特殊地址的稳定访问</p>
+<p>用关键字inline 放在函数定义（注意是定义而非声明）下文继续讲到的前面即可将函数指定为内联函数，内联函数通常就是将它在程序中的每个调用点上 内联地 展开。</p>
+<p>volatile应该是在编译阶段， extern 在链接阶段。</p>
+<h3 id="源码到可执行"><a href="#源码到可执行" class="headerlink" title="源码到可执行"></a>源码到可执行</h3><ul>
+<li>预处理阶段：对源代码文件中文件包含关系（头文件）、预编译语句（宏定义）进行分析和替换，生成预编译文件。</li>
+<li>编译阶段：将经过预处理后的预编译文件转换成特定汇编代码，生成汇编文件</li>
+<li>汇编阶段：将编译阶段生成的汇编文件转化成机器码，生成可重定位目标文件</li>
+<li>链接阶段：将多个目标文件及所需要的库连接成最终的可执行目标文件</li>
+</ul>
+<h2 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h2><h3 id="读取输入的数N，求从-1-N-总共出现-‘1’-的次数"><a href="#读取输入的数N，求从-1-N-总共出现-‘1’-的次数" class="headerlink" title="读取输入的数N，求从 1~N 总共出现 ‘1’ 的次数"></a>读取输入的数N，求从 1~N 总共出现 ‘1’ 的次数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">int</span> n, N, cnt = <span class="hljs-number">0</span>;<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>,&amp;N);<span class="hljs-comment">// 输入 N 值。</span><br>	<span class="hljs-keyword">for</span>(n = <span class="hljs-number">1</span>; n&lt;=N; n++)&#123;<span class="hljs-comment">// 循环执行</span><br>		<span class="hljs-type">int</span> t = n;<br>		<span class="hljs-keyword">while</span>(t)&#123; <span class="hljs-comment">// 循环取出每一位</span><br>            <span class="hljs-keyword">if</span>(t%<span class="hljs-number">10</span> == <span class="hljs-number">1</span>) cnt++;<br>			t/=<span class="hljs-number">10</span>;<br>        &#125;<br>	&#125;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d n&quot;</span>, cnt);<span class="hljs-comment">// 输出结果</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="计算-Π：根据公式：π-x2F-4-x3D-1-1-x2F-3-1-x2F-5-1-x2F-7-1-x2F-9-1-x2F-11-……"><a href="#计算-Π：根据公式：π-x2F-4-x3D-1-1-x2F-3-1-x2F-5-1-x2F-7-1-x2F-9-1-x2F-11-……" class="headerlink" title="计算 Π：根据公式：π&#x2F;4&#x3D;1-1&#x2F;3+1&#x2F;5-1&#x2F;7+1&#x2F;9-1&#x2F;11+……"></a>计算 Π：根据公式：π&#x2F;4&#x3D;1-1&#x2F;3+1&#x2F;5-1&#x2F;7+1&#x2F;9-1&#x2F;11+……</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;math.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">float</span> s = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">float</span> pi = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">float</span> i = <span class="hljs-number">1.0</span>;<br>    <span class="hljs-type">float</span> n = <span class="hljs-number">1.0</span>;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-built_in">fabs</span>(i) &gt;= <span class="hljs-number">1e-7</span>) &#123;<br>        pi += i;<br>        n = n + <span class="hljs-number">2</span>;<br>        s = -s; <span class="hljs-comment">// 这里设计的很巧妙，每次正负号都不一样</span><br>        i = s / n;<br>    &#125;<br>    pi = <span class="hljs-number">4</span> * pi;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pi的值为：%.7f&quot;</span>, pi);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="比较输入字符串-s1-和-s2-前-n-个字。作差值"><a href="#比较输入字符串-s1-和-s2-前-n-个字。作差值" class="headerlink" title="比较输入字符串 s1 和 s2 前 n 个字。作差值"></a>比较输入字符串 s1 和 s2 前 n 个字。作差值</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">strcmpx</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s1, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *s2, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> n)</span>&#123;<br>    <span class="hljs-type">int</span> c1, c2;<br>    <span class="hljs-keyword">do</span> &#123;<br>        c1 = <span class="hljs-built_in">tolower</span>(*s1++);<br>        c2 = <span class="hljs-built_in">tolower</span>(*s2++);<br>    &#125; <span class="hljs-keyword">while</span>((--n &gt; <span class="hljs-number">0</span>) &amp;&amp; c1 == c2 &amp;&amp; c1 != <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> c1-c2;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>;<br>    <span class="hljs-type">char</span> str3[] = <span class="hljs-string">&quot;AZCf&quot;</span>;<br>    <span class="hljs-type">char</span> str4[] = <span class="hljs-string">&quot;abcd&quot;</span>;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;strcmpx(str3, str4, n) = %d&quot;</span>, strcmpx(str3, str4, n));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">strcmpx</span><span class="hljs-params">(str3, str4, n)</span></span> = <span class="hljs-number">24</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="N-X-N-数组，输出每一行中最小，又是每一列中最大的数的位置"><a href="#N-X-N-数组，输出每一行中最小，又是每一列中最大的数的位置" class="headerlink" title="N X N 数组，输出每一行中最小，又是每一列中最大的数的位置"></a>N X N 数组，输出每一行中最小，又是每一列中最大的数的位置</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> N 3</span><br><span class="hljs-type">int</span> a[N][N]=&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>&#125;;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">int</span> i,j,t,minj;<br>    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;N;i++)&#123;<br>        t=a[i][<span class="hljs-number">0</span>];<br>        minj=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;N;j++)&#123; <span class="hljs-comment">// 行上最小</span><br>            <span class="hljs-keyword">if</span>(a[i][j]&lt;t)&#123;<br>                t=a[i][j];<br>                minj=j;<span class="hljs-comment">// 找到了行上最小的数所在的列</span><br>            &#125;<br>        &#125;<br>        <span class="hljs-type">int</span> k;<br>        <span class="hljs-keyword">for</span>(k=<span class="hljs-number">0</span>;k&lt;N;k++)&#123;<br>            <span class="hljs-keyword">if</span>(a[k][minj]&gt;t)<span class="hljs-comment">// 判断是否列上最大</span><br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(k&lt;N) <span class="hljs-keyword">continue</span>;<span class="hljs-comment">// 接着查找下一行</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; 所求点是： a[%d][%d]:%d n&quot;</span>,i,minj,t);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">所求点是：<span class="hljs-selector-tag">a</span><span class="hljs-selector-attr">[2]</span><span class="hljs-selector-attr">[0]</span>:<span class="hljs-number">7</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="删除链表倒数第n个节点"><a href="#删除链表倒数第n个节点" class="headerlink" title="删除链表倒数第n个节点"></a>删除链表倒数第n个节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">getLength</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> ListNode* head)</span> &#123;<br>    <span class="hljs-type">int</span> length = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (head) &#123;<br>        ++length;<br>        head = head-&gt;next;<br>    &#125;<br>    <span class="hljs-keyword">return</span> length;<br>&#125;<br><br><span class="hljs-keyword">struct</span> ListNode* <span class="hljs-title function_">removeNthFromEnd</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> ListNode* head, <span class="hljs-type">int</span> n)</span> &#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ListNode</span>* <span class="hljs-title">dummy</span> =</span> <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> ListNode));<br>    dummy-&gt;val = <span class="hljs-number">0</span>, dummy-&gt;next = head;<br>    <span class="hljs-type">int</span> length = getLength(head);<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ListNode</span>* <span class="hljs-title">cur</span> =</span> dummy;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; length - n + <span class="hljs-number">1</span>; ++i) &#123;<br>        cur = cur-&gt;next;<br>    &#125;<br>    cur-&gt;next = cur-&gt;next-&gt;next;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ListNode</span>* <span class="hljs-title">ans</span> =</span> dummy-&gt;next;<br>    <span class="hljs-built_in">free</span>(dummy);<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h3><h3 id="有10000个正整数，每个数的取值范围均在1到1000之间，编程找出从小到大排在第3400-从0开始算起-的那个数，将此数的值返回，要求不使用排序实现"><a href="#有10000个正整数，每个数的取值范围均在1到1000之间，编程找出从小到大排在第3400-从0开始算起-的那个数，将此数的值返回，要求不使用排序实现" class="headerlink" title="有10000个正整数，每个数的取值范围均在1到1000之间，编程找出从小到大排在第3400(从0开始算起)的那个数，将此数的值返回，要求不使用排序实现"></a>有10000个正整数，每个数的取值范围均在1到1000之间，编程找出从小到大排在第3400(从0开始算起)的那个数，将此数的值返回，要求不使用排序实现</h3><p>不允许用排序，维护一个数组count[1000]，分别存储1-1000每个数字的出现次数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TOTAL 10000</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> RANGE 1000</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> REQUIRED 3400</span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> number[TOTAL] = &#123; <span class="hljs-number">0</span> &#125;;<br>	<span class="hljs-type">int</span> count[RANGE] = &#123; <span class="hljs-number">0</span> &#125;;<br>	<span class="hljs-type">int</span> i, sum = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) &#123;<br>		number[i] = (<span class="hljs-built_in">rand</span>() % <span class="hljs-number">1000</span>) + <span class="hljs-number">1</span>;		<span class="hljs-comment">/*产生10000个1-1000之间的随机数*/</span><br>	&#125;<br><br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) &#123;<br>		count[number[i] - <span class="hljs-number">1</span>]++;				<span class="hljs-comment">/*计算10000个整数出现次数*/</span><br>	&#125;<br><br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000</span>; i++) &#123;<br>		sum += count[i];<br>		<span class="hljs-keyword">if</span> (sum &gt;= REQUIRED + <span class="hljs-number">1</span>) &#123;<br>			cout &lt;&lt; i + <span class="hljs-number">1</span> &lt;&lt; endl;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://jswanyu.github.io/2023/05/16/面经/嵌入式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>万宇</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

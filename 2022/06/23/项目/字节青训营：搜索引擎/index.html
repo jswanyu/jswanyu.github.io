@@ -16,16 +16,16 @@
   <meta name="author" content="万宇">
   <meta name="keywords" content="">
   
-    <meta name="description" content="暂时记录部分 技术栈主要技术栈：Java MySQL Spring SpringBoot Redis Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 算法Jieba分词TFIDF算法TF-IDF算法介绍： TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章">
+    <meta name="description" content="技术栈主要技术栈：Java+MySQL+Spring+SpringBoot+Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 不太建议使用微服务，因为搜索引擎作为中间件来讲，拆得越细，他性能会越差。我们对于这种服务的想法还是说让他尽可能的快。因为每个服务都有他的目标，像这种类似于搜索的这种服务的话，它其实性能的要求是远高于它架构的合理性的要求的。 流程思路 使用jieba分词">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字节青训营项目：搜索引擎">
 <meta property="og:url" content="http://jswanyu.github.io/2022/06/23/%E9%A1%B9%E7%9B%AE/%E5%AD%97%E8%8A%82%E9%9D%92%E8%AE%AD%E8%90%A5%EF%BC%9A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/index.html">
 <meta property="og:site_name" content="Wynn&#39;s blog">
-<meta property="og:description" content="暂时记录部分 技术栈主要技术栈：Java MySQL Spring SpringBoot Redis Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 算法Jieba分词TFIDF算法TF-IDF算法介绍： TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章">
+<meta property="og:description" content="技术栈主要技术栈：Java+MySQL+Spring+SpringBoot+Vue 算法：Jieba分词、TFIDF词频权重计算 工具：布隆过滤器 不太建议使用微服务，因为搜索引擎作为中间件来讲，拆得越细，他性能会越差。我们对于这种服务的想法还是说让他尽可能的快。因为每个服务都有他的目标，像这种类似于搜索的这种服务的话，它其实性能的要求是远高于它架构的合理性的要求的。 流程思路 使用jieba分词">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%9B%BE%E6%A0%87.jpeg">
 <meta property="article:published_time" content="2022-06-23T10:37:22.000Z">
-<meta property="article:modified_time" content="2022-07-24T13:27:35.707Z">
+<meta property="article:modified_time" content="2022-10-11T06:55:41.654Z">
 <meta property="article:author" content="万宇">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jswanyu-1309100582.cos.ap-shanghai.myqcloud.com/icon/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%9B%BE%E6%A0%87.jpeg">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          796 字
+          1.7k 字
         
       </span>
     
@@ -243,11 +243,22 @@
             
             <div class="markdown-body">
               
-              <p>暂时记录部分</p>
-<h1 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h1><p>主要技术栈：Java MySQL Spring SpringBoot Redis Vue</p>
+              <h1 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h1><p>主要技术栈：Java+MySQL+Spring+SpringBoot+Vue</p>
 <p>算法：Jieba分词、TFIDF词频权重计算</p>
 <p>工具：布隆过滤器</p>
-<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><h2 id="Jieba分词"><a href="#Jieba分词" class="headerlink" title="Jieba分词"></a>Jieba分词</h2><h2 id="TFIDF算法"><a href="#TFIDF算法" class="headerlink" title="TFIDF算法"></a>TFIDF算法</h2><p>TF-IDF算法介绍：</p>
+<p>不太建议使用微服务，因为搜索引擎作为中间件来讲，拆得越细，他性能会越差。我们对于这种服务的想法还是说让他尽可能的快。因为每个服务都有他的目标，像这种类似于搜索的这种服务的话，它其实性能的要求是远高于它架构的合理性的要求的。</p>
+<h1 id="流程思路"><a href="#流程思路" class="headerlink" title="流程思路"></a>流程思路</h1><ul>
+<li>使用jieba分词对所有的文本进行分词，并将分词放进表segmentation ，这个过程中需要使用布隆过滤器保证分词表的唯一性，之前是用简单的查询判断表里有没有某个分词，比较慢，用map感觉又会比较占空间</li>
+<li>随后为分词表 和 data 表（文本表）建立倒排索引，即建立一个关系表，将 文本 ID 跟 分词 ID 绑定起来，同时需要计算tfidf值，这是一个词频统计的权重，代表着一个词在某个文本中的区别能力。这样就可以根据分词去查询和哪些文本相关，查询结果根据tfidf值排序，实现基本的搜索引擎功能。</li>
+<li>这个过程中，随着数据量的增大，这个关系表会越来越大，当文本数据有100 多万的时候，关系表达到了2000多万，通过分词查询速度会很慢，就采用了分表，分表的基本思路是将分词 id 取模，平均分到100张表里，这样单表的数据在20w左右，搜索的过程就更新为先去分词表里查分词的id，再去某个关系表查结果</li>
+<li>可能提问：如果加了新的文本数据，流程还是先分词，旧分词可以定位到具体的关系表，添加行数据。新分词的话要先添加进分词表，再根据id取模结果，去对应关系表中添加数据</li>
+<li>额外功能：搜索词过滤，用正则的方式得到要过滤的词，还是先查询所有结果，然后把过滤词的结果从所有结果中去掉，本质还是sql的逻辑</li>
+<li>额外功能：相关搜索，这个实现起来很简单，就是用sql的like符号去查和输入词相关的词，没有用权重计算</li>
+<li>额外功能：搜索关键词下拉联想，使用字典树。</li>
+<li>额外功能：以图搜图，把所有图片都编码成512维的向量，然后把输入的图片也编码成这个向量，然后去计算输入图片和所有图片里的预先相似度，然后返回相似度较高的图片， 这是在Python 里实现的，Python 和 Java 之间做了一个 socket 的通信</li>
+</ul>
+<p>改进：将数据放到redis中，像现在市面上大部分搜索引擎，比如ES，都是将数据放到内存里，对内存压力太大的话也可以进行横向拆分</p>
+<h1 id="TFIDF算法"><a href="#TFIDF算法" class="headerlink" title="TFIDF算法"></a>TFIDF算法</h1><p>TF-IDF算法介绍：</p>
 <p>TF-IDF（term frequency–inverse document frequency）是一种用于计算词频的常用加权技术，主要思想是：如果某个词或短语在一篇文章中出现的频率TF高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
 <blockquote>
 <p>比如“我喜爱篮球”，我，喜爱会在其他文章（语句）中经常出现，但篮球偶尔出现，那么能给这条语句分类的关键词应该是“篮球”</p>
@@ -256,7 +267,7 @@
 <p>$$<br>IDF &#x3D; log\frac{总文章数}{一个词在多少篇文章中出现过}<br>$$</p>
 <p>案例：假如一篇文件的总词语数是100个，而词语“母牛”出现了3次，那么“母牛”一词在该文件中的词频就是3&#x2F;100&#x3D;0.03。一个计算文件频率 (DF) 的方法是测定有多少份文件出现过“母牛”一词，然后除以文件集里包含的文件总数。所以，如果“母牛”一词在1,000份文件出现过，而文件总数是10,000,000份的话，其逆向文件频率就是 lg(10,000,000 &#x2F; 1,000)&#x3D;4。最后的TF-IDF的分数为0.03 * 4&#x3D;0.12。</p>
 <p>在本项目中，idf值本来需要根据语料库按照公式进行计算，不过jieba分词已经提供了一份很好的 idf 字典，所以默认直接使用jieba分词的 idf 字典</p>
-<h2 id="前端-Vue"><a href="#前端-Vue" class="headerlink" title="前端-Vue"></a>前端-Vue</h2><p>运行前端项目，在工作目录打开cmd</p>
+<h1 id="前端-Vue"><a href="#前端-Vue" class="headerlink" title="前端-Vue"></a>前端-Vue</h1><p>运行前端项目，在工作目录打开cmd</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> serve<br></code></pre></td></tr></table></figure>
 
 
@@ -349,8 +360,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/23/Redis/Redis%EF%BC%9A07.%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E5%9B%9B%EF%BC%9A%E7%A4%BE%E4%BA%A4%E5%8A%9F%E8%83%BD/" title="Redis：07.实战应用四：社交功能">
-                        <span class="hidden-mobile">Redis：07.实战应用四：社交功能</span>
+                      <a href="/2022/06/23/Redis/Redis%EF%BC%9A05.%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8%E5%9B%9B%EF%BC%9A%E7%A4%BE%E4%BA%A4%E5%8A%9F%E8%83%BD/" title="Redis：05.实战应用四：社交功能">
+                        <span class="hidden-mobile">Redis：05.实战应用四：社交功能</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
